@@ -1,0 +1,519 @@
+#
+#   Makefile.fpc for Free Pascal Source Tree
+#
+
+[package]
+name=fpc
+version=2.1.1
+
+[target]
+dirs=fpcsrc fpcdocs
+
+[require]
+nortl=y
+
+[install]
+fpcpackage=y
+
+[default]
+fpcdir=.
+rule=help
+
+[prerules]
+# Build dir
+ifndef BUILDDIR
+BUILDDIR=$(BASEDIR)/build
+endif
+
+# Check if install/ subdir is available
+ifneq ($(wildcard install),)
+CVSINSTALL=install
+else
+CVSINSTALL=.
+endif
+
+# Prefix for units
+ifneq ($(findstring $(OS_SOURCE),$(LIMIT83fs)),)
+PKGUNITSPRE=u
+else
+PKGUNITSPRE=units-
+endif
+
+# Cross compile needs a prefix to not conflict with original packages
+ifdef CROSSINSTALL
+PKGPRE=$(FULL_TARGET)-
+else
+PKGPRE=
+endif
+
+# We want to have the resulting .zips in the current dir
+ifndef DIST_DESTDIR
+export DIST_DESTDIR:=$(BASEDIR)
+endif
+
+
+[rules]
+#####################################################################
+# Main targets
+#####################################################################
+
+.PHONY: help checkfpcdir
+
+help:
+        @$(ECHO)
+        @$(ECHO) Targets
+        @$(ECHO)    all         Alias for build
+        @$(ECHO)    build       Build a new compiler and all packages
+        @$(ECHO)    install     Install newly build files
+        @$(ECHO)    zipinstall  Create zip/tar of installed files
+        @$(ECHO)    singlezipinstall  Alias for zipinstall
+        @$(ECHO)
+        @$(ECHO) Distribution Targets:
+        @$(ECHO)    rpm       Build linux .rpm packages
+        @$(ECHO)    deb       Build linux .deb packages
+        @$(ECHO)    inno      Build Windows (Innosetup) based installer
+        @$(ECHO)    tar       Build .tar installer
+        @$(ECHO)
+        @$(ECHO) FV based installer Targets:
+        @$(ECHO)    go32v2zip   Build .zip files for go32v2
+        @$(ECHO)    os2zip      Build .zip files for OS/2
+        @$(ECHO)    sourcezip   Build .zip files for the sources
+        @$(ECHO)
+        @exit
+
+
+#####################################################################
+# Dependencies
+#####################################################################
+
+#######################################
+# Install targets
+#######################################
+
+demo_install:
+        $(MAKE) -C $(CVSINSTALL)/demo sourceinstall
+
+man_install:
+        $(MAKE) -C $(CVSINSTALL)/man installman
+
+doc_install:
+        $(MAKE) -C $(CVSINSTALL)/doc installdoc
+
+
+##########################################################################
+# Packaging
+##########################################################################
+
+BUILDSTAMP=fpcsrc/build-stamp.$(FULL_TARGET)
+
+.PHONY: all clean distclean build install installbase zipinstall singlezipinstall
+
+all: build
+
+build: $(BUILDSTAMP)
+
+clean: $(addsuffix _distclean,$(TARGET_DIRS))
+        $(DEL) fpcsrc/build-stamp.*
+
+distclean: clean
+
+installbase:
+# create dirs
+        $(MKDIR) $(INSTALL_BASEDIR)
+        $(MKDIR) $(INSTALL_BINDIR)
+ifndef SNAPSHOT
+ifndef CROSSINSTALL
+# readme & whatsnew and docs
+        $(MKDIR) $(INSTALL_DOCDIR)
+        -$(COPY) $(addprefix $(CVSINSTALL)/doc/,*.txt copying* faq.*) $(INSTALL_DOCDIR)
+# bingo32 (cwsdpmi,wmemu387.dxe)
+ifeq ($(OS_TARGET),go32v2)
+        $(COPY) $(CVSINSTALL)/bingo32/*.dxe $(INSTALL_BINDIR)
+        $(COPY) $(CVSINSTALL)/bingo32/*.exe $(INSTALL_BINDIR)
+endif
+# binw32 (*.dll,*.exe,*.ico)
+ifneq ($(patsubst %/,%,$(subst \,/,$(dir $(CPPROG)))),$(patsubst %/,%,$(subst \,/,$(INSTALL_BINDIR))))
+ifeq ($(OS_TARGET),win32)
+        $(COPY) $(addprefix $(CVSINSTALL)/binw32/,*.ico *.exe *.dll *.h) $(INSTALL_BINDIR)
+endif
+endif
+# binos2 (emx.dll,emxwrap.dll,unzip32.dll,fp2.ico)
+ifeq ($(OS_TARGET),os2)
+        $(COPY) $(addprefix $(CVSINSTALL)/binos2/,*.ico *.dll) $(INSTALL_BINDIR)
+endif
+# binos2 (emx.dll,emxwrap.dll,unzip32.dll,fp2.ico)
+ifeq ($(OS_TARGET),emx)
+        $(COPY) $(addprefix $(CVSINSTALL)/binos2/,*.ico *.dll) $(INSTALL_BINDIR)
+endif
+# manpages for UNIX systems
+ifneq ($(findstring $(OS_TARGET),linux freebsd sunos qnx),)
+        $(MAKE) -C $(CVSINSTALL)/man installman
+endif
+endif
+endif
+# install generated things
+        $(MAKE) -C fpcsrc installbase
+
+install: $(BUILDSTAMP)
+        $(MAKE) installbase
+        $(MAKE) -C fpcsrc installother
+
+zipinstall: $(BUILDSTAMP)
+        $(MAKE) fpc_zipinstall ZIPTARGET=installbase ZIPNAME=base
+        $(MAKE) -C fpcsrc zipinstallother
+
+zipinstall: $(BUILDSTAMP)
+        $(MAKE) fpc_zipinstall ZIPTARGET=install ZIPNAME=fpc-$(PACKAGE_VERSION)
+
+
+##########################################################################
+# Docs
+##########################################################################
+
+.PHONY: docspdf makepackdocs docsrcinstall docsrc
+
+# We don't want the package name fpc in the path
+DOCSOURCEDIR=$(INSTALL_SOURCEDIR)/../docs
+
+docspdf:
+        $(MAKE) -C fpcdocs pdfinstall DOCINSTALLDIR=$(PACKDIR)
+
+# Used by makepack to generate unix installation .tar
+makepackdocs:
+        $(MAKE) fpc_zipinstall ZIPTARGET=docspdf FULLZIPNAME=docs
+
+docsrcinstall:
+        $(MAKE) -C fpcdocs distclean
+        $(MKDIR) $(DOCSOURCEDIR)
+        $(COPYTREE) fpcdocs/* $(DOCSOURCEDIR)
+
+docsrc:
+        $(MAKE) fpc_zipinstall ZIPTARGET=docsrcinstall FULLZIPNAME=docsrc
+
+
+##########################################################################
+# Demos
+##########################################################################
+
+.PHONY: demozip
+
+# We don't want the package name fpc in the path
+ifdef UNIXHier
+DEMOSOURCEDIR=$(INSTALL_DOCDIR)/../demo
+else
+DEMOSOURCEDIR=$(INSTALL_PREFIX)/demo
+endif
+
+demosrcinstall:
+        $(MAKE) -C demo clean
+        $(MKDIR) $(DEMOSOURCEDIR)
+        $(COPYTREE) demo/* $(DEMOSOURCEDIR)
+
+demozip:
+        $(MAKE) fpc_zipinstall ZIPTARGET=demosrcinstall FULLZIPNAME=demo
+
+
+##########################################################################
+# Source targets
+##########################################################################
+
+.PHONY: sourcebase sourcezip
+
+# We don't want the fpc/ package prefix
+INSTALL_BASESOURCEDIR=$(INSTALL_SOURCEDIR)/..
+
+sourcebase:
+# base Makefiles needed for sources
+        $(MKDIR) $(INSTALL_BASESOURCEDIR)
+        $(MKDIR) $(INSTALL_BASESOURCEDIR)/rtl
+        $(MKDIR) $(INSTALL_BASESOURCEDIR)/packages
+        $(MKDIR) $(INSTALL_BASESOURCEDIR)/packages/base
+        $(MKDIR) $(INSTALL_BASESOURCEDIR)/packages/extra
+        $(COPY) fpcsrc/Makefile*  $(INSTALL_BASESOURCEDIR)
+        $(COPY) fpcsrc/rtl/Makefile* $(INSTALL_BASESOURCEDIR)/rtl
+        $(COPY) fpcsrc/packages/Makefile* $(INSTALL_BASESOURCEDIR)/packages
+        $(COPY) fpcsrc/packages/base/Makefile* $(INSTALL_BASESOURCEDIR)/packages/base
+        $(COPY) fpcsrc/packages/extra/Makefile* $(INSTALL_BASESOURCEDIR)/packages/extra
+
+sourcezip:
+        $(MAKE) fpc_zipinstall ZIPTARGET=sourcebase ZIPNAME=base ZIPSUFFIX=$(ZIPSOURCESUFFIX)
+        $(MAKE) -C fpcsrc compiler_zipsourceinstall
+        $(MAKE) -C fpcsrc rtl_zipsourceinstall
+        $(MAKE) -C fpcsrc packages_zipsourceinstall ZIPPREFIX=$(PKGUNITSPRE)
+        $(MAKE) -C fpcsrc fcl_zipsourceinstall
+        $(MAKE) -C fpcsrc fv_zipsourceinstall
+        $(MAKE) -C fpcsrc utils_zipsourceinstall
+        $(MAKE) -C fpcsrc ide_zipsourceinstall
+        $(MAKE) -C fpcsrc installer_zipsourceinstall
+
+
+##########################################################################
+# OS targets
+##########################################################################
+
+BUILDTARGETS=go32v2 win32 linux freebsd netbsd openbsd os2 emx sunos qnx beos
+
+.PHONY: go32v2 win32 linux freebsd os2 emx netbsd openbsd go32v2zip win32zip linuxzip freebsdzip os2zip emxzip netbsdzip openbsdzip
+
+$(BUILDTARGETS): checkfpcdir
+        $(MAKE) install OS_TARGET=$@
+
+$(addsuffix zip,$(filter-out beos sunos,$(BUILDTARGETS))): checkfpcdir
+        $(MAKE) zipinstall OS_TARGET=$(subst zip,,$@)
+
+beoszip : checkfpcdir
+        $(MAKE) zipinstall OS_TARGET=beos USEZIP=1
+
+sunoszip: checkfpcdir
+        $(MAKE) zipinstall OS_TARGET=sunos TARPROG=gtar
+
+
+##########################################################################
+# Dos, OS/2 Short 8.3 Names
+##########################################################################
+
+.PHONY: renametoshort shortsrc shortbin shortnames
+
+renametoshort:
+# Compiler parts
+        -mv base$(ZIPSUFFIX).zip base$(ZIPSUFFIXSHORT).zip
+        -mv compiler$(ZIPSUFFIX).zip comp$(ZIPSUFFIXSHORT).zip
+        -mv utils$(ZIPSUFFIX).zip util$(ZIPSUFFIXSHORT).zip
+        -mv installer$(ZIPSUFFIX).zip inst$(ZIPSUFFIXSHORT).zip
+# Packages
+        -mv $(PKGUNITSPRE)fcl$(ZIPSUFFIX).zip ufcl$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)gdbint$(ZIPSUFFIX).zip ugdb$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)regexpr$(ZIPSUFFIX).zip ureg$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)paszlib$(ZIPSUFFIX).zip upzl$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)unzip$(ZIPSUFFIX).zip uzip$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)netdb$(ZIPSUFFIX).zip undb$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)ftpapi$(ZIPSUFFIX).zip uftp$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)hwvideo$(ZIPSUFFIX).zip uhwv$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)clkdll$(ZIPSUFFIX).zip uclk$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)pasjpeg$(ZIPSUFFIX).zip upjp$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fv$(ZIPSUFFIX).zip ufv$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)rexx$(ZIPSUFFIX).zip urexx$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)zlib$(ZIPSUFFIX).zip uzlib$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)mmtk$(ZIPSUFFIX).zip ummtk$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)lvm$(ZIPSUFFIX).zip ulvm$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)imlib$(ZIPSUFFIX).zip uimlb$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)libpng$(ZIPSUFFIX).zip ulpng$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)opengl$(ZIPSUFFIX).zip uogl$(ZIPSUFFIXSHORT).zip
+
+shortsrc:
+        $(MAKE) renametoshort ZIPSUFFIX=$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
+
+shortbin:
+        $(MAKE) renametoshort ZIPSUFFIXSHORT=$(SHORTSUFFIX)
+
+shortnames: shortsrc shortbin
+
+
+##########################################################################
+# Win32, Go32v2, OS/2
+##########################################################################
+
+.PHONY: dist
+
+dist:
+        $(MAKE) sourcezip
+        $(MAKE) demozip
+        $(MAKE) zipinstall
+ifneq ($(findstring $(OS_TARGET),$(LIMIT83fs)),)
+        $(MAKE) shortnames
+endif
+
+
+##########################################################################
+# Debian
+##########################################################################
+
+ifdef inUnix
+
+ifneq ($(wildcard $(CVSINSTALL)/debian/changelog),)
+
+.PHONY: debcopy deb
+
+DEBPACKAGEVERSION:=$(shell head -n 1 $(CVSINSTALL)/debian/changelog | awk '{ print $$2 }' | tr -d '[()]')
+DEBFPCVERSION:=$(shell echo $(DEBPACKAGEVERSION) | awk -F '-' '{ print $$1 }')
+DEBSRCDIR:=$(BUILDDIR)/fpc-$(DEBFPCVERSION)
+
+debcheck:
+ifneq ($(DEBFPCVERSION),$(PACKAGE_VERSION))
+        @$(ECHO) "Debian version ($(DEBFPCVERSION)) is not correct, expect $(PACKAGE_VERSION)"
+        @exit 1
+endif
+
+debcopy: distclean
+        rm -rf $(DEBSRCDIR)
+        install -d $(DEBSRCDIR)
+        $(COPYTREE) fpcsrc/compiler $(DEBSRCDIR)
+        $(COPYTREE) fpcsrc/rtl $(DEBSRCDIR)
+        $(COPYTREE) fpcsrc/fcl $(DEBSRCDIR)
+        $(COPYTREE) fpcsrc/fv $(DEBSRCDIR)
+        $(COPYTREE) fpcsrc/ide $(DEBSRCDIR)
+        $(COPYTREE) fpcsrc/packages $(DEBSRCDIR)
+        $(COPYTREE) fpcsrc/utils $(DEBSRCDIR)
+        $(COPYTREE) demo $(DEBSRCDIR)
+        $(COPYTREE) logs $(DEBSRCDIR)
+ifndef NODOCS
+        $(COPYTREE) fpcdocs $(DEBSRCDIR)
+endif
+        $(COPYTREE) fpcsrc/Makefile* $(DEBSRCDIR)
+        $(COPYTREE) $(CVSINSTALL)/debian $(DEBSRCDIR)
+        $(COPYTREE) $(CVSINSTALL)/man $(DEBSRCDIR)
+        $(COPYTREE) $(CVSINSTALL)/doc $(DEBSRCDIR)
+        find $(DEBSRCDIR) -name 'CVS*' | xargs -n1 rm -rf
+        chmod 755 $(DEBSRCDIR)/debian/rules
+
+debbuild:
+ifdef NODOCS
+        cd $(DEBSRCDIR) ; fakeroot debian/rules binary-arch
+else
+        cd $(DEBSRCDIR) ; fakeroot debian/rules binary
+endif
+        mv $(DEBSRCDIR)/../*.deb .
+
+debclean:
+        rm -rf $(DEBSRCDIR)
+        -rmdir $(BUILDDIR)
+
+debtargz: checkfpcdir
+        $(MAKE) fpc_zipinstall USETAR=y ZIPTARGET=debcopy PACKDIR=$(DEBSRCDIR) FULLZIPNAME=fpc-$(DEBFPCVERSION).orig
+
+deb: checkfpcdir debcheck debcopy debbuild debclean
+
+endif   # changelog found
+
+endif
+
+
+##########################################################################
+# RPM
+##########################################################################
+
+ifdef inUnix
+
+# rpm available?
+RPM:=$(strip $(wildcard $(addsuffix /rpm$(SRCEXEEXT),$(SEARCHPATH))))
+ifneq ($(RPM),)
+
+ifneq ($(wildcard $(CVSINSTALL)/fpc.spec),)
+
+.PHONY: rpmcopy rpm
+
+# Only the recent rpms have rpmbuild
+RPMBUILD=$(strip $(wildcard $(addsuffix /rpmbuild,$(SEARCHPATH))))
+ifeq ($(RPMBUILD),)
+RPMBUILD=$(strip $(wildcard $(addsuffix /rpm,$(SEARCHPATH))))
+endif
+RPMDIR=$(BUILDDIR)/rpm
+RPMSPECFILE:=$(RPMDIR)/SPECS/fpc-$(PACKAGE_VERSION).spec
+RPMSOURCEFILE:=$(RPMDIR)/SOURCES/fpc-$(PACKAGE_VERSION)-src.tar.gz
+RPMSRCDIR:=$(RPMDIR)/SOURCES/fpc
+RPMDEFINES=--define "_topdir $(RPMDIR)" \
+           --define "_sourcedir $(RPMDIR)/SOURCES" \
+           --define "_builddir $(RPMDIR)/BUILD" \
+           --define "_rpmdir $(RPMDIR)/RPMS" \
+           --define "_srcrpmdir $(RPMDIR)/SRPMS"
+rpmcopy: distclean
+        # false || is needed to workaround fpcmake sections
+        false || [ -d $(RPMDIR) ] || install -d $(RPMDIR)
+        false || [ -d $(RPMDIR)/BUILD ] || install -d $(RPMDIR)/BUILD
+        false || [ -d $(RPMDIR)/SOURCES ] || install -d $(RPMDIR)/SOURCES
+        false || [ -d $(RPMDIR)/SPECS ] || install -d $(RPMDIR)/SPECS
+        false || [ -d $(RPMDIR)/RPMS ] || install -d $(RPMDIR)/RPMS
+        false || [ -d $(RPMDIR)/SRPMS ] || install -d $(RPMDIR)/SRPMS
+        rm -rf $(RPMSRCDIR)
+        sed "s+%FPCVERSION%+$(PACKAGE_VERSION)+" $(CVSINSTALL)/fpc.spec > $(RPMSPECFILE)
+ifndef NODOCS
+        cat $(CVSINSTALL)/fpcdoc.spec >> $(RPMSPECFILE)
+endif
+        # Install files
+        install -d $(RPMSRCDIR)
+        $(COPYTREE) fpcsrc/compiler $(RPMSRCDIR)
+        $(COPYTREE) fpcsrc/rtl $(RPMSRCDIR)
+        $(COPYTREE) fpcsrc/fcl $(RPMSRCDIR)
+        $(COPYTREE) fpcsrc/fv $(RPMSRCDIR)
+        $(COPYTREE) fpcsrc/ide $(RPMSRCDIR)
+        $(COPYTREE) fpcsrc/packages $(RPMSRCDIR)
+        $(COPYTREE) fpcsrc/utils $(RPMSRCDIR)
+        $(COPYTREE) demo $(RPMSRCDIR)
+#        $(COPYTREE) logs $(RPMSRCDIR)
+        $(COPYTREE) fpcsrc/Makefile* $(RPMSRCDIR)
+        $(COPYTREE) $(CVSINSTALL)/man $(RPMSRCDIR)
+        $(COPYTREE) $(CVSINSTALL)/doc $(RPMSRCDIR)
+        $(COPY) $(CVSINSTALL)/smart_strip.sh $(RPMSRCDIR)
+        chmod +x $(RPMSRCDIR)/smart_strip.sh
+ifndef NODOCS
+        $(COPYTREE) docs $(RPMSRCDIR)
+endif
+        find $(RPMSRCDIR) -name 'CVS*' | xargs -n1 rm -rf
+        cd $(RPMSRCDIR) ; tar cfvz $(RPMSOURCEFILE) *
+        rm -rf $(RPMSRCDIR)
+
+rpmbuild: checkfpcdir
+        $(RPMBUILD) $(RPMDEFINES) --nodeps -ba $(RPMSPECFILE)
+        mv `find $(RPMDIR)/RPMS/ -name '*.rpm'` .
+        mv `find $(RPMDIR)/SRPMS/ -name '*.rpm'` .
+
+rpmclean:
+        rm -rf $(RPMDIR)
+        -rmdir $(BUILDDIR)
+
+rpm: checkfpcdir rpmcopy rpmbuild rpmclean
+
+endif   # spec found
+
+endif   # rpm available
+
+endif   # inUnix
+
+##########################################################################
+# Inno setup
+##########################################################################
+
+ISCCPROG=$(subst $(PATHSEP),/,$(ProgramFiles))/inno setup 5/iscc.exe
+
+ifndef inUnix
+USEINNOWRAPPER=1
+endif
+INNODIR=$(BUILDDIR)/inno
+INNOWRAPPER=$(subst /,$(PATHSEP),$(DIST_DESTDIR)/fpcinno$(SRCBATCHEXT))
+INNOCMD_CDINNO:=cd $(subst /,$(ZIPPATHSEP),$(INNODIR))
+INNOCMD_CDBASE:=cd $(subst /,$(ZIPPATHSEP),$(BASEDIR))
+INNOCMD_ISCC:=$(ISCCPROG) $(INNODIR)/fpc.iss
+FPCISSSUBST=-d BUILDDIR=$(subst /,$(PATHSEP),$(INNODIR))
+ifdef NODOCS
+FPCISSSUBST+=-d DisableDocs=;
+endif
+
+innocheck:
+ifndef NODOCS
+# Check for doc-pdf.zip
+ifeq ($(wildcard doc-pdf.zip),)
+        @$(ECHO) "No documentation available. Please copy the file doc-pdf.zip to this directory."
+        @exit 1
+endif
+endif
+# Check for libgdb
+ifeq ($(wildcard libgdb/win32/libgdb.a),)
+        @$(ECHO) "Libgdb not available. Please get and unzip libgdb-<version>.i386-win32.zip in this directory."
+        @exit 1
+endif
+
+innobuild: innocheck build
+        $(DELTREE) $(INNODIR)
+        $(MKDIR) $(INNODIR)
+ifndef NODOCS
+        unzip -d $(INNODIR) doc-pdf.zip
+endif
+        $(MAKE) install INSTALL_PREFIX=$(INNODIR)
+        compiler/utils/fpcsubst -i install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST)
+        $(INNOCMD_ISCC)
+        $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
+
+innoclean:
+        $(DELTREE) $(INNODIR)
+
+inno: checkfpcdir innobuild innoclean
