@@ -9,7 +9,7 @@ move_examples()
 {
     # Make examples dir
     install -d -m 755 $DOC_DIR/fp-units-$1/examples/
-    
+
     for package in $2; do
         if [ -d $EXAMPLE_TEMP/$package/examples ]; then
             echo "Moving examples of $package"
@@ -28,7 +28,7 @@ FV_PACKAGES="fv"
 GTK_PACKAGES="gtk"
 GTK2_PACKAGES="gtk2"
 GNOME1_PACKAGES="imlib zvt gnome gconf"
-BASE_PACKAGES="paszlib pasjpeg regexpr ncurses md5"
+BASE_PACKAGES="paszlib pasjpeg regexpr ncurses md5 uuid"
 GFX_PACKAGES="forms ggi libgd svgalib opengl"
 DB_PACKAGES="ibase mysql oracle postgres gdbm odbc"
 MISC_PACKAGES="gdbint utmp syslog cdrom tcl newt"

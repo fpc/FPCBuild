@@ -6,3 +6,4 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/x11
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/regexpr
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/md5
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/uuid

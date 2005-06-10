@@ -45,7 +45,7 @@ FPCDIR=
 PACKAGEVERSION:=$(shell head -n 1 debian/changelog | awk '{ print $$2 }' | tr -d '[()]')
 FPCVERSION:=$(shell echo $(PACKAGEVERSION) | awk -F '-' '{ print $$1 }')
 FPCTARGET=$(CPU_TARGET)-linux
-# Get directories	
+# Get directories
 PWD:=$(shell pwd)
 BUILD_DIR=$(PWD)/debian/build
 INSTALL_DIR=$(PWD)/debian/tmp
@@ -84,7 +84,7 @@ clean:
 	$(MAKE) ide_distclean
 	$(MAKE) utils_distclean
 
-	$(MAKE) -C docs clean
+	$(MAKE) -C fpcdocs clean
 
 	-(find . -name \*.a | xargs rm)
 
@@ -148,12 +148,12 @@ install-arch-stamp: build-arch-stamp debian-files-stamp
 	bash debian/moveexamples $(EXAMPLE_TEMP) $(DOC_DIR)
 
 # Install man pages and RTL demos and whatsnew and readme
-	$(MAKE) man_install $(INSTALLOPTS) INSTALL_PREFIX=$(INSTALL_DIR)/usr/share
-	$(MAKE) demo_install $(INSTALLOPTS) INSTALL_SOURCEDIR=$(DOC_DIR)/fp-compiler
-	$(MAKE) doc_install $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-compiler
+	$(MAKE) -C man installman $(INSTALLOPTS) INSTALL_PREFIX=$(INSTALL_DIR)/usr/share
+	$(MAKE) -C demo sourceinstall $(INSTALLOPTS) INSTALL_SOURCEDIR=$(DOC_DIR)/fp-compiler
+	$(MAKE) -C doc installdoc $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-compiler
 
 # Create fpc.cfg which is included as conffile
-	chmod 755 compiler/utils/samplecfg 
+	chmod 755 compiler/utils/samplecfg
 	compiler/utils/samplecfg "/usr/lib/fpc/\$$fpcversion" $(INSTALL_DIR)/etc
 	touch install-arch-stamp
 
@@ -177,7 +177,7 @@ build-indep-stamp: debian-files-stamp build-arch-stamp
 	@echo "--- Building Documentation"
 	dh_testdir
 
-	$(MAKE) -C docs $(DOCTYPE) $(BUILDOPTS) FPDOC=$(NEWFPDOC) 
+	$(MAKE) -C fpcdocs $(DOCTYPE) $(BUILDOPTS) FPDOC=$(NEWFPDOC)
 
 	touch build-indep-stamp
 
@@ -189,7 +189,7 @@ install-indep-stamp: debian-files build-indep
 	dh_testroot
 	dh_clean -k
 
-	$(MAKE) -C docs $(DOCTYPE)install $(INSTALLOPTS) INSTALL_DOCDIR=$(INSTALL_DIR)/usr/share/doc/fp-docs
+	$(MAKE) -C fpcdocs $(DOCTYPE)install $(INSTALLOPTS) INSTALL_DOCDIR=$(INSTALL_DIR)/usr/share/doc/fp-docs
 
 	touch install-indep-stamp
 
@@ -202,7 +202,7 @@ build: build-arch build-indep
 
 install: install-arch install-indep
 
-binary: binary-arch binary-indep 
+binary: binary-arch binary-indep
 
 
 ###################
@@ -215,7 +215,7 @@ binary-indep: build-indep install-indep debian-files
 	dh_testroot
 	dh_installdocs -i
 	dh_installchangelogs -i
-	dh_installchangelogs -pfp-docs logs/Changes.docs
+#	dh_installchangelogs -pfp-docs logs/Changes.docs
 	dh_install -i --sourcedir=debian/tmp --list-missing
 	dh_compress -i -X.pdf
 	dh_fixperms -i
@@ -231,10 +231,10 @@ binary-arch: build-arch arrange-arch debian-files
 	dh_installdocs -a
 	dh_installchangelogs -a
 
-	dh_installchangelogs -pfp-compiler logs/Changes.compiler
-	dh_installchangelogs -pfp-units-rtl logs/Changes.rtl
-	dh_installchangelogs -pfp-units-fcl logs/Changes.fcl
-	dh_installchangelogs -pfp-utils logs/Changes.utils
+#	dh_installchangelogs -pfp-compiler logs/Changes.compiler
+#	dh_installchangelogs -pfp-units-rtl logs/Changes.rtl
+#	dh_installchangelogs -pfp-units-fcl logs/Changes.fcl
+#	dh_installchangelogs -pfp-utils logs/Changes.utils
 
 	dh_installexamples -a
 	dh_compress -a

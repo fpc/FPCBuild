@@ -82,24 +82,6 @@ help:
         @exit
 
 
-#####################################################################
-# Dependencies
-#####################################################################
-
-#######################################
-# Install targets
-#######################################
-
-demo_install:
-        $(MAKE) -C $(CVSINSTALL)/demo sourceinstall
-
-man_install:
-        $(MAKE) -C $(CVSINSTALL)/man installman
-
-doc_install:
-        $(MAKE) -C $(CVSINSTALL)/doc installdoc
-
-
 ##########################################################################
 # Packaging
 ##########################################################################
@@ -162,7 +144,7 @@ zipinstall: $(BUILDSTAMP)
         $(MAKE) fpc_zipinstall ZIPTARGET=installbase ZIPNAME=base
         $(MAKE) -C fpcsrc zipinstallother
 
-zipinstall: $(BUILDSTAMP)
+singlezipinstall: $(BUILDSTAMP)
         $(MAKE) fpc_zipinstall ZIPTARGET=install ZIPNAME=fpc-$(PACKAGE_VERSION)
 
 
@@ -364,6 +346,7 @@ endif
         $(COPYTREE) $(CVSINSTALL)/man $(DEBSRCDIR)
         $(COPYTREE) $(CVSINSTALL)/doc $(DEBSRCDIR)
         find $(DEBSRCDIR) -name 'CVS*' | xargs -n1 rm -rf
+        find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
         chmod 755 $(DEBSRCDIR)/debian/rules
 
 debbuild:
@@ -446,9 +429,10 @@ endif
         $(COPY) $(CVSINSTALL)/smart_strip.sh $(RPMSRCDIR)
         chmod +x $(RPMSRCDIR)/smart_strip.sh
 ifndef NODOCS
-        $(COPYTREE) docs $(RPMSRCDIR)
+        $(COPYTREE) fpcdocs $(RPMSRCDIR)
 endif
         find $(RPMSRCDIR) -name 'CVS*' | xargs -n1 rm -rf
+        find $(RPMSRCDIR) -name '.svn' | xargs -n1 rm -rf
         cd $(RPMSRCDIR) ; tar cfvz $(RPMSOURCEFILE) *
         rm -rf $(RPMSRCDIR)
 

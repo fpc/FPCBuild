@@ -4,8 +4,8 @@ The packages were originally put together by:
 Debian maintainer:
   Carlos Laviola <claviola@debian.org>
 
-From sources obtained from:
-  'cvs -d :pserver:cvs@cvs.freepascal.org:/FPC/CVS -z3 co -r RELEASE_1_9_4 fpc'
+With sources obtained from:
+  'cvs -d :pserver:cvs@cvs.freepascal.org:/FPC/CVS -z3 co -r RELEASE_2_0_0 fpc'
   (password: 'cvs')
 
 The files and libraries are released under the terms of the GNU Library

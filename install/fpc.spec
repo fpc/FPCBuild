@@ -69,7 +69,7 @@ NEWFPDOC=`pwd`/utils/fpdoc/fpdoc
 	make ide_all FPC=${NEWPP}
 	make utils_all FPC=${NEWPP}
 if [ -z ${NODOCS} ]; then
-	make -C docs pdf FPC=${NEWPP} FPDOC=${NEWFPDOC}
+	make -C fpcdocs pdf FPC=${NEWPP} FPDOC=${NEWFPDOC}
 fi
 
 %install
@@ -90,12 +90,12 @@ INSTALLOPTS="FPC=${NEWPP} INSTALL_PREFIX=%{buildroot}/usr INSTALL_LIBDIR=%{build
 	make ide_distinstall ${INSTALLOPTS}
 	make utils_distinstall ${INSTALLOPTS}
 
-	make demo_install ${INSTALLOPTS} INSTALL_SOURCEDIR=%{buildexampledir}
-	make doc_install ${INSTALLOPTS}
-	make man_install ${INSTALLOPTS} INSTALL_MANDIR=%{buildmandir}
-	
+	make -C demo sourceinstall ${INSTALLOPTS} INSTALL_SOURCEDIR=%{buildexampledir}
+	make -C doc installdoc ${INSTALLOPTS}
+	make -C man installman ${INSTALLOPTS} INSTALL_MANDIR=%{buildmandir}
+
 if [ -z ${NODOCS} ]; then
-	make -C docs pdfinstall ${INSTALLOPTS} INSTALL_DOCDIR=%{builddocdir}
+	make -C fpcdocs pdfinstall ${INSTALLOPTS} INSTALL_DOCDIR=%{builddocdir}
 fi
 
 	# create link
@@ -116,7 +116,7 @@ fi
 	make ide_clean
 	make utils_clean
 if [ -z ${NODOCS} ]; then
-	make -C docs clean
+	make -C fpcdocs clean
 fi
 
 if [ %{buildroot} != "/" ]; then

@@ -1,20 +1,46 @@
+fpc (2.1.1-0) unstable; urgency=low
+
+  * Snapshot build
+
+ -- Peter Vreman <peter@freepascal.org>  Thu, 10 Jun 2005 12:00:00 +0100
+
+fpc (2.0.0-2) unstable; urgency=low
+
+  * debian/fp-compiler.postinst.in: forgot to reapply the patch that
+    correctly creates the slave link to pc(1).  (Closes: #310907)
+
+ -- Carlos Laviola <claviola@debian.org>  Mon, 30 May 2005 11:59:10 -0300
+
 fpc (2.0.0-1) unstable; urgency=low
 
-  * New release
+  * As I couldn't upload 1.9.8 on all supported architectures before 2.0.0
+    was released, I'm rehashing its changelog now.
+  * New upstream release.
+      Bugs fixed on CVS before 1.9.8:
+       * man/man1/fpc.1: -OPn changed to -Opn in rev 1.8 (Closes: #255960)
+       * debian/fp-compiler.postinst.in: fixed in rev 1.5 (Closes: #269853)
+      Bugs fixed on CVS before 1.9.6:
+       * rtl/unix/crt.pp: fixed in rev 1.20 (Closes: #216060)
+       * rtl/i386/strings.inc: fixed in rev 1.16 (Closes: #288955)
+       * compiler/nadd.pas: fixed in rev 1.126 (Closes: #297881)
+  * debian/control: Added missing build dependencies on libgpmg1-dev and
+    libncurses5-dev and set save_size at build time, which finally makes
+    the package build without manual intervention.  (Closes: #304633)
 
- -- Peter Vreman <peter@freepascal.org>  Thu, 08 May 2005 12:00:00 +0100
+ -- Carlos Laviola <claviola@debian.org>  Fri, 20 May 2005 19:07:00 -0300
 
-fpc (1.9.8-1) unstable; urgency=low
+fpc (1.9.6-2) unstable; urgency=low
 
-  * New release
+  * debian/control: Oops -- fp-units-fv had the wrong description.
 
- -- Peter Vreman <peter@freepascal.org>  Thu, 14 Feb 2005 12:00:00 +0100
+ -- Carlos Laviola <claviola@debian.org>  Fri, 14 Jan 2005 13:15:50 -0200
 
 fpc (1.9.6-1) unstable; urgency=low
 
-  * New release
+  * New upstream release.
+  * debian/control: Added build dependency on libgpmg1-dev.
 
- -- Peter Vreman <peter@freepascal.org>  Thu, 31 Dec 2004 12:00:00 +0100
+ -- Carlos Laviola <claviola@debian.org>  Fri, 31 Dec 2004 21:16:25 -0200
 
 fpc (1.9.4-5) unstable; urgency=low
 
@@ -98,7 +124,7 @@ fpc (1.0.6-2) unstable; urgency=low
   * NMU for Debcamp BSP.
   * Apply a very silly patch (Closes: #141439), which was RC. The PDF file now
     builds.
-  * Updated versioned-build-depends-on-debhelper. 
+  * Updated versioned-build-depends-on-debhelper.
 
  -- Amaya Rodrigo Sastre <amaya@debian.org>  Sat, 12 Jul 2003 17:58:50 +0200
 

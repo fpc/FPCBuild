@@ -1,17 +1,12 @@
 The Free Pascal Compiler for Debian
 ----------------------
 
-The source tree was checked out from CVS at cvs.freepascal.org with
- 'cvs -d :pserver:cvs@cvs.freepascal.org:/FPC/CVS -z3 co -r %{fpccvstag} fpc'
- (password: 'cvs')
-
-The Debian Build Directory was created with 'make debcopy' and then 
-duplicated to .orig before 'dpkg-buildpackage -rfakeroot' was run.
+The source tree was checked out from the subversion repository at
+svn.freepascal.org with
+ 'svn co http://svn.freepascal.org/svn/fpcbuild/tags/%{fpcsvntag}'
 
 Only PDF docs are built as shipped. You may want to make the HTML files with
-tex4ht by yourself and eventually adapt the doc-base file. Building the
-documents requires at least the following values in /etc/texmf/texmf.conf:
-save_size = 10000
+tex4ht by yourself and eventually adapt the doc-base file.
 
 To create a new config file for fpc (/etc/fpc.cfg) use the command:
  /usr/lib/fpc/%{fpcversion}/samplecfg /usr/lib/fpc/%{fpcversion}
@@ -36,11 +31,15 @@ HTTP Mirrored at
   http://www.atlasz.com/freepascal/
 
 FTP Mirrored at
-  ftp://ftp.nl.freepascal.org/pub/fpc/
+  http://fpc.planetmirror.com/pub/fpc/
+  ftp://gd.tuwien.ac.at/languages/pascal/fpc/
   ftp://ftp.de.freepascal.org/pub/fpc/
-  ftp://ftp.us.freepascal.org/pub/fpc/
+  ftp://ftp.uni-erlangen.de/pub/mirrors/freepascal/
+  http://mirror.mirimar.net/freepascal/
+  http://cdn.mirror.garr.it/mirrors/freepascal/
+  ftp://ftpsv1.u-aizu.ac.jp/pub/lang/pascal/freepascal/
+  ftp://ftp.nl.freepascal.org/pub/fpc/
   ftp://freepascal.stack.nl/pub/fpc/
-  ftp://ftp.epix.net/pub/languages/pascal/
-  ftp://ftp.techgnosis.net/pub/fpc/
-  ftp://ftp.fisek.com.tr/pub/fpc/
-  http://clubinfo.collegebdeb.qc.ca/nuitari/fpc/
+  ftp://ftp.no.freepascal.org/pub/fpc/
+  ftp://ftp.chg.ru/pub/lang/pascal/fpc/
+  ftp://ftp.us.freepascal.org/pub/fpc/
