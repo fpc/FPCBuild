@@ -93,6 +93,8 @@ BUILDSTAMP=fpcsrc/build-stamp.$(FULL_TARGET)
 all: build
 
 build: $(BUILDSTAMP)
+$(BUILDSTAMP):
+        $(MAKE) -C fpcsrc build
 
 clean: $(addsuffix _distclean,$(TARGET_DIRS))
         $(DEL) fpcsrc/build-stamp.*
@@ -493,7 +495,7 @@ ifndef NODOCS
         unzip -d $(INNODIR) doc-pdf.zip
 endif
         $(MAKE) install INSTALL_PREFIX=$(INNODIR)
-        compiler/utils/fpcsubst -i install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST)
+        fpcsrc/compiler/utils/fpcsubst -i install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST)
         $(INNOCMD_ISCC)
         $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
 
