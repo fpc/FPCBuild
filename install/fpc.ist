@@ -168,6 +168,9 @@ Source: examples\pasjpeg\*.*; DestDir: {app}\examples\pasjpeg; Flags: ignorevers
 ; paszlib
 Source: units\i386-win32\paszlib\*.*; DestDir: {app}\units\i386-win32\paszlib; Flags: ignoreversion; Components: packages/paszlib
 Source: examples\paszlib\*.*; DestDir: {app}\examples\paszlib; Flags: ignoreversion; Components: packages/paszlib
+; postgres
+Source: units\i386-win32\postgres\*.*; DestDir: {app}\units\i386-win32\postgres; Flags: ignoreversion; Components: packages/postgres
+Source: examples\postgres\*.*; DestDir: {app}\examples\postgres; Flags: ignoreversion; Components: packages/postgres
 ; regexpr
 Source: units\i386-win32\regexpr\*.*; DestDir: {app}\units\i386-win32\regexpr; Flags: ignoreversion; Components: packages/regexp
 Source: examples\regexpr\*.*; DestDir: {app}\examples\regexpr; Flags: ignoreversion; Components: packages/regexp
@@ -219,6 +222,7 @@ Name: packages/ibase; Description: Interbase/Firebird units; Types: Custom Full
 Name: packages/mysql; Description: MySQL units; Types: Custom Full
 Name: packages/gdbint; Description: GDB access units; Types: Custom Full
 Name: packages/paszlib; Description: Paszlib unit (provide acces to gzipped files); Types: Custom Full
+Name: packages/postgres; Description: Postgres units; Types: Custom Full
 Name: packages/regexp; Description: Regular Expression support units; Types: Custom Full
 Name: packages/unzip; Description: Unzip units (provide acces to .zip files); Types: Custom Full
 Name: packages/zlib; Description: Interface to libz compression library; Types: Custom Full
