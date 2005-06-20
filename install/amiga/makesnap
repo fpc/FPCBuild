@@ -1,0 +1,66 @@
+; Snapshot creation script 
+
+;*********************************************************
+; Create the binary directory output tree on the work:
+; volume.
+;*********************************************************
+cd work:
+makedir fpc-tmp
+cd fpc-tmp
+makedir pp
+cd pp
+makedir bin msg units
+cd bin
+makedir amiga
+cd /
+cd units
+makedir amiga
+cd amiga
+makedir rtl
+cd //
+
+;*********************************************************
+; Compile and copy
+;*********************************************************
+
+; Compile the compiler
+cd work3:/fpc/compiler
+ppc68k -dm68k -Sg -dAMIGA -dGDB -Fum68k -Fu../rtl/amiga -Futargets pp.pas -vi
+rename pp ppc68k
+copy ppc68k to work:/fpc-tmp/pp/bin/amiga/
+; Compiler the utilities
+cd utils
+ppc68k -dm68k -Sg -Fu.. -Fu../../rtl/amiga ppudump.pp -vi
+ppc68k -dm68k -Sg -Fu.. -Fu../../rtl/amiga ppufiles.pp -vi
+ppc68k -dm68k -Sg -Fu.. -Fu../../rtl/amiga  ppumove.pp -vi
+ppc68k -dm68k -Sg -Fu.. -Fu../../rtl/amiga fpc.pp -vi
+copy ppufiles to work:/fpc-tmp/pp/bin/amiga/ clone
+copy ppumove to work:/fpc-tmp/pp/bin/amiga/ clone
+copy ppudump to work:/fpc-tmp/pp/bin/amiga/ clone
+copy fpc to work:/fpc-tmp/pp/bin/amiga/ clone
+; Return the compiler directory
+cd /
+; Copy all message files
+cd msg
+copy #? to work:/fpc-tmp/pp/msg/ clone
+; Return to compiler directory
+cd //
+; Return to base directory
+cd rtl
+cd amiga
+copy #?.o to work:/fpc-tmp/pp/units/amiga/rtl/ clone
+copy #?.a to work:/fpc-tmp/pp/units/amiga/rtl/ clone
+copy #?.ppu to work:/fpc-tmp/pp/units/amiga/rtl/ clone
+
+;*********************************************************
+; Archive
+;*********************************************************
+cd work:/fpc-tmp
+cd pp
+lha a -er baseami.lha #?
+copy baseami.lha to work3:/fpc/
+cd /
+delete #? force all
+cd /
+delete fpc-tmp
+

@@ -1,0 +1,115 @@
+; Installation script for Amiga Free Pascal compiler
+; This will install the compiler into work:pp/
+Echo "This will install the Free Pascal Compiler version 1.0.8"
+Echo "in the path <user>/pp/"
+Ask Continue?
+if WARN
+  SKIP ContinueInstall
+ELSE
+  SKIP End
+ENDIF
+;***************************************************
+; Get base directory for install
+;***************************************************
+LAB ContinueInstall
+; Make the user request the directory where to install
+REQUESTFILE >env:tmptxt DRAWERSONLY TITLE "Location of FPC installation"
+; If no drawer/dir selected, exit
+IF WARN
+  SKIP End
+ENDIF  
+; Get the directory where we started the install
+CD >env:tmpdir
+; Go into the destination directory
+CD $tmptxt
+FAILAT 21
+MAKEDIR pp
+CD pp
+ECHO >env:tmptxt `CD`/
+; Return to old directory
+; Return to old version
+FAILAT 10
+CD $tmpdir
+;***************************************************
+; Verify if this is what the user wants
+;***************************************************
+ECHO "Free Pascal will be installed in $tmptxt"
+Ask Continue?
+if NOT WARN
+  SKIP End
+ENDIF
+;***************************************************
+; Install the basic stuff
+;***************************************************
+lha x baseami.lha $tmptxt
+lha x asldami.lha $tmptxt
+;***************************************************
+; Install the amiga units
+;***************************************************
+ASK "Do you wish to install the Amiga units?"
+IF WARN
+  lha x amunits.lha $tmptxt
+  SKIP InstallDocs
+ELSE
+  SKIP InstallDocs
+ENDIF
+;***************************************************
+; Install the Documentation
+;***************************************************
+LAB InstallDocs
+ASK "Do you wish to install the Documentation (in HTML format)?"
+IF WARN
+  lha x doc-html.lha $tmptxt
+  SKIP InstallDemos
+ELSE
+  SKIP InstallDemos
+ENDIF
+;***************************************************
+; Install the Demos
+;***************************************************
+LAB InstallDemos
+ASK "Do you wish to install the Demos?"
+IF WARN
+  lha x demos.lha $tmptxt
+  SKIP InstallSource
+ELSE
+  SKIP InstallSource
+ENDIF
+;***************************************************
+; Source code installation
+;***************************************************
+LAB InstallSource
+ASK "Do you wish to install the Source code?"
+IF WARN
+  lha x compilersrc.lha $tmptxt
+  lha x rtlsrc.lha $tmptxt
+  lha x amunitssrc.lha $tmptxt
+  SKIP InstallFinished
+ELSE
+  SKIP InstallFinished
+ENDIF
+;***************************************************
+; Information
+;***************************************************
+LAB InstallFinished
+ECHO "Your shell-startup/user-startup script should be updated: "
+ECHO "1) To allocate more stack space for processes (e.g : STACK 256000)"
+ECHO "2) To Assign your FPC path to libs (e.g : Assign LIBS: work:pp/bin/amiga ADD)"
+ECHO "3) To add FPC to your executable path (e.g : PATH work:pp/bin/amiga ADD)"
+ASK "Do you wish to update the shell-startup automatically?"
+IF WARN 
+    ECHO "; Added by Free Pascal Compiler installation " >> S:shell-startup
+	ECHO "Stack 256000" >> S:shell-startup
+	CD $tmptxt
+    ECHO >env:tmptxt `CD`/bin/amiga
+    ECHO "ASSIGN LIBS: $tmptxt ADD" >> S:shell-startup
+    ECHO "PATH $tmptxt ADD" >> S:shell-startup
+    CD $tmpdir
+ENDIF
+ECHO "Enjoy! (You will ll need to restart your shell so changes take effect)"
+copy fpc.cfg to $tmptxt clone 
+
+
+; End of script, don't do anything else
+
+LAB END

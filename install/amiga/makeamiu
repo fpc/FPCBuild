@@ -1,0 +1,109 @@
+; Snapshot creation script for amigaunits
+
+;*********************************************************
+; Create the binary directory output tree on the work:
+; volume.
+;*********************************************************
+cd work:
+makedir fpc-tmp
+cd fpc-tmp
+makedir units
+cd units
+makedir amiga
+cd amiga
+makedir amigaunits utilunits
+
+;*********************************************************
+; Compile and copy
+;*********************************************************
+
+cd work3:fpc/packages/extra/amunits/units
+
+;copy units/#? to work:fpc-tmp/units/amiga/amigaunits clone
+;copy utilunits/#? to work:fpc-tmp/units/amiga/utilunits clone
+
+; Go to units directory and compile
+
+;cd work:fpc-tmp/units/amiga/amigaunits
+
+ppc68k amigados -vi -Fu../utilunits -Fi../inc
+ppc68k amigaguide -vi -Fu../utilunits -Fi../inc
+ppc68k amigalib -vi -Fu../utilunits -Fi../inc
+ppc68k amigaprinter -vi -Fu../utilunits -Fi../inc
+ppc68k asl -vi -Fu../utilunits -Fi../inc
+ppc68k audio -vi -Fu../utilunits -Fi../inc
+ppc68k bootblock -vi -Fu../utilunits -Fi../inc
+ppc68k bullet -vi -Fu../utilunits -Fi../inc
+ppc68k cd -vi -Fu../utilunits -Fi../inc
+ppc68k clipboard -vi -Fu../utilunits -Fi../inc
+ppc68k colorwheel -vi -Fu../utilunits -Fi../inc
+ppc68k configregs -vi -Fu../utilunits -Fi../inc
+ppc68k configvars -vi -Fu../utilunits -Fi../inc
+ppc68k console -vi -Fu../utilunits -Fi../inc
+ppc68k conunit -vi -Fu../utilunits -Fi../inc
+ppc68k datatypes -vi -Fu../utilunits -Fi../inc
+ppc68k diskfont -vi -Fu../utilunits -Fi../inc
+ppc68k expansion  -vi -Fu../utilunits -Fi../inc
+ppc68k expansionbase -vi -Fu../utilunits -Fi../inc
+ppc68k gadtools  -vi -Fu../utilunits -Fi../inc
+ppc68k gameport -vi -Fu../utilunits -Fi../inc
+ppc68k gradientslider  -vi -Fu../utilunits -Fi../inc
+ppc68k hardblocks -vi -Fu../utilunits -Fi../inc
+ppc68k hardware  -vi -Fu../utilunits -Fi../inc
+ppc68k icon -vi -Fu../utilunits -Fi../inc
+ppc68k input -vi -Fu../utilunits -Fi../inc
+ppc68k keyboard -vi -Fu../utilunits -Fi../inc
+ppc68k locale -vi -Fu../utilunits -Fi../inc
+ppc68k lowlevel -vi -Fu../utilunits -Fi../inc
+ppc68k nonvolatile -vi -Fu../utilunits -Fi../inc
+ppc68k prefs -vi -Fu../utilunits -Fi../inc
+ppc68k prtbase -vi -Fu../utilunits -Fi../inc
+ppc68k prtgfx -vi -Fu../utilunits -Fi../inc
+ppc68k realtime -vi -Fu../utilunits -Fi../inc
+ppc68k rexx -vi -Fu../utilunits -Fi../inc
+ppc68k romboot_base -vi -Fu../utilunits -Fi../inc
+ppc68k scsidisk -vi -Fu../utilunits -Fi../inc
+ppc68k tapedeck -vi -Fu../utilunits -Fi../inc
+ppc68k trackdisk -vi -Fu../utilunits -Fi../inc
+ppc68k translator -vi -Fu../utilunits -Fi../inc
+
+cd /
+cd utilunits
+
+ppc68k amigautils.pas -Fu../units -Fi../inc
+ppc68k consoleio.pas -Fu../units -Fi../inc
+ppc68k deadkeys.pas -Fu../units -Fi../inc
+ppc68k doublebuffer.pas -Fu../units -Fi../inc
+ppc68k easyasl.pas -Fu../units -Fi../inc
+ppc68k hisoft.pas -Fu../units -Fi../inc
+ppc68k longarray.pas -Fu../units -Fi../inc
+ppc68k pcq.pas -Fu../units -Fi../inc
+ppc68k systemvartags.pas -Fu../units -Fi../inc
+ppc68k timerutils.pas -Fu../units -Fi../inc
+ppc68k vartags.pas -Fu../units -Fi../inc
+ppc68k wbargs.pas -Fu../units -Fi../inc
+
+
+cd /
+copy units/#?.o to work:fpc-tmp/units/amiga/amigaunits clone
+copy units/#?.ppu to work:fpc-tmp/units/amiga/amigaunits clone
+copy units/#?.a to work:fpc-tmp/units/amiga/amigaunits clone
+
+copy utilunits/#?.o to work:fpc-tmp/units/amiga/utilunits clone
+copy utilunits/#?.ppu to work:fpc-tmp/units/amiga/utilunits clone
+copy utilunits/#?.a to work:fpc-tmp/units/amiga/utilunits clone
+
+;*********************************************************
+; Archive
+;*********************************************************
+
+cd work:fpc-tmp
+
+lha a -er amunits.lha units/amiga/amigaunits/#?
+lha a -er amunits.lha units/amiga/utilunits/#?
+
+copy amunits.lha to work3:fpc
+
+delete #? force all
+cd /
+delete fpc-tmp

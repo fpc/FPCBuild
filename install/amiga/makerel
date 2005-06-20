@@ -1,0 +1,133 @@
+; Script to make a release file.
+; Assumes that script is run in root /fpc/ source tree
+
+; This assumes that the compiler is already installed
+
+; Clean all directories before.
+cd work3:fpc/rtl/amiga
+delete #?.o
+delete #?.ppu
+delete #?.a
+delete #?.asm
+cd work3:fpc/compiler/m68k
+delete #?.o
+delete #?.ppu
+delete #?.a
+delete #?.asm
+cd work3:fpc/compiler/targets
+delete #?.o
+delete #?.ppu
+delete #?.a
+delete #?.asm
+cd work3:fpc/compiler/utils
+delete #?.o
+delete #?.ppu
+delete #?.a
+delete #?.asm
+cd work3:fpc/packages/extra/amunits/units
+delete #?.o
+delete #?.ppu
+delete #?.a
+delete #?.asm
+cd work3:fpc/packages/extra/amunits/utilunits
+delete #?.o
+delete #?.ppu
+delete #?.a
+delete #?.asm
+;*********************************************************
+; Create the directory output tree on the work:
+; volume (for source stuff)
+;*********************************************************
+cd work:
+makedir fpc-tmp
+cd fpc-tmp
+;***************************
+; Compiler source code
+;***************************
+makedir source
+cd source
+makedir compiler
+; Return to fpc-tmp directory
+cd /
+copy work3:fpc/compiler/ to work:fpc-tmp/source/compiler/ all clone
+lha a -er compilersrc.lha #?
+copy compilersrc.lha work3:fpc/
+delete #? all
+;***************************
+; RTL source code
+;***************************
+makedir source
+cd source
+makedir rtl
+; Return to fpc-tmp directory
+cd /
+copy work3:fpc/rtl/ to work:fpc-tmp/source/rtl/ all clone
+lha a -er rtlsrc.lha #?
+copy rtlsrc.lha work3:fpc/
+delete #? all
+;***************************
+; Amiga units source code
+;***************************
+makedir source
+cd source
+makedir packages
+cd packages
+makedir extra
+cd extra
+makedir amunits
+cd amunits
+; Return to fpc-tmp directory
+cd ////
+copy work3:fpc/packages/extra/amunits/ to work:fpc-tmp/source/packages/extra/amunits/ all clone
+lha a -er amunitssrc.lha #?
+copy amunitssrc.lha work3:fpc/
+delete #? all
+;***************************
+; Create demo directories
+;***************************
+makedir demo
+cd demo
+makedir amiga text
+copy work3:fpc/packages/extra/amunits/demos/ to work:fpc-tmp/demo/amiga/ all clone
+copy work3:fpc/demo/text/ to work:fpc-tmp/demo/text/ all clone
+cd /
+lha a -er demos.lha #?
+copy demos.lha work3:fpc/
+delete #? all
+; We are in the fpc-tmp directory
+;***************************
+; Copy the documentation
+;***************************
+makedir doc
+cd doc
+makedir fpc
+cd /
+copy work3:fpc/install/doc/copying to work:fpc-tmp/doc/fpc/ clone
+copy work3:fpc/install/doc/copying.fpc to work:fpc-tmp/doc/fpc/ clone
+copy work3:fpc/install/doc/faq.htm to work:fpc-tmp/doc/fpc/ clone
+copy work3:fpc/install/doc/faq.txt to work:fpc-tmp/doc/fpc/ clone
+copy work3:fpc/install/doc/readme.txt to work:fpc-tmp/doc/fpc/ clone
+copy work3:fpc/install/doc/whatsnew.txt to work:fpc-tmp/doc/fpc/ clone
+lha a -er work3:fpc/baseami.lha #?
+delete #? all
+;*********************************************************
+; Archive
+;*********************************************************
+cd /
+delete fpc-tmp
+cd work3:fpc
+; Get install script
+copy work3:fpc/install/amiga/installfpc to work3:fpc/ clone
+copy work3:fpc/install/amiga/installfpc to work3:fpc/ clone
+protect installfpc +s
+lha a fpc108ami.lha amunits.lha
+lha a fpc108ami.lha amunitssrc.lha
+lha a fpc108ami.lha asldami.lha
+lha a fpc108ami.lha baseami.lha
+lha a fpc108ami.lha compilersrc.lha
+lha a fpc108ami.lha demos.lha
+lha a fpc108ami.lha doc-html.lha
+lha a fpc108ami.lha rtlsrc.lha
+lha a fpc108ami.lha installfpc
+lha a fpc108ami.lha fpc.cfg
+
