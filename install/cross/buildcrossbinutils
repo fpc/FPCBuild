@@ -162,6 +162,7 @@ cd ${WORKDIR}${BINUTILSBASE}-${BINUTILSVERSION}
 FAILURES=""
 for a in $TARGETS; do
 if [ ! -f ${DESTDIR}bin/${a}-as ] ; then
+rm ./config.cache
 echo Building $a
 { ./configure --disable-nls --disable-shared --target=$a --prefix=${DESTDIR} && ${MAKE} $(EXTRAOPT) && ${MAKE} install && ${MAKE} clean; } > ${LOGDIR}log-${a} 2>&1
 
