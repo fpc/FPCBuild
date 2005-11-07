@@ -2,7 +2,7 @@ Name: fpc
 Version: %FPCVERSION%
 Release: 0
 ExclusiveArch: i386 i586 i686 ppc amd64 x86_64
-Copyright: GPL
+License: GPL
 Group: Development/Languages
 Source: %{name}-%{version}-src.tar.gz
 Summary: Free Pascal Compiler
