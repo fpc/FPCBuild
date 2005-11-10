@@ -2,6 +2,7 @@
 /usr/bin/fpc
 /usr/bin/fpcsubst
 /usr/bin/fpcmkcfg
+/usr/bin/fppkg
 /usr/lib/fpc/%{fpcversion}/ppc*
 /usr/lib/fpc/%{fpcversion}/samplecfg
 /usr/lib/fpc/%{fpcversion}/msg
