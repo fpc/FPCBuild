@@ -13,6 +13,7 @@
 /usr/bin/h2paspp
 /usr/bin/postw32
 /usr/bin/fpcmake
+/usr/bin/fpcres
 /usr/bin/fprcp
 /usr/bin/fpdoc
 /usr/bin/makeskel
