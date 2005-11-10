@@ -78,7 +78,7 @@ fi
 if [ "$CROSS" = "" ]; then
   if [ "$CHECKLIBGDB" = "yes" ]; then
     if [ "$GDBLIBDIR" = "" ]; then
-      GDBLIBDIR=libgdb/$TARGETOS/$TARGETCPU
+      GDBLIBDIR=fpcsrc/libgdb/$TARGETOS/$TARGETCPU
     fi
     if [ ! -e "$GDBLIBDIR/libgdb.a" ]; then
       echo "Libgdb ($GDBLIBDIR/libgdb.a) not found, aborting"
