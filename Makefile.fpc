@@ -459,7 +459,9 @@ endif   # inUnix
 # Inno setup
 ##########################################################################
 
+ifndef ISCCPROG
 ISCCPROG=$(subst $(PATHSEP),/,$(ProgramFiles))/inno setup 5/iscc.exe
+endif ISCCPROG
 
 ifndef inUnix
 USEINNOWRAPPER=1
@@ -483,8 +485,8 @@ ifeq ($(wildcard doc-pdf.zip),)
 endif
 endif
 # Check for libgdb
-ifeq ($(wildcard libgdb/win32/libgdb.a),)
-        @$(ECHO) "Libgdb not available. Please get and unzip libgdb-<version>.i386-win32.zip in this directory."
+ifeq ($(wildcard fpcsrc/libgdb/win32/libgdb.a),)
+        @$(ECHO) "Libgdb not available. Please get and unzip libgdb-<version>.i386-win32.zip in fpcsrc/."
         @exit 1
 endif
 
