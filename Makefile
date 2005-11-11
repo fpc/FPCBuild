@@ -2081,7 +2081,7 @@ endif   # rpm available
 endif   # inUnix
 ifndef ISCCPROG
 ISCCPROG=$(subst $(PATHSEP),/,$(ProgramFiles))/inno setup 5/iscc.exe
-endif ISCCPROG
+endif # ISCCPROG
 ifndef inUnix
 USEINNOWRAPPER=1
 endif
