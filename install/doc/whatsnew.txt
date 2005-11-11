@@ -1,7 +1,40 @@
 
                             Free Pascal Compiler
 
-                                Version 2.0.0
+                                Version 2.0.2
+
+******************************************************************************
+                              What's New in 2.0.2
+******************************************************************************
+This is a bug fix release, so don't expect a big new feature list here. Most
+of the almost 700 changes made to 2.0.2 since 2.0.0 are fixes for some issues.
+
+Compiler:
+  * Lot of small bugs and compatibility fixes
+  * Improved SSE support
+  * Improved inlining
+  * Enhanced variant support
+  * Embedded resource support for targets using elf32 executable format  
+  
+RTL:
+  * Lot of small bugs and compatibility fixes
+  * Enhanced variant support
+  * Embedded resource support for targets using elf32 executable format
+  
+FCL:
+  * Lot of small bugs and compatibility fixes
+  * Improved SqlDB package
+
+Packages:
+  * Lot of small bugs and compatibility fixes
+  * Improved data base support
+  
+IDE:
+  * Small bug fixes
+
+Misc:
+  * Improved docs
+  * Bug fixes for FreeVision
 
 ******************************************************************************
                               What's New in 2.0.0
