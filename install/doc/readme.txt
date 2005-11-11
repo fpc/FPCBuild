@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 2.0.0
+                               Version 2.0.2
 
 
 ****************************************************************************
@@ -15,11 +15,12 @@ platforms. The language and the runtime library are almost compatible with
 Turbo Pascal 7.0 and recent Delphi releases. There is also partial support
 for the Macintosh pascal dialect.
 
-Free Pascal 2.0.0 is currently available for the following platforms:
+Free Pascal 2.0.2 is currently available for the following platforms:
 - Linux-i386
 - Linux-powerpc
 - Linux-sparc
 - Linux-x86_64 (amd64)
+- Linux-arm (cross compiling environment for Linux-i386)
 - Win32 (Win95/98/Me/XP/2000 and WinNT)
 - OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 - FreeBSD i386
@@ -27,12 +28,6 @@ Free Pascal 2.0.0 is currently available for the following platforms:
 - Mac OS (classic) for PowerPC
 - Netware-i386
 - NetwLibc-i386 (LibC is preferred API under newer Netware versions)
-
-More platforms will be supported in future 1.9.x beta releases.
-Because release building is quite time intensive, we decide to start the
-2.0 beta series only with the most important targets. If you want to change
-this and create and maintain 2.0 beta releases for other platforms and
-targets, feel free to contact us, e-mail addresses are listed below.
 
 There are other platforms which are more or less working, but there is
 currently no maintainer for them and thus we cannot provide adequate
@@ -140,7 +135,7 @@ and type
 * Quick start - Linux/FreeBSD
 ****************************************************************************
 
-Download fpc-2.0.0.<cpu>-<os>.tar and untar into a temporary directory.
+Download fpc-2.0.2.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
