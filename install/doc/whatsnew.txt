@@ -14,7 +14,10 @@ Compiler:
   * Improved SSE support
   * Improved inlining
   * Enhanced variant support
-  * Embedded resource support for targets using elf32 executable format  
+  * Embedded resource support for targets using elf32 executable format
+  + Type checking of compile time expressions
+  + Mode MacPas: Support for Mac style objects
+  + Mode MacPas: Compile time variables can be given on command line 
   
 RTL:
   * Lot of small bugs and compatibility fixes
