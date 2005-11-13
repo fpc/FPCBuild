@@ -1,17 +1,26 @@
 # MPW script to  prepare an installation package
 # Precondition: fpc:install:macos is current dir.
-# Parameter: version number, e. g. 1.9.6
+# Parameter 1: version number, e. g. 1.9.6
+# Parameter 2: path to the dir where fpc was build
+#  (the dir containg compiler rtl etc) (with trailing colon)
 
 
 If {1} == ''
-  Echo '#ERROR FPC version must be given as parameter (e. g. 1.9.6)'
+  Echo '#ERROR FPC version must be given as first parameter (e. g. 1.9.6)'
   Exit 1
 Else
   Set fpcversion "{1}"
 End
 
-Set compilerdir :::compiler:
-Set rtlunitsdir :::rtl:units:powerpc-macos:
+If {2} == ''
+  Echo '#ERROR Path to the dir where fpc was built must be given as second parameter'
+  Exit 1
+Else
+  Set builtfpcdir "{2}"
+End
+
+Set compilerdir "{2}compiler:"
+Set rtlunitsdir "{2}rtl:units:powerpc-macos:"
 
 Set units "charset cmem dos getopts heaptrc macostp macpas macutils matrix objects objpas strings system unixutil macos"
 
