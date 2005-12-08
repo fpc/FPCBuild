@@ -7,13 +7,8 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
-if [ -z $CVSROOT ]; then
-  echo "CVSROOT not set"
-  exit 1
-fi
-
-CVSTAGVER=`echo $1 | tr '.' '_'`
-CVSTAG="RELEASE_$CVSTAGVER"
+SVNTAGVER=`echo $1 | tr '.' '_'`
+SVNPATH="release_$SVNTAGVER"
 
 PACKNAME=fpc-$1.source
 OUTPUTDIR=..
@@ -22,11 +17,11 @@ rm -rf buildsrc
 
 mkdir buildsrc
 cd buildsrc
-cvs -z3 checkout -r $CVSTAG fpc
+svn co http://svn.freepascal.org/svn/fpc/tags/$SVNPATH fpc
 
-find -name CVS -type d | xargs tar --remove-files -cvf $OUTPUTDIR/CVSfiles-$1.tar.gz 
+find -name .svn -type d | xargs tar --remove-files -cvf $OUTPUTDIR/SVNfiles-$1.tar.gz 
 
 rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
-zip -D9r $OUTPUTDIR/$PACKNAME.zip fpc/
+zip -D9r $OUTPUTDIR/$PACKNAME.zip fpc
 tar cfv - fpc/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
 rm -rf buildsrc
