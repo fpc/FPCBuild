@@ -1,3 +1,4 @@
+{
   Copyright (c) 1999 by Michael van Canneyt
 
   Win32 menu creation example.
