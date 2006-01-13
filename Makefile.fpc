@@ -486,7 +486,7 @@ endif
 endif
 # Check for libgdb
 ifeq ($(wildcard fpcsrc/libgdb/win32/libgdb.a),)
-        @$(ECHO) "Libgdb not available. Please get and unzip libgdb-<version>.i386-win32.zip in fpcsrc/."
+        @$(ECHO) "Libgdb not available. Please get and unzip libgdb-*.i386-win32.zip in fpcsrc/."
         @exit 1
 endif
 
