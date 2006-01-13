@@ -119,6 +119,8 @@ Source: bin\i386-win32\unitdiff.exe; DestDir: {app}\bin\i386-win32; Flags: ignor
 Source: bin\i386-win32\yylex.cod; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\yyparse.cod; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: units\i386-win32\lexyacc\*.*; DestDir: {app}\units\i386-win32\lexyacc; Flags: ignoreversion; Components: utils
+; Demos
+Source: demo\*.*; DestDir: {app}\demo; Flags: ignoreversion; Components: demo
 ; Documentation
 %DisableDocs%Source: doc\*.pdf; DestDir: {app}\doc; Flags: ignoreversion; Components: docs
 
@@ -144,12 +146,15 @@ Source: examples\gtk2\*.*; DestDir: {app}\examples\gtk2; Flags: ignoreversion; C
 ; GDBINT
 Source: units\i386-win32\gdbint\*.*; DestDir: {app}\units\i386-win32\gdbint; Flags: ignoreversion; Components: packages/gdbint
 Source: examples\gdbint\*.*; DestDir: {app}\examples\gdbint; Flags: ignoreversion; Components: packages/gdbint
+; Graph
+Source: units\i386-win32\graph\*.*; DestDir: {app}\units\i386-win32\graph; Flags: ignoreversion; Components: packages/graph
+; Source: examples\graph\*.*; DestDir: {app}\examples\graph; Flags: ignoreversion; Components: packages/graph
+; Hash
+Source: units\i386-win32\hash\*.*; DestDir: {app}\units\i386-win32\hash; Flags: ignoreversion; Components: packages/hash
+Source: examples\hash\*.*; DestDir: {app}\examples\hash; Flags: ignoreversion; Components: packages/hash
 ; Interbase
 Source: units\i386-win32\ibase\*.*; DestDir: {app}\units\i386-win32\ibase; Flags: ignoreversion; Components: packages/ibase
 Source: examples\ibase\*.*; DestDir: {app}\examples\ibase; Flags: ignoreversion; Components: packages/ibase
-; MD5
-Source: units\i386-win32\md5\*.*; DestDir: {app}\units\i386-win32\md5; Flags: ignoreversion; Components: packages/md5
-Source: examples\md5\*.*; DestDir: {app}\examples\md5; Flags: ignoreversion; Components: packages/md5
 ; MySQL
 Source: units\i386-win32\mysql\*.*; DestDir: {app}\units\i386-win32\mysql; Flags: ignoreversion; Components: packages/mysql
 Source: examples\mysql\*.*; DestDir: {app}\examples\mysql; Flags: ignoreversion; Components: packages/mysql
@@ -210,10 +215,12 @@ Name: binutils; Description: GNU linker and assembler; Flags: fixed; Types: Cust
 Name: ide; Description: Integrated Development Environment; Types: Custom Full
 Name: utils; Description: Free Pascal Utilities; Types: Custom Full
 Name: make; Description: GNU make; Types: Custom Full
+Name: demo; Description: Demos; Types: Custom Full
 Name: gdb; Description: GNU debugger; Types: Full Custom
 Name: fcl; Description: FCL (Free Component Library) units; Types: Custom Full
 Name: fv; Description: Free Vision; Types: Custom Full
 Name: packages; Description: Various unit packages; Types: Custom Full
+Name: packages/graph; Description: Graph unit; Types: Custom Full
 Name: packages/gtk; Description: GTK 1.2 units; Types: Custom Full
 Name: packages/gtk/fpgtk; Description: fpGTK (for GTK 1.2) units; Types: Custom Full
 Name: packages/gtk2; Description: GTK 2 units; Types: Custom Full
@@ -223,12 +230,13 @@ Name: packages/mysql; Description: MySQL units; Types: Custom Full
 Name: packages/gdbint; Description: GDB access units; Types: Custom Full
 Name: packages/paszlib; Description: Paszlib unit (provide acces to gzipped files); Types: Custom Full
 Name: packages/postgres; Description: Postgres units; Types: Custom Full
+;Name: packages/ptc; Description: OpenPTC units; Types: Custom Full
 Name: packages/regexp; Description: Regular Expression support units; Types: Custom Full
 Name: packages/unzip; Description: Unzip units (provide acces to .zip files); Types: Custom Full
 Name: packages/zlib; Description: Interface to libz compression library; Types: Custom Full
 Name: packages/netdb; Description: Portable DNS routines; Types: Custom Full
 Name: packages/pasjpeg; Description: PasJPEG units (provide access to JPEG files); Types: Custom Full
-Name: packages/md5; Description: MD5 checksum units; Types: Custom Full
+Name: packages/hash; Description: Hashing (MD5, CRC) support units; Types: Custom Full
 Name: packages/cdrom; Description: Portable CD-ROM acces; Types: Custom Full
 Name: packages/odbc; Description: ODBC data acces; Types: Custom Full
 Name: packages/sqlite; Description: SQLITE data access; Types: Custom Full
