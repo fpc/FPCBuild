@@ -143,6 +143,9 @@ installbinary ()
   
   echo "Installing utilities..."
   unztarfromtar $BINARYTAR ${CROSSPREFIX}utils.$1.tar.gz $PREFIX
+  if [ $UID == 0 ]; then
+    chmod u=srx,g=rx,o=rx $PREFIX/bin/grab_vcsa
+  fi
 
   ide=`tar -tf $BINARYTAR | grep "${CROSSPREFIX}ide.$1.tar.gz"`
   if [ "$ide" = "${CROSSPREFIX}ide.$1.tar.gz" ]; then
