@@ -104,7 +104,8 @@ Source: bin\i386-win32\delp.exe; DestDir: {app}\bin\i386-win32; Flags: ignorever
 Source: bin\i386-win32\fpcmake.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\fpdoc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\fpmc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
-Source: bin\i386-win32\fpmcgtk.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+; makes no sense since we don't deliever the gtk dlls
+; Source: bin\i386-win32\fpmcgtk.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\fprcp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\h2pas.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\h2paspp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
@@ -119,6 +120,8 @@ Source: bin\i386-win32\unitdiff.exe; DestDir: {app}\bin\i386-win32; Flags: ignor
 Source: bin\i386-win32\yylex.cod; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\yyparse.cod; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: units\i386-win32\lexyacc\*.*; DestDir: {app}\units\i386-win32\lexyacc; Flags: ignoreversion; Components: utils
+; Demos
+Source: demo\*.*; DestDir: {app}\demo; Flags: ignoreversion recursesubdirs ; Components: demo
 ; Documentation
 %DisableDocs%Source: doc\*.pdf; DestDir: {app}\doc; Flags: ignoreversion; Components: docs
 
@@ -144,12 +147,15 @@ Source: examples\gtk2\*.*; DestDir: {app}\examples\gtk2; Flags: ignoreversion; C
 ; GDBINT
 Source: units\i386-win32\gdbint\*.*; DestDir: {app}\units\i386-win32\gdbint; Flags: ignoreversion; Components: packages/gdbint
 Source: examples\gdbint\*.*; DestDir: {app}\examples\gdbint; Flags: ignoreversion; Components: packages/gdbint
+; Graph
+Source: units\i386-win32\graph\*.*; DestDir: {app}\units\i386-win32\graph; Flags: ignoreversion; Components: packages/graph
+; Source: examples\graph\*.*; DestDir: {app}\examples\graph; Flags: ignoreversion; Components: packages/graph
+; Hash
+Source: units\i386-win32\hash\*.*; DestDir: {app}\units\i386-win32\hash; Flags: ignoreversion; Components: packages/hash
+Source: examples\hash\*.*; DestDir: {app}\examples\hash; Flags: ignoreversion; Components: packages/hash
 ; Interbase
 Source: units\i386-win32\ibase\*.*; DestDir: {app}\units\i386-win32\ibase; Flags: ignoreversion; Components: packages/ibase
 Source: examples\ibase\*.*; DestDir: {app}\examples\ibase; Flags: ignoreversion; Components: packages/ibase
-; MD5
-Source: units\i386-win32\md5\*.*; DestDir: {app}\units\i386-win32\md5; Flags: ignoreversion; Components: packages/md5
-Source: examples\md5\*.*; DestDir: {app}\examples\md5; Flags: ignoreversion; Components: packages/md5
 ; MySQL
 Source: units\i386-win32\mysql\*.*; DestDir: {app}\units\i386-win32\mysql; Flags: ignoreversion; Components: packages/mysql
 Source: examples\mysql\*.*; DestDir: {app}\examples\mysql; Flags: ignoreversion; Components: packages/mysql
@@ -159,6 +165,9 @@ Source: examples\netdb\*.*; DestDir: {app}\examples\netdb; Flags: ignoreversion;
 ; odbc
 Source: units\i386-win32\odbc\*.*; DestDir: {app}\units\i386-win32\odbc; Flags: ignoreversion; Components: packages/odbc
 Source: examples\odbc\*.*; DestDir: {app}\examples\odbc; Flags: ignoreversion; Components: packages/odbc
+; oracle
+Source: units\i386-win32\oracle\*.*; DestDir: {app}\units\i386-win32\oracle; Flags: ignoreversion; Components: packages/opengl
+Source: examples\oracle\*.*; DestDir: {app}\examples\oracle; Flags: ignoreversion; Components: packages/opengl
 ; opengl
 Source: units\i386-win32\opengl\*.*; DestDir: {app}\units\i386-win32\opengl; Flags: ignoreversion; Components: packages/opengl
 Source: examples\opengl\*.*; DestDir: {app}\examples\opengl; Flags: ignoreversion; Components: packages/opengl
@@ -168,6 +177,9 @@ Source: examples\pasjpeg\*.*; DestDir: {app}\examples\pasjpeg; Flags: ignorevers
 ; paszlib
 Source: units\i386-win32\paszlib\*.*; DestDir: {app}\units\i386-win32\paszlib; Flags: ignoreversion; Components: packages/paszlib
 Source: examples\paszlib\*.*; DestDir: {app}\examples\paszlib; Flags: ignoreversion; Components: packages/paszlib
+; postgres
+Source: units\i386-win32\postgres\*.*; DestDir: {app}\units\i386-win32\postgres; Flags: ignoreversion; Components: packages/postgres
+Source: examples\postgres\*.*; DestDir: {app}\examples\postgres; Flags: ignoreversion; Components: packages/postgres
 ; regexpr
 Source: units\i386-win32\regexpr\*.*; DestDir: {app}\units\i386-win32\regexpr; Flags: ignoreversion; Components: packages/regexp
 Source: examples\regexpr\*.*; DestDir: {app}\examples\regexpr; Flags: ignoreversion; Components: packages/regexp
@@ -207,10 +219,12 @@ Name: binutils; Description: GNU linker and assembler; Flags: fixed; Types: Cust
 Name: ide; Description: Integrated Development Environment; Types: Custom Full
 Name: utils; Description: Free Pascal Utilities; Types: Custom Full
 Name: make; Description: GNU make; Types: Custom Full
+Name: demo; Description: Demos; Types: Custom Full
 Name: gdb; Description: GNU debugger; Types: Full Custom
 Name: fcl; Description: FCL (Free Component Library) units; Types: Custom Full
 Name: fv; Description: Free Vision; Types: Custom Full
 Name: packages; Description: Various unit packages; Types: Custom Full
+Name: packages/graph; Description: Graph unit; Types: Custom Full
 Name: packages/gtk; Description: GTK 1.2 units; Types: Custom Full
 Name: packages/gtk/fpgtk; Description: fpGTK (for GTK 1.2) units; Types: Custom Full
 Name: packages/gtk2; Description: GTK 2 units; Types: Custom Full
@@ -219,12 +233,14 @@ Name: packages/ibase; Description: Interbase/Firebird units; Types: Custom Full
 Name: packages/mysql; Description: MySQL units; Types: Custom Full
 Name: packages/gdbint; Description: GDB access units; Types: Custom Full
 Name: packages/paszlib; Description: Paszlib unit (provide acces to gzipped files); Types: Custom Full
+Name: packages/postgres; Description: Postgres units; Types: Custom Full
+;Name: packages/ptc; Description: OpenPTC units; Types: Custom Full
 Name: packages/regexp; Description: Regular Expression support units; Types: Custom Full
 Name: packages/unzip; Description: Unzip units (provide acces to .zip files); Types: Custom Full
 Name: packages/zlib; Description: Interface to libz compression library; Types: Custom Full
 Name: packages/netdb; Description: Portable DNS routines; Types: Custom Full
 Name: packages/pasjpeg; Description: PasJPEG units (provide access to JPEG files); Types: Custom Full
-Name: packages/md5; Description: MD5 checksum units; Types: Custom Full
+Name: packages/hash; Description: Hashing (MD5, CRC) support units; Types: Custom Full
 Name: packages/cdrom; Description: Portable CD-ROM acces; Types: Custom Full
 Name: packages/odbc; Description: ODBC data acces; Types: Custom Full
 Name: packages/sqlite; Description: SQLITE data access; Types: Custom Full

@@ -493,6 +493,7 @@ endif
 innobuild: innocheck build
         $(DELTREE) $(INNODIR)
         $(MKDIR) $(INNODIR)
+        $(COPYTREE) demo $(INNODIR)
 ifndef NODOCS
         unzip -d $(INNODIR) doc-pdf.zip
 endif
