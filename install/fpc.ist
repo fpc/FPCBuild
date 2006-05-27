@@ -104,7 +104,8 @@ Source: bin\i386-win32\delp.exe; DestDir: {app}\bin\i386-win32; Flags: ignorever
 Source: bin\i386-win32\fpcmake.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\fpdoc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\fpmc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
-Source: bin\i386-win32\fpmcgtk.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+; makes no sense since we don't deliever the gtk dlls
+; Source: bin\i386-win32\fpmcgtk.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\fprcp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\h2pas.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\h2paspp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
@@ -120,7 +121,7 @@ Source: bin\i386-win32\yylex.cod; DestDir: {app}\bin\i386-win32; Flags: ignoreve
 Source: bin\i386-win32\yyparse.cod; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: units\i386-win32\lexyacc\*.*; DestDir: {app}\units\i386-win32\lexyacc; Flags: ignoreversion; Components: utils
 ; Demos
-Source: demo\*.*; DestDir: {app}\demo; Flags: ignoreversion; Components: demo
+Source: demo\*.*; DestDir: {app}\demo; Flags: ignoreversion recursesubdirs ; Components: demo
 ; Documentation
 %DisableDocs%Source: doc\*.pdf; DestDir: {app}\doc; Flags: ignoreversion; Components: docs
 
@@ -164,6 +165,9 @@ Source: examples\netdb\*.*; DestDir: {app}\examples\netdb; Flags: ignoreversion;
 ; odbc
 Source: units\i386-win32\odbc\*.*; DestDir: {app}\units\i386-win32\odbc; Flags: ignoreversion; Components: packages/odbc
 Source: examples\odbc\*.*; DestDir: {app}\examples\odbc; Flags: ignoreversion; Components: packages/odbc
+; oracle
+Source: units\i386-win32\oracle\*.*; DestDir: {app}\units\i386-win32\oracle; Flags: ignoreversion; Components: packages/opengl
+Source: examples\oracle\*.*; DestDir: {app}\examples\oracle; Flags: ignoreversion; Components: packages/opengl
 ; opengl
 Source: units\i386-win32\opengl\*.*; DestDir: {app}\units\i386-win32\opengl; Flags: ignoreversion; Components: packages/opengl
 Source: examples\opengl\*.*; DestDir: {app}\examples\opengl; Flags: ignoreversion; Components: packages/opengl
