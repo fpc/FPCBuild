@@ -30,6 +30,15 @@ AppendDefaultDirName=false
 AlwaysShowComponentsList=false
 ShowLanguageDialog=yes
 
+
+[Tasks]
+Name: associatepp; Description: "Associate .pp files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide
+Name: associateinc; Description: "Associate .inc files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide
+Name: associatepas; Description: "Associate .pas files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide; Flags: unchecked
+Name: associatedpr; Description: "Associate .dpr files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide; Flags: unchecked
+Name: createdesktopicon; Description: "Create a desktop icon for the Free Pascal IDE"; Components: ide
+Name: createcfg; Description: "Create a standard configuration file for the compiler"
+
 [Files]
 ; Base package
 Source: bin\i386-win32\ppc386.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
@@ -203,7 +212,7 @@ Source: units\i386-win32\zlib\*.*; DestDir: {app}\units\i386-win32\zlib; Flags: 
 Filename: {app}\Free Pascal.url; Section: InternetShortcut; Key: URL; String: http://www.freepascal.org/
 
 [Icons]
-Name: {userdesktop}\Free Pascal IDE; Filename: {app}\bin\i386-win32\fp.exe; components: ide; IconFileName: {app}\bin\i386-win32\fp32.ico; WorkingDir: {app}\bin\i386-win32
+Name: {userdesktop}\Free Pascal IDE; Filename: {app}\bin\i386-win32\fp.exe; components: ide; IconFileName: {app}\bin\i386-win32\fp32.ico; WorkingDir: {app}\bin\i386-win32 Tasks: createdesktopicon
 Name: {group}\Free Pascal; Filename: {app}\bin\i386-win32\fp.exe; components: ide; IconFileName: {app}\bin\i386-win32\fp32.ico; WorkingDir: {app}\bin\i386-win32
 Name: {group}\{cm:ProgramOnTheWeb,Free Pascal}; Filename: {app}\Free Pascal.url; IconFileName: {app}\bin\i386-win32\fp32.ico;
 Name: {group}\{cm:UninstallProgram,Free Pascal}; Filename: {uninstallexe}
@@ -287,38 +296,29 @@ Name: Full; Description: Full installation
 Name: Minimum; Description: Minimum installation
 Name: Custom; Description: Custom installation; Flags: iscustom
 
-[Tasks]
-Name: associatepp; Description: "Associate .pp files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide;
-Name: associateinc; Description: "Associate .inc files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide;
-Name: associatepas; Description: "Associate .pas files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide; Flags: unchecked;
-Name: associatedpr; Description: "Associate .dpr files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide; Flags: unchecked;
-Name: createdesktopicon; Description: "Create a desktop icon for the Free Pascal IDE"; Components: ide;
-Name: createcfg; Description: "Create a standard configuration file for the compiler";
-
-
 [Registry]
 ; Associate .pp with FP IDE
-Root: HKCR; Subkey: ".pp"; ValueType: string; ValueName: ""; ValueData: "FPCPPFile"; Flags: uninsdeletevalue; Tasks: associatepp;
-Root: HKCR; Subkey: "FPCPPFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepp;
-Root: HKCR; Subkey: "FPCPPFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepp;
-Root: HKCR; Subkey: "FPCPPFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepp;
+Root: HKCR; Subkey: ".pp"; ValueType: string; ValueName: ""; ValueData: "FPCPPFile"; Flags: uninsdeletevalue; Tasks: associatepp
+Root: HKCR; Subkey: "FPCPPFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepp
+Root: HKCR; Subkey: "FPCPPFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepp
+Root: HKCR; Subkey: "FPCPPFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepp
 ; Associate .inc with FP IDE
-Root: HKCR; Subkey: ".inc"; ValueType: string; ValueName: ""; ValueData: "FPCINCFile"; Flags: uninsdeletevalue; Tasks: associateinc;
-Root: HKCR; Subkey: "FPCINCFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal include File"; Flags: uninsdeletekey; Tasks: associateinc;
-Root: HKCR; Subkey: "FPCINCFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associateinc;
-Root: HKCR; Subkey: "FPCINCFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associateinc;
+Root: HKCR; Subkey: ".inc"; ValueType: string; ValueName: ""; ValueData: "FPCINCFile"; Flags: uninsdeletevalue; Tasks: associateinc
+Root: HKCR; Subkey: "FPCINCFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal include File"; Flags: uninsdeletekey; Tasks: associateinc
+Root: HKCR; Subkey: "FPCINCFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associateinc
+Root: HKCR; Subkey: "FPCINCFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associateinc
 ; Associate .pas with FP IDE
-Root: HKCR; Subkey: ".pas"; ValueType: string; ValueName: ""; ValueData: "FPCPASFile"; Flags: uninsdeletevalue; Tasks: associatepas;
-Root: HKCR; Subkey: "FPPASFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepas;
-Root: HKCR; Subkey: "FPPASFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepas;
-Root: HKCR; Subkey: "FPPASFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepas;
+Root: HKCR; Subkey: ".pas"; ValueType: string; ValueName: ""; ValueData: "FPCPASFile"; Flags: uninsdeletevalue; Tasks: associatepas
+Root: HKCR; Subkey: "FPPASFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepas
+Root: HKCR; Subkey: "FPPASFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepas
+Root: HKCR; Subkey: "FPPASFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepas
 ; Associate .pas with FP IDE
-Root: HKCR; Subkey: ".dpr"; ValueType: string; ValueName: ""; ValueData: "FPCDPRFile"; Flags: uninsdeletevalue; Tasks: associatedpr;
-Root: HKCR; Subkey: "FPDPRFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal Project File"; Flags: uninsdeletekey; Tasks: associatedpr;
-Root: HKCR; Subkey: "FPDPRFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatedpr;
-Root: HKCR; Subkey: "FPDPRFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatedpr;
+Root: HKCR; Subkey: ".dpr"; ValueType: string; ValueName: ""; ValueData: "FPCDPRFile"; Flags: uninsdeletevalue; Tasks: associatedpr
+Root: HKCR; Subkey: "FPDPRFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal Project File"; Flags: uninsdeletekey; Tasks: associatedpr
+Root: HKCR; Subkey: "FPDPRFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatedpr
+Root: HKCR; Subkey: "FPDPRFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatedpr
 ; Extend path in NT,2000 or XP. Does not work in 95/98/Me
 Root: HKCU; Subkey: Environment; ValueType: String; ValueName: "PATH"; ValueData: "{reg:HKCU\environment,PATH|};{app}\bin\i386-Win32";MinVersion: 5.0,4.0
 
 [Run]
-FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for Free Pascal compiler"; Parameters: "-d ""basepath={app}"" -o ""{app}\bin\i386-Win32\fpc.cfg""";
+FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for Free Pascal compiler"; Parameters: "-d ""basepath={app}"" -o ""{app}\bin\i386-Win32\fpc.cfg""";Tasks: createcfg
