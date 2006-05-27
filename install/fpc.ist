@@ -47,7 +47,7 @@ Source: bin\i386-win32\ppufiles.exe; DestDir: {app}\bin\i386-win32; Flags: ignor
 Source: bin\i386-win32\ppumove.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\ppc386.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\cygwin1.dll; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
-Source: bin\i386-win32\fp32_32.ico; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\fp32.ico; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\fpc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\fpcmkcfg.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: doc\fpc\copying; DestDir: {app}\doc\fpc; Components: base
