@@ -212,7 +212,7 @@ Source: units\i386-win32\zlib\*.*; DestDir: {app}\units\i386-win32\zlib; Flags: 
 Filename: {app}\Free Pascal.url; Section: InternetShortcut; Key: URL; String: http://www.freepascal.org/
 
 [Icons]
-Name: {userdesktop}\Free Pascal IDE; Filename: {app}\bin\i386-win32\fp.exe; components: ide; IconFileName: {app}\bin\i386-win32\fp32.ico; WorkingDir: {app}\bin\i386-win32 Tasks: createdesktopicon
+Name: {userdesktop}\Free Pascal IDE; Filename: {app}\bin\i386-win32\fp.exe; components: ide; IconFileName: {app}\bin\i386-win32\fp32.ico; WorkingDir: {app}\bin\i386-win32; Tasks: createdesktopicon
 Name: {group}\Free Pascal; Filename: {app}\bin\i386-win32\fp.exe; components: ide; IconFileName: {app}\bin\i386-win32\fp32.ico; WorkingDir: {app}\bin\i386-win32
 Name: {group}\{cm:ProgramOnTheWeb,Free Pascal}; Filename: {app}\Free Pascal.url; IconFileName: {app}\bin\i386-win32\fp32.ico;
 Name: {group}\{cm:UninstallProgram,Free Pascal}; Filename: {uninstallexe}
@@ -321,4 +321,4 @@ Root: HKCR; Subkey: "FPDPRFile\shell\open\command"; ValueType: string; ValueName
 Root: HKCU; Subkey: Environment; ValueType: String; ValueName: "PATH"; ValueData: "{reg:HKCU\environment,PATH|};{app}\bin\i386-Win32";MinVersion: 5.0,4.0
 
 [Run]
-FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for Free Pascal compiler"; Parameters: "-d ""basepath={app}"" -o ""{app}\bin\i386-Win32\fpc.cfg""";Tasks: createcfg
+FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for Free Pascal compiler"; Parameters: "-d ""basepath={app}"" -o ""{app}\bin\i386-Win32\fpc.cfg"""; Tasks: createcfg
