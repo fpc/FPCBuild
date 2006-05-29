@@ -37,6 +37,7 @@ Name: associateinc; Description: "Associate .inc files with Free Pascal IDE"; Gr
 Name: associatepas; Description: "Associate .pas files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide; Flags: unchecked
 Name: associatedpr; Description: "Associate .dpr files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide; Flags: unchecked
 Name: createdesktopicon; Description: "Create a desktop icon for the Free Pascal IDE"; Components: ide
+Name: createidecfg; Description: "Create a default configuration for the Free Pascal IDE"; Components: ide
 Name: createcfg; Description: "Create a standard configuration file for the compiler"
 
 [Files]
@@ -322,3 +323,5 @@ Root: HKCU; Subkey: Environment; ValueType: String; ValueName: "PATH"; ValueData
 
 [Run]
 FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for Free Pascal compiler"; Parameters: "-d ""basepath={app}"" -o ""{app}\bin\i386-Win32\fpc.cfg"""; Tasks: createcfg
+FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for the Free Pascal IDE"; Parameters: "-1 -d ""basepath={app}"" -o ""{app}\bin\i386-Win32\fp.cfg"""; Tasks: createidecfg
+FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for the Free Pascal IDE"; Parameters: "-2 -d ""basepath={app}"" -o ""{app}\bin\i386-Win32\fp.ini"""; Tasks: createidecfg
