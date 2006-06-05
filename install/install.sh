@@ -209,8 +209,9 @@ esac
 SHORTARCH=$ARCHNAME
 
 FULLARCH=$ARCHNAME-$OSNAME
-DOCDIR=$PREFIX/share/doc/fpc-$VERSION
-DEMODIR=$DOCDIR/examples
+# doc-pdf.tar.gz contains the needed paths.
+DOCDIR=$PREFIX/
+DEMODIR=$DOCDIR/
 
 # Install all binary releases
 for f in *binary*.tar
