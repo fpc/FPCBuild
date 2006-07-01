@@ -1,7 +1,49 @@
 
                             Free Pascal Compiler
 
-                                Version 2.0.2
+                                Version 2.0.4
+
+******************************************************************************
+                              What's New in 2.0.4
+******************************************************************************
+This is a bug fix release, so don't expect a big new feature list here. Most
+of the more than 1000 changes made to 2.0.4 since 2.0.2 are fixes for some issues.
+
+Compiler:
+  * Lot of small bugs and compatibility fixes
+  * Updated several translations
+  * Improved code generation
+  * Improved and fixed PIC code generation
+  * Improved register allocation
+  * Improved ansistring string code generation
+  * Several alignment values increased so the requirements of modern processors are met better
+  * WINDOWS defined on all windows platforms (Win32, Win64, WinCE)
+  * Parameter order for methods with 
+  
+RTL:
+  * Lot of small bug and compatibility fixes
+  * 64 bit file pointer support on most targets
+  * Improved heap manager
+  * Improved ansistring routines
+
+FCL:
+  * Lot of small bugs and compatibility fixes
+  * Improved data base support
+
+Packages:
+  * Lot of small bugs and compatibility fixes
+  * Improved data base support
+  * Apple universal interfaces
+  
+IDE:
+  * Small bug fixes
+  * Improved dialog layout
+  * Unix: improved support for various terminals
+
+Misc:
+  * Improved docs
+  * Better cross compilation support
+  * Bug fixes for FreeVision  
 
 ******************************************************************************
                               What's New in 2.0.2
