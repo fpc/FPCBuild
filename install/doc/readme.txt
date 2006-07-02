@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 2.0.2
+                               Version 2.0.4
 
 
 ****************************************************************************
@@ -15,19 +15,21 @@ platforms. The language and the runtime library are almost compatible with
 Turbo Pascal 7.0 and recent Delphi releases. There is also partial support
 for the Macintosh pascal dialect.
 
-Free Pascal 2.0.2 is currently available for the following platforms:
+Free Pascal 2.0.4 is currently available for the following platforms:
 - Linux-i386
-- Linux-powerpc
-- Linux-sparc
 - Linux-x86_64 (amd64)
 - Linux-arm (cross compiling environment for Linux-i386)
 - Win32 (Win95/98/Me/XP/2000 and WinNT)
 - OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
-- FreeBSD i386
+- FreeBSD-i386
 - Mac OS X/Darwin for PowerPC
+
+The following platforms might be provided later:
 - Mac OS (classic) for PowerPC
 - Netware-i386
 - NetwLibc-i386 (LibC is preferred API under newer Netware versions)
+- Linux-powerpc
+- Linux-sparc
 
 There are other platforms which are more or less working, but there is
 currently no maintainer for them and thus we cannot provide adequate
@@ -72,8 +74,7 @@ free to contact us, e-mail addresses are listed below.
 - can call external C code
 - smartlinking (not yet supported under Mac OS X)
 - support for the GNU debugger
-- IDE (currently for GO32v2, Linux, FreeBSD, OS/2 and Win32 only; not all
-  platforms include debugger integrated in IDE)
+- IDE (not all platforms include debugger integrated in IDE)
 - can create binaries running natively under both DOS and OS/2 (EMX version)
 
 
@@ -103,7 +104,7 @@ Mac OS (classic)
 * Quick start - Win32
 ****************************************************************************
 
-Download the distribution package (fpc-2.0.0.i386-win32.exe) and run it
+Download the distribution package (fpc-2.0.4.i386-win32.exe) and run it
 - it is a self-extracting installer, so just follow the instructions
 to install it. Don't forget to set the path as mentioned by the install
 program.
@@ -118,7 +119,7 @@ and type
 * Quick start - OS/2 / DOS
 ****************************************************************************
 
-Download distribution archive (os2200.zip for OS/2 or dos196.zip for
+Download distribution archive (os2204.zip for OS/2 or dos204.zip for
 GO32v2) and unzip it into a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -135,7 +136,7 @@ and type
 * Quick start - Linux/FreeBSD
 ****************************************************************************
 
-Download fpc-2.0.2.<cpu>-<os>.tar and untar into a temporary directory.
+Download fpc-2.0.4.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
