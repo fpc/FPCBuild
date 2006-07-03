@@ -38,6 +38,12 @@ const
   CERAPI_E_ALREADYINITIALIZED = $80041001;
 
 {* types **********************************************************************}
+type
+  TRapiInit = record
+    cbSize:DWORD;
+    heRapiInit:THandle;
+    hrRapiInit:HResult;
+  end;
 
 {* functions*******************************************************************}
 function CeCloseHandle(hFile: HANDLE):WINBOOL; external RAPILIB name 'CeCloseHandle';
@@ -49,17 +55,16 @@ function CeReadFile( hFile: HANDLE; lpBuffer: LPVOID; nNumberOfBytesToRead: DWOR
 function CeWriteFile( hFile: HANDLE; lpBuffer: LPCVOID; nNumberOfBytesToWrite: DWORD; lpNumberOfBytesWritten: LPDWORD;  lpOverlapped: LPOVERLAPPED):WINBOOL; external RAPILIB name 'CeWriteFile';
 function CeRapiGetError:Longint; external RAPILIB name 'CeRapiGetError';
 function CeRapiInit:Longint; external RAPILIB name 'CeRapiInit';
+function CeRapiInitEx(var RInit:TRapiInit) : LongInt; external RAPILIB name 'CeRapiInitEx';
 function CeRapiUninit:Longint; external RAPILIB name 'CeRapiUninit';
-
+function CeGetFileAttributes(lpFileName:LPCWSTR): longint; external RAPILIB name 'CeGetFileAttributes';
 
 
 implementation
 
 initialization
 
- CeRapiInit;
 finalization
 
- CeRapiUninit;
 end.
 

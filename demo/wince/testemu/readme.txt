@@ -19,11 +19,10 @@ building : see win32-i386-win32-build.cmd
 
 update sources for the following consts :
 
-  SLOCALTESTEXEPATH = 'MysDisc:\My\Path\To\fpcsrc\tests\output\arm-wince\test\';
   SLOCALLOGPATHFILE = 'MysDisc:\My\Path\To\fpcsrc\tests\wcemtem.log';
-  SREMOTEEXEPATH    = '\Storage Card\tests\';                                      <- dir where progs will be copied
+  SREMOTEEXEPATH    = '\Storage Card\tests\';                          <- dir where progs will be copied
 
-current version assume that 'wcetemu.exe' is present in SREMOTEEXEPATH
+current version assume that 'wcetrun.exe' is present in SREMOTEEXEPATH
 
 wcetrun.exe : do the following things
 -----------

@@ -28,20 +28,16 @@ uses Sysutils, w32rapi, windows;
 {* const **********************************************************************}
 
 const
-  SLOCALTESTEXEPATH = 'MysDisc:\My\Path\To\fpcsrc\tests\output\arm-wince\test\';
   SLOCALLOGPATHFILE = 'MysDisc:\My\Path\To\fpcsrc\tests\wcemtem.log';
   SREMOTEEXEPATH    = '\Storage Card\tests\';
   SREMOTERUNPROG    = 'wcetrun.exe';
-  IBLOCKBUFFERSIZE  = 8192;
+  IBLOCKBUFFERSIZE  = 65535;
   ISEEKWAITTEMPOMS  = 1000;
-  ISEEKRETRYMAX     = 100;
+  ISEEKRETRYMAX     = 180;
 
 {* var ************************************************************************}
 var flog             : Text;
-    sTestExeName,
-    sLocalTest,
-    sRemoteTest,
-    sRemoteProg      : String;
+    sTestExeName     : String;
     lRes,
     lSeekFileCount   : Longint;
     bExitCode        : Byte;
@@ -58,57 +54,63 @@ end;
 {* sub RAPI *******************************************************************}
 function remotecopyto( const csSource, csTarget : String): Longint;
 var wsTarget        : WideString;
-    lRes,
     lRead,
-    lWritten,
-    lRemoteExitCode : Longint;
+    lWritten,res    : Longint;
     bError          : Boolean;
     hFileTarget     : HANDLE;
     AFileSource     : File of byte;
 
 begin
- //create target file
- wsTarget:=csTarget;
- hFileTarget:=CeCreateFile( PWideChar(wsTarget), GENERIC_WRITE, 0, NIL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL,0);
- bError:=(hFileTarget=INVALID_HANDLE_VALUE);
+ // open local file
+ {$I-}
+ AssignFile(AFileSource,csSource);
+ system.FileMode := $40;
+ system.Reset(AFileSource);
+ {$I+}
+ res:=system.ioresult;
+ bError:=(res>0);
  if bError then begin
-  Result:=CEGetLastError;
-  Log('error creating remote file "'+csTarget+'" ce('+IntToStr(CEGetLastError)+') rapi('+IntToStr(ceRapiGetError)+')');
- end else begin
-  try
-   //copy local file by block
-   {$I-}
-   AssignFile(AFileSource,csSource);
-   system.FileMode := 0;
-   system.Reset(AFileSource);
-   {$I+}
-   bError:=(system.ioresult>0);
+   Log('error opening local file "'+csSource+'" ioresult='+IntToStr(res));
+   Result:=res;
+   exit;
+ end;
+ try
+   //create target file
+   wsTarget:=csTarget;
+   hFileTarget:=CeCreateFile( PWideChar(wsTarget), GENERIC_WRITE, 0, NIL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL,0);
+   bError:=(hFileTarget=INVALID_HANDLE_VALUE);
    if bError then begin
-    Log('error opening local file "'+csSource+'" ioresult='+IntToStr(system.ioresult));
-    Result:=ioresult;
-   end else begin
-     try
-
-       repeat
-        {$I-}
-        system.BlockRead( AFileSource, RBLOCKBUFFER, IBLOCKBUFFERSIZE, lRead);
-        {$I+}
-        bError:=ioresult>0;
-        if bError then begin
-          Log('error readblock local file "'+csTarget+'" toread='+IntToStr(IBLOCKBUFFERSIZE)+' read='+IntToStr(lRead));
-          Result:=ioresult;
-        end else begin
-          bError:=not CeWriteFile( hFileTarget, @RBLOCKBUFFER,  lRead, @lWritten, nil);
-          if (bError) or (lRead<>lWritten) then begin
-            Log('error writing remote file "'+csTarget+'" ce(+'+IntToStr(CEGetLastError)+') written('+IntToStr(lWritten)+')');
-            Result:=CEGetLastError;
-          end;
-        end;
-       until (lRead<IBLOCKBUFFERSIZE) or (bError);
-       if not bError then Result:=0;
-     finally CloseFile(AFileSource);  end;
+     Result:=CEGetLastError;
+     Log('error creating remote file "'+csTarget+'" ce('+IntToStr(CEGetLastError)+') rapi('+IntToStr(ceRapiGetError)+')');
+     exit;
    end;
-  finally CeCloseHandle(hFileTarget); end;
+   try
+    //copy local file by block
+    repeat
+      {$I-}
+      system.BlockRead( AFileSource, RBLOCKBUFFER, IBLOCKBUFFERSIZE, lRead);
+      {$I+}
+      res:=system.ioresult;
+      bError:=res>0;
+      if bError then begin
+        Log('error readblock local file "'+csTarget+'" toread='+IntToStr(IBLOCKBUFFERSIZE)+' read='+IntToStr(lRead));
+        Result:=res;
+      end
+      else begin
+        bError:=not CeWriteFile( hFileTarget, @RBLOCKBUFFER,  lRead, @lWritten, nil) or (lRead<>lWritten);
+        if bError then begin
+          Log('error writing remote file "'+csTarget+'" ce(+'+IntToStr(CEGetLastError)+') written('+IntToStr(lWritten)+')');
+          Result:=CEGetLastError;
+        end;
+      end;
+     until (lRead<IBLOCKBUFFERSIZE) or (bError);
+     if not bError then
+       Result:=0;
+   finally
+     CeCloseHandle(hFileTarget);
+   end;
+ finally
+   CloseFile(AFileSource);
  end;
 end;
 
@@ -149,8 +151,7 @@ begin
 end;
 
 function remotereadexitcode( const csRemote : String; var vbExitCode: Byte): Longint;
-var wsRemote,
-    wsExitCode      : WideString;
+var wsRemote        : WideString;
     lRead           : Longint;
     hFileRemote     : HANDLE;
     bError          : Boolean;
@@ -159,8 +160,7 @@ begin
  //create target file
    //change extention to .ext
  wsRemote:=ChangeFileExt(csRemote,'.ext');
- Sleep(ISEEKWAITTEMPOMS);
- hFileRemote:=CeCreateFile( PWideChar(wsRemote), GENERIC_READ, 0, NIL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL or FILE_ATTRIBUTE_TEMPORARY,0);
+ hFileRemote:=CeCreateFile( PWideChar(wsRemote), GENERIC_READ, 0, NIL, OPEN_EXISTING, 0, 0);
  bError:=(hFileRemote=INVALID_HANDLE_VALUE);
  if bError then begin
   Result:=CEGetLastError;
@@ -168,23 +168,47 @@ begin
  end else begin
   try
    //read remote file
-   bError:=not CeReadFile( hFileRemote, @RBLOCKBUFFER,  IBLOCKBUFFERSIZE, @lRead, nil);
+   bError:=not (CeReadFile( hFileRemote, @RBLOCKBUFFER,  1, @lRead, nil) and (lRead = 1));
    if (bError) then begin
-    Log('error reading remote file "'+csRemote+'" ce(+'+IntToStr(CEGetLastError)+') read('+IntToStr(lRead)+')');
+    Log('error reading remote file "'+csRemote+'" ce('+IntToStr(CEGetLastError)+') read('+IntToStr(lRead)+')');
     Result:=CEGetLastError;
+    if Result = 0 then
+      Result:=255;
    end else begin
-    Log('read '+IntToStr(lREad));
     vbExitCode:=RBLOCKBUFFER[1];
     Log('exit code read ='+IntToStr(vbExitCode));
     Result:=0;
    end;
-  finally CeCloseHandle(hFileRemote); end;
+  finally
+    CeCloseHandle(hFileRemote);
+  end;
  end;
+end;
+
+function InitRapi: boolean;
+var
+  ri: TRapiInit;
+  res: cardinal;
+begin
+  ri.cbSize:=sizeof(ri);
+  res:=CeRapiInitEx(ri);
+  if (res = S_OK) then begin
+    if (WaitForSingleObject(ri.heRapiInit, 10*1000) = WAIT_OBJECT_0) then
+      res:=ri.hrRapiInit
+    else
+      res:=E_FAIL;
+  end;
+  Result:=res = S_OK;
+  if not Result then begin
+    CeRapiUninit;
+    Log('Can''''t initialize connection to remote device.');
+  end;
 end;
 
 {******************************************************************************}
 
 begin
+ system.FileMode := $42;
  system.Assign(flog,SLOCALLOGPATHFILE);
  {$I-}
  system.Append(flog);
@@ -195,42 +219,64 @@ begin
  end else log('log append');
 
  try
-  if Paramcount>0 then begin
-
+  if (Paramcount>0) then begin
+   if not InitRapi then
+     Halt(255);
    //copy file
    sTestExeName:=ParamStr(1);
-   log('remote copy "'+SLOCALTESTEXEPATH+sTestExeName+'" to "'+SREMOTEEXEPATH+sTestExeName+'"');
-   lRes:=remotecopyto(SLOCALTESTEXEPATH+sTestExeName, SREMOTEEXEPATH+sTestExeName);
-   if lRes=0
-   then lRes:=remoterun(SREMOTEEXEPATH+SREMOTERUNPROG,'"'+SREMOTEEXEPATH+sTestExeName+'"');
-   Sleep(ISEEKWAITTEMPOMS);
-   //wait for test finished (waitforsingleobject and getexitcodprocess not available with rapi)
-   //test finished when .exe can be remote deleted
-   lSeekFileCount:=1;
-   repeat
+   remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
+   log('remote copy "'+sTestExeName+'" to "'+SREMOTEEXEPATH+sTestExeName+'"');
+   lRes:=remotecopyto(sTestExeName, SREMOTEEXEPATH+sTestExeName);
+   if lRes=0 then
+     lRes:=remoterun(SREMOTEEXEPATH+SREMOTERUNPROG,'"'+SREMOTEEXEPATH+sTestExeName+'"')
+   else
+     Halt(255);  // source file not found
+     
+   // waiting for result file creation (waitforsingleobject and getexitcodprocess not available with rapi)
+   log('Waiting for result file...');
+   lSeekFileCount:=ISEEKRETRYMAX;
+   bFileFound:=False;
+   for lSeekFileCount:=1 to ISEEKRETRYMAX do
+     if CeGetFileAttributes(PWideChar(widestring(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext')))) <> -1  then begin
+       bFileFound:=True;
+       break;
+     end
+     else
+       Sleep(ISEEKWAITTEMPOMS);
 
-   log('sleeping '+IntToStr(ISEEKWAITTEMPOMS));
-   Sleep(ISEEKWAITTEMPOMS);
-   log('try remote delete "'+SREMOTEEXEPATH+sTestExeName+'"');
-   if remotedelete(SREMOTEEXEPATH+sTestExeName)=0 then begin
-    log('remote read exitcode"'+SREMOTEEXEPATH+sTestExeName+'"');
-    lRes:=remotereadexitcode(SREMOTEEXEPATH+sTestExeName, bExitCode);
-    bFileFound:=(lRes=0);
-   end else begin
-    bFileFound:=False;
-    Inc(lSeekFileCount);
+   if bFileFound then begin
+     // reading result file
+     bFileFound:=False;
+     for lSeekFileCount:=1 to 30 do begin
+       log('remote read exitcode"'+SREMOTEEXEPATH+sTestExeName+'"');
+       lRes:=remotereadexitcode(SREMOTEEXEPATH+sTestExeName, bExitCode);
+       bFileFound:=(lRes=0);
+       if bFileFound then begin
+         remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
+         break;
+       end;
+       log('sleeping '+IntToStr(ISEEKWAITTEMPOMS));
+       Sleep(ISEEKWAITTEMPOMS);
+     end;
    end;
-    
-   until bFileFound or (lSeekFileCount>ISEEKRETRYMAX);
+   
+   // deleting remote file
+   remotedelete(SREMOTEEXEPATH+sTestExeName);
 
+   CeRapiUninit;
+   
    if (not bFileFound) then begin
-    log('* error no exitcode for "'+sTestExeName+'"');
-    bExitCode:=255; //error code, not result file found
+     log('* error no exitcode for "'+sTestExeName+'"');
+     bExitCode:=255; //error code, result file not found
    end;
-
-  end else log('exiting no params');
- finally log('log closed'); Close(flog); end;
+  end
+  else
+    log('exiting no params');
+ finally
+   log('log closed');
+   Close(flog);
+ end;
  
- if bExitCode>0
- then Halt(bExitCode);
+ if bExitCode>0 then
+   Halt(bExitCode);
 end.
