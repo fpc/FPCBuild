@@ -55,7 +55,7 @@ end;
 function remotecopyto( const csSource, csTarget : String): Longint;
 var wsTarget        : WideString;
     lRead,
-    lWritten,res    : Longint;
+    lWritten,res,i  : Longint;
     bError          : Boolean;
     hFileTarget     : HANDLE;
     AFileSource     : File of byte;
@@ -77,8 +77,13 @@ begin
  try
    //create target file
    wsTarget:=csTarget;
-   hFileTarget:=CeCreateFile( PWideChar(wsTarget), GENERIC_WRITE, 0, NIL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL,0);
-   bError:=(hFileTarget=INVALID_HANDLE_VALUE);
+   for i:=1 to 10 do begin
+     hFileTarget:=CeCreateFile( PWideChar(wsTarget), GENERIC_WRITE, 0, NIL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL,0);
+     bError:=(hFileTarget=INVALID_HANDLE_VALUE);
+     if not bError then
+       break;
+     Sleep(1000);
+   end;
    if bError then begin
      Result:=CEGetLastError;
      Log('error creating remote file "'+csTarget+'" ce('+IntToStr(CEGetLastError)+') rapi('+IntToStr(ceRapiGetError)+')');
