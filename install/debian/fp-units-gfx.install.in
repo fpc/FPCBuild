@@ -6,6 +6,7 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/ggi
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libgd
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libpng
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/graph
 
 /usr/bin/fd2pascal
 /usr/share/man/man1/fd2pascal.1

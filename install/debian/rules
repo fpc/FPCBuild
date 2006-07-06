@@ -59,7 +59,6 @@ NEWFPCMAKE=$(PWD)/utils/fpcm/fpcmake
 BUILDOPTS=PP=$(NEWPP)
 INSTALLOPTS=PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE) INSTALL_PREFIX=$(INSTALL_DIR)/usr
 
-export DH_COMPAT=2
 # export DH_VERBOSE=1
 
 ###################

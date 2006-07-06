@@ -2,8 +2,8 @@ Source: fpc
 Section: devel
 Priority: optional
 Maintainer: Carlos Laviola <claviola@debian.org>
-Standards-Version: 3.6.1
-Build-Depends: fp-compiler, fp-utils, debhelper (>= 4.2), tetex-bin, tetex-extra, awk, gs-common, libncurses5-dev, libgpmg1-dev
+Standards-Version: 3.6.2
+Build-Depends: fp-compiler, fp-utils, debhelper (>= 5), tetex-bin, tetex-extra, awk, gs-common, libncurses5-dev, libgpmg1-dev
 
 Package: fp-compiler
 Architecture: i386 powerpc sparc amd64
