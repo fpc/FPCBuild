@@ -1,8 +1,8 @@
-fpc (2.1.1-0) unstable; urgency=low
+fpc (2.0.4-1) unstable; urgency=low
 
-  * Snapshot build
+  * New release
 
- -- Peter Vreman <peter@freepascal.org>  Thu, 10 Jun 2005 12:00:00 +0100
+ -- Peter Vreman <peter@freepascal.org>  Thu, 07 Jul 2006 12:00:00 +0100
 
 fpc (2.0.0-2) unstable; urgency=low
 
