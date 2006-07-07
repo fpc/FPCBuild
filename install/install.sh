@@ -143,7 +143,9 @@ installbinary ()
   
   echo "Installing utilities..."
   unztarfromtar $BINARYTAR ${CROSSPREFIX}utils.$1.tar.gz $PREFIX
-  if [ $UID == 0 ]; then
+  
+  # Should this be here at all without a big Linux test around it?
+  if [ "x$UID" = "x0" ]; then
     chmod u=srx,g=rx,o=rx $PREFIX/bin/grab_vcsa
   fi
 
