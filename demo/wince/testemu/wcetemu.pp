@@ -232,11 +232,15 @@ begin
    remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
    log('remote copy "'+sTestExeName+'" to "'+SREMOTEEXEPATH+sTestExeName+'"');
    lRes:=remotecopyto(sTestExeName, SREMOTEEXEPATH+sTestExeName);
-   if lRes=0 then
-     lRes:=remoterun(SREMOTEEXEPATH+SREMOTERUNPROG,'"'+SREMOTEEXEPATH+sTestExeName+'"')
-   else
+   if lRes<>0 then
      Halt(255);  // source file not found
      
+   lRes:=remoterun(SREMOTEEXEPATH+SREMOTERUNPROG,'"'+SREMOTEEXEPATH+sTestExeName+'"');
+   if lRes<>0 then begin
+     log('Unable to run "'+SREMOTEEXEPATH+SREMOTERUNPROG+'"');
+     Halt(255);
+   end;
+
    // waiting for result file creation (waitforsingleobject and getexitcodprocess not available with rapi)
    log('Waiting for result file...');
    lSeekFileCount:=ISEEKRETRYMAX;
