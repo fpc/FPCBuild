@@ -247,6 +247,10 @@ other libraries which are used to create executables by the compiler
 come under a modified GNU Library General Public license. Additional
 information about the library license is found in COPYING.FPC.
 
+License conditions for DPMI provider for GO32v2 version (CWSDPMI.EXE)
+can be found in cwsdpmi.doc, sources and/or binary updates may be
+downloaded from http://clio.rice.edu/cwsdpmi/.
+
 NOTE: OS/2 version of the installer uses the library UNZIP32.DLL from
       Info-ZIP. Info-ZIP's software (Zip, UnZip and related utilities)
       is free and can be obtained as source code or executables from

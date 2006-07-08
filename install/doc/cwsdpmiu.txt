@@ -1,0 +1,12 @@
+This is an update of the r5 distribution for testing purposes.  It is a test
+version!  The copyright banner has an updated year but the images are very
+similar to the standard r5 binaries.  Three bug fixes:
+
+1) Test of PSE feature checks correct bit (removes warnings with BOCHS).
+2) Load ESP properly to clear upper bits with VCPI servers setting them
+   (Martin, please test!)
+3) Serializing jump to avoid Pentium III bug hang (Symantec bug).
+
+Official r5 version is included as CWSDPMI5.EXE and CWSDSTB5.EXE in case of
+troubles with particular configuration. However, the test version is 4 years
+old now, so it should be hopefully safe.
