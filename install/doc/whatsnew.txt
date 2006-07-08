@@ -18,7 +18,8 @@ Compiler:
   * Improved ansistring string code generation
   * Several alignment values increased so the requirements of modern processors are met better
   * WINDOWS defined on all windows platforms (Win32, Win64, WinCE)
-  * Parameter order for methods with 
+  * Parameter order for methods with structured results changed (result pointer<->self swapped), 
+    please check such methods if they are implemented in assembler
   
 RTL:
   * Lot of small bug and compatibility fixes
