@@ -34,7 +34,7 @@ echo "Old SVN (branch) dir: $OLDSVNTAG"
 echo "New SVN (branch) dir: $NEWSVNTAG"
 
 $SVN copy $SVNURL/fpc/$OLDSVNTAG $SVNURL/fpc/$NEWSVNTAG -m "$COMMITMSG"
-$SVN copy $SVNURL/fpcdocs/$OLDSVNTAG $SVNURL/fpcdocs/$NEWSVNTAG -m "$COMMITMSG"
+$SVN copy $SVNURL/fpcdocs/trunk $SVNURL/fpcdocs/$NEWSVNTAG -m "$COMMITMSG"
 $SVN copy $SVNURL/fpcbuild/$OLDSVNTAG $SVNURL/fpcbuild/$NEWSVNTAG -m "$COMMITMSG"
 
 # Generate svn:externals property
