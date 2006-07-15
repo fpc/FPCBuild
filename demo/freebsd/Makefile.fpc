@@ -4,7 +4,7 @@
 
 [target]
 units=
-programs=fontdemo sysmousetest
+programs=fontdemo sysmousetest demo_kqueue demo_sendfile
 
 [default]
 fpcdir=../..

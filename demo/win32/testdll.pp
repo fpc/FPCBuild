@@ -6,9 +6,9 @@
 library testdll;
 
 function GetModuleFileName(hModule:longint;lpszPath:pchar;cchPath:longint):longint;
- external 'kernel32' name 'GetModuleFileNameA';
+  stdcall; external 'kernel32' name 'GetModuleFileNameA';
 procedure beep(ID:longint);
- external 'user32' name 'MessageBeep';
+  stdcall; external 'user32' name 'MessageBeep';
 
 var
   teststr : string;
