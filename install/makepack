@@ -36,9 +36,8 @@ HOSTOS=`uname -s | tr "[:upper:]" "[:lower:]"`
 MAKE=make
 
 case "$HOSTOS" in
- *BSD*) MAKE=gmake
-  ;;
- *bsd*) MAKE=gmake
+ *freebsd*) MAKE=gmake
+	EXTRAOPT="-Fl/usr/local/lib -Fl/usr/X11R6/lib  -dFREEBSD5"
   ;;
 esac
 
@@ -118,7 +117,7 @@ fi
 
 # Build everything using the makefiles
 ${MAKE} distclean CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS
-${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS
+${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}"
 if [ $? != 0 ]; then
   echo "Failed to make distribution archive."
   exit 1
