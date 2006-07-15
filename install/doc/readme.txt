@@ -177,13 +177,14 @@ Suggestions, Help ...
 ---------------------
 e-mail: fpc-devel@lists.freepascal.org (bugs, developer related questions)
 e-mail: fpc-pascal@lists.freepascal.org (general pascal related questions)
-web forum: http://community.freepascal.org:10000 (all questions)
 
 Both these adresses are for mailing lists. If you're not subscribed,
 be sure to mention this fact when sending questions to these lists,
 so that people sending answers know about it and send you a copy.
 Information about available lists and subscription can be found
 on http://lists.freepascal.org/mailman/listinfo
+
+Web forum: http://community.freepascal.org:10000 (all questions)
 
 WWW: http://www.freepascal.org
 FTP: ftp://ftp.freepascal.org/fpc
