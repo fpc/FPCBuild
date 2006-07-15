@@ -10,10 +10,10 @@
 
 Please also read the platform specific README file, if it exists.
 
-This package contains a freeware 32-bit/64-bit pascal compiler for several
-platforms. The language and the runtime library are almost compatible with
-Turbo Pascal 7.0 and recent Delphi releases. There is also partial support
-for the Macintosh pascal dialect.
+This package contains an advanced freeware 32-bit/64-bit pascal compiler for
+several platforms. The language and the runtime library are almost compatible
+with Turbo Pascal 7.0 and recent Delphi releases. There is also partial
+support for the Macintosh pascal dialect.
 
 Free Pascal 2.0.4 is currently available for the following platforms:
 - Linux-i386
@@ -44,6 +44,8 @@ free to contact us, e-mail addresses are listed below.
 
 - high speed compiler
 - fully 32 or 64-bit code
+  - 32 bit compiler can be on x86_64 Linux distributions to compile 32 bit
+    applications
 - language features:
   - almost fully compatible with Borland Pascal and Borland Delphi
   - ansi strings
@@ -71,12 +73,20 @@ free to contact us, e-mail addresses are listed below.
   - Netwide assembler (Nasm)
   - Microsoft Assembler/Turbo Assembler (Masm/Tasm)
   - Watcom assembler (wasm)
+- internal assembler for ultra fast object file generation
 - can call external C code
+  - h2pas utility to convert .h files to Pascal units
 - smartlinking (not yet supported under Mac OS X)
 - support for the GNU debugger
-- IDE (not all platforms include debugger integrated in IDE)
+- integrated development environment
+  - powerfull user friendly Wordstar compatible multi file editor
+  - context sensitive help supports help files in HTML, Windows HLP and Borland
+    TPH format.
+  - debugger on most platforms
 - can create binaries running natively under both DOS and OS/2 (EMX version)
-
+- no need for Linux distribution specific binaries, programs you write run on
+  all distributions
+- high quality documentation
 
 ****************************************************************************
 * Minimum requirements
@@ -91,7 +101,7 @@ OS/2:
    OS/2 Warp v4.0 with FP 5 and above, WSeB, MCP or any eComStation version
    (OS/2 2.0/2.1 may work partly, but not supported)
 Linux:
- - system running a 2.0.x kernel
+ - system running a 2.2.x kernel
 FreeBSD:
 - FreeBSD 4.x system or 5.x system that has COMPAT_4 system (which is
   default)
@@ -167,6 +177,7 @@ Suggestions, Help ...
 ---------------------
 e-mail: fpc-devel@lists.freepascal.org (bugs, developer related questions)
 e-mail: fpc-pascal@lists.freepascal.org (general pascal related questions)
+web forum: http://community.freepascal.org:10000 (all questions)
 
 Both these adresses are for mailing lists. If you're not subscribed,
 be sure to mention this fact when sending questions to these lists,
