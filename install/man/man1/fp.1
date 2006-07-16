@@ -1,0 +1,167 @@
+.TH fp 1 "14 apr 2006" "Free Pascal" "Free Pascal IDE"
+.SH NAME
+fp \- Free Pascal Compiler (FPC) integrated development enviroment
+
+.SH SYNOPSIS
+
+.B "fp [options] [sourcefile]"
+.BR
+
+.SH DESCRIPTION
+This binary is the integrated development environment of the
+.I Free Pascal Compiler (FPC)
+which is an advanced
+.I Turbo Pascal
+and
+.I Delphi (7.0) 
+compatible multitarget Pascal compiler. The compiler engine is not based on GCC,
+but is completely standalone.
+.PP
+The compiler uses
+.BR LD (1)
+and can use
+.BR AS (1)
+(see parameter \-Aas), but also has its own binary object writer.
+.PP
+The current main targets are
+.I Go32V2
+(Dos DJGPP extender),
+.I Freebsd,
+.I Linux,
+.I MacOS,
+.I MacOSX,
+.I MorphOS,
+.I Netware,
+.I OS/2
+and
+.I Win32.
+The other targets (M68K compilers for Atari and Amiga) are either based on older
+versions of the compiler or are still in development.
+.PP
+This manpage is meant for quick\-reference only. FPC comes with a great (2000+ pages)
+manual, which is updated constantly, while this man page can be out of date.
+
+.SH Usage
+
+The user interface of the IDE has been designed to be similar to Turbo Pascal.
+It provides the user with a user friendly, but rather powerfull editor, an extensive
+on-line help system and a debugger.
+
+A text mode windowing system is the base of the user interface. The mouse is supported,
+but most people will use the keyboard. The user will usually open a few text editor
+windows in which he will design his program, during which he can regularily check and
+debug through the use of hot keys. The high speed of the compiler ensures that programmers
+can do this often and therefore allows speedy development of code.
+
+.SH Help files
+
+No help files are provided by default. The user must download the Free Pascal documentation
+in HTML format and install it into the IDE using the Help->Files menu. Turbo Pascal .tph
+files can also be installed in this menu and can be usefull for source code that ships with
+.tph files as documentation.
+
+.SH Character sets
+
+The IDE has been designed for VGA text mode fonts. These fonts allow visually more
+interresting text modes than the the VT100 fonts normally used on Unix systems and
+also more portable, since most operating systems use VGA character sets for their
+text modes.
+
+When running on a VT100 compatible terminal, some emulation will occur. Internally the
+IDE will think it is running on a VGA text mode font (most likely code page 850), while
+all characters will (in the case of code page 850) be converted to Latin-1 and VT100
+alternate character set characters.
+
+The Linux console can do VGA fonts and therefore the IDE can be viewed as it was intended
+on it. The Linux console mode supports the all of the VGA character set through the
+/dev/vcsa* devices and most of it through normal escape sequences. To prevent bad user
+experiences, the IDE has been made rather aggressive in using VGA character sets. First
+it will determine the actual console number you are running on (even if you run on a pty,
+like in Midnight Commander). Then the IDE will open the /dev/vcsa* device belonging to
+that console. If permission is denied the IDE will call the grab_vcsa utility, which
+is a setuid root utility which will grant permissions to the vcsa device.
+
+In case the vcsa device is not available, the IDE will send escape codes to enable the
+VGA font. In this mode a few characters in the low 32 ascii positions are unavailable,
+but mainly since the full set of line drawing characters is available the user will
+notice few differences.
+
+The Linux frame buffer device and the Free Pascal IDE are an excellent combination.
+With fbdev it is possible to use text mode resolutions higher than the normal 80x25, which
+allows the programmer to see a lot more code at a time.
+
+The Linux console allows the user to load user defined fonts. If you do this, such a font
+must have a VGA styled layout, i.e. code page 437/850/... (Note that this does not mean
+your file system has to use such an encoding, the Linux console handles the conversion
+from ISO-8859-1, UTF-8 or whatever to the font.) Since the default fonts have a code page
+437 layout, only users that have experimented with fonts will have to take care here.
+
+The IDE recognizes the environment variable CONSOLEFONT_CP in which you can specify the
+code page of the console font. Recognized values are currently "cp437" and "cp850".
+If you do not set this variable code page 437 will be assumed. Currently, if you use
+code page 850 without setting the variable there won't be a huge impact at this time,
+the characters that the IDE uses exist in both code pages.
+
+Note: KOI8-R/KOI8-U fonts have all required characters, but the line drawing characters
+are not in the right positions. We may support this in the future, but currently do not.
+
+.SH Keyboard
+
+Unix keyboard handling is a complicated matter because not all key combinations generate
+escape codes, different terminal emulators generate different escape codes, and some
+key combinations may trigger actions in the X11 Window manager.
+
+Because the Free Pascal IDE's user interface is designed to be similar to Turbo Pascal,
+including keyboard commands, you may experience one of the above situations.
+Some alternative keys have been added, and perhaps more will have to be added in the
+future.
+
+When running on the Linux console, the keyboard is reprogrammed for full functionality.
+
+Here are some common problems you may encounter and possible work-arounds:
+
+.BR Problem:
+Selecting text with shift+arrow keys does not work.
+
+.BR Solution:
+Use the mouse
+
+.BR Solution:
+Use "ctrl+k b" to mark start of block,"ctrl+k e" to mark end of block,
+"ctrl+k h" to hide the block.
+
+.BR Problem:
+Cut/Copy/Paste keys do not work.
+
+.BR Solution:
+Go to Options->Environment->Keyboard & mouse and enable the Microsoft styled
+Cut/Copy/Paste keys.
+
+.BR Solution:
+Use the menu bar.
+
+.BR Problem:
+Alt key does not work.
+
+.BR Solution:
+Press Escape first, then the key without alt. Note that this is not possible on
+the Linux console, but the Alt key does work there.
+
+If for whatever reason the reprogrammed Linux console keyboard is not restored
+to the original state after exit (IDE crash?), you can do something like
+"/etc/init.d/kbd start" to reprogram it into its normal behaviour.
+
+.SH AUTHORS
+Free Pascal development team (see http://www.freepascal.org)
+
+.SH SEE ALSO
+.BR  grab_vcsa
+.BR  fpc
+.BR  fpc.cfg (5)
+.BR  ppdep (1)
+.BR  ppudump (1)
+.BR  ppumove (1)
+.BR  ptop (1)
+.BR  h2pas (1)
+.BR  ld (1)
+.BR  as (1)

@@ -1,0 +1,68 @@
+.TH grab_vcsa 1 "22 jan 2006" "Free Pascal" "Linux console vcsa grabber"
+.SH NAME
+grab_vcsa \- Linux console vcsa grabber
+
+.SH SYNOPSIS
+
+.B "grab_vcsa"
+.BR
+
+.SH DESCRIPTION
+The
+.I Linux
+console allows text mode
+.I video buffer access
+. For each tty device
+(/dev/tty0..31) there exist two devices (/dev/vcs0..31) and (/dev/vcsa0..31).
+These devices are two different representations of the content of the console.
+
+When you login on the Linux console, your tty device is changed owner to you,
+so you can read/write it. When you logout it is takes from you. This does not
+happen with the vcs and vcsa devices, i.e. you cannot access the video buffer
+of your own tty.
+
+Unfortunately there is a lot of reason to use the text mode video buffer. For
+instance, it is not possible to get access to the full 256 characters the VGA
+adapter can display without using the text mode video buffer (Linux emulates
+the vt100 character set which does not have all VGA characters). This
+annoyance severely limits the porting possibilities to Linux of software
+that was written with a VGA character set in mind.
+
+.B grab_vcsa
+is a setuid root program that, when called will change the owner of the vcs
+and vcsa devices to you, after a series of security checks have been performed.
+
+It is not necessary to change the permissions back again (this would be pointless
+since a user could kill a imaginary release_vcsa program before it can do its
+work). The permissions are automatically reverted on logout.
+
+.B grab_vcsa
+is used by the Free Pascal video unit. The video unit allows programmers to
+develop portable programs accross Dos, Linux, FreeBSD, Windows, OS/2 and
+other operating systems while they can still assume being able to use the
+full VGA character set.
+
+.SH RETURN CODES
+.B  grab_vcsa
+has the following return codes:
+.TP
+.BR 0
+Success
+.TP
+.BR 1
+You are not running on the Linux console
+.TP
+.BR 2
+Error while statting tty.
+.TP
+.BR 3
+Error while executing chown.
+.TP
+.BR 4
+Error while executing chmod.
+.TP
+.BR 4
+You do not own your own tty.
+
+.SH AUTHOR
+Daniel Mantione <daniel.mantione@freepascal.org>
