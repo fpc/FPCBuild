@@ -284,6 +284,13 @@ renametoshort:
         -mv $(PKGUNITSPRE)libpng$(ZIPSUFFIX).zip ulpng$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)opengl$(ZIPSUFFIX).zip uogl$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)graph$(ZIPSUFFIX).zip ugrph$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)sqlite$(ZIPSUFFIX).zip usqlt$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)cdrom$(ZIPSUFFIX).zip ucdr$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fpgtk$(ZIPSUFFIX).zip ufpgt$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)ibase$(ZIPSUFFIX).zip uibas$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)mysql$(ZIPSUFFIX).zip umysq$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)oracle$(ZIPSUFFIX).zip uora$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)postgres$(ZIPSUFFIX).zip upgr$(ZIPSUFFIXSHORT).zip
 
 shortsrc:
         $(MAKE) renametoshort ZIPSUFFIX=$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
