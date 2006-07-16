@@ -6,8 +6,10 @@
 ******************************************************************************
                               What's New in 2.0.4
 ******************************************************************************
-This is a bug fix release, so don't expect a big new feature list here. Most
-of the more than 1000 changes made to 2.0.4 since 2.0.2 are fixes for some issues.
+
+More than 1000 changes have been made to 2.0.4 since 2.0.2. As this is a bug
+fix release, most are fixes for some issues, but new features and performance
+enhancements have been added as well.
 
 Compiler:
   * Lot of small bugs and compatibility fixes
@@ -16,16 +18,23 @@ Compiler:
   * Improved and fixed PIC code generation
   * Improved register allocation
   * Improved ansistring string code generation
-  * Several alignment values increased so the requirements of modern processors are met better
+  * Several alignment values increased so the requirements of modern processors
+    are met better
   * WINDOWS defined on all windows platforms (Win32, Win64, WinCE)
-  * Parameter order for methods with structured results changed (result pointer<->self swapped), 
-    please check such methods if they are implemented in assembler
+  * Parameter order for methods with structured results changed
+    (result pointer<->self swapped), please check such methods if they are
+    implemented in assembler
+  * i386 compiler no longer needs environment variables set when installed on
+    an x86_64 Linux distribution
   
 RTL:
   * Lot of small bug and compatibility fixes
   * 64 bit file pointer support on most targets
+  * Faster integer to string conversion
+  * Endian conversion routines added
   * Improved heap manager
   * Improved ansistring routines
+  * PowerPC: Power3/4/5/PPC970 compatibility
 
 FCL:
   * Lot of small bugs and compatibility fixes
@@ -34,17 +43,24 @@ FCL:
 Packages:
   * Lot of small bugs and compatibility fixes
   * Improved data base support
-  * Apple universal interfaces
+  * Apple universal interfaces added
+
+Free Vision:
+  * New outline unit
+  * Small bug fixes
+  * Unix: much improved video and keyboard handling
+  * Unix: Free Vision applications no longer need to link to libc
+  * Linux: grab_vcsa utility to ensure vcsa access
   
 IDE:
   * Small bug fixes
-  * Improved dialog layout
-  * Unix: improved support for various terminals
+  * Redesigned directories window
+  * Reorganised compiler options window
+  * Option to use Ctrl+X,C,V for cut/copy/paste
 
 Misc:
-  * Improved docs
+  * Improved documentation
   * Better cross compilation support
-  * Bug fixes for FreeVision  
 
 ******************************************************************************
                               What's New in 2.0.2
@@ -308,7 +324,8 @@ Compiler:
 
 RTL:
   * more improvements for unix runtime library
-  * using FPC_USE_LIBC allows to compile an rtl which uses libc instead of syscalls
+  * using FPC_USE_LIBC allows to compile an rtl which uses libc instead of
+    syscalls
   + System.Initialize
   + Sysutils.ExecuteProcess
   + System.WideStringManager
@@ -334,8 +351,8 @@ Compiler:
   + full widestring support
   + default parameters
   + cross name scope overloading
-  + support for the PowerPC, Sparc and ARM processor, installation packages will follow within the
-    next weeks
+  + support for the PowerPC, Sparc and ARM processor, installation packages
+    will follow within the next weeks
   + new and more sophisticated register allocator
   + inlining across units
   + register calling conventions
@@ -372,4 +389,5 @@ IDE:
 
 Misc:
   * improved cross compilation
-  
+
+
