@@ -117,7 +117,7 @@ fi
 
 # Build everything using the makefiles
 ${MAKE} distclean CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS
-${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}"
+${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" CREATESMART=1 LINKSMART=1 
 if [ $? != 0 ]; then
   echo "Failed to make distribution archive."
   exit 1
