@@ -60,14 +60,14 @@ utils. Provided units are the runtime library (RTL), free component library
 FPCDIR=
 NEWPP=`pwd`/compiler/%{ppcname}
 NEWFPDOC=`pwd`/utils/fpdoc/fpdoc
-	make compiler_cycle
+	make compiler_cycle CREATESMART=1 LINKSMART=1
 	make rtl_clean rtl_smart FPC=${NEWPP}
 	make packages_base_smart FPC=${NEWPP}
 	make fcl_smart FPC=${NEWPP}
 	make fv_smart FPC=${NEWPP}
 	make packages_extra_smart FPC=${NEWPP}
-	make ide_all FPC=${NEWPP}
-	make utils_all FPC=${NEWPP}
+	make ide_all FPC=${NEWPP} CREATESMART=1 LINKSMART=1
+	make utils_all FPC=${NEWPP} CREATESMART=1 LINKSMART=1
 if [ -z ${NODOCS} ]; then
 	make -C fpcdocs pdf FPC=${NEWPP} FPDOC=${NEWFPDOC}
 fi
