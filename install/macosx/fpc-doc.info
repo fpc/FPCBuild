@@ -1,0 +1,32 @@
+Package: fpc-doc
+Version: 2.0.4
+Revision: 1
+Architecture: powerpc
+Enhances: fpc
+Source: ftp://ftp.freepascal.org/pub/fpc/beta/2.0.4-rc2/docs/doc-pdf.tar.gz
+Source-MD5: 9c77a3b71dd869319881fdff3d0ebf41
+Source2: ftp://ftp.freepascal.org/pub/fpc/beta/2.0.4-rc2/docs/doc-html.tar.gz
+Source2-MD5: 4a9130e8955f010b324a006a3b6fdabf
+SourceRename: %n-%v-pdf.tar.gz
+Source2Rename: %n-%v-html.tar.gz
+SourceDirectory: .
+CompileScript: <<
+<<
+InstallScript: <<
+mkdir -p %i/share/doc/fpc-%v
+install -d -m 755 %i/share/doc/fpc-%v/pdf
+install -d -m 755 %i/share/doc/fpc-%v/html
+install -c -m 644 share/doc/fpdocs-%v/*.pdf %i/share/doc/fpc-%v/pdf
+rm share/doc/fpdocs-%v/*.pdf
+mv share/doc/fpdocs-%v/* %i/share/doc/fpc-%v/html
+<<
+License: GPL
+Description: Free Pascal compiler documentation
+DescDetail: <<
+Free Pascal compiler documentation as html and pdf.
+Files are in /PREFIX/share/doc/fpc-%v/.
+Or view the documentation online at: 
+http://www.freepascal.org/docs.html
+<<
+Homepage: http://www.freepascal.org
+Maintainer: Karl-Michael Schindler <karl-michael.schindler@physik.uni-halle.de>

@@ -1,40 +1,75 @@
 Package: fpc
-Version: 1.9.8
+Version: 2.0.4
 Revision: 1
-Source: ftp://ftp.freepascal.org/mirrors/fpc/beta/source-%v/%n-%v.source.tar.gz
-Source-MD5: 9b459ccf4273bde8e6f5e32cbd488ecc
-Source2: ftp://ftp.freepascal.org/mirrors/fpc/beta/source-%v/%n-%v.darwin.bootstrap.tar.gz
-Source2-MD5: 632dfd942aeea0155dea571654e86eb9
-SourceDirectory: fpc
+Architecture: powerpc
+Recommends: fpc-doc
+Source: ftp://ftp.freepascal.org/pub/fpc/beta/2.0.4-rc2/source/fpcbuild_2_0_4_rc2.zip
+Source-MD5: a05540b972881dce27e223ad53627a23
+Source2: ftp://ftp.freepascal.org/pub/fpc/beta/%v-rc2/source/fpc-%v.%m-darwin.bootstrap.tar.bz2
+Source2-MD5: 55a63489f4ef5cde8faa6a61ec8bd9b6
+SourceDirectory: fpcbuild_2_0_4_rc2_exp/fpcsrc
+# ***** SourceDirectory: fpc-src-%v/fpcsrc
 CompileScript: <<
-# replace /sw with the correct path in the default fpc.cfg file
-sed -e 's|/PREFIX|%p|g' -e 's|VERSION|%v|g' <%b/../fpc.cfg.in >%b/../fpc.cfg
+#!/bin/sh -e
+# create the default fpc.cfg file
+cat >%b/../../fpc.cfg <<EOFCFG
+-Fu%p/lib/fpc/%v/units/%m-darwin/*
+-Fl/usr/lib
+-Fl%p/lib
+-O1
+-vim
+EOFCFG
 # compile the stuff
-make clean PP=%b/../ppcppc
-make compiler_cycle PP=%b/../ppcppc
-make -C rtl PP=%b/compiler/ppcppc OPT="-gl -g"
-make packages_base_all fcl PP=%b/compiler/ppcppc OPT="-gl -g"
-make packages_extra_all PP=%b/compiler/ppcppc OPT="-gl -g"
-make utils PP=%b/compiler/ppcppc DATA2INC=%b/utils/data2inc OPT="-gl -g"
-make fv ide PP=%b/compiler/ppcppc OPT="-gl -g"
+# ready for later addition of x86 compiler
+  if [ "%m" = "powerpc" ]; then ppcarch="ppcppc" ; else ppcarch="ppc386" ; fi
+  make -C rtl             PP=%b/../../$ppcarch OPT="-gl -g"
+  make compiler           PP=%b/../../$ppcarch OPT="-gl -g"
+  make packages_base_all  PP=%b/compiler/$ppcarch OPT="-gl -g"
+  make fcl                PP=%b/compiler/$ppcarch OPT="-gl -g"
+  make packages_extra_all PP=%b/compiler/$ppcarch OPT="-gl -g"
+  make utils              PP=%b/compiler/$ppcarch OPT="-gl -g" DATA2INC=%b/utils/data2inc
+  make fv ide             PP=%b/compiler/$ppcarch OPT="-gl -g"
 <<
 InstallScript: <<
-make compiler_install rtl_install utils_install INSTALL_PREFIX=%i PP=%b/compiler/ppcppc FPCMAKE=%b/utils/fpcm/fpcmake
-make fcl_install packages_install INSTALL_PREFIX=%i PP=%b/compiler/ppcppc FPCMAKE=%b/utils/fpcm/fpcmake
-make fv_install ide_install INSTALL_PREFIX=%i PP=%b/compiler/ppcppc FPCMAKE=%b/utils/fpcm/fpcmake
-mkdir %i/etc
-install -c -m 644 %b/../fpc.cfg %i/etc/
+#!/bin/sh -e
+# ready for later addition of x86 compiler
+  if [ "%m" = "powerpc" ]; then ppcarch="ppcppc" ; else ppcarch="ppc386" ; fi
+  make compiler_install             INSTALL_PREFIX=%i PP=%b/compiler/$ppcarch FPCMAKE=%b/utils/fpcm/fpcmake
+  make rtl_install utils_install    INSTALL_PREFIX=%i PP=%b/compiler/$ppcarch FPCMAKE=%b/utils/fpcm/fpcmake
+  ln -sf ../lib/fpc/%v/$ppcarch %i/bin/$ppcarch
+  make fcl_install packages_install INSTALL_PREFIX=%i PP=%b/compiler/$ppcarch FPCMAKE=%b/utils/fpcm/fpcmake
+  make fv_install ide_install       INSTALL_PREFIX=%i PP=%b/compiler/$ppcarch FPCMAKE=%b/utils/fpcm/fpcmake
+  make -C ../install/man            INSTALL_PREFIX=%i/share
+  make -C ../install/doc            INSTALL_PREFIX=%i/share PP=%b/compiler/$ppcarch 
+  mkdir %i/etc
+  install -c -m 644 %b/../../fpc.cfg %i/etc/
 <<
 ConfFiles: %p/etc/fpc.cfg
-License: GPL
+License: GPL/LGPL
 Description: Free Pascal (aka FPK Pascal) compiler
 DescDetail: <<
-Free Pascal (aka FPK Pascal) is a 32 or 64 bit (from 1.9.6) pascal compiler. It is available for different processors Intel x86, Amd64/x86Ê64 (from 1.9.6), PowerPC (from 1.9.2), Sparc (from 1.9.6) and Motorola 680x0 (1.0.x only). The following operating systems are supported Linux, FreeBSD, NetBSD, MacOSX/Darwin, MacOS classic, DOS, Win32, OS/2, BeOS, SunOS (Solaris), Netware (libc and classic), QNX and Classic Amiga. 
+Free Pascal (aka FPK Pascal) is a 32 and 64 bit professional Pascal
+compiler. It is available for different processors: Intel x86, Amd64/x86
+64, PowerPC, Sparc. The following operating systems are supported: Linux,
+FreeBSD, Mac OS X/Darwin, Mac OS classic, DOS, Win32, OS/2, Netware (libc
+and classic) and MorphOS. 
 
-The language syntax is semantically compatible with TP 7.0 as well as most versions of Delphi (classes, rtti, exceptions, ansistrings, widestrings, interfaces). Furthermore Free Pascal supports function overloading, operator overloading, global properties and other such features.
+The language syntax is semantically compatible with TP 7.0 as well as most
+versions of Delphi (classes, rtti, exceptions, ansistrings, widestrings,
+interfaces). Furthermore Free Pascal supports function overloading,
+operator overloading, global properties and other such features.
+<<
+DescUsage: <<
+ get help with: fpc -?
+ compile and link a Pascal file with: fpc FILENAME
+ For setting up the Free Pascal IDE see: 
+    http://www.freepascal.org/wiki/index.php/Textmode_IDE
+ For using Free Pascal with Xcode see:
+    http://www.surtec.com/~rj/Xcode-FreePascal
+ For more documentation about Free Pascal in HTML and pdf, install fpc-doc
 <<
 DescPort: <<
- Nothing special, yet. ToDo: .fpc.cfg, fcl, docs, split of packages, fv&ide, lazarus.
+ Nothing special, yet. ToDo: lazarus and extra package with dependent C libraries (gtk ...) .
 <<
 Homepage: http://www.freepascal.org
-Maintainer: Karl-Michael Schindler <schindler@physik.uni-halle.de>
+Maintainer: Karl-Michael Schindler <karl-michael.schindler@physik.uni-halle.de>
