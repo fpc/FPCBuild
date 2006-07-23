@@ -149,6 +149,9 @@ zipinstall: $(BUILDSTAMP)
 singlezipinstall: $(BUILDSTAMP)
         $(MAKE) fpc_zipinstall ZIPTARGET=install ZIPNAME=fpc-$(PACKAGE_VERSION)
 
+crosszipinstall: $(BUILDSTAMP)
+        $(MAKE) fpc_zipinstall CROSSINSTALL=1 ZIPTARGET=installbase ZIPNAME=base
+        $(MAKE) -C fpcsrc zipinstallother CROSSINSTALL=1
 
 ##########################################################################
 # Docs
