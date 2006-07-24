@@ -39,10 +39,14 @@ RTL:
 FCL:
   * Lot of small bugs and compatibility fixes
   * Improved data base support
-
+  * Improved database support
+  * The sqlitedataset, interbase, fpodbc, ddg, mysqldb3 and mysqldb4 units 
+    are obsolete and replaced by the sqldb components
+  * Oracle support added
+    
 Packages:
   * Lot of small bugs and compatibility fixes
-  * Improved data base support
+  * Improved database support
   * Apple universal interfaces added
 
 Free Vision:
