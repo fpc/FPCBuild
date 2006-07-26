@@ -26,7 +26,7 @@ Compiler:
     implemented in assembler
   * i386 compiler no longer needs environment variables set when installed on
     an x86_64 Linux distribution
-  
+
 RTL:
   * Lot of small bug and compatibility fixes
   * 64 bit file pointer support on most targets
@@ -38,12 +38,11 @@ RTL:
 
 FCL:
   * Lot of small bugs and compatibility fixes
-  * Improved data base support
   * Improved database support
-  * The sqlitedataset, interbase, fpodbc, ddg, mysqldb3 and mysqldb4 units 
+  * The sqlitedataset, interbase, fpodbc, ddg, mysqldb3 and mysqldb4 units
     are obsolete and replaced by the sqldb components
   * Oracle support added
-    
+
 Packages:
   * Lot of small bugs and compatibility fixes
   * Improved database support
@@ -55,7 +54,7 @@ Free Vision:
   * Unix: much improved video and keyboard handling
   * Unix: Free Vision applications no longer need to link to libc
   * Linux: grab_vcsa utility to ensure vcsa access
-  
+
 IDE:
   * Small bug fixes
   * Redesigned directories window
@@ -80,13 +79,13 @@ Compiler:
   * Embedded resource support for targets using elf32 executable format
   + Type checking of compile time expressions
   + Mode MacPas: Support for Mac style objects
-  + Mode MacPas: Compile time variables can be given on command line 
-  
+  + Mode MacPas: Compile time variables can be given on command line
+
 RTL:
   * Lot of small bugs and compatibility fixes
   * Enhanced variant support
   * Embedded resource support for targets using elf32 executable format
-  
+
 FCL:
   * Lot of small bugs and compatibility fixes
   * Improved SqlDB package
@@ -94,7 +93,7 @@ FCL:
 Packages:
   * Lot of small bugs and compatibility fixes
   * Improved data base support
-  
+
 IDE:
   * Small bug fixes
 
@@ -114,18 +113,18 @@ Compiler:
   * Updated language files
   * Improved warnings regarding uninitialised variables
   * Lot of small bugs and compatibility fixes
-  
+
 RTL:
   * Several widestring and unicode fixes
   * Heavily improved variant support
   * Improved threading support
   * Improved 64 bit compatibility
   * Lot of small bugs and compatibility fixes
-  
+
 FCL:
   * Improved data base support
   * Lot of small bugs and compatibility fixes
-  
+
 Packages:
   + Jedi windows api is part of the packages now
   + Windows specific units of the rtl have been moved to packages/base/winunits
@@ -135,12 +134,12 @@ Packages:
 
 IDE:
   * Small bug fixes
-  
+
 Misc:
   * Improved docs
   * Bug fixes for FreeVision
-  
-  
+
+
                         Version 1.9.8 aka 2.0.0-Rc2
 
 ******************************************************************************
@@ -185,18 +184,18 @@ Packages:
   + gtk2 interface units
   * 64 bit compatibility fixes
   * Lot of small bugs and compatibility fixes
-  
+
 IDE:
   + vector unit window
   * x86-64 asssembler debugging support improved
   * Sparc asssembler debugging support improved
   * Some bug fixes
-  
+
 Misc:
   + txt output to fpdoc added
   * some fpdoc bugs fixes
   + demo for macos
-  
+
 
                         Version 1.9.6 aka 2.0.0-Rc1
 
