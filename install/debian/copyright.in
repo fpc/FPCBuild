@@ -5,8 +5,7 @@ Debian maintainer:
   Carlos Laviola <claviola@debian.org>
 
 With sources obtained from:
-  'cvs -d :pserver:cvs@cvs.freepascal.org:/FPC/CVS -z3 co -r RELEASE_2_0_0 fpc'
-  (password: 'cvs')
+ 'svn co http://svn.freepascal.org/svn/fpcbuild/tags/%{fpcsvnpath}'
 
 The files and libraries are released under the terms of the GNU Library
 General Public License, which can be found in the file
