@@ -3,7 +3,7 @@ The Free Pascal Compiler for Debian
 
 The source tree was checked out from the subversion repository at
 svn.freepascal.org with
- 'svn co http://svn.freepascal.org/svn/fpcbuild/tags/%{fpcsvntag}'
+ 'svn co http://svn.freepascal.org/svn/fpcbuild/tags/%{fpcsvnpath}'
 
 Only PDF docs are built as shipped. You may want to make the HTML files with
 tex4ht by yourself and eventually adapt the doc-base file.
@@ -33,7 +33,7 @@ HTTP Mirrored at
 FTP Mirrored at
   http://fpc.planetmirror.com/pub/fpc/
   ftp://gd.tuwien.ac.at/languages/pascal/fpc/
-  ftp://ftp.de.freepascal.org/pub/fpc/
+  ftp://ftp.hu.freepascal.org/pub/fpc/
   ftp://ftp.uni-erlangen.de/pub/mirrors/freepascal/
   http://mirror.mirimar.net/freepascal/
   http://cdn.mirror.garr.it/mirrors/freepascal/
