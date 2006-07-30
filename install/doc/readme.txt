@@ -33,10 +33,12 @@ The following platforms might be provided later:
 
 There are other platforms which are more or less working, but there is
 currently no maintainer for them and thus we cannot provide adequate
-support. DOS (i386) using the GO32v2 dos extender is one such example,
-other examples would include other BSD variants, etc. If you want to change
-this and create and maintain versions for other platforms and targets, feel
-free to contact us, e-mail addresses are listed below.
+support. DOS (i386) using the GO32v2 DOS extender is one such example,
+other examples would include other BSD variants, etc., and it's at least
+partly relevant for platforms marked as possibly provided later in the list
+above. If you want to change this situation and create and maintain
+versions for other platforms and targets, feel free to contact us, e-mail
+addresses are listed below.
 
 
 ****************************************************************************
@@ -119,10 +121,11 @@ Mac OS (classic)
 
 Download the distribution package (fpc-2.0.4.i386-win32.exe) and run it
 - it is a self-extracting installer, so just follow the instructions
-to install it. Don't forget to set the path as mentioned by the install
-program.
+to install it. Don't forget to set the PATH environment variable if you
+install FPC under Win95/98/ME (the installer should do it automatically
+under WinNT/2k/XP).
 
-To test the compiler, change to the demo directory of the compiler
+To test the compiler, change to the demo\texts directory of the FPC tree
 and type
         fpc hello
         hello
@@ -139,7 +142,7 @@ Start the install program INSTALL.EXE and follow the instructions.
 
 Don't forget to set the path as mentioned by the install program.
 
-To test the compiler, change to the demo directory of the compiler
+To test the compiler, change to the demo\texts directory of the FPC tree
 and type
         fpc hello
         hello
@@ -153,7 +156,7 @@ Download fpc-2.0.4.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
-To test the compiler, change to the demo directory of the compiler
+To test the compiler, change to the demo/texts directory of the FPC tree
 and type
         fpc hello
         hello
