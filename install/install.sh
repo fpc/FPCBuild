@@ -197,6 +197,7 @@ if [ ! -w $PREFIX ]; then
   PREFIX=$HOME/fpc-$VERSION
 fi
 ask "Install prefix (/usr or /usr/local) " PREFIX
+eval PREFIX=$PREFIX
 makedirhierarch $PREFIX
 
 # Set some defaults.
