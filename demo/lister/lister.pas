@@ -262,7 +262,7 @@ Begin
                          End
                        Else
                          Begin
-                           textout(1,1,+' is a directory');
+                           textout(1,1,' is a directory');
                          End;
                       Forced:=True;
                      End;
