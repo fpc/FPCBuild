@@ -2,13 +2,13 @@ Name: fpc
 Version: %FPCVERSION%
 Release: 0
 ExclusiveArch: i386 i586 i686 ppc amd64 x86_64
-License: GPL
+License: GPL and modified LGPL
 Group: Development/Languages
 Source: %{name}-%{version}-src.tar.gz
 Summary: Free Pascal Compiler
 Packager: Peter Vreman (peter@freepascal.org)
 URL: http://www.freepascal.org/
-BuildRoot: %{_tmppath}/fpc-build
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: fpc
 
 %define fpcdir %{_libdir}/fpc/%{version}
@@ -41,7 +41,7 @@ BuildRequires: fpc
 
 
 %description
-The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32bit
+The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64bit
 Pascal Compiler. It comes with fully TP 7.0 compatible run-time library.
 Some extensions are added to the language, like function overloading. Shared
 libraries can be linked. Basic Delphi support is already implemented (classes,
@@ -73,9 +73,7 @@ if [ -z ${NODOCS} ]; then
 fi
 
 %install
-if [ %{buildroot} != "/" ]; then
-	rm -rf %{buildroot}
-fi
+rm -rf %{buildroot}
 
 FPCDIR=
 NEWPP=`pwd`/compiler/%{ppcname}
@@ -108,27 +106,14 @@ fi
 
 
 %clean
-	make compiler_clean
-	make rtl_clean
-	make packages_clean
-	make fcl_clean
-	make fv_clean
-	make ide_clean
-	make utils_clean
-if [ -z ${NODOCS} ]; then
-	make -C fpcdocs clean
-fi
-
-if [ %{buildroot} != "/" ]; then
-	rm -rf %{buildroot}
-fi
+rm -rf %{buildroot}
 
 %post
 # Create a version independent config
 %{fpcdir}/samplecfg %{_libdir}/fpc/\$fpcversion
 
 %files
-%defattr(-, root, root)
+%defattr(-, root, root,-)
 %{_bindir}/*
 %{fpcdir}
 %doc %{docdir}/NEWS
