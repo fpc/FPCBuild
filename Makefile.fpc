@@ -481,7 +481,7 @@ INNODIR=$(BUILDDIR)/inno
 INNOWRAPPER=$(subst /,$(PATHSEP),$(DIST_DESTDIR)/fpcinno$(SRCBATCHEXT))
 INNOCMD_CDINNO:=cd $(subst /,$(ZIPPATHSEP),$(INNODIR))
 INNOCMD_CDBASE:=cd $(subst /,$(ZIPPATHSEP),$(BASEDIR))
-INNOCMD_ISCC:=$(ISCCPROG) $(INNODIR)/fpc.iss
+INNOCMD_ISCC:="$(ISCCPROG)" $(INNODIR)/fpc.iss
 FPCISSSUBST=-d BUILDDIR=$(subst /,$(PATHSEP),$(INNODIR))
 ifdef NODOCS
 FPCISSSUBST+=-d DisableDocs=;
@@ -501,7 +501,10 @@ ifeq ($(wildcard fpcsrc/libgdb/win32/libgdb.a),)
         @exit 1
 endif
 
-innobuild: innocheck build
+fpcsrc/utils/rmcvsdir$(EXEEXT): fpcsrc/utils/rmcvsdir.pp
+        $(MAKE) -C fpcsrc/utils rmcvsdir$(EXEEXT) FPC=$(BASEDIR)/fpcsrc/compiler/ppc386
+
+innobuild: innocheck build fpcsrc/utils/rmcvsdir$(EXEEXT)
         $(DELTREE) $(INNODIR)
         $(MKDIR) $(INNODIR)
         $(COPYTREE) demo $(INNODIR)
@@ -509,6 +512,7 @@ ifndef NODOCS
         unzip -d $(INNODIR) doc-pdf.zip
 endif
         $(MAKE) install INSTALL_PREFIX=$(INNODIR)
+        fpcsrc/utils/rmcvsdir$(EXEEXT) $(INNODIR)
         fpcsrc/compiler/utils/fpcsubst -i install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST)
         $(INNOCMD_ISCC)
         $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
