@@ -198,7 +198,8 @@ if [ ! -w $PREFIX ]; then
 fi
 ask "Install prefix (/usr or /usr/local) " PREFIX
 # Support ~ expansion
-export PREFIX=`eval echo $PREFIX`
+PREFIX=`eval echo $PREFIX`
+export PREFIX
 makedirhierarch $PREFIX
 
 # Set some defaults.
