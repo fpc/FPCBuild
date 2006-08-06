@@ -3,7 +3,7 @@
 # Free Pascal installation script for Unixy platforms.
 # Copyright 1996-2004 Michael Van Canneyt, Marco van de Voort and Peter Vreman
 #
-# Don't edit this file. 
+# Don't edit this file.
 # Everything can be set when the script is run.
 #
 
@@ -17,7 +17,7 @@ ask ()
 {
   askvar=$2
   eval old=\$$askvar
-  eval printf \""$1 [$old] : "\" 
+  eval printf \""$1 [$old] : "\"
   read $askvar
   eval test -z \"\$$askvar\" && eval $askvar=\'$old\'
 }
@@ -86,7 +86,7 @@ checkpath ()
    if [ $i = $ARG ]; then
      return 0
    fi
- done 
+ done
  return 1
 }
 
@@ -101,15 +101,15 @@ installbinary ()
   else
     FPCTARGET=`echo $2 | sed 's/-$//'`
     CROSSPREFIX=$2
-  fi  
-  
+  fi
+
   BINARYTAR=${CROSSPREFIX}binary.$1.tar
-  
+
   # conversion from long to short archname for ppc<x>
   case $FPCTARGET in
     m68k*)
       PPCSUFFIX=68k;;
-    sparc*) 
+    sparc*)
       PPCSUFFIX=sparc;;
     i386*)
       PPCSUFFIX=386;;
@@ -136,14 +136,14 @@ installbinary ()
       unztar binutils-${CROSSPREFIX}$1.tar.gz $PREFIX
     fi
   fi
-  
+
   # Install symlink
   rm -f $EXECDIR/ppc${PPCSUFFIX}
   ln -sf $LIBDIR/ppc${PPCSUFFIX} $EXECDIR/ppc${PPCSUFFIX}
-  
+
   echo "Installing utilities..."
   unztarfromtar $BINARYTAR ${CROSSPREFIX}utils.$1.tar.gz $PREFIX
-  
+
   # Should this be here at all without a big Linux test around it?
   if [ "x$UID" = "x0" ]; then
     chmod u=srx,g=rx,o=rx $PREFIX/bin/grab_vcsa
@@ -161,7 +161,7 @@ installbinary ()
   fi
   if yesno "Install packages"; then
     listtarfiles $BINARYTAR packages units
-    for f in $packages 
+    for f in $packages
     do
       if [ $f != ${CROSSPREFIX}units-fcl.$1.tar.gz ]; then
         p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
@@ -181,7 +181,7 @@ installbinary ()
 clear
 echo "This shell script will attempt to install the Free Pascal Compiler"
 echo "version $VERSION with the items you select"
-echo 
+echo
 
 # Here we start the thing.
 HERE=`pwd`
@@ -197,6 +197,9 @@ if [ ! -w $PREFIX ]; then
   PREFIX=$HOME/fpc-$VERSION
 fi
 ask "Install prefix (/usr or /usr/local) " PREFIX
+# Support ~ expansion
+PREFIX=`eval echo $PREFIX`
+export PREFIX
 makedirhierarch $PREFIX
 
 # Set some defaults.
@@ -206,7 +209,7 @@ EXECDIR=$PREFIX/bin
 OSNAME=`uname -s | tr A-Z a-z`
 
 BSDHIER=0
-case $OSNAME in 
+case $OSNAME in
 *bsd)
   BSDHIER=1;;
 esac
@@ -223,7 +226,7 @@ do
   target=`echo $f | sed 's+^.*binary\.\(.*\)\.tar$+\1+'`
   cross=`echo $f | sed 's+binary\..*\.tar$++'`
 
-  # cross install? 
+  # cross install?
   if [ "$cross" != "" ]; then
     if [ "`which fpc 2>/dev/null`" = '' ]; then
       echo "No native FPC found."
@@ -272,7 +275,7 @@ fi
 
 # The End
 echo
-echo End of installation. 
+echo End of installation.
 echo
 echo Refer to the documentation for more information.
 echo
