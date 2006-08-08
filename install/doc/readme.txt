@@ -103,7 +103,7 @@ Win32:
 OS/2:
  - OS/2 Warp v3.0 with one of late fixpaks - FP 35 should be fine,
    OS/2 Warp v4.0 with FP 5 and above, WSeB, MCP or any eComStation version
-   (OS/2 2.0/2.1 may work partly, but not supported)
+   (OS/2 2.0/2.1 currently not supported, not even for compiled programs)
 Linux:
  - system running a 2.2.x kernel
 FreeBSD:
