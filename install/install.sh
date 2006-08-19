@@ -8,7 +8,7 @@
 #
 
 # Release Version will be replaced by makepack
-VERSION=%version%
+VERSION=2.0.4
 
 # some useful functions
 # ask displays 1st parameter, and ask new value for variable, whose name is
@@ -215,11 +215,19 @@ case $OSNAME in
 esac
 
 SHORTARCH=$ARCHNAME
-
 FULLARCH=$ARCHNAME-$OSNAME
 DOCDIR=$PREFIX/share/doc/fpc-$VERSION
-DEMODIR=$DOCDIR/examples
 
+case $OSNAME in
+  freebsd)	
+     # normal examples are already installed in fpc-version. So added "demo"
+     DEMODIR=$PREFIX/share/examples/fpc-$VERSION/demo
+     ;;
+  *)
+     DEMODIR=$DOCDIR/examples	
+     ;;
+esac
+   
 # Install all binary releases
 for f in *binary*.tar
 do
