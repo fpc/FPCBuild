@@ -1858,7 +1858,7 @@ help:
 	@$(ECHO) Distribution Targets:
 	@$(ECHO)    rpm       Build linux .rpm packages
 	@$(ECHO)    deb       Build linux .deb packages
-	@$(ECHO)    inno      Build Windows (Innosetup) based installer
+	@$(ECHO)    inno      "Build Windows (Innosetup) based installer"
 	@$(ECHO)    tar       Build .tar installer
 	@$(ECHO)
 	@$(ECHO) FV based installer Targets:
@@ -2036,6 +2036,7 @@ debcopy: distclean
 	$(COPYTREE) fpcsrc/utils $(DEBSRCDIR)
 	$(COPYTREE) demo $(DEBSRCDIR)
 	$(COPYTREE) logs $(DEBSRCDIR)
+	$(COPYTREE) fpcsrc/libgdb $(DEBSRCDIR)
 ifndef NODOCS
 	$(COPYTREE) fpcdocs $(DEBSRCDIR)
 endif
