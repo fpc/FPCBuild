@@ -14,7 +14,7 @@ fi
 NEWSVNTAG=$1
 
 # For testing output the svn commands
-if [ $2 = "test" ]; then
+if [ ."$2" = ."test" ]; then
   SVN="echo svn"
 else
   SVN=svn
@@ -55,8 +55,6 @@ echo
 # just created fpcbuild branch
 $SVN co -N $SVNURL/fpcbuild/$NEWSVNTAG branchtmp
 $SVN ps -F external.lst svn:externals branchtmp
-$SVN ci branchtmp -m "$COMMITMSG"
 
-# Cleanup
-rm -rf branchtmp
-rm -f external.lst
+# Commit and cleanup
+$SVN ci branchtmp -m "$COMMITMSG" && rm -rf branchtmp && rm -f external.lst
