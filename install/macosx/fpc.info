@@ -3,11 +3,11 @@ Version: 2.0.4
 Revision: 1
 Architecture: powerpc
 Recommends: fpc-doc
-Source: ftp://ftp.freepascal.org/pub/fpc/beta/2.0.4-rc3/source/fpcbuild-2.0.4-rc3.tar.gz
+Source: ftp://ftp.freepascal.org/pub/fpc/dist/source-%v/fpcbuild-%v.tar.gz
 Source-MD5: a05540b972881dce27e223ad53627a23
-Source2: ftp://ftp.freepascal.org/pub/fpc/beta/%v-rc3/source/fpc-%v.%m-darwin.bootstrap.tar.bz2
+Source2: ftp://ftp.freepascal.org/pub/fpc/dist/powerpc-macosx-%v/fpc-%v.%m-darwin.bootstrap.tar.bz2
 Source2-MD5: 55a63489f4ef5cde8faa6a61ec8bd9b6
-SourceDirectory: fpcbuild_2.0.4-rc3_exp/fpcsrc
+SourceDirectory: fpcbuild_%v_exp/fpcsrc
 # ***** SourceDirectory: fpc-src-%v/fpcsrc
 CompileScript: <<
 #!/bin/sh -e

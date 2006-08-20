@@ -3,9 +3,9 @@ Version: 2.0.4
 Revision: 1
 Architecture: powerpc
 Enhances: fpc
-Source: ftp://ftp.freepascal.org/pub/fpc/beta/2.0.4-rc2/docs/doc-pdf.tar.gz
+Source: ftp://ftp.freepascal.org/pub/fpc/dist/docs-%v/doc-pdf.tar.gz
 Source-MD5: 9c77a3b71dd869319881fdff3d0ebf41
-Source2: ftp://ftp.freepascal.org/pub/fpc/beta/2.0.4-rc2/docs/doc-html.tar.gz
+Source2: ftp://ftp.freepascal.org/pub/fpc/dist/docs-%v/doc-html.tar.gz
 Source2-MD5: 4a9130e8955f010b324a006a3b6fdabf
 SourceRename: %n-%v-pdf.tar.gz
 Source2Rename: %n-%v-html.tar.gz
