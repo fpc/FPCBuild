@@ -2016,6 +2016,7 @@ renametoshort:
 	-mv $(PKGUNITSPRE)mysql$(ZIPSUFFIX).zip umysq$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)oracle$(ZIPSUFFIX).zip uora$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)postgres$(ZIPSUFFIX).zip upgr$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGUNITSPRE)winunits$(ZIPSUFFIX).zip uwin$(ZIPSUFFIXSHORT).zip
 shortsrc:
 	$(MAKE) renametoshort ZIPSUFFIX=$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
 shortbin:
@@ -2052,7 +2053,7 @@ debcopy: distclean
 	$(COPYTREE) fpcsrc/utils $(DEBSRCDIR)
 	$(COPYTREE) demo $(DEBSRCDIR)
 	$(COPYTREE) logs $(DEBSRCDIR)
-	$(COPYTREE) fpcsrc/libgdb $(DEBSRCDIR)
+	[ -e fpcsrc/libgdb ] && $(COPYTREE) fpcsrc/libgdb $(DEBSRCDIR)
 ifndef NODOCS
 	$(COPYTREE) fpcdocs $(DEBSRCDIR)
 endif
