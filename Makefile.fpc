@@ -334,6 +334,43 @@ DEBPACKAGEVERSION:=$(shell head -n 1 $(CVSINSTALL)/debian/changelog | awk '{ pri
 DEBFPCVERSION:=$(shell echo $(DEBPACKAGEVERSION) | awk -F '-' '{ print $$1 }')
 DEBSRCDIR:=$(BUILDDIR)/fpc-$(DEBFPCVERSION)
 
+#
+# Automatic detection if libgdb.a is present (logic copied from ide/Makefile.fpc)
+#
+
+ifndef NOGDB
+
+# Try to find GDB library
+# Look for a valid GDBLIBDIR environment variable
+ifdef GDBLIBDIR
+override LIBGDBFILE:=$(firstword $(wildcard $(addsuffix /libgdb.a,$(GDBLIBDIR))))
+endif
+
+# Use default dirs if not available
+ifeq ($(LIBGDBFILE),)
+# Default locations <target>/<cpu> (linux) or <target> (win32,go32v2) only
+override GDBLIBDIR=$(wildcard $(FPCDIR)/libgdb/$(OS_TARGET)/$(CPU_TARGET))
+ifeq ($(GDBLIBDIR),)
+override GDBLIBDIR=$(FPCDIR)/libgdb/$(OS_TARGET)
+endif
+# Detect if libgdb.a is available
+override LIBGDBFILE:=$(firstword $(wildcard $(addsuffix /libgdb.a,$(GDBLIBDIR))))
+endif
+
+# Disable GDB when no libgdb.a found
+ifeq ($(LIBGDBFILE),)
+GDB=
+else
+GDB=1
+endif
+
+else
+
+# Disable
+GDB=
+
+endif  #NOGDB
+
 debcheck:
 ifneq ($(DEBFPCVERSION),$(PACKAGE_VERSION))
         @$(ECHO) "Debian version ($(DEBFPCVERSION)) is not correct, expect $(PACKAGE_VERSION)"
@@ -352,7 +389,9 @@ debcopy: distclean
         $(COPYTREE) fpcsrc/utils $(DEBSRCDIR)
         $(COPYTREE) demo $(DEBSRCDIR)
         $(COPYTREE) logs $(DEBSRCDIR)
-        [ -e fpcsrc/libgdb ] && $(COPYTREE) fpcsrc/libgdb $(DEBSRCDIR)
+ifdef GDB
+        $(COPYTREE) $(GDBLIBDIR) $(DEBSRCDIR)
+endif
 ifndef NODOCS
         $(COPYTREE) fpcdocs $(DEBSRCDIR)
 endif
