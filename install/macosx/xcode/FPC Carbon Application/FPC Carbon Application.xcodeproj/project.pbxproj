@@ -1,0 +1,528 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DD37F23D0A60252800975B2D /* program.pas in Sources */ = {isa = PBXBuildFile; fileRef = DDC6851B09F57195004E4BFF /* program.pas */; };
+		DD37F23E0A60252800975B2D /* TestUnit.pas in Sources */ = {isa = PBXBuildFile; fileRef = DDC6851C09F57195004E4BFF /* TestUnit.pas */; };
+		DD37F2C70A6037EA00975B2D /* libfpcrtl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD37F2430A60255800975B2D /* libfpcrtl.a */; };
+		DDC6890D09F5762A004E4BFF /* DataforkResource.rsrc in Rez */ = {isa = PBXBuildFile; fileRef = DDC6868C09F571C2004E4BFF /* DataforkResource.rsrc */; };
+		DDC6890E09F5762D004E4BFF /* TestResFile.r in Rez */ = {isa = PBXBuildFile; fileRef = DDC6851E09F57195004E4BFF /* TestResFile.r */; };
+		DDC6890F09F57637004E4BFF /* program.pas in Sources */ = {isa = PBXBuildFile; fileRef = DDC6851B09F57195004E4BFF /* program.pas */; };
+		DDC6891009F57637004E4BFF /* TestUnit.pas in Sources */ = {isa = PBXBuildFile; fileRef = DDC6851C09F57195004E4BFF /* TestUnit.pas */; };
+		DDC689B509F57C69004E4BFF /* English.lproj/InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DDC689B309F57C69004E4BFF /* English.lproj/InfoPlist.strings */; };
+		DDC689B609F57C69004E4BFF /* English.lproj/main.nib in Resources */ = {isa = PBXBuildFile; fileRef = DDC689B409F57C69004E4BFF /* English.lproj/main.nib */; };
+		DDC689BF09F57CE9004E4BFF /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC689BE09F57CE9004E4BFF /* Carbon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		DD7C44CD0A6E5050003FA52B /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.inc";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(TARGET_TEMP_DIR)/$(INPUT_FILE_NAME).compiled",
+			);
+			script = "echo \\\"-Fi$INPUT_FILE_DIR\\\" >> \"$PROJECT_TEMP_DIR\"/unitpaths\ntouch \"$TARGET_TEMP_DIR\"/\"$INPUT_FILE_NAME\".compiled\n";
+		};
+		DD7C45710A6E7E36003FA52B /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.inc";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+			);
+		};
+		DDC688F309F57599004E4BFF /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = sourcecode.pascal;
+			isEditable = 1;
+			outputFiles = (
+				"$(TARGET_TEMP_DIR)/$(INPUT_FILE_NAME).compiled",
+			);
+			script = "# set -vx\n\n# if FPC_MAIN_FILE is specified, only use that one\nif test \"x$FPC_MAIN_FILE\" = x ; then\n  echo \"$INPUT_FILE_SUFFIX\" \"$INPUT_FILE_PATH\" >> \"$PROJECT_TEMP_DIR\"/files_to_compile\nelif test \"x$INPUT_FILE_NAME\" = \"x$FPC_MAIN_FILE\" || test \"x$INPUT_FILE_PATH\" = \"x$FPC_MAIN_FILE\" ; then\n  echo \"$INPUT_FILE_SUFFIX\" \"$INPUT_FILE_PATH\" > \"$PROJECT_TEMP_DIR\"/files_to_compile\n  echo \"$INPUT_FILE_SUFFIX\" \"$INPUT_FILE_PATH\" > \"$PROJECT_TEMP_DIR\"/mainfile\nfi\n\necho \\\"-Fu$INPUT_FILE_DIR\\\" >> \"$PROJECT_TEMP_DIR\"/unitpaths\necho \\\"-Fi$INPUT_FILE_DIR\\\" >> \"$PROJECT_TEMP_DIR\"/unitpaths\n\n# if this file was not yet before compiled, it may be a new file -> delete\n# source cache (there might be a new mainfile now, unless FPC_MAIN_FILE is specified)\nif test ! -f \"$TARGET_TEMP_DIR\"/\"$INPUT_FILE_NAME\".compiled && test \"x$FPC_MAIN_FILE\" = x ; then\n  cd \"$PROJECT_TEMP_DIR\"\n  rm -f mainfile scriptrun > /dev/null 2>&1\nfi\n\ntouch \"$TARGET_TEMP_DIR\"/\"$INPUT_FILE_NAME\".compiled\n";
+		};
+		DDC6891509F57648004E4BFF /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = sourcecode.pascal;
+			isEditable = 1;
+			outputFiles = (
+				"$(PROJECT_DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).s",
+			);
+			script = "";
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXContainerItemProxy section */
+		DD37F25D0A60268D00975B2D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DDC6850F09F5717A004E4BFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD37F2420A60255800975B2D;
+			remoteInfo = fpcrtl;
+		};
+		DDC688ED09F57578004E4BFF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DDC6850F09F5717A004E4BFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DDC688D409F57523004E4BFF;
+			remoteInfo = "Put unit sources in the 'Compile Sources' phase of this target";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DD37F2430A60255800975B2D /* libfpcrtl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfpcrtl.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDC6851B09F57195004E4BFF /* program.pas */ = {isa = PBXFileReference; fileEncoding = 12; lastKnownFileType = sourcecode.pascal; path = program.pas; sourceTree = "<group>"; };
+		DDC6851C09F57195004E4BFF /* TestUnit.pas */ = {isa = PBXFileReference; fileEncoding = 12; lastKnownFileType = sourcecode.pascal; path = TestUnit.pas; sourceTree = "<group>"; };
+		DDC6851E09F57195004E4BFF /* TestResFile.r */ = {isa = PBXFileReference; fileEncoding = 12; lastKnownFileType = sourcecode.rez; path = TestResFile.r; sourceTree = "<group>"; };
+		DDC6868B09F571C2004E4BFF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 12; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
+		DDC6868C09F571C2004E4BFF /* DataforkResource.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = DataforkResource.rsrc; sourceTree = "<group>"; };
+		DDC688C809F574E9004E4BFF /* «PROJECTNAME».app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = «PROJECTNAME».app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDC688CA09F574E9004E4BFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
+		DDC689B309F57C69004E4BFF /* English.lproj/InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DDC689B409F57C69004E4BFF /* English.lproj/main.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = English.lproj/main.nib; sourceTree = "<group>"; };
+		DDC689BE09F57CE9004E4BFF /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DDC688C609F574E9004E4BFF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD37F2C70A6037EA00975B2D /* libfpcrtl.a in Frameworks */,
+				DDC689BF09F57CE9004E4BFF /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DD7C45450A6E72DE003FA52B /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				DDC6851B09F57195004E4BFF /* program.pas */,
+				DDC6851C09F57195004E4BFF /* TestUnit.pas */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		DDC6850D09F5717A004E4BFF = {
+			isa = PBXGroup;
+			children = (
+				DD7C45450A6E72DE003FA52B /* Source */,
+				DDC6868A09F571C2004E4BFF /* Resources */,
+				DDC689BE09F57CE9004E4BFF /* Carbon.framework */,
+				DDC6888C09F57243004E4BFF /* Products */,
+				DDC688CA09F574E9004E4BFF /* Info.plist */,
+			);
+			comments = "(note: \"Main target\" is used below to indicate the target with the same name as your project)\n\nSee the comments for the \"Main target\" under \"Targets\" for detailed information on how this project operates.\n\nIn short:\n\na) add your sources to the  target called 'Put all program sources also in this target'\nb) add your sources *EXCEPT FOR INCLUDE FILES* to the Main Target\nd) add all frameworks, resources, libraries etc to the Main target\n\nIf there are errors, the \"Errors and Warnings\" smart group will probably not work properly (e.g. errors may disappear after you double click on them). To work around this Xcode bug, go to the Build Transcript by double clicking on the icon of the \"Errors and Warnings\" smart group. There you can (double) click on the errors to go to the right position in the right source file.\n\nNote that the assembly view of Xcode does not work before Xcode 2.3. And in Xcode 2.3, you will not be able to step over PowerPC Pascal function calls (this should be fixed in the next Xcode release though).";
+			sourceTree = "<group>";
+		};
+		DDC6868A09F571C2004E4BFF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DDC689B309F57C69004E4BFF /* English.lproj/InfoPlist.strings */,
+				DDC689B409F57C69004E4BFF /* English.lproj/main.nib */,
+				DDC6868B09F571C2004E4BFF /* Info.plist */,
+				DDC6868C09F571C2004E4BFF /* DataforkResource.rsrc */,
+				DDC6851E09F57195004E4BFF /* TestResFile.r */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		DDC6888C09F57243004E4BFF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DDC688C809F574E9004E4BFF /* «PROJECTNAME».app */,
+				DD37F2430A60255800975B2D /* libfpcrtl.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DD37F2420A60255800975B2D /* fpcrtl */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD37F2560A60258300975B2D /* Build configuration list for PBXNativeTarget "fpcrtl" */;
+			buildPhases = (
+				DD37F2460A60257100975B2D /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = fpcrtl;
+			productName = fpcrtl;
+			productReference = DD37F2430A60255800975B2D /* libfpcrtl.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		DDC688C709F574E9004E4BFF /* «PROJECTNAME» */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDC688CB09F574E9004E4BFF /* Build configuration list for PBXNativeTarget "«PROJECTNAME»" */;
+			buildPhases = (
+				DDC688C409F574E9004E4BFF /* Resources */,
+				DDC6891B09F576D9004E4BFF /* ShellScript */,
+				DDC688C509F574E9004E4BFF /* Sources */,
+				DDC688C609F574E9004E4BFF /* Frameworks */,
+				DDC6890909F5761D004E4BFF /* Rez */,
+			);
+			buildRules = (
+				DD7C45710A6E7E36003FA52B /* PBXBuildRule */,
+				DDC6891509F57648004E4BFF /* PBXBuildRule */,
+			);
+			comments = "This is the main target that does the actual compilation work. Because of several Xcode bugs and holes in its support for third party compilers, the structure is quite convoluted. There are three targets, but you only have to care about the first two:\n\na) This target (make sure this target is set as the \"Active Target\"!)\n\nThis target does the assembling and linking. It is dependent on the three other targets, so the scripts for those targets are run first. Next, it runs a script which compiles the main program and units (using the previously gathered information) and generate the assembler code. Then its \"Compile Sources\" phase will assemble the code, because if we directly generate the object files then Xcode will not perform any linking.\n\nb) The target called 'Put all program sources also in this target'\n\nAs the name says, you should add your sources to that target. The \"compilation rule\" for the Pascal files in that target will add those source files to a list of files to be compiled.\n\nc) The target called 'fpcrtl'\n\nThis target creates a static library of the FPC run time library. You should not have to change this target (you cannot add sources to it either)\n\n\nThe standard Xcode process is used to link in any necessary frameworks, libraries and resources. Therefore these frameworks, libraries and resources can be added to the project and this (the main) target like in any other Xcode project.\n";
+			dependencies = (
+				DDC688EE09F57578004E4BFF /* PBXTargetDependency */,
+				DD37F25E0A60268D00975B2D /* PBXTargetDependency */,
+			);
+			name = «PROJECTNAME»;
+			productName = «PROJECTNAME»;
+			productReference = DDC688C809F574E9004E4BFF /* «PROJECTNAME».app */;
+			productType = "com.apple.product-type.application";
+		};
+		DDC688D409F57523004E4BFF /* Put all program sources also in this target */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDC688DC09F57542004E4BFF /* Build configuration list for PBXNativeTarget "Put all program sources also in this target" */;
+			buildPhases = (
+				DD37F2350A60250900975B2D /* ShellScript */,
+				DDC688D209F57523004E4BFF /* Sources */,
+			);
+			buildRules = (
+				DD7C44CD0A6E5050003FA52B /* PBXBuildRule */,
+				DDC688F309F57599004E4BFF /* PBXBuildRule */,
+			);
+			comments = "See the comments for the target called the same as your project for details.";
+			dependencies = (
+			);
+			name = "Put all program sources also in this target";
+			productName = "Put unit sources in the 'Compile Sources' phase of this target";
+			productType = "com.apple.product-type.objfile";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DDC6850F09F5717A004E4BFF /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = DDC6851009F5717A004E4BFF /* Build configuration list for PBXProject "«PROJECTNAME»" */;
+			hasScannedForEncodings = 0;
+			mainGroup = DDC6850D09F5717A004E4BFF;
+			productRefGroup = DDC6888C09F57243004E4BFF /* Products */;
+			projectDirPath = "";
+			targets = (
+				DDC688C709F574E9004E4BFF /* «PROJECTNAME» */,
+				DDC688D409F57523004E4BFF /* Put all program sources also in this target */,
+				DD37F2420A60255800975B2D /* fpcrtl */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DDC688C409F574E9004E4BFF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDC689B509F57C69004E4BFF /* English.lproj/InfoPlist.strings in Resources */,
+				DDC689B609F57C69004E4BFF /* English.lproj/main.nib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		DDC6890909F5761D004E4BFF /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDC6890D09F5762A004E4BFF /* DataforkResource.rsrc in Rez */,
+				DDC6890E09F5762D004E4BFF /* TestResFile.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DD37F2350A60250900975B2D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+				"$(PROJECT_TEMP_DIR)/cleanscriptrun",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# hack to workaround Xcode bug that $PROJECT_TEMP_DIR isn't cleaned when you clean,\n# and that scripts aren't run when you clean a project\n\nmkdir -p \"$PROJECT_TEMP_DIR\"\n\n# when the \"scripts not run when cleaning\" bug is fixed, this doesn't have be run\n# when cleaning\n\nif [ x\"$ACTION\" = \"xbuild\" ]; then\n  # remove unit path and source file cache\n  cd \"$PROJECT_TEMP_DIR\"\n  rm -f mainfile scriptrun unitpaths files_to_compile  > /dev/null 2>&1\nfi\n\n# simple so that the script isn't run every time you compile\ntouch \"$PROJECT_TEMP_DIR\"/cleanscriptrun";
+		};
+		DD37F2460A60257100975B2D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/libfpcrtl.a",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# if you activate this to see what the script does, Xcode will take a *VERY LONG* time to process the output of the \"ar\" command line\n# set -vx\n\n\n# put the entire RTL in one static library so we can link it easily (without automatically linking all object files)\n\nif [ x\"$ACTION\" = \"xbuild\" ]; then\n  \n  rm -f \"$PROJECT_TEMP_DIR\"/rtllibs\n  for arch in $ARCHS\n  do\n    # get the correct compiler name\n    case $arch in\n      i386)\n        FPC_ARCH=386\n        RTL_ARCH=i386\n     ;;\n      ppc)\n        FPC_ARCH=ppc\n        RTL_ARCH=powerpc\n     ;;\n      * )\n       echo warning: Unsupported target architecture ${arch}, skipping...\n       continue\n     ;;\n    esac\n\n    FPC_VERSION=`/usr/local/bin/ppc${FPC_ARCH} -iV`\n    if [ $? != 0 ]; then\n      echo \"error: Cannot find the FPC binary for $RTL_ARCH (/usr/local/bin/ppc${FPC_ARCH}). Check if you have installed FPC for this architecture.\"\n      exit 1\n    fi\n    MY_OUTPUT_FILE=\"$PROJECT_TEMP_DIR\"/libfpcrtl-${FPC_ARCH}.a\n    ar -ru \"$MY_OUTPUT_FILE\" `ls \"$FPC_RTL_UNITS_BASE\"/\"$FPC_VERSION\"/units/${RTL_ARCH}-darwin/*/*.o | grep -v 'darwin/fv/'`\n    if [ $? != 0 ]; then\n      echo \"error: Problem creating static library for FPC Run Time Library. Check the FPC_RTL_UNITS_BASE setting in the global project configuration.\"\n      exit 1\n    fi\n    echo -n  \" \"\\\"\"$MY_OUTPUT_FILE\"\\\" >> \"$PROJECT_TEMP_DIR\"/rtllibs\n  done\n  /bin/sh -c \"lipo -create `cat \\\"$PROJECT_TEMP_DIR\\\"/rtllibs` -output \\\"$TARGET_BUILD_DIR\\\"/libfpcrtl.a\"\n  ranlib \"$TARGET_BUILD_DIR\"/libfpcrtl.a > /dev/null 2>&1\n  # delete working files\n  rm -f `cat \"$PROJECT_TEMP_DIR\"/rtllibs`\n  rm -f \"$PROJECT_TEMP_DIR\"/rtllibs\nfi\n";
+		};
+		DDC6891B09F576D9004E4BFF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(PROJECT_TEMP_DIR)/files_to_compile",
+			);
+			outputPaths = (
+				"$(PROJECT_TEMP_DIR)/scriptrun",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# set -vx\n\nif [ x\"$ACTION\" = \"xclean\" ]; then\n  exit 0\nfi\n\nfunction make_conditional() {\n  for arch in $ARCHS\n  do\n    for file in \"$PROJECT_DERIVED_FILE_DIR\"/\"$arch\"/*.s\n    do\n      DEST_FILE=\"$PROJECT_DERIVED_FILE_DIR\"/`basename \"$file\"`\n      echo \"#ifdef __${arch}__\" >> /\"$DEST_FILE\"\n      cat \"$file\" >> \"$DEST_FILE\"\n      echo \"#endif\" >> \"$DEST_FILE\"\n    done\n  done\n}\n\n\nUNIT_PATHS_FILE=\"$PROJECT_TEMP_DIR\"/unitpaths\n\n# remove duplicate unit search paths\nif test -f \"$UNIT_PATHS_FILE\"; then\n  sort -u < \"$UNIT_PATHS_FILE\" > \"$UNIT_PATHS_FILE\".tmp\n  mv \"$UNIT_PATHS_FILE\".tmp \"$UNIT_PATHS_FILE\"\nelse\n  touch \"$UNIT_PATHS_FILE\"\nfi\n\n# Make sure there are some files to compile\nif test !  -f \"$PROJECT_TEMP_DIR\"/files_to_compile; then\n  echo error: Add your main program and its units to the \\\"Put all program sources also in this target\\\" target\n  exit 1\nfi\n\n\n# support for previous Xcode naming scheme\nif [ \"$BUILD_STYLE\" = Development ]\nthen\n  BUILD_STYLE=Debug\nfi\n\nif [ \"$BUILD_STYLE\" = Deployment ]\nthen\n  BUILD_STYLE=Release\nfi\n\n# keep track of whether we compiled the main program so that once we did, we can stop\nMAIN_PROGRAM_COMPILED=0\n\n# don't skip the first file, since it may be the main program.\nFIRST_FILE=1\n\nFILES_TO_SKIP=\n\nrm \"$PROJECT_DERIVED_FILE_DIR\"/*.s >/dev/null 2>&1\n\n\nwhile read INPUT_FILE_SUFFIX INPUT_FILE_PATH\ndo\n  # skip include files (crude, may miss some)\n  if ! egrep -qi 'end\\.' \"$INPUT_FILE_PATH\" >/dev/null 2>&1; then\n    FIRST_FILE=0\n    echo warning: Skipping compilation of \\\"$INPUT_FILE_PATH\\\", seems to be an include file or not a Pascal file\n    FILES_TO_SKIP=`echo -e \"$INPUT_FILE_PATH\"'\\n'\"$FILES_TO_SKIP\"`\n    continue\n  fi\n\n  for variant in $BUILD_VARIANTS\n  do\n    for arch in $ARCHS\n    do\n      # get the name of the objects file dir\n####\n      #FULL_OBJECT_FILES_DIR=\"$OBJECT_FILE_DIR\"-\"$variant\"/\"$arch\"\n      FULL_OBJECT_FILES_DIR=\"$PROJECT_DERIVED_FILE_DIR\"/\"$arch\"\n####\n\n      # create the necessary directories (not done by Xcode because we only specify a fake output file)\n      mkdir -p \"$PROJECT_TEMP_DIR\" \"$FULL_OBJECT_FILES_DIR\"\n  \n      # if the file was already compiled (because an earlier compiled unit depended on it), skip it\n      if test \"$FULL_OBJECT_FILES_DIR\"/`basename \"$INPUT_FILE_PATH\" $INPUT_FILE_SUFFIX`.o -nt \"$INPUT_FILE_PATH\" -a $FIRST_FILE -ne 1 ; then\n        continue 3\n      fi\n      \n      # get the correct compiler name\n      if [ \"$arch\" = \"i386\" ]\n      then\n        FPCARCH=386\n        RTLARCH=i386\n      else\n        FPCARCH=ppc\n        RTLARCH=powerpc\n      fi\n\n      # check if the compiler exists\n      if ! test -f /usr/local/bin/ppc${FPCARCH}\n      then\n        echo \"error: FPC for $arch is not installed on this machine. You can probably solve this problem by setting the architectures to build for to your native target only and rebuilding.\"\n        exit 2\n      fi\n  \n      # go into the object files dir so we can use short paths\n      cd \"$FULL_OBJECT_FILES_DIR\"\n  \n      # actually compile (but do not assemble nor link)\n      echo -n /usr/local/bin/ppc${FPCARCH} \\\"$INPUT_FILE_PATH\\\" $FPC_SPECIFIC_OPTIONS $FPC_COMMON_OPTIONS -Tdarwin -a -s -FE. -vbr $FPC_OVERRIDE_OPTIONS > docompile.sh\n\n      # add unit paths\n      while read unitsearchpath\n      do\n        echo -n \" \" $unitsearchpath >> docompile.sh\n      done < \"$UNIT_PATHS_FILE\"\n      \n      echo ' > \"$PROJECT_TEMP_DIR\"/compiler_output 2>&1' >> docompile.sh\n      echo 'compres=$?' >> docompile.sh\n      echo 'sed -e \"s/\\([^:]*\\):\\([^:]*\\):\\([^:]*\\):\\([^:]*\\):\\(.*\\)/\\1:\\2:\\3:column \\4 -\\5/\" < \"$PROJECT_TEMP_DIR\"/compiler_output' >> docompile.sh\n      echo 'exit $compres' >> docompile.sh\n      /bin/sh ./docompile.sh\n  \n      # Compilation successful?\n      if [ $? == 0 ]; then\n  \n        # if it was a unit, continue with the next file (no need to compile all its variants and archs, that\n        # will be done when compiling the main program)\n        if test ! -f ./link.res; then\n          continue 3\n        fi\n        \n        echo Main file found!\n\n        # this is the main program -> next time only compile this file\n        # (if units are modified, they will be added after this file, but that doesn't matter\n        echo \"$INPUT_FILE_SUFFIX\" \"$INPUT_FILE_PATH\" > \"$PROJECT_TEMP_DIR\"/files_to_compile\n        \n        # record that the main program was compiled, so we don't have to compile any more units\n        MAIN_PROGRAM_COMPILED=1\n        \n        # delete leftovers\n        rm -f ppas.sh link.res\n  \n        # log the name of the input file so it can be touched if necessary for recompilation\n        echo -n \"$INPUT_FILE_PATH\" > \"$PROJECT_TEMP_DIR\"/mainfile\n  \n      else\n        exit 2\n      fi\n    done\n  done\n\n  # if the main program was compiled, we can stop\n  if test $MAIN_PROGRAM_COMPILED -ne 0; then\n    make_conditional\n    touch \"$PROJECT_TEMP_DIR\"/scriptrun\n    exit 0\n  fi\n  FIRST_FILE=0\n\ndone < \"$PROJECT_TEMP_DIR\"/files_to_compile\n\necho \"warning: It seems your project only contains units and no main program\"\ngrep  -Fv \"$FILES_TO_SKIP\" < \"$PROJECT_TEMP_DIR\"/files_to_compile > \"$PROJECT_TEMP_DIR\"/files_to_compile.tmp\nsort -u < \"$PROJECT_TEMP_DIR\"/files_to_compile.tmp > \"$PROJECT_TEMP_DIR\"/files_to_compile\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DDC688C509F574E9004E4BFF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDC6890F09F57637004E4BFF /* program.pas in Sources */,
+				DDC6891009F57637004E4BFF /* TestUnit.pas in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDC688D209F57523004E4BFF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD37F23D0A60252800975B2D /* program.pas in Sources */,
+				DD37F23E0A60252800975B2D /* TestUnit.pas in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DD37F25E0A60268D00975B2D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD37F2420A60255800975B2D /* fpcrtl */;
+			targetProxy = DD37F25D0A60268D00975B2D /* PBXContainerItemProxy */;
+		};
+		DDC688EE09F57578004E4BFF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DDC688D409F57523004E4BFF /* Put all program sources also in this target */;
+			targetProxy = DDC688ED09F57578004E4BFF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		DD37F2570A60258300975B2D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = fpcrtl;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		DD37F2580A60258300975B2D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = fpcrtl;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		DDC6851109F5717A004E4BFF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FPC_COMMON_OPTIONS = "-Sgi -Mmacpas";
+				FPC_MAIN_FILE = "";
+				FPC_OVERRIDE_OPTIONS = "";
+				FPC_RTL_UNITS_BASE = /usr/local/lib/fpc/;
+				FPC_SPECIFIC_OPTIONS = "-Ci -Cr -Co -gl -O-";
+			};
+			name = Debug;
+		};
+		DDC6851209F5717A004E4BFF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FPC_COMMON_OPTIONS = "-Sgi -Mmacpas";
+				FPC_MAIN_FILE = "";
+				FPC_OVERRIDE_OPTIONS = "";
+				FPC_RTL_UNITS_BASE = /usr/local/lib/fpc/;
+				FPC_SPECIFIC_OPTIONS = "-Ci- -Cr- -Co- -O3 -Xs ";
+			};
+			name = Release;
+		};
+		DDC688CC09F574E9004E4BFF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/build/Debug\"";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = «PROJECTNAME»;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		DDC688CD09F574E9004E4BFF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/build/Debug\"";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = «PROJECTNAME»;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		DDC688DD09F57542004E4BFF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Put unit sources in the 'Compile Sources' phase of this target";
+			};
+			name = Debug;
+		};
+		DDC688DE09F57542004E4BFF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Put unit sources in the 'Compile Sources' phase of this target";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DD37F2560A60258300975B2D /* Build configuration list for PBXNativeTarget "fpcrtl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD37F2570A60258300975B2D /* Debug */,
+				DD37F2580A60258300975B2D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DDC6851009F5717A004E4BFF /* Build configuration list for PBXProject "«PROJECTNAME»" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDC6851109F5717A004E4BFF /* Debug */,
+				DDC6851209F5717A004E4BFF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DDC688CB09F574E9004E4BFF /* Build configuration list for PBXNativeTarget "«PROJECTNAME»" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDC688CC09F574E9004E4BFF /* Debug */,
+				DDC688CD09F574E9004E4BFF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DDC688DC09F57542004E4BFF /* Build configuration list for PBXNativeTarget "Put all program sources also in this target" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDC688DD09F57542004E4BFF /* Debug */,
+				DDC688DE09F57542004E4BFF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DDC6850F09F5717A004E4BFF /* Project object */;
+}

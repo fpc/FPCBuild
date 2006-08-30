@@ -1,0 +1,12 @@
+{
+	FilesToRename = {
+	};
+	FilesToMacroExpand = (
+		"program.pas",
+		"Info.plist",
+		"TestUnit.pas",
+		"English.lproj/InfoPlist.strings",
+		"English.lproj/main.nib/objects.xib",
+	);
+	Description = "This project builds a Carbon application that uses .nib files for resources. It has been tested with Xcode 2.1 and 2.3, but should work with later and possibly also with earlier versions. It also requires FPC 2.0.4 or later to be installed.";
+}
