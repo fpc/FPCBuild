@@ -167,6 +167,9 @@ Source: examples\hash\*.*; DestDir: {app}\examples\hash; Flags: ignoreversion; C
 ; Interbase
 Source: units\i386-win32\ibase\*.*; DestDir: {app}\units\i386-win32\ibase; Flags: ignoreversion; Components: packages/ibase
 Source: examples\ibase\*.*; DestDir: {app}\examples\ibase; Flags: ignoreversion; Components: packages/ibase
+; LibPNG
+Source: units\i386-win32\libpng\*.*; DestDir: {app}\units\i386-win32\libpng; Flags: ignoreversion; Components: packages/libpng
+; Source: examples\libpng\*.*; DestDir: {app}\examples\libpng; Flags: ignoreversion; Components: packages/libpng
 ; MySQL
 Source: units\i386-win32\mysql\*.*; DestDir: {app}\units\i386-win32\mysql; Flags: ignoreversion; Components: packages/mysql
 Source: examples\mysql\*.*; DestDir: {app}\examples\mysql; Flags: ignoreversion; Components: packages/mysql
@@ -257,6 +260,7 @@ Name: packages/odbc; Description: ODBC data acces; Types: Custom Full
 Name: packages/sqlite; Description: SQLITE data access; Types: Custom Full
 Name: packages/tcl; Description: TCL interpreter access; Types: Custom Full
 Name: packages/winunits; Description: Windows API units; Types: Custom Full
+Name: sources/libpng; Description: PNG library access source files (Linux); Types: Custom Full
 ;Name: sources; Description: Pascal source files; Types: Custom Full
 ;Name: sources/base; Description: Base sources, required; Types: Custom Full
 ;Name: sources/compiler; Description: Compiler sources; Types: Custom Full
@@ -285,7 +289,6 @@ Name: packages/winunits; Description: Windows API units; Types: Custom Full
 ;Name: sources/mmtk; Description: MMOS/2 access source files (OS/2); Types: Custom Full
 ;Name: sources/clkdll; Description: CLKDLL access source files (OS/2); Types: Custom Full
 ;Name: sources/lvm; Description: LVM access source files (OS/2); Types: Custom Full
-;Name: sources/libpng; Description: PNG library access source files (Linux); Types: Custom Full
 ;Name: sources/imlib; Description: imlib library access source files (Linux); Types: Custom Full
 ;Name: sources/cdrom; Description: Portable CD-ROM access source files; Types: Custom Full
 ;Name: sources/odbc; Description: ODBC data acces source files; Types: Custom Full
