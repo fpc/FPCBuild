@@ -120,6 +120,9 @@ ifneq ($(patsubst %/,%,$(subst \,/,$(dir $(CPPROG)))),$(patsubst %/,%,$(subst \,
 ifeq ($(OS_TARGET),win32)
         $(COPY) $(addprefix $(CVSINSTALL)/binw32/,*.ico *.exe *.dll *.h) $(INSTALL_BINDIR)
 endif
+ifeq ($(OS_TARGET),win64)
+        $(COPY) $(addprefix $(CVSINSTALL)/binw64/,*.ico *.exe *.dll *.h) $(INSTALL_BINDIR)
+endif
 endif
 # binos2 (emx.dll,emxwrap.dll,unzip32.dll,fp2.ico)
 ifeq ($(OS_TARGET),os2)
@@ -238,9 +241,9 @@ sourcezip:
 # OS targets
 ##########################################################################
 
-BUILDTARGETS=go32v2 win32 linux freebsd netbsd openbsd os2 emx sunos qnx beos
+BUILDTARGETS=go32v2 win32 linux freebsd netbsd openbsd os2 emx sunos qnx beos win64 wince
 
-.PHONY: go32v2 win32 linux freebsd os2 emx netbsd openbsd go32v2zip win32zip linuxzip freebsdzip os2zip emxzip netbsdzip openbsdzip
+.PHONY: go32v2 win32 win64 wince linux freebsd os2 emx netbsd openbsd go32v2zip win32zip linuxzip freebsdzip os2zip emxzip netbsdzip openbsdzip
 
 $(BUILDTARGETS): checkfpcdir
         $(MAKE) install OS_TARGET=$@
@@ -543,7 +546,12 @@ ifeq ($(wildcard fpcsrc/libgdb/win32/libgdb.a),)
 endif
 
 fpcsrc/utils/rmcvsdir$(EXEEXT): fpcsrc/utils/rmcvsdir.pp
+ifneq ($(findstring $(OS_SOURCE),win32),)
         $(MAKE) -C fpcsrc/utils rmcvsdir$(EXEEXT) FPC=$(BASEDIR)/fpcsrc/compiler/ppc386
+endif
+ifneq ($(findstring $(OS_SOURCE),win64),)
+        $(MAKE) -C fpcsrc/utils rmcvsdir$(EXEEXT) FPC=$(BASEDIR)/fpcsrc/compiler/ppcx64
+endif
 
 innobuild: innocheck build fpcsrc/utils/rmcvsdir$(EXEEXT)
         $(DELTREE) $(INNODIR)
