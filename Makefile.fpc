@@ -443,9 +443,9 @@ ifneq ($(wildcard $(CVSINSTALL)/fpc.spec),)
 .PHONY: rpmcopy rpm
 
 # Only the recent rpms have rpmbuild
-RPMBUILD=$(strip $(wildcard $(addsuffix /rpmbuild,$(SEARCHPATH))))
+RPMBUILD=$(firstword $(strip $(wildcard $(addsuffix /rpmbuild,$(SEARCHPATH)))))
 ifeq ($(RPMBUILD),)
-RPMBUILD=$(strip $(wildcard $(addsuffix /rpm,$(SEARCHPATH))))
+RPMBUILD=$(firstword $(strip $(wildcard $(addsuffix /rpm,$(SEARCHPATH)))))
 endif
 RPMDIR=$(BUILDDIR)/rpm
 RPMSPECFILE:=$(RPMDIR)/SPECS/fpc-$(PACKAGE_VERSION).spec
