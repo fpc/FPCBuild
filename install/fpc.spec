@@ -29,6 +29,7 @@ BuildRequires: fpc
 %endif
 %endif
 
+%define buildbasedir %{buildroot}%{fpcdir}
 %define builddocdir %{buildroot}%{docdir}
 %define buildmandir %{buildroot}%{_mandir}
 %define buildbindir %{buildroot}%{_bindir}
@@ -79,7 +80,7 @@ FPCDIR=
 NEWPP=`pwd`/compiler/%{ppcname}
 INSTALLOPTS="FPC=${NEWPP} INSTALL_PREFIX=%{buildroot}/usr INSTALL_LIBDIR=%{buildlibdir} \
 		INSTALL_DOCDIR=%{builddocdir} INSTALL_BINDIR=%{buildbindir} \
-		INSTALL_EXAMPLEDIR=%{buildexampledir}"
+		INSTALL_EXAMPLEDIR=%{buildexampledir} INSTALL_BASEDIR=%{buildbasedir}"
 	make compiler_distinstall ${INSTALLOPTS}
 	make rtl_distinstall ${INSTALLOPTS}
 	make packages_distinstall ${INSTALLOPTS}
