@@ -2,3 +2,5 @@
 
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/netdb
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libasync
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libcurl
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/dbus
