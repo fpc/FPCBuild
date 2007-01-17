@@ -28,25 +28,29 @@ uses Sysutils, w32rapi, windows;
 {* const **********************************************************************}
 
 const
-  SLOCALLOGPATHFILE = 'MysDisc:\My\Path\To\fpcsrc\tests\wcemtem.log';
-  SREMOTEEXEPATH    = '\Storage Card\tests\';
   SREMOTERUNPROG    = 'wcetrun.exe';
   IBLOCKBUFFERSIZE  = 65535;
   ISEEKWAITTEMPOMS  = 1000;
   ISEEKRETRYMAX     = 180;
 
 {* var ************************************************************************}
-var flog             : Text;
+var
+    SREMOTEEXEPATH   : string = '\fpctests';
+    SLOCALLOGPATHFILE: string;
+    flog             : Text;
     sTestExeName     : String;
     lRes,
     lSeekFileCount   : Longint;
     bExitCode        : Byte;
     RBLOCKBUFFER     : Array[1..IBLOCKBUFFERSIZE] of Byte;
     bFileFound       : boolean;
-    
+
 {* log ************************************************************************}
-procedure log(const csString: String);
+procedure log(const csString: String; Error: boolean = False);
 begin
+ if Error then
+   writeln(csString);
+ if SLOCALLOGPATHFILE = '' then exit;
  system.writeln(flog,FormatDateTime('yy-mm-dd hh:nn:ss',Now)+' : '+csString);
  system.Flush(flog);
 end;
@@ -70,7 +74,7 @@ begin
  res:=system.ioresult;
  bError:=(res>0);
  if bError then begin
-   Log('error opening local file "'+csSource+'" ioresult='+IntToStr(res));
+   Log('error opening local file "'+csSource+'" ioresult='+IntToStr(res), True);
    Result:=res;
    exit;
  end;
@@ -86,7 +90,7 @@ begin
    end;
    if bError then begin
      Result:=CEGetLastError;
-     Log('error creating remote file "'+csTarget+'" ce('+IntToStr(CEGetLastError)+') rapi('+IntToStr(ceRapiGetError)+')');
+     Log('error creating remote file "'+csTarget+'" ce('+IntToStr(CEGetLastError)+') rapi('+IntToStr(ceRapiGetError)+')', True);
      exit;
    end;
    try
@@ -98,13 +102,13 @@ begin
       res:=system.ioresult;
       bError:=res>0;
       if bError then begin
-        Log('error readblock local file "'+csTarget+'" toread='+IntToStr(IBLOCKBUFFERSIZE)+' read='+IntToStr(lRead));
+        Log('error readblock local file "'+csTarget+'" toread='+IntToStr(IBLOCKBUFFERSIZE)+' read='+IntToStr(lRead), True);
         Result:=res;
       end
       else begin
         bError:=not CeWriteFile( hFileTarget, @RBLOCKBUFFER,  lRead, @lWritten, nil) or (lRead<>lWritten);
         if bError then begin
-          Log('error writing remote file "'+csTarget+'" ce(+'+IntToStr(CEGetLastError)+') written('+IntToStr(lWritten)+')');
+          Log('error writing remote file "'+csTarget+'" ce(+'+IntToStr(CEGetLastError)+') written('+IntToStr(lWritten)+')', True);
           Result:=CEGetLastError;
         end;
       end;
@@ -169,13 +173,13 @@ begin
  bError:=(hFileRemote=INVALID_HANDLE_VALUE);
  if bError then begin
   Result:=CEGetLastError;
-  Log('error opening remote file "'+wsRemote+'" ce('+IntToStr(CEGetLastError)+') rapi('+IntToStr(ceRapiGetError)+')');
+  Log('error opening remote file "'+wsRemote+'" ce('+IntToStr(CEGetLastError)+') rapi('+IntToStr(ceRapiGetError)+')', True);
  end else begin
   try
    //read remote file
    bError:=not (CeReadFile( hFileRemote, @RBLOCKBUFFER,  1, @lRead, nil) and (lRead = 1));
    if (bError) then begin
-    Log('error reading remote file "'+csRemote+'" ce('+IntToStr(CEGetLastError)+') read('+IntToStr(lRead)+')');
+    Log('error reading remote file "'+csRemote+'" ce('+IntToStr(CEGetLastError)+') read('+IntToStr(lRead)+')', True);
     Result:=CEGetLastError;
     if Result = 0 then
       Result:=255;
@@ -206,39 +210,101 @@ begin
   Result:=res = S_OK;
   if not Result then begin
     CeRapiUninit;
-    Log('Can''''t initialize connection to remote device.');
+    Log('Can''''t initialize connection to remote device.', True);
   end;
 end;
 
 {******************************************************************************}
 
+procedure ProcessCmdLine;
+var
+  i: integer;
+  s: string;
+  
+  function GetNextParam(HaltOnEnd: boolean): string;
+  begin
+    Inc(i);
+    if i > ParamCount then begin
+      if HaltOnEnd then begin
+        writeln('Incorrect parameters.');
+        Halt(2);
+      end;
+      Result:='';
+    end
+    else
+      Result:=ParamStr(i);
+  end;
+  
 begin
- system.FileMode := $42;
- system.Assign(flog,SLOCALLOGPATHFILE);
- {$I-}
- system.Append(flog);
- {$I+}
- if (system.ioresult>0) then begin
-  system.Rewrite(flog);
-  log('log rewrite');
- end else log('log append');
+ if ParamCount = 0 then begin
+   writeln('Usage: ' + ExtractFileName(ParamStr(0)) + ' [-L <log_file>] [-R <remote_path>] <test_to_run>');
+   writeln('-L - write log to <log_file>.');
+   writeln('-R - path in Pocket PC device where <test_to_run> program will be copied.');
+   writeln('     default path: ' + SREMOTEEXEPATH);
+   Halt(1);
+ end;
+ 
+ i:=0;
+ while True do begin
+   s:=GetNextParam(False);
+   if s = '' then
+     break;
+   if Copy(s, 1, 2) = '-L' then
+     SLOCALLOGPATHFILE:=GetNextParam(True)
+   else
+   if Copy(s, 1, 2) = '-R' then
+     SREMOTEEXEPATH:=GetNextParam(True)
+   else
+     if sTestExeName = '' then
+       sTestExeName:=s
+     else
+       begin
+         writeln('Incorrect parameters.');
+         Halt(2);
+       end;
+ end;
+ SREMOTEEXEPATH:=IncludeTrailingPathDelimiter(SREMOTEEXEPATH);
+end;
+
+{******************************************************************************}
+
+begin
+ ProcessCmdLine;
+ if SLOCALLOGPATHFILE <> '' then begin
+   system.FileMode := $42;
+   system.Assign(flog,SLOCALLOGPATHFILE);
+   {$I-}
+   system.Append(flog);
+   {$I+}
+   if (system.ioresult>0) then begin
+    system.Rewrite(flog);
+    log('log rewrite');
+   end else log('log append');
+ end;
 
  try
-  if (Paramcount>0) then begin
    if not InitRapi then
      Halt(255);
    //copy file
-   sTestExeName:=ParamStr(1);
    remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
    log('remote copy "'+sTestExeName+'" to "'+SREMOTEEXEPATH+sTestExeName+'"');
    lRes:=remotecopyto(sTestExeName, SREMOTEEXEPATH+sTestExeName);
    if lRes<>0 then
      Halt(255);  // source file not found
-     
-   lRes:=remoterun(SREMOTEEXEPATH+SREMOTERUNPROG,'"'+SREMOTEEXEPATH+sTestExeName+'"');
-   if lRes<>0 then begin
-     log('Unable to run "'+SREMOTEEXEPATH+SREMOTERUNPROG+'"');
-     Halt(255);
+
+   while True do begin
+     lRes:=remoterun(SREMOTEEXEPATH+SREMOTERUNPROG,'"'+SREMOTEEXEPATH+sTestExeName+'"');
+     if lRes<>0 then begin
+       // check exec stub file
+       if CeGetFileAttributes(PWideChar(widestring(SREMOTEEXEPATH+SREMOTERUNPROG))) <> -1  then begin
+         log('Unable to run "'+SREMOTEEXEPATH+SREMOTERUNPROG+'"', True);
+         Halt(255);
+       end;
+       if remotecopyto(ExtractFilePath(ParamStr(0)) + SREMOTERUNPROG, SREMOTEEXEPATH+SREMOTERUNPROG) <> 0 then
+         Halt(255);  // exec stub file not found
+     end
+     else
+       break;
    end;
 
    // waiting for result file creation (waitforsingleobject and getexitcodprocess not available with rapi)
@@ -275,15 +341,14 @@ begin
    CeRapiUninit;
    
    if (not bFileFound) then begin
-     log('* error no exitcode for "'+sTestExeName+'"');
+     log('* error no exitcode for "'+sTestExeName+'"', True);
      bExitCode:=255; //error code, result file not found
    end;
-  end
-  else
-    log('exiting no params');
  finally
-   log('log closed');
-   Close(flog);
+   if SLOCALLOGPATHFILE <> '' then begin
+     log('log closed');
+     Close(flog);
+   end;
  end;
  
  if bExitCode>0 then

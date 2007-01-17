@@ -17,13 +17,6 @@ wcetemu.exe : do the following things
 
 building : see win32-i386-win32-build.cmd
 
-update sources for the following consts :
-
-  SLOCALLOGPATHFILE = 'MysDisc:\My\Path\To\fpcsrc\tests\wcemtem.log';
-  SREMOTEEXEPATH    = '\Storage Card\tests\';                          <- dir where progs will be copied
-
-current version assume that 'wcetrun.exe' is present in SREMOTEEXEPATH
-
 wcetrun.exe : do the following things
 -----------
 1.run the exefile passed as parameter
@@ -32,8 +25,6 @@ wcetrun.exe : do the following things
 
 building : see win32-arm-wince-crossbuild.cmd
            binutils for arm-wince will be required (cf wince wiki)
-
-copy the exe to MyDisc:\My\Path\to\wcetemu.exe
 
 environment
 -----------
@@ -47,7 +38,7 @@ environment
 
 for running the testsuite :
 
-make TEST_FPC=ppcrossarm TEST_CPU_TARGET=arm TEST_OS_TARGET=wince TEST_OPT="-XParm-wince-pe- -WC" EMULATOR=MyDisc:\My\Path\to\wcetemu.exe
+make TEST_FPC=ppcrossarm TEST_CPU_TARGET=arm TEST_OS_TARGET=wince TEST_OPT="-XParm-wince-pe- -WC" TEST_REMOTEPATH=\fpctests EMULATOR=MyDisc:\My\Path\to\wcetemu.exe 
 
 see also fpsrc\tests\readme.txt
 
