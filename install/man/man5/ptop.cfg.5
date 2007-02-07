@@ -1,4 +1,4 @@
-.TH ptop.cfg 5 "31 may 1999" FreePascal "ptop source beautifier config file"
+.TH ptop.cfg 5 "25 January 2007" FreePascal "ptop source beautifier config file"
 .SH NAME
 ptop.cfg \- The ptop source\-beautifier configuration file.
 
@@ -17,13 +17,13 @@ not auto-loaded, so the name doesn't matter much. This man\-page describes
 the structure of such a configuration file for
 .BR ptop (1)
 
-.SH Structure
+.SH STRUCTURE
 
-The structure of a ptop configuration file is a simple buildingblock repeated several (20-30) times,
-for each pascal keyword known to the ptop program. (see the default configuration file or ptopu.pp source to
+The structure of a ptop configuration file is a simple building block repeated several (60-70) times,
+once for each pascal keyword known to the ptop program. (see the default configuration file or ptopu.pp source to
 find out which keywords are known)
 .PP
-The basic building block of the configuration file consists out of one or two lines,
+The basic building block of the configuration file consists out of one, two or three lines,
 describing how ptop should react on a certain keyword.
 First a line without square brackets with the following format:
 .PP
@@ -34,8 +34,13 @@ If one of the options is "dindonkey" (see further below), a second line
 .PP
 [keyword]=otherkeyword1,otherkeyword2,otherkeyword3,...
 .PP
-As you can see the block contains two types of identifiers, keywords(keyword and otherkeyword1..3 in above example)
-and options, (option1..3 above).
+Then if one of the options is "gobsym", a third line
+(with angle brackets) is needed like this:
+.PP
+<keyword>=terminalword1,terminalword2,terminalword3,...
+.PP
+As you can see the block contains two types of identifiers, keywords(keyword, otherkeyword1..3 and terminalword1..3
+in the above example) and options, (option1..3 above).
 .PP
 \fIKeywords\fP
 are the built-in valid Pascal structure-identifiers like BEGIN, END, CASE, IF,
@@ -81,30 +86,24 @@ Option	\	\	does what
 crsupp\	\	\	suppress CR before the keyword.
 .br
 crbefore\	\	\	force CR before keyword
+.br
 \	\	\	\	(doesn't go with crsupp :) )
 .br
 blinbefore\	\	blank line before keyword.
 .br
-dindonkey\	\	\	de\-indent on assiociated keywords
-\	\	\	\	(see below)
+dindonkey\	\	\	de\-indent on assiociated keywords (see below)
 .br
-dindent\	\	\	deindent (always)
+dindent\	\	\	de\-indent (always)
 .br
 spbef\	\	\	space before
 .br
 spaft\	\	\	space after
 .br
-gobsym\	\	\	Print symbols which follow a
+gobsym\	\	\	Print symbols which follow a keyword,
 .br
-\	\	\	\	keyword but which do not
+\	\	\	\	but which do not affect layout.
 .br
-\	\	\	\	affect layout. prints until
-.br
-\	\	\	\	terminators occur.
-.br
-\	\	\	\	(terminators are hard-coded in pptop,
-.br
-\	\	\	\	still needs changing)
+\	\	\	\	Prints until terminators occur.
 .br
 inbytab\	\	\	indent by tab.
 .br
@@ -127,9 +126,14 @@ de\-indent on assiociated keyword).
 "dinkdonkey" deindents if any of the keywords specified by the extra options of the
 square-bracket line is found.
 .PP
-.SH Example
+In a similar manner the option "gobsym", short for gobble symbols, requires some additional information 
+in order to perform its function. The "gobsym" option indicates that all symbols following the keyword
+should be passed through unchanged until a terminal symbol is reached. The list of acceptable termial
+symbols is provided by the angle-bracket line.
+.PP
+.SH EXAMPLES
 
-The line
+The block
 
 else=crbefore,dindonkey,inbytab,upper
 .br
@@ -152,19 +156,51 @@ things:
 .br
 \- (dindonkey) De\-indent on the keywords
 .br
-\	in square brackets line (if,then,else)
+\   in square brackets line (if,then,else)
 .br
 \- (inbytab) indent by tab.
 .br
 \- (upper) uppercase the keyword (ELSE)
 .PP
+The block
 
-Try to play with the configfile until you find the effect you desire. The
-configurability and possibilities of ptop are quite large compared to shareware
-source beautifier found on e.g. SIMTEL.
+case=spaft,gobsym,inbytab,crafter,capital
+.br
+<case>=ofsym
 .PP
 
-.SH Acknowledgements
+Means:
+
+The keyword this is about is
+.I case
+, it's on the LEFT side of both equal signs.
+.PP
+
+When case is found, the options tell it to do the following
+things:
+
+\- (spaft) Insure that there is a space 
+.br
+\   after the keyword. (case)
+.br
+\- (gobsym) pass symbols through unchanced until one of
+.br
+\   the words in the angle brackets line (of) is found.
+.br
+\- (crafter) Make sure terminator (of) ends the line.
+.br
+\- (inbytab) indent by tab.
+.br
+\- (capital) Capitalize the keyword (case becomes Case).
+
+.PP
+
+Try to play with the configfile until you find the effect you desire. The
+configurability and possibilities of ptop are quite large compared to other shareware
+source beautifiers found on e.g. SIMTEL.
+.PP
+
+.SH ACKNOWLEDGEMENTS
 
 The writer of the program, Michael van Canneyt, who also helped out explaining
 the format of ptop.cfg.
