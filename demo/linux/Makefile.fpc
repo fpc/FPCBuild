@@ -3,9 +3,7 @@
 #
 
 [target]
-programs_linux=daemon
-programs_freebsd=daemon
-programs_netbsd=daemon
+programs_linux=epoll-pipe
 
 [default]
 fpcdir=../..
