@@ -2067,7 +2067,6 @@ sourcezip:
 	$(MAKE) -C fpcsrc compiler_zipsourceinstall
 	$(MAKE) -C fpcsrc rtl_zipsourceinstall
 	$(MAKE) -C fpcsrc packages_zipsourceinstall ZIPPREFIX=$(PKGUNITSPRE)
-	$(MAKE) -C fpcsrc fcl_zipsourceinstall
 	$(MAKE) -C fpcsrc fv_zipsourceinstall
 	$(MAKE) -C fpcsrc utils_zipsourceinstall
 	$(MAKE) -C fpcsrc ide_zipsourceinstall
@@ -2088,7 +2087,6 @@ renametoshort:
 	-mv compiler$(ZIPSUFFIX).zip comp$(ZIPSUFFIXSHORT).zip
 	-mv utils$(ZIPSUFFIX).zip util$(ZIPSUFFIXSHORT).zip
 	-mv installer$(ZIPSUFFIX).zip inst$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGUNITSPRE)fcl$(ZIPSUFFIX).zip ufcl$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)gdbint$(ZIPSUFFIX).zip ugdb$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)regexpr$(ZIPSUFFIX).zip ureg$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)paszlib$(ZIPSUFFIX).zip upzl$(ZIPSUFFIXSHORT).zip
