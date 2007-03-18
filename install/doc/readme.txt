@@ -1,7 +1,18 @@
 
                             Free Pascal Compiler
 
-                               Version 2.0.4
+                               Version 2.1.2
+
+
+****************************************************************************
+* Beta
+****************************************************************************
+
+This is a beta-release. It will be replaced with a newer version in less then
+three months. Please submit bugs on our bug-tracker, www.freepascal.org/mantis.
+To test if a bug is fixed in the meanwhile you can use a snapshot-version,
+based on the fixes_2_2 branch. For more information see the sections about
+reporting bugs and snapshots below.
 
 
 ****************************************************************************
@@ -10,35 +21,35 @@
 
 Please also read the platform specific README file, if it exists.
 
+
 This package contains an advanced freeware 32-bit/64-bit pascal compiler for
 several platforms. The language and the runtime library are almost compatible
 with Turbo Pascal 7.0 and recent Delphi releases. There is also partial
 support for the Macintosh pascal dialect.
 
-Free Pascal 2.0.4 is currently available for the following platforms:
+Free Pascal 2.1.2 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
-- Linux-arm (cross compiling environment for Linux-i386)
-- Win32 (Win95/98/Me/XP/2000 and WinNT)
+- Linux-arm
+- Linux-powerpc
+- Linux-sparc
+- Linux-arm
+- Win32-i386 (Win95/98/Me/XP/2000/Vista and WinNT)
+- Win64-x86_64 (XP/Vista)
+- Wince-arm (cross compiled from win32-i386)
 - OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 - FreeBSD-i386
 - Mac OS X/Darwin for PowerPC
-- Linux-powerpc
-
-The following platforms might be provided later:
-- Mac OS (classic) for PowerPC
+- Mac OS X/i386
+- go32v2-i386
 - Netware-i386
 - NetwLibc-i386 (LibC is preferred API under newer Netware versions)
-- Linux-sparc
 
 There are other platforms which are more or less working, but there is
-currently no maintainer for them and thus we cannot provide adequate
-support. DOS (i386) using the GO32v2 DOS extender is one such example,
-other examples would include other BSD variants, etc., and it's at least
-partly relevant for platforms marked as possibly provided later in the list
-above. If you want to change this situation and create and maintain
-versions for other platforms and targets, feel free to contact us, e-mail
-addresses are listed below.
+currently no maintainer for them and thus we cannot provide adequate support.
+Like other BSD variants, etc. If you want to change this and create and
+maintain versions for other platforms and targets, feel free to contact us,
+e-mail addresses are listed below.
 
 
 ****************************************************************************
@@ -56,6 +67,7 @@ addresses are listed below.
   - exception support
   - RTTI support
   - procedure overloading
+  - generics
   - operator overloading
   - COM, CORBA and raw interfaces support
   - dynamic array support
@@ -119,7 +131,7 @@ Mac OS (classic)
 * Quick start - Win32
 ****************************************************************************
 
-Download the distribution package (fpc-2.0.4.i386-win32.exe) and run it
+Download the distribution package (fpc-2.1.2.i386-win32.exe) and run it
 - it is a self-extracting installer, so just follow the instructions
 to install it. Don't forget to set the PATH environment variable if you
 install FPC under Win95/98/ME (the installer should do it automatically
@@ -152,7 +164,7 @@ and type
 * Quick start - Linux/FreeBSD
 ****************************************************************************
 
-Download fpc-2.0.4.<cpu>-<os>.tar and untar into a temporary directory.
+Download fpc-2.1.2.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
@@ -168,7 +180,7 @@ and type
 
 There are two methods to install Free Pascal for Mac OS X.
 
-1) Download and install the Mac OS X package (fpc-2.0.4.powerpc-macosx.dmg)
+1) Download and install the Mac OS X package (fpc-2.1.2.powerpc-macosx.dmg)
 
 This gives you the Free Pascal Compiler and the Xcode integration kit.
 
@@ -236,7 +248,7 @@ options.
 
 The documentation is available as HTML pages, PDF, PS, and text although the
 recommended format is pdf. These are all available on
-ftp://ftp.freepascal.org/fpc/docs
+ftp://ftp.freepascal.org/fpc/dist/docs-2.1.2
 
 NB that there is at present no FPC specific documentation for the Win32
 system functions. There is a note in the ftp /doc explaining where
