@@ -5,6 +5,21 @@ Maintainer: Carlos Laviola <claviola@debian.org>
 Standards-Version: 3.6.2
 Build-Depends: fp-compiler, fp-utils, debhelper (>= 5), tetex-bin, tetex-extra, awk, gs-common, libncurses5-dev, libgpmg1-dev
 
+Package: fpc
+Architecture: i386 powerpc sparc amd64
+Depends: fp-units-rtl, fp-compiler, fp-units-base, fp-ide, fp-units-fcl, fp-units-fv, fp-units-gtk, fp-units-gtk2, fp-units-gnome1, fp-units-db, fp-units-gfx, fp-units-net, fp-units-misc
+Suggests: fp-utils, fp-docs (>= 2.1.1)
+Description: Free Pascal Compiler -- Meta Package
+ The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
+ Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
+ Some extensions are added to the language, like function overloading. Shared
+ libraries can be linked and created. Basic Delphi support is already
+ implemented (classes, exceptions, ansistrings, open arayes). This package
+ contains dependency on all FPC packages provided on your architecture. You need
+ at least the RTL package before you can start compiling anything, but if you
+ want to write any real-world program, you may need to install this meta
+ package.
+
 Package: fp-compiler
 Architecture: i386 powerpc sparc amd64
 Depends: fp-units-rtl (= %{packageversion})

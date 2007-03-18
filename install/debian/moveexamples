@@ -23,23 +23,23 @@ move_examples()
 }
 
 
-FCL_PACKAGES="fcl"
 FV_PACKAGES="fv"
 GTK_PACKAGES="gtk"
 GTK2_PACKAGES="gtk2"
 GNOME1_PACKAGES="imlib zvt gnome gconf"
 BASE_PACKAGES="paszlib pasjpeg regexpr ncurses hash uuid fppkg"
+FCL_PACKAGES="fcl-db fcl-image"
 GFX_PACKAGES="forms ggi libgd svgalib opengl graph openal"
 DB_PACKAGES="ibase mysql oracle postgres gdbm odbc"
 MISC_PACKAGES="gdbint utmp syslog cdrom tcl newt fftw"
 NET_PACKAGES="netdb dbus libcurl"
 
-move_examples fcl "$FCL_PACKAGES"
 move_examples fv "$FV_PACKAGES"
 move_examples gtk "$GTK_PACKAGES"
 move_examples gtk2 "$GTK2_PACKAGES"
 move_examples gnome1 "$GNOME1_PACKAGES"
 move_examples base "$BASE_PACKAGES"
+move_examples fcl "$FCL_PACKAGES"
 move_examples gfx "$GFX_PACKAGES"
 move_examples db "$DB_PACKAGES"
 move_examples misc "$MISC_PACKAGES"

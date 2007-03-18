@@ -78,7 +78,6 @@ clean:
 	$(MAKE) compiler_distclean
 	$(MAKE) rtl_distclean
 	$(MAKE) packages_distclean
-	$(MAKE) fcl_distclean
 	$(MAKE) fv_distclean
 	$(MAKE) ide_distclean
 	$(MAKE) utils_distclean
@@ -118,7 +117,7 @@ build-arch-stamp: debian-files-stamp
 	$(MAKE) compiler_cycle
 	$(MAKE) rtl_clean rtl_smart $(BUILDOPTS)
 	$(MAKE) packages_base_smart $(BUILDOPTS)
-	$(MAKE) fcl_smart $(BUILDOPTS)
+	$(MAKE) packages_fcl_smart $(BUILDOPTS)
 	$(MAKE) fv_smart $(BUILDOPTS)
 	$(MAKE) packages_extra_smart $(BUILDOPTS)
 	$(MAKE) ide_all $(BUILDOPTS)
@@ -137,7 +136,6 @@ install-arch-stamp: build-arch-stamp debian-files-stamp
 # Specify the compiler to use so installing will use the correct versioned dir
 	$(MAKE) compiler_distinstall $(INSTALLOPTS)
 	$(MAKE) rtl_distinstall $(INSTALLOPTS)
-	$(MAKE) fcl_distinstall $(INSTALLOPTS)
 	$(MAKE) fv_distinstall $(INSTALLOPTS)
 	$(MAKE) packages_distinstall $(INSTALLOPTS)
 	$(MAKE) ide_distinstall $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-ide
@@ -232,7 +230,6 @@ binary-arch: build-arch arrange-arch debian-files
 
 #	dh_installchangelogs -pfp-compiler logs/Changes.compiler
 #	dh_installchangelogs -pfp-units-rtl logs/Changes.rtl
-#	dh_installchangelogs -pfp-units-fcl logs/Changes.fcl
 #	dh_installchangelogs -pfp-utils logs/Changes.utils
 
 	dh_installexamples -a
