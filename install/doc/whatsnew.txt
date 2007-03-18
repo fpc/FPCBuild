@@ -1,7 +1,44 @@
 
                             Free Pascal Compiler
 
-                                Version 2.0.4
+                                Version 2.1.2
+
+******************************************************************************
+                              What's New in 2.1.2
+******************************************************************************
+
+More than 1000 changes have been made to 2.1.2 since 2.0.4. Except from new
+features, there are many bug fixes and several performance enhancements added.
+
+Compiler:
+  * Native support for ARM-platform
+  * Native support for Win64
+  * Internal linker for win32, win64 and wince
+  * Added several optimisations
+  * Added generics
+
+RTL:
+  * Lot of small bug and compatibility fixes
+
+FCL:
+  * Lot of small bugs and compatibility fixes
+  * Improved database support
+  * The obsolete sqlitedataset, interbase, fpodbc, ddg, mysqldb3 and mysqldb4
+    units are removed
+
+Packages:
+  * Added a new fppkg package manager
+  * Improved database support
+
+Free Vision:
+  *
+
+IDE:
+  * Small bug fixes
+
+Misc:
+  * Improved documentation
+  * Better cross compilation support
 
 ******************************************************************************
                               What's New in 2.0.4
