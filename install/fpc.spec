@@ -63,9 +63,10 @@ NEWPP=`pwd`/compiler/%{ppcname}
 NEWFPDOC=`pwd`/utils/fpdoc/fpdoc
 	make compiler_cycle
 	make rtl_clean rtl_smart FPC=${NEWPP}
-	make packages_base_smart FPC=${NEWPP}
+        make packages_base_smart FPC=${NEWPP}
+        make packages_fcl_smart FPC=${NEWPP}
 	make fv_smart FPC=${NEWPP}
-	make packages_extra_smart FPC=${NEWPP}
+        make packages_extra_smart FPC=${NEWPP}
 	make ide_all FPC=${NEWPP}
 	make utils_all FPC=${NEWPP}
 if [ -z ${NODOCS} ]; then
