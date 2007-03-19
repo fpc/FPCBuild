@@ -156,9 +156,9 @@ installbinary ()
     fi
   fi
 
-  if yesno "Install FCL"; then
-      unztarfromtar $BINARYTAR ${CROSSPREFIX}units-fcl.$1.tar.gz $PREFIX
-  fi
+#  if yesno "Install FCL"; then
+#      unztarfromtar $BINARYTAR ${CROSSPREFIX}units-fcl.$1.tar.gz $PREFIX
+#  fi
   if yesno "Install packages"; then
     listtarfiles $BINARYTAR packages units
     for f in $packages
