@@ -296,6 +296,21 @@ renametoshort:
         -mv $(PKGUNITSPRE)oracle$(ZIPSUFFIX).zip uora$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)postgres$(ZIPSUFFIX).zip upgr$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)winunits$(ZIPSUFFIX).zip uwin$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fcl-base$(ZIPSUFFIX).zip ufclb$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fcl-db$(ZIPSUFFIX).zip ufcld$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fcl-fpcunit$(ZIPSUFFIX).zip ufclu$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fcl-image$(ZIPSUFFIX).zip ufcli$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fcl-net$(ZIPSUFFIX).zip ufcln$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fcl-passrc$(ZIPSUFFIX).zip ufclp$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fcl-registry$(ZIPSUFFIX).zip ufclr$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fcl-web$(ZIPSUFFIX).zip ufclw$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fcl-xml$(ZIPSUFFIX).zip ufclx$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)httpd-1.3$(ZIPSUFFIX).zip uhd13$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)httpd-2.0$(ZIPSUFFIX).zip uhd20$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)httpd-2.2$(ZIPSUFFIX).zip uhd22$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)oggvorbis$(ZIPSUFFIX).zip uoggv$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)openal$(ZIPSUFFIX).zip uoal$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)openssl$(ZIPSUFFIX).zip uossl$(ZIPSUFFIXSHORT).zip
 
 shortsrc:
         $(MAKE) renametoshort ZIPSUFFIX=$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
