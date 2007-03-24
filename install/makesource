@@ -24,4 +24,5 @@ find -name .svn -type d | xargs tar --remove-files -cvf $OUTPUTDIR/SVNfiles-$1.t
 rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
 zip -D9r $OUTPUTDIR/$PACKNAME.zip fpc
 tar cfv - fpc/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
+cd ..
 rm -rf buildsrc

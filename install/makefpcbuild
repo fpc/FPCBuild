@@ -1,0 +1,29 @@
+#!/bin/sh
+
+set -e
+
+if [ $# -ne 1 ]; then
+  echo "Usage: makefpcbuild <release>"
+  exit 1
+fi
+
+SVNTAGVER=`echo $1 | tr '.' '_'`
+SVNPATH="release_$SVNTAGVER"
+
+PACKNAME=fpcbuild-$1
+OUTPUTDIR=..
+
+rm -rf buildsrc
+
+mkdir buildsrc
+cd buildsrc
+svn co http://svn.freepascal.org/svn/fpcbuild/tags/$SVNPATH fpcbuild
+svn export fpcbuild fpcbuild-$1
+
+#find -name .svn -type d | xargs tar --remove-files -cvf $OUTPUTDIR/SVNfiles-$1.tar.gz 
+
+rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
+zip -D9r $OUTPUTDIR/$PACKNAME.zip fpcbuild-$1
+tar cfv - fpcbuild/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
+cd ..
+rm -rf buildsrc
