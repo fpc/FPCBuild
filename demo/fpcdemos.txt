@@ -3,22 +3,25 @@ FPC demo package
 This packages contains the following subdirectories:
 
 - text     text mode demos (should run everywhere)
-- graph    demos those use the graph unit (runs nearly everywhere)
+- graph    demos which use the graph unit (runs nearly everywhere)
            includes gameunit (text&graph), outputs to another subdir level
-- modex    demos those make extensive use of modeX (runs with go32v2 only)
-- win32    demos those are win32 specific
-- linux    demos those are linux specific
+- modex    demos which make extensive use of modeX (runs with go32v2 only)
+- win32    demos which are win32 specific
+- linux    demos which are linux specific
 - lister   KVM api demo. Runs on Unix and win32 currently.
-- os2      demos those are OS/2 specific
-- palmos   demos those are palmos specific (dragonball)
-- netware  demos those are netware(clib) specific
-- netwlibc demos those are netware(libc) specific
-- macos    demos those are macos (classic) specific
+- os2      demos which are OS/2 specific
+- palmos   demos which are palmos specific (dragonball)
+- netware  demos which are netware(clib) specific
+- netwlibc demos which are netware(libc) specific
+- macos    demos which are macos (classic) specific
+- freebsd  demos which are freebsd specific
+- morphos  demos which are morphos specific
+- wince    demos which are wince specific
 
-To build the programs (except for macos) simply type 'make' in the base
-dir. To do a cross build, type make OS_TARGET=crosstarget, i.e. make
-OS_TARGET=win32. This assumes the crossbinutils and cross RTL are properly
-installed and configured.
+To build the programs (except for macos and wince) simply type 'make' in
+the base dir. To do a cross build, type make OS_TARGET=crosstarget, i.e.
+make OS_TARGET=win32. This assumes the crossbinutils and cross RTL are
+properly installed and configured.
 
 To build the macos sample, issue the command 'fpc <filename>' in MPW in
 directory macos.
