@@ -111,7 +111,7 @@ Description: Free Pascal -- Free Vision units
 
 Package: fp-units-gtk
 Architecture: i386 powerpc sparc amd64
-Depends: fp-units-rtl (= %{packageversion}), fp-units-fcl (= %{packageversion})
+Depends: fp-units-rtl (= %{packageversion}), fp-units-fcl (= %{packageversion}), libglib1.2-dev, libgtk1.2-dev
 Description: Free Pascal -- GTK 1.2 units
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
@@ -120,7 +120,7 @@ Description: Free Pascal -- GTK 1.2 units
 
 Package: fp-units-gtk2
 Architecture: i386 powerpc sparc amd64
-Depends: fp-units-rtl (= %{packageversion}), fp-units-fcl (= %{packageversion})
+Depends: fp-units-rtl (= %{packageversion}), fp-units-fcl (= %{packageversion}), libglib2.0-dev, libgtk2.0-dev
 Description: Free Pascal -- GTK 2.x units
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
