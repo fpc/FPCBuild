@@ -7,17 +7,43 @@
                               What's New in 2.1.2
 ******************************************************************************
 
-More than 1000 changes have been made to 2.1.2 since 2.0.4. Except from new
-features, there are many bug fixes and several performance enhancements added.
+Free Pascal 2.1.2 is the first beta of the upcoming 2.2 release. The work on 
+Free Pascal 2.2 started halfway during the year 2005; this release is the
+first to demonstrate the work that has been done.
+
+Platforms:
+  * New platform: Win64. FPC is the first open source compiler for 64-bit Windows
+     operating systems.
+  * New processor architecture: 64-bit PowerPC
+    * PowerPC64 support for Linux
+    * PowerPC64 support for MacOS X
+  * MacOS X on i386 now supported
+  * New platform: Windows CE
+  * New platform: Nintendo Game Boy Advance
+  * New platform: Nintendo NDS
+  * Native support for ARM-platform
+  * GO32V2 DOS platform got a long needed update
 
 Compiler:
-  * Native support for ARM-platform
-  * Native support for Win64
-  * Internal linker for win32, win64 and wince
-  * Added several optimisations
-  * Added generics
+  * Internal linker for win32, win64 and wince, resulting in smaller executables,
+    less memory used during compilation, and faster compile times for programs
+    using large frameworks like for example the Lazarus Component Library.
+  * Generics
+  * Bit packed arrays and records
+  * Resourcestrings can now be smartlinked, resulting in smaller executables
+  * pointer[low..high] syntax to pass C-style pointer arrays procedures using
+    open arrays
+  * Interface delegation
+  * Added several speed optimisations, for example:
+    * Compiler can omit stack frames
+    * Compiler can store records in registers
+    * Tail recursion expansion
+    * Register renaming optimizations
+  * Dwarf debug format support
+  * Reduced memory usage during compilation
 
 RTL:
+  * Heap uses less memory
   * Lot of small bug and compatibility fixes
 
 FCL:
@@ -31,9 +57,12 @@ Packages:
   * Improved database support
 
 Free Vision:
-  *
+  * Now uses resourcestrings
 
 IDE:
+  * Evaluate window
+  * Improved HTML rendering
+  * Improved xterm support
   * Small bug fixes
 
 Misc:
