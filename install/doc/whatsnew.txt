@@ -16,8 +16,8 @@ of changes which may affect the behaviour of previously working code, and
 how to cope with these changes.
 
 Platforms:
-  * New platform: Win64. FPC is the first open source compiler for 64-bit Windows
-     operating systems.
+  * New platform: Win64. FPC is the first open source compiler for 64-bit
+     Windows operating systems.
   * New processor architecture: 64-bit PowerPC
     * PowerPC/64 support for Linux
   * Mac OS X on Intel (i386) is now supported
@@ -28,20 +28,24 @@ Platforms:
   * GO32V2 DOS platform got a long needed update
 
 Compiler:
-  * Internal linker for win32, win64 and wince, resulting in smaller executables,
-    less memory used during compilation, and faster compile times for programs
-    using large frameworks like for example the Lazarus Component Library.
+  * Internal linker for win32, win64 and wince, resulting in smaller
+    executables, less memory used during compilation, and faster compile
+    times for programs using large frameworks like for example the Lazarus
+    Component Library.
   * Generics
   * Bit packed arrays and records
   * Resourcestrings can now be smartlinked, resulting in smaller executables
-  * pointer[low..high] syntax to pass C-style pointer arrays to procedures using
-    open arrays
+  * pointer[low..high] syntax to pass C-style pointer arrays to procedures
+    using open arrays
   * Interface delegation
   * Added several speed optimisations, for example:
     * Compiler can omit stack frames
     * Compiler can store records in registers
     * Tail recursion expansion
     * Register renaming optimizations
+  * Compiler can initialise local variables, function results, and "out"
+    parameters with several values (command line parameters -gt till -gtttt)
+    to help find uses of uninitialised variables
   * Dwarf debug format support
   * Reduced memory usage during compilation
 
