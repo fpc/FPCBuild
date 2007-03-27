@@ -11,16 +11,19 @@ Free Pascal 2.1.2 is the first beta of the upcoming 2.2 release. The work on
 Free Pascal 2.2 started halfway during the year 2005; this release is the
 first to demonstrate the work that has been done.
 
+Please also see http://wiki.freepascal.org/User_Changes_2.2.0 for a list
+of changes which may affect the behaviour of previously working code, and
+how to cope with these changes.
+
 Platforms:
   * New platform: Win64. FPC is the first open source compiler for 64-bit Windows
      operating systems.
   * New processor architecture: 64-bit PowerPC
-    * PowerPC64 support for Linux
-    * PowerPC64 support for MacOS X
-  * MacOS X on i386 now supported
+    * PowerPC/64 support for Linux
+  * Mac OS X on Intel (i386) is now supported
   * New platform: Windows CE
   * New platform: Nintendo Game Boy Advance
-  * New platform: Nintendo NDS
+  * New platform: Nintendo DS
   * Native support for ARM-platform
   * GO32V2 DOS platform got a long needed update
 
@@ -31,7 +34,7 @@ Compiler:
   * Generics
   * Bit packed arrays and records
   * Resourcestrings can now be smartlinked, resulting in smaller executables
-  * pointer[low..high] syntax to pass C-style pointer arrays procedures using
+  * pointer[low..high] syntax to pass C-style pointer arrays to procedures using
     open arrays
   * Interface delegation
   * Added several speed optimisations, for example:
