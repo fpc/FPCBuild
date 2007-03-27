@@ -40,7 +40,6 @@ Free Pascal 2.1.2 is currently available for the following platforms:
 - OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 - FreeBSD-i386
 - Mac OS X/Darwin for PowerPC
-- Mac OS X/i386
 - go32v2-i386
 - Netware-i386
 - NetwLibc-i386 (LibC is preferred API under newer Netware versions)
@@ -122,7 +121,7 @@ FreeBSD:
 - FreeBSD 4.x system or 5.x system that has COMPAT_4 system (which is
   default)
 Mac OS X:
- - Mac OS X 10.1 and higher (10.0 may also work, but is untested)
+ - Mac OS X 10.2 and higher
 Mac OS (classic)
  - Mac OS 9.2 has been tested, should probably also work from 7.5.3 and up.
 
