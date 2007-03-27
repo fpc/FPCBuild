@@ -46,6 +46,7 @@ Compiler:
   * Compiler can initialise local variables, function results, and "out"
     parameters with several values (command line parameters -gt till -gtttt)
     to help find uses of uninitialised variables
+  * Compiler can now properly deal with paths > 255 characters in all cases
   * Dwarf debug format support
   * Reduced memory usage during compilation
 
@@ -62,6 +63,8 @@ FCL:
 Packages:
   * Added a new fppkg package manager
   * Improved database support
+  * Apple universal interfaces updated to r200 of the common FPC/GPC/MW
+    interfaces
 
 Free Vision:
   * Now uses resourcestrings
