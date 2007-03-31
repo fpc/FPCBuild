@@ -96,8 +96,16 @@ build: $(BUILDSTAMP)
 $(BUILDSTAMP):
         $(MAKE) -C fpcsrc build
 
+buildx64: fpcsrc/build-stamp.x86_64-win64
+fpcsrc/build-stamp.x86_64-win64:
+        $(MAKE) -C fpcsrc build OS_TARGET=win64 CPU_TARGET=x86_64
+
+buildce: fpcsrc/build-stamp.arm-wince
+fpcsrc/build-stamp.arm-wince:
+        $(MAKE) -C fpcsrc build OS_TARGET=wince CPU_TARGET=arm
+
 clean: $(addsuffix _distclean,$(TARGET_DIRS))
-        $(DEL) fpcsrc/build-stamp.*
+        -rm fpcsrc/build-stamp.*
 
 distclean: clean
 
@@ -105,6 +113,9 @@ installbase:
 # create dirs
         $(MKDIR) $(INSTALL_BASEDIR)
         $(MKDIR) $(INSTALL_BINDIR)
+ifeq ($(OS_TARGET),wince)
+        $(COPY) $(addprefix $(CVSINSTALL)/crossbinwce/, *.exe) $(INSTALL_BINDIR)
+endif
 ifndef SNAPSHOT
 ifndef CROSSINSTALL
 # readme & whatsnew and docs
@@ -144,6 +155,10 @@ endif
 install: $(BUILDSTAMP)
         $(MAKE) installbase
         $(MAKE) -C fpcsrc installother
+
+crossinstall: $(BUILDSTAMP)
+        $(MAKE) installbase CROSSINSTALL=1
+        $(MAKE) -C fpcsrc installother CROSSINSTALL=1
 
 zipinstall: $(BUILDSTAMP)
         $(MAKE) fpc_zipinstall ZIPTARGET=installbase ZIPNAME=base
@@ -541,15 +556,8 @@ ifeq ($(wildcard fpcsrc/libgdb/win32/libgdb.a),)
         @exit 1
 endif
 
-fpcsrc/utils/rmcvsdir$(EXEEXT): fpcsrc/utils/rmcvsdir.pp
-ifneq ($(findstring $(OS_SOURCE),win32),)
-        $(MAKE) -C fpcsrc/utils rmcvsdir$(EXEEXT) FPC=$(BASEDIR)/fpcsrc/compiler/ppc386
-endif
-ifneq ($(findstring $(OS_SOURCE),win64),)
-        $(MAKE) -C fpcsrc/utils rmcvsdir$(EXEEXT) FPC=$(BASEDIR)/fpcsrc/compiler/ppcx64
-endif
-
-innobuild: innocheck build fpcsrc/utils/rmcvsdir$(EXEEXT)
+innobuild: innocheck build
+        rmcvsdir$(EXEEXT) $(INNODIR)
         $(DELTREE) $(INNODIR)
         $(MKDIR) $(INNODIR)
         $(COPYTREE) demo $(INNODIR)
@@ -557,12 +565,44 @@ ifndef NODOCS
         unzip -d $(INNODIR) doc-pdf.zip
 endif
         $(MAKE) install INSTALL_PREFIX=$(INNODIR)
-        fpcsrc/utils/rmcvsdir$(EXEEXT) $(INNODIR)
-        fpcsrc/compiler/utils/fpcsubst -i install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST)
+        rmcvsdir$(EXEEXT) $(INNODIR)
+        fpcsubst -i install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
         $(INNOCMD_ISCC)
         $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
 
+innocebuild: innocheck buildce
+        rmcvsdir$(EXEEXT) $(INNODIR)
+        $(DELTREE) $(INNODIR)
+        $(MKDIR) $(INNODIR)
+        $(COPYTREE) demo $(INNODIR)
+        $(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=wince CPU_TARGET=arm
+        rmcvsdir$(EXEEXT) $(INNODIR)
+        fpcsubst -i install/fpcce.ist -o $(INNODIR)/fpcce.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+        "$(ISCCPROG)" $(INNODIR)/fpcce.iss
+        $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
+
+innox64build: innocheck buildx64
+        rmcvsdir$(EXEEXT) $(INNODIR)
+        $(DELTREE) $(INNODIR)
+        $(MKDIR) $(INNODIR)
+        $(COPYTREE) demo $(INNODIR)
+        $(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=win64 CPU_TARGET=x86_64
+        rmcvsdir$(EXEEXT) $(INNODIR)
+        fpcsubst -i install/fpcx64.ist -o $(INNODIR)/fpcx64.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+        "$(ISCCPROG)" $(INNODIR)/fpcx64.iss
+        $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
+
 innoclean:
+        rmcvsdir$(EXEEXT) $(INNODIR)
         $(DELTREE) $(INNODIR)
 
+innoce : checkfpcdir
+	$(MAKE) OS_TARGET=wince CPU_TARGET=arm innocebuild
+        $(MAKE) innoclean	
+
+innox64 : checkfpcdir
+	$(MAKE) OS_TARGET=win64 CPU_TARGET=x86_64 innox64build
+        $(MAKE) innoclean	
+
 inno: checkfpcdir innobuild innoclean
+
