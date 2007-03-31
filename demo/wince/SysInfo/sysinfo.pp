@@ -12,6 +12,7 @@
  10-05-2005 : orinaudo@gmail.com
   first release
   win32(xp) cross compiled with fpc 2.1.x from today, tested on PPC arm-wince 4.21
+  Tested on WM5
 }
 
 Program sysinfo;
@@ -24,7 +25,7 @@ Uses Strings, Windows, SysUtils, strutils;
 
 {$include appconst.inc}
 
-{$R *.res}
+{$R sysinfo.rc}
 
 
 //*****************************************************************************
@@ -124,7 +125,7 @@ begin
  //small hack, wm_create occur during creation -> createwindows function is not returned
  //so FMainHWnd still 0 and menubar need a parent !
  if (FMainHWnd=0) and (piMessage=WM_CREATE) then FMainHWnd:=pMainHWnd;
- 
+
  with AMessage do begin
   msg := piMessage;
   wParam := pWParam;
@@ -189,7 +190,7 @@ begin
   FillByte(FShellActivateInfo,sizeof(SHACTIVATEINFO),0);
   FShellActivateInfo.cbSize := sizeof(SHACTIVATEINFO);
 end;
- 
+
 procedure TMainSysInfo.DoPaint( var vAMessage : TMessage);
 var rt     : RECT;
     ps     : PAINTSTRUCT;
@@ -206,12 +207,12 @@ begin
                        [Sysutils.WinCEBuildNumber, Sysutils.WinCEMajorVersion,
                         Sysutils.WinCEMinorVersion, SysUtils.WinCEPlatform,
                         Sysutils.WinCECSDVersion]);
-    
+
     DrawText(Ahdc, PWideChar(wzData), -1, @rt, DT_LEFT);
 
    finally EndPaint(FMainHWnd, @ps); end;
 end;
- 
+
 procedure TMainSysInfo.DoDestroy( var vAMessage : TMessage);
 begin
   vAMessage.Result:=0;
@@ -219,7 +220,7 @@ begin
   FMenuBarHWnd:=0;
   PostQuitMessage(0);
 end;
- 
+
 procedure TMainSysInfo.DoActivate( var vAMessage : TMessage);
 begin
   with vAMessage do begin
@@ -228,7 +229,7 @@ begin
    SHHandleWMActivate(FMainHWnd, wParam, lParam, @FShellActivateInfo, 0); //SHA_INPUTDIALOG
   end;
 end;
- 
+
 procedure TMainSysInfo.DoSettingChange( var vAMessage : TMessage);
 begin
   with vAMessage do begin
@@ -255,7 +256,7 @@ end;
 //*****************************************************************************
 Begin
  try
- 
+
   GMainSysInfo:=TMainSysInfo.Create;
   try
     if GMainSysInfo.WInit
@@ -266,7 +267,7 @@ Begin
             end;
 
   finally GMainSysInfo.Free; end;
-  
+
  except
   On E:Exception do MessageBox(0,PWideChar(WideFormat('message = %s',[E.message])),'Error', MB_OK);
  end;
