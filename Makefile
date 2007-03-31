@@ -2319,7 +2319,7 @@ ifndef NODOCS
 endif
 	$(MAKE) install INSTALL_PREFIX=$(INNODIR)
 	rmcvsdir$(EXEEXT) $(INNODIR)
-	fpcsubst -i install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST)
+	fpcsubst -i install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	$(INNOCMD_ISCC)
 	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
 innocebuild: innocheck buildce
@@ -2329,7 +2329,7 @@ innocebuild: innocheck buildce
 	$(COPYTREE) demo $(INNODIR)
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=wince CPU_TARGET=arm
 	rmcvsdir$(EXEEXT) $(INNODIR)
-	fpcsubst -i install/fpcce.ist -o $(INNODIR)/fpcce.iss $(FPCISSSUBST)
+	fpcsubst -i install/fpcce.ist -o $(INNODIR)/fpcce.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcce.iss
 	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
 innox64build: innocheck buildx64
@@ -2339,7 +2339,7 @@ innox64build: innocheck buildx64
 	$(COPYTREE) demo $(INNODIR)
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=win64 CPU_TARGET=x86_64
 	rmcvsdir$(EXEEXT) $(INNODIR)
-	fpcsubst -i install/fpcx64.ist -o $(INNODIR)/fpcx64.iss $(FPCISSSUBST)
+	fpcsubst -i install/fpcx64.ist -o $(INNODIR)/fpcx64.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcx64.iss
 	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
 innoclean:
