@@ -156,14 +156,22 @@ installbinary ()
     fi
   fi
 
-#  if yesno "Install FCL"; then
-#      unztarfromtar $BINARYTAR ${CROSSPREFIX}units-fcl.$1.tar.gz $PREFIX
-#  fi
+  if yesno "Install FCL"; then
+    listtarfiles $BINARYTAR packages units
+    for f in $packages
+    do
+      if echo "$f" | grep -o fcl > /dev/null ; then
+        p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
+	echo "Installing $p"
+        unztarfromtar $BINARYTAR $f $PREFIX
+      fi
+    done
+  fi
   if yesno "Install packages"; then
     listtarfiles $BINARYTAR packages units
     for f in $packages
     do
-      if [ $f != ${CROSSPREFIX}units-fcl.$1.tar.gz ]; then
+      if ! echo "$f" | grep -o fcl > /dev/null ; then
         p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
 	echo "Installing $p"
         unztarfromtar $BINARYTAR $f $PREFIX
