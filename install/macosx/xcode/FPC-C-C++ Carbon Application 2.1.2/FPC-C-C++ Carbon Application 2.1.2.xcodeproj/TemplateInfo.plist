@@ -1,0 +1,9 @@
+{
+	FilesToRename = {
+	};
+	FilesToMacroExpand = (
+		"Info.plist",
+		"English.lproj/main.nib/objects.xib",
+	);
+	Description = "This project builds a Carbon application that uses .nib files for resources, and which mixes Pascal, C and C++ files in the same project. It has been tested with Xcode 2.4.1, but should also work with later versions. It has been created for FPC 2.1.2 and later. It can be used to create universal binaries when running on an Intel Mac with both the PowerPC and Intel versions of FPC installed.";
+}
