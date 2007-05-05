@@ -1,0 +1,16 @@
+==================================================================
+Overview
+==================================================================
+
+This package installs the Free Pascal Compiler for Intel. It requires the Mac OS X Developer Tools (Xcode) to be installed (partial Xcode installs may work, but are unsupported). An integration toolkit for use with Xcode is also included on this disk image. This install can be used to compile for both PowerPC and Intel, and to create Universal Binaries.
+
+The compiler can also be used at the command line, in which case you use Terminal to compile programs. For editing source files, you can use your favorite editor.
+
+After installation, the compiler -called "fpc"- will be located in the directory /usr/local/bin. You may have to add this directory to your PATH before you can use the compiler from the command line. See the section labeled "Quick start" in the ReadMe for more information on how to do that. The documentation is installed in "/Developer/Documentation/Free Pascal Compiler".
+
+To compile a program or a unit, go to the directory containing the source file and type
+	fpc sourcefile
+
+The compiler will automatically compile the necessary units as well. Run "fpc" without any command line options to get a list of the available parameters.
+
+For more information, For more information, see the ReadMe.txt file or visit http://www.freepascal.org
