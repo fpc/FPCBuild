@@ -1,6 +1,60 @@
-program fpc204carbontempl;
-    uses
-        FPCMacOSAll, TestUnit;
+unit MainUnit;
+
+interface
+
+uses
+	MacTypes;
+
+procedure RunMainProcedure;
+
+
+implementation
+
+uses
+	FPCMacOSAll;
+
+{-------------------------------- }
+
+procedure ShowExamples;
+    var
+        fontID  : Integer;
+        sh      : StringHandle;
+        ph      : PicHandle;
+        r       : Rect;
+
+begin
+    MoveTo(7, 28);
+
+    GetFNum('Helvetica', fontID);
+    TextFont(fontID);
+    TextSize(24);
+    TextFace(bold);
+    DrawString('Pascal Carbon example');
+
+    MoveTo(  6, 36);
+    LineTo(420, 36);
+
+    sh := StringHandle(GetResource('STR ', 256));
+    if sh <> nil then
+    begin
+        TextSize(12);
+        TextFace(normal);
+        MoveTo(6, 60);
+        DrawString(sh^^);
+    end;
+    
+    ph := PicHandle(GetResource('PICT', 256));
+    if ph <> nil then
+    begin
+        r := ph^^.picFrame;
+        OffsetRect(r, 60, 120);
+        DrawPicture(ph, r);
+    end;
+end;
+
+{-------------------------------- }
+
+procedure RunMainProcedure;
 
     label
         CantCreateWindow,
@@ -11,7 +65,6 @@ program fpc204carbontempl;
         err     : OSStatus;
         nibRef  : IBNibRef;
         window  : WindowRef;
-
 
 begin
     // Create a Nib reference passing the name of the nib file (without the .nib extension)
@@ -49,4 +102,6 @@ begin
     CantSetMenuBar:
     CantGetNibRef:
     Halt(byte(err));
+end;
+
 end.

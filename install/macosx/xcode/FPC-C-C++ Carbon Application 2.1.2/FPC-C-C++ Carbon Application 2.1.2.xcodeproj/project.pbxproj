@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4809C45C0AB8C05000D1B097 /* CSupport.pas in Sources */ = {isa = PBXBuildFile; fileRef = 48E6F8210AB75028009C03E0 /* CSupport.pas */; };
 		4809C45D0AB8C05300D1B097 /* Start.pas in Sources */ = {isa = PBXBuildFile; fileRef = 488D3ACF0AB60A0100DA2F98 /* Start.pas */; };
 		486946360AB9EA2B009E9150 /* MainUnit.pas in Sources */ = {isa = PBXBuildFile; fileRef = 486946350AB9EA2B009E9150 /* MainUnit.pas */; };
+		488D3A220AB5F3E800DA2F98 /* main.nib in Resources */ = {isa = PBXBuildFile; fileRef = 488D3A1F0AB5F3E800DA2F98 /* main.nib */; };
+		488D3B130AB60F1400DA2F98 /* External.c in Sources */ = {isa = PBXBuildFile; fileRef = 488D3B110AB60F1400DA2F98 /* External.c */; };
+		488D3BFD0AB6A88F00DA2F98 /* Main.r in Rez */ = {isa = PBXBuildFile; fileRef = 488D3BFC0AB6A88F00DA2F98 /* Main.r */; };
+		488D3C640AB6B5D100DA2F98 /* External.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 488D3C630AB6B5D100DA2F98 /* External.cpp */; };
 		48C60A570AB971A3004EF347 /* libfpc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4809C4EA0AB9580800D1B097 /* libfpc.a */; };
+		48C60A5C0AB97269004EF347 /* libExternal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 488D3B040AB60EFD00DA2F98 /* libExternal.a */; };
 		48C60B090AB972B4004EF347 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C60B080AB972B4004EF347 /* Carbon.framework */; };
-		DD9A81CE0BE62E840073A464 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD9A81C80BE62E840073A464 /* InfoPlist.strings */; };
-		DD9A81CF0BE62E840073A464 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD9A81CA0BE62E840073A464 /* locversion.plist */; };
-		DD9A81D00BE62E840073A464 /* main.nib in Resources */ = {isa = PBXBuildFile; fileRef = DD9A81CC0BE62E840073A464 /* main.nib */; };
-		DD9A81E80BE62EB60073A464 /* DataforkResource.rsrc in Rez */ = {isa = PBXBuildFile; fileRef = DD9A81E60BE62EB60073A464 /* DataforkResource.rsrc */; };
-		DD9A81E90BE62EB60073A464 /* TestResFile.r in Rez */ = {isa = PBXBuildFile; fileRef = DD9A81E70BE62EB60073A464 /* TestResFile.r */; };
+		48E6F8120AB74E5D009C03E0 /* CSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 48E6F8110AB74E5D009C03E0 /* CSupport.h */; };
+		48E6F8200AB74F10009C03E0 /* MainExports.h in Headers */ = {isa = PBXBuildFile; fileRef = 48E6F81F0AB74F10009C03E0 /* MainExports.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -32,6 +35,13 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
+		488D3B050AB60F0200DA2F98 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 488D39340AB5966900DA2F98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 488D3B030AB60EFD00DA2F98;
+			remoteInfo = CSupport;
+		};
 		48C60A540AB97176004EF347 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 488D39340AB5966900DA2F98 /* Project object */;
@@ -46,13 +56,16 @@
 		486946350AB9EA2B009E9150 /* MainUnit.pas */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.pascal; path = MainUnit.pas; sourceTree = "<group>"; };
 		488D39650AB597CC00DA2F98 /* «PROJECTNAME».app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = «PROJECTNAME».app; sourceTree = BUILT_PRODUCTS_DIR; };
 		488D39A30AB59A5B00DA2F98 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
+		488D3A200AB5F3E800DA2F98 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/main.nib; sourceTree = "<group>"; };
 		488D3ACF0AB60A0100DA2F98 /* Start.pas */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.pascal; path = Start.pas; sourceTree = "<group>"; };
+		488D3B040AB60EFD00DA2F98 /* libExternal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libExternal.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		488D3B110AB60F1400DA2F98 /* External.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = External.c; sourceTree = "<group>"; };
+		488D3BFC0AB6A88F00DA2F98 /* Main.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; path = Main.r; sourceTree = "<group>"; };
+		488D3C630AB6B5D100DA2F98 /* External.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = External.cpp; sourceTree = "<group>"; };
 		48C60B080AB972B4004EF347 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		DD9A81C90BE62E840073A464 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = InfoPlist.strings; sourceTree = "<group>"; };
-		DD9A81CB0BE62E840073A464 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = English; path = locversion.plist; sourceTree = "<group>"; };
-		DD9A81CD0BE62E840073A464 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = main.nib; sourceTree = "<group>"; };
-		DD9A81E60BE62EB60073A464 /* DataforkResource.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = DataforkResource.rsrc; sourceTree = "<group>"; };
-		DD9A81E70BE62EB60073A464 /* TestResFile.r */ = {isa = PBXFileReference; fileEncoding = 12; lastKnownFileType = sourcecode.rez; path = TestResFile.r; sourceTree = "<group>"; };
+		48E6F8110AB74E5D009C03E0 /* CSupport.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CSupport.h; path = Headers/CSupport.h; sourceTree = "<group>"; };
+		48E6F81F0AB74F10009C03E0 /* MainExports.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MainExports.h; path = Headers/MainExports.h; sourceTree = "<group>"; };
+		48E6F8210AB75028009C03E0 /* CSupport.pas */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.pascal; name = CSupport.pas; path = Headers/CSupport.pas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +73,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48C60A5C0AB97269004EF347 /* libExternal.a in Frameworks */,
 				48C60A570AB971A3004EF347 /* libfpc.a in Frameworks */,
 				48C60B090AB972B4004EF347 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		488D3B020AB60EFD00DA2F98 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +92,7 @@
 		488D39320AB5966900DA2F98 = {
 			isa = PBXGroup;
 			children = (
+				48E6F8130AB74E63009C03E0 /* Headers */,
 				488D399A0AB599C800DA2F98 /* Source */,
 				488D399B0AB599D400DA2F98 /* Resources */,
 				488D39660AB597CC00DA2F98 /* Products */,
@@ -84,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				488D39650AB597CC00DA2F98 /* «PROJECTNAME».app */,
+				488D3B040AB60EFD00DA2F98 /* libExternal.a */,
 				4809C4EA0AB9580800D1B097 /* libfpc.a */,
 			);
 			name = Products;
@@ -92,8 +115,11 @@
 		488D399A0AB599C800DA2F98 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				48E6F8210AB75028009C03E0 /* CSupport.pas */,
 				488D3ACF0AB60A0100DA2F98 /* Start.pas */,
 				486946350AB9EA2B009E9150 /* MainUnit.pas */,
+				488D3B110AB60F1400DA2F98 /* External.c */,
+				488D3C630AB6B5D100DA2F98 /* External.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -101,24 +127,34 @@
 		488D399B0AB599D400DA2F98 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DD9A81E60BE62EB60073A464 /* DataforkResource.rsrc */,
-				DD9A81E70BE62EB60073A464 /* TestResFile.r */,
-				DD9A81C70BE62E840073A464 /* English.lproj */,
+				488D3BFC0AB6A88F00DA2F98 /* Main.r */,
+				488D3A1F0AB5F3E800DA2F98 /* main.nib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		DD9A81C70BE62E840073A464 /* English.lproj */ = {
+		48E6F8130AB74E63009C03E0 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				DD9A81CC0BE62E840073A464 /* main.nib */,
-				DD9A81C80BE62E840073A464 /* InfoPlist.strings */,
-				DD9A81CA0BE62E840073A464 /* locversion.plist */,
+				48E6F81F0AB74F10009C03E0 /* MainExports.h */,
+				48E6F8110AB74E5D009C03E0 /* CSupport.h */,
 			);
-			path = English.lproj;
+			name = Headers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		488D3B000AB60EFD00DA2F98 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48E6F8120AB74E5D009C03E0 /* CSupport.h in Headers */,
+				48E6F8200AB74F10009C03E0 /* MainExports.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		4809C4E90AB9580800D1B097 /* fpc */ = {
@@ -126,11 +162,11 @@
 			buildConfigurationList = 4809C4ED0AB9584400D1B097 /* Build configuration list for PBXNativeTarget "fpc" */;
 			buildPhases = (
 				4809C4EB0AB9581800D1B097 /* Build libfpc.a */,
-				48D58C590ABAA14B00D2D511 /* Compile Pascal Sources */,
+				48D58C690ABAA25A00D2D511 /* Compile Pascal Sources */,
 			);
 			buildRules = (
 			);
-			comments = "This target takes care of FPC everything. It has two trivial custom scripts: one to build the FPC runtime (libfpc.a) and one two compile pascal source code. The following environment variables must exist:\n\nFPC_FLAGS\n  Compiler options to control symbols, code generation etc. Will typically be configuration specific.\n\nFPC_MAIN\n  The full path to the pascal main program file. Make it project relative, e.g $(PROJECT_DIR)/MyProgram.pas.\n\nFPC_PATHS\n  This is a whitespace separated list of folders to search for units and include files, for example:\n\n     -Fu\"$(PROJECT_DIR)/My Units\" -Fi\"$(PROJECT_DIR)/My Includes\"";
+			comments = "This target takes care of FPC everything. It has two trivial custom scripts: one to build the FPC runtime (libfpc.a) and one two compile pascal source code. The following environment variables must exist:\n\nFPC_FLAGS\n  Compiler options to control symbols, code generation etc. Will typically be configuration specific.\n\nFPC_MAIN\n  The full path to the pascal main program file. Make it project relative, e.g $(PROJECT_DIR)/MyProgram.pas.\n\nFPC_PATHS\n  This is a whitespace separated list of folders to search for units and include files, for example:\n\n     -Fu\"$(PROJECT_DIR)/My Units\" -Fi\"$(PROJECT_DIR)/My Includes\"\n";
 			dependencies = (
 			);
 			name = fpc;
@@ -152,11 +188,29 @@
 			);
 			dependencies = (
 				48C60A550AB97176004EF347 /* PBXTargetDependency */,
+				488D3B060AB60F0200DA2F98 /* PBXTargetDependency */,
 			);
 			name = "«PROJECTNAME»";
 			productName = "«PROJECTNAME»";
 			productReference = 488D39650AB597CC00DA2F98 /* «PROJECTNAME».app */;
 			productType = "com.apple.product-type.application";
+		};
+		488D3B030AB60EFD00DA2F98 /* External */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 488D3B0E0AB60F0C00DA2F98 /* Build configuration list for PBXNativeTarget "External" */;
+			buildPhases = (
+				488D3B000AB60EFD00DA2F98 /* Headers */,
+				488D3B010AB60EFD00DA2F98 /* Sources */,
+				488D3B020AB60EFD00DA2F98 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = External;
+			productName = CSupport;
+			productReference = 488D3B040AB60EFD00DA2F98 /* libExternal.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -170,6 +224,7 @@
 			projectDirPath = "";
 			targets = (
 				488D39640AB597CC00DA2F98 /* «PROJECTNAME» */,
+				488D3B030AB60EFD00DA2F98 /* External */,
 				4809C4E90AB9580800D1B097 /* fpc */,
 			);
 		};
@@ -180,9 +235,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD9A81CE0BE62E840073A464 /* InfoPlist.strings in Resources */,
-				DD9A81CF0BE62E840073A464 /* locversion.plist in Resources */,
-				DD9A81D00BE62E840073A464 /* main.nib in Resources */,
+				488D3A220AB5F3E800DA2F98 /* main.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,8 +246,7 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD9A81E80BE62EB60073A464 /* DataforkResource.rsrc in Rez */,
-				DD9A81E90BE62EB60073A464 /* TestResFile.r in Rez */,
+				488D3BFD0AB6A88F00DA2F98 /* Main.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +269,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Build libfpc.a\n# 9 July 2006 (Jonas Maebe)\n#   * original version\n# 15 September 2006 (Erling Johansen)\n#   * simplified\n# 26 April 2007 (Jonas Maebe)\n#  * added support for ppc64/x86_64 (future proofing) \n\nrm -f \"$TARGET_TEMP_DIR\"/*.a\nnarch=\n\nfor arch in $ARCHS\ndo\n\tcase $arch in\n\t\tppc) fpc_arch=ppc; fpc_rtl=powerpc ;;\n\t\ti386) fpc_arch=386; fpc_rtl=i386 ;;\n\t\tppc64) fpc_arch=ppc64; fpc_rtl=powerpc64 ;;\n\t\tx86_64) fpc_arch=x64; fpc_rtl=x86_64 ;;\n\t\t*) continue\n\tesac\n\tif test -e /usr/local/bin/ppc${fpc_arch}\n\tthen\n\t\tupath=/usr/local/lib/fpc/`/usr/local/bin/ppc${fpc_arch} -iV`/units/${fpc_rtl}-darwin\n\t\tar -q \"$TARGET_TEMP_DIR\"/libfpc${narch}.a `ls \"$upath\"/*/*.o | grep -v 'darwin/fv/'`\n\t\tnarch=${narch}x\n\telse\n\t\techo error: can\\'t build libfpc.a for $arch \\(ppc${fpc_arch} not found\\)\n\tfi\ndone\n\nif test ${#narch} -gt 1\nthen\n\tlipo -create \"$TARGET_TEMP_DIR\"/libfpc*.a -output \"$TARGET_BUILD_DIR\"/libfpc.a\n\trm -f \"$TARGET_TEMP_DIR\"/*.a\nelse\n\tmv \"$TARGET_TEMP_DIR\"/libfpc.a \"$TARGET_BUILD_DIR\"\nfi\n";
 		};
-		48D58C590ABAA14B00D2D511 /* Compile Pascal Sources */ = {
+		48D58C690ABAA25A00D2D511 /* Compile Pascal Sources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			comments = "This run script compiles (all) pascal sources into assembler by calling FPC with the main program (only) as argument. FPC will in turn compile dependent units as necessary. The Compile Sources build phase will detect the outdated .o files and assemble the modified sources (because the Pascal source files rule states that output from pascal compilation is assembler files in derived source folders).   ";
@@ -230,7 +282,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Compile Pascal Sources\n# 15sep06,ejo  written.\n# 26 April 2007 - Jonas Maebe\n#  * support for ppc64 and x86_64\n#  * don't run when cleaning (in case running scripts when cleaning is ever fixed by Apple)\n#  * split the options in FPC_COMMON_OPTIONS (common to all configurations) and FPC_CFG_SPECIFIC_OPTIONS (per configuration)\n\nif [ x\"$ACTION\" != \"xbuild\" ]; then\n  # in case running scripts during cleaning gets fixed\n  exit 0\nfi\n\nif test ! -e \"$FPC_MAIN_FILE\"\nthen\n\techo error: FPC_MAIN_FILE not found \\($FPC_MAIN_FILE\\)\n\texit 2\nfi\n\nfor variant in $BUILD_VARIANTS\ndo\n\tfor arch in $ARCHS\n\tdo\n\t\tcase $arch in\n\t\t\ti386) fpc_arch=386;;\n\t\t\tppc) fpc_arch=ppc;;\n              ppc64) fpc_arch=ppc64;;\n              x86_64) fpc_arch=x64;;\n\t\t\t*) continue\n\t\tesac\n\n\t\tif test -e /usr/local/bin/ppc${fpc_arch}\n\t\tthen\n\t\t\tapp_target_temp_dir=$CONFIGURATION_TEMP_DIR/`basename \"$PROJECT_TEMP_DIR\"`\n\t\t\tout_dir=$app_target_temp_dir/`basename \"$DERIVED_SOURCES_DIR\"`-$variant/$arch\n\t\t\tmkdir -p \"$out_dir\"\n\t\t\tcd \"$out_dir\"\n\n\t\t\techo /usr/local/bin/ppc${fpc_arch} -a -s -vbr -FE. $FPC_COMMON_OPTIONS $FPC_SPECIFIC_OPTIONS '\\' >ppccmd.sh\n\t\t\techo -Fi\\\"`dirname \"$FPC_MAIN_FILE\"`\\\" '\\' >>ppccmd.sh\n\t\t\techo $FPC_UNIT_PATHS '\\' >>ppccmd.sh\n\t\t\techo \\\"$FPC_MAIN_FILE\\\" >>ppccmd.sh\n\n\t\t\t/bin/sh ppccmd.sh\n\t\telse\n\t\t\techo $FPC_MAIN_FILE:1: error: 1: can\\'t compile for $arch \\(ppc${fpc_arch} not found\\)\n\t\t\texit 2\n\t\tfi\n\tdone\ndone\n";
+			shellScript = "# Compile Pascal Sources\n# 15sep06,ejo  written.\n# 26 April 2007 - Jonas Maebe\n#  * support for ppc64 and x86_64\n#  * don't run when cleaning (in case running scripts when cleaning is ever fixed by Apple)\n#  * split the options in FPC_COMMON_FLAGS (common to all configurations) and FPC_CFG_SPECIFIC_FLAGS (per configuration)\n\nif [ x\"$ACTION\" != \"xbuild\" ]; then\n  # in case running scripts during cleaning gets fixed\n  exit 0\nfi\n\nif test ! -e \"$FPC_MAIN_FILE\"\nthen\n\techo error: FPC_MAIN_FILE not found \\($FPC_MAIN_FILE\\)\n\texit 2\nfi\n\nfor variant in $BUILD_VARIANTS\ndo\n\tfor arch in $ARCHS\n\tdo\n\t\tcase $arch in\n\t\t\ti386) fpc_arch=386;;\n\t\t\tppc) fpc_arch=ppc;;\n              ppc64) fpc_arch=ppc64;;\n              x86_64) fpc_arch=x64;;\n\t\t\t*) continue\n\t\tesac\n\n\t\tif test -e /usr/local/bin/ppc${fpc_arch}\n\t\tthen\n\t\t\tapp_target_temp_dir=$CONFIGURATION_TEMP_DIR/`basename \"$PROJECT_TEMP_DIR\"`\n\t\t\tout_dir=$app_target_temp_dir/`basename \"$DERIVED_SOURCES_DIR\"`-$variant/$arch\n\t\t\tmkdir -p \"$out_dir\"\n\t\t\tcd \"$out_dir\"\n\n\t\t\techo /usr/local/bin/ppc${fpc_arch} -a -s -vbr -FE. $FPC_COMMON_OPTIONS $FPC_SPECIFIC_OPTIONS '\\' >ppccmd.sh\n\t\t\techo -Fi\\\"`dirname \"$FPC_MAIN_FILE\"`\\\" '\\' >>ppccmd.sh\n\t\t\techo $FPC_UNIT_PATHS '\\' >>ppccmd.sh\n\t\t\techo \\\"$FPC_MAIN_FILE\\\" >>ppccmd.sh\n\n\t\t\t/bin/sh ppccmd.sh\n\t\telse\n\t\t\techo $FPC_MAIN_FILE:1: error: 1: can\\'t compile for $arch \\(ppc${fpc_arch} not found\\)\n\t\t\texit 2\n\t\tfi\n\tdone\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -239,14 +291,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4809C45C0AB8C05000D1B097 /* CSupport.pas in Sources */,
 				4809C45D0AB8C05300D1B097 /* Start.pas in Sources */,
 				486946360AB9EA2B009E9150 /* MainUnit.pas in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		488D3B010AB60EFD00DA2F98 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				488D3B130AB60F1400DA2F98 /* External.c in Sources */,
+				488D3C640AB6B5D100DA2F98 /* External.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		488D3B060AB60F0200DA2F98 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 488D3B030AB60EFD00DA2F98 /* External */;
+			targetProxy = 488D3B050AB60F0200DA2F98 /* PBXContainerItemProxy */;
+		};
 		48C60A550AB97176004EF347 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4809C4E90AB9580800D1B097 /* fpc */;
@@ -255,26 +322,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		DD9A81C80BE62E840073A464 /* InfoPlist.strings */ = {
+		488D3A1F0AB5F3E800DA2F98 /* main.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				DD9A81C90BE62E840073A464 /* English */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		DD9A81CA0BE62E840073A464 /* locversion.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DD9A81CB0BE62E840073A464 /* English */,
-			);
-			name = locversion.plist;
-			sourceTree = "<group>";
-		};
-		DD9A81CC0BE62E840073A464 /* main.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DD9A81CD0BE62E840073A464 /* English */,
+				488D3A200AB5F3E800DA2F98 /* English */,
 			);
 			name = main.nib;
 			sourceTree = "<group>";
@@ -287,7 +338,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -319,8 +370,8 @@
 				FPC_COMMON_OPTIONS = "-Mmacpas -Sgi";
 				FPC_MAIN_FILE = "$(PROJECT_DIR)/Start.pas";
 				FPC_RTL_UNITS_BASE = /usr/local/lib/fpc;
-				FPC_SPECIFIC_OPTIONS = "-ghlttt -O-1 -CRrio";
-				FPC_UNIT_PATHS = "-Fu\"$(PROJECT_DIR)/Source\"";
+				FPC_SPECIFIC_OPTIONS = "-ghlttt -O-1 -CRriot";
+				FPC_UNIT_PATHS = "-Fu\"$(PROJECT_DIR)/Headers\"";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 			};
 			name = Debug;
@@ -333,7 +384,7 @@
 				FPC_MAIN_FILE = "$(PROJECT_DIR)/Start.pas";
 				FPC_RTL_UNITS_BASE = /usr/local/lib/fpc;
 				FPC_SPECIFIC_OPTIONS = "-Ci- -Cr- -Co- -O3 -Xs";
-				FPC_UNIT_PATHS = "-Fu\"$(PROJECT_DIR)/Source\"";
+				FPC_UNIT_PATHS = "-Fu\"$(PROJECT_DIR)/Headers\"";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				PRODUCT_NAME = "«PROJECTNAME»";
 			};
@@ -352,7 +403,10 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-lgcc_s.10.4",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "«PROJECTNAME»";
 				WRAPPER_EXTENSION = app;
@@ -371,10 +425,55 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-lgcc_s.10.4",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "«PROJECTNAME»";
 				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		488D3B0F0AB60F0C00DA2F98 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = External;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		488D3B100AB60F0C00DA2F98 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = External;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -405,6 +504,15 @@
 			buildConfigurations = (
 				488D396A0AB597CD00DA2F98 /* Debug */,
 				488D396B0AB597CD00DA2F98 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		488D3B0E0AB60F0C00DA2F98 /* Build configuration list for PBXNativeTarget "External" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				488D3B0F0AB60F0C00DA2F98 /* Debug */,
+				488D3B100AB60F0C00DA2F98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
