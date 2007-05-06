@@ -1,15 +1,15 @@
 
                             Free Pascal Compiler
 
-                                Version 2.1.2
+                                Version 2.1.4
 
 ******************************************************************************
-                              What's New in 2.1.2
+                              What's New in 2.1.4
 ******************************************************************************
 
-Free Pascal 2.1.2 is the first beta of the upcoming 2.2 release. The work on 
-Free Pascal 2.2 started halfway during the year 2005; this release is the
-first to demonstrate the work that has been done.
+Free Pascal 2.1.4 is the first public beta of the upcoming 2.2 release. The
+work on Free Pascal 2.2 started halfway during the year 2005; this release is
+the first to demonstrate the work that has been done.
 
 Please also see http://wiki.freepascal.org/User_Changes_2.2.0 for a list
 of changes which may affect the behaviour of previously working code, and
