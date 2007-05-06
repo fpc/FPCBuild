@@ -37,11 +37,14 @@ Free Pascal 2.1.2 is currently available for the following platforms:
 - Win32-i386 (Win95/98/Me/XP/2000/Vista and WinNT)
 - Win64-x86_64 (XP/Vista)
 - Wince-arm (cross compiled from win32-i386)
-- OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 - FreeBSD-i386
 - Mac OS X/Darwin for PowerPC
-- Mac OS X/i386
+- Mac OS X/Darwin for Intel (i386)
 - go32v2-i386
+
+The following platforms were not release-ready at the moment of the release
+but they might follow later:
+- OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 - Netware-i386
 - NetwLibc-i386 (LibC is preferred API under newer Netware versions)
 
@@ -93,7 +96,7 @@ e-mail addresses are listed below.
   - h2pas utility to convert .h files to Pascal units
 - smartlinking (not yet supported under Mac OS X)
 - support for the GNU debugger
-- integrated development environment
+- integrated development environment (disabled by default on Mac OS X)
   - powerfull user friendly Wordstar compatible multi file editor
   - context sensitive help supports help files in HTML, Windows HLP and Borland
     TPH format.
@@ -122,7 +125,7 @@ FreeBSD:
 - FreeBSD 4.x system or 5.x system that has COMPAT_4 system (which is
   default)
 Mac OS X:
- - Mac OS X 10.1 and higher (10.0 may also work, but is untested)
+ - Mac OS X 10.2 and higher
 Mac OS (classic)
  - Mac OS 9.2 has been tested, should probably also work from 7.5.3 and up.
 
@@ -284,7 +287,8 @@ SNAPSHOTS & SOURCES
 One of the features of FPC is the snapshots. These are made daily or weekly
 from the developers' latest versions of the source. Snapshots are available
 for GO32v2, Win32, OS/2, Linux and Netware versions. The latest snapshots
-are in: ftp... /fpc/snapshot/ in appropriately named .zip/tar files.
+are in: ftp://ftp.freepascal.org/fpc/snapshot/ in appropriately named
+.zip/tar files.
 
 You will also normally find in the snapshot archive file a readme, with
 a note about the latest included changes. It is quite common, though it doesn't
