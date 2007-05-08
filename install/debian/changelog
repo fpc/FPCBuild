@@ -1,3 +1,9 @@
+fpc (2.3.1-0) unstable; urgency=low
+
+  * Snapshot build
+
+ -- Mazen Neifer <mazen@freepascal.org>  Mon, 07 Mai 2007 23:21:00 +0200
+
 fpc (2.1.1-0) unstable; urgency=low
 
   * Snapshot build

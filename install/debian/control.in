@@ -3,7 +3,7 @@ Section: devel
 Priority: optional
 Maintainer: Carlos Laviola <claviola@debian.org>
 Standards-Version: 3.6.2
-Build-Depends: fp-compiler, fp-utils, debhelper (>= 5), tetex-bin, tetex-extra, awk, gs-common, libncurses5-dev, libgpmg1-dev
+Build-Depends: fp-compiler, fp-utils, debhelper (>= 5), findutils, awk, gs-common, libncurses5-dev, libgpmg1-dev
 
 Package: fpc
 Architecture: i386 powerpc sparc amd64
@@ -67,6 +67,7 @@ Description: Free Pascal -- Utils
 Package: fp-docs
 Section: doc
 Architecture: all
+Build-Depends: tetex-bin, tetex-extra
 Description: Free Pascal -- Documentation
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
@@ -182,3 +183,12 @@ Description: Free Pascal -- miscellaneous units
  Free Pascal miscellaneous units for:
   - Utmp
   - PasZLib (Pascal-only zlib implementation)
+
+Package: fp-units-i386
+Architecture: i386
+Depends: fp-units-rtl (= %{packageversion})
+Description: Free Pascal -- miscellaneous units
+ The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
+ Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
+ Free Pascal spacific units for i386 architecture :
+  - libc : used for compatibility with kylix, depreciated.

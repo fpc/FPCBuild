@@ -1,7 +1,6 @@
 /usr/share/doc/fp-units-misc
 
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/utmp
-/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libc
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/pthreads
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/unixutil
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/zlib
