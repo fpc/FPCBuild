@@ -4,7 +4,7 @@
 
 [package]
 name=fpc
-version=2.1.4
+version=2.1.5
 
 [target]
 dirs=fpcsrc fpcdocs
@@ -409,7 +409,7 @@ ifneq ($(DEBFPCVERSION),$(PACKAGE_VERSION))
 endif
 
 debcopy: distclean
-        rm -rf $(DEBSRCDIR)
+        rm -rf ${BUILDDIR}
         install -d $(DEBSRCDIR)
         $(COPYTREE) fpcsrc/compiler $(DEBSRCDIR)
         $(COPYTREE) fpcsrc/rtl $(DEBSRCDIR)

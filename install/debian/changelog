@@ -1,3 +1,9 @@
+fpc (2.1.5-0) unstable; urgency=low
+
+  * Snapshot build
+
+ -- Mazen Neifer <mazen@freepascal.org>  Sat, 12 may 2007 22:58:00 +0100
+
 fpc (2.1.4-0) unstable; urgency=low
 
   * New beta-release

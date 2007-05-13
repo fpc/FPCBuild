@@ -1,0 +1,6 @@
+/usr/share/doc/fp-units-multimedia
+
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/oggvorbis
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/a52
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/dts
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/pcap
