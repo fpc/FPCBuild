@@ -9,3 +9,4 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/httpd-2.2
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/ldap
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/openssl
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/pcap
