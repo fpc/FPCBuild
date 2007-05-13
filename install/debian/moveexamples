@@ -36,7 +36,6 @@ for PACKAGE_FILE in ${PACKAGE_LIST}
 do
     PACKAGE_NAME=`basename "${PACKAGE_FILE}" '.install.in' | sed -e 's/fp-units-//'`
     PACKAGE_CONTENT=`grep '/usr/lib/fpc' "${PACKAGE_FILE}" | sed -e 's@.*/\([^/]\)/\?@\1@'`
-	echo '    **** PACKAGE_FILE = "'${PACKAGE_NAME}'"'
 	echo '    **** PACKAGE_NAME = "'${PACKAGE_NAME}'"'
 	echo '    **** PACKAGE_CONTENT = "'${PACKAGE_CONTENT}'"'
     move_examples "${PACKAGE_NAME}" "${PACKAGE_CONTENT}"

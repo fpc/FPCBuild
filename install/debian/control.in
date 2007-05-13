@@ -171,7 +171,7 @@ Description: Free Pascal -- graphics libraries units
 
 Package: fp-units-net
 Architecture: i386 powerpc sparc amd64
-Depends: fp-units-rtl (= %{packageversion}), libcurl-dev, libdbus-1-dev, libldap-dev, libssl-dev
+Depends: fp-units-rtl (= %{packageversion}), libcurl-dev, libdbus-1-dev, libldap-dev, libssl-dev, libpcap-dev
 Description: Free Pascal -- networking units
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
@@ -185,6 +185,7 @@ Description: Free Pascal -- networking units
   - httpd-2.2
   - ldap
   - openssl : Open SSL
+  - pcap
 
 Package: fp-units-misc
 Architecture: i386 powerpc sparc amd64
@@ -198,7 +199,7 @@ Description: Free Pascal -- miscellaneous units
 
 Package: fp-units-multimedia
 Architecture: i386 powerpc sparc amd64
-Depends: fp-units-rtl (= %{packageversion}), libogg-dev, libvobis-dev, a52dec-dev, libdts-dev, libpcap-dev, libmad0-dev, libmodplug-dev
+Depends: fp-units-rtl (= %{packageversion}), libogg-dev, libvobis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev
 Description: Free Pascal -- miscellaneous units
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
@@ -206,9 +207,9 @@ Description: Free Pascal -- miscellaneous units
   - oggvorbis
   - a52
   - dts
-  - pcap
   - mad
   - modplug
+  - sdl
 
 Package: fp-units-i386
 Architecture: i386
