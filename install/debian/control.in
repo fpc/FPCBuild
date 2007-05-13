@@ -7,7 +7,7 @@ Build-Depends: fp-compiler, fp-utils, debhelper (>= 5), findutils, awk, gs-commo
 
 Package: fpc
 Architecture: i386 powerpc sparc amd64
-Depends: fp-units-rtl, fp-compiler, fp-units-base, fp-ide, fp-units-fcl, fp-units-fv, fp-units-gtk, fp-units-gtk2, fp-units-gnome1, fp-units-db, fp-units-gfx, fp-units-net, fp-units-misc
+Depends: fp-units-rtl, fp-compiler, fp-units-base, fp-ide, fp-units-fcl, fp-units-fv, fp-units-gtk, fp-units-gtk2, fp-units-gnome1, fp-units-db, fp-units-gfx, fp-units-net, fp-units-misc, fp-units-multimedia
 Suggests: fp-utils, fp-docs (>= 2.1.1)
 Description: Free Pascal Compiler -- Meta Package
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
@@ -112,7 +112,7 @@ Description: Free Pascal -- Free Vision units
 
 Package: fp-units-gtk
 Architecture: i386 powerpc sparc amd64
-Depends: fp-units-rtl (= %{packageversion}), fp-units-fcl (= %{packageversion})
+Depends: fp-units-rtl (= %{packageversion}), fp-units-fcl (= %{packageversion}), libglib1.2-dev, libgtk1.2-dev
 Description: Free Pascal -- GTK 1.2 units
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
@@ -121,7 +121,7 @@ Description: Free Pascal -- GTK 1.2 units
 
 Package: fp-units-gtk2
 Architecture: i386 powerpc sparc amd64
-Depends: fp-units-rtl (= %{packageversion}), fp-units-fcl (= %{packageversion})
+Depends: fp-units-rtl (= %{packageversion}), fp-units-fcl (= %{packageversion}), libglib2.0-dev, libgtk2.0-dev
 Description: Free Pascal -- GTK 2.x units
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
@@ -154,25 +154,37 @@ Description: Free Pascal -- database libraries units
 
 Package: fp-units-gfx
 Architecture: i386 powerpc sparc amd64
-Depends: fp-units-rtl (= %{packageversion}), fp-units-base (= %{packageversion})
+Depends: fp-units-rtl (= %{packageversion}), fp-units-base (= %{packageversion}), libggi-dev, libgd-dev, libpng-dev, libopenal-dev, libcairo-dev
 Description: Free Pascal -- graphics libraries units
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
  This package contains Free Pascal units with bindings for:
-  - Forms 0.88
-  - Svgalib
-  - GGI
-  - OpenGL
+  - opengl :OpenGL
+  - forms : Forms 0.88
+  - svgalib : Svgalib
+  - ggi : General Graphical Interface
+  - libgd
+  - libpng
+  - graph
+  - openal
+  - cairo
 
 Package: fp-units-net
 Architecture: i386 powerpc sparc amd64
-Depends: fp-units-rtl (= %{packageversion})
+Depends: fp-units-rtl (= %{packageversion}), libcurl-dev, libdbus-1-dev, libldap-dev, libssl-dev
 Description: Free Pascal -- networking units
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
  This package contains Free Pascal units for creating network tools:
-  - NetDB unit for TCP/IP handling
-  - LibAsync unit for easy Asynchronous IO
+  - netdb : NetDB unit for TCP/IP handling
+  - libasync : LibAsync unit for easy Asynchronous IO
+  - libcurl
+  - dbus
+  - httpd-1.3
+  - httpd-2.0
+  - httpd-2.2
+  - ldap
+  - openssl : Open SSL
 
 Package: fp-units-misc
 Architecture: i386 powerpc sparc amd64
@@ -183,6 +195,20 @@ Description: Free Pascal -- miscellaneous units
  Free Pascal miscellaneous units for:
   - Utmp
   - PasZLib (Pascal-only zlib implementation)
+
+Package: fp-units-multimedia
+Architecture: i386 powerpc sparc amd64
+Depends: fp-units-rtl (= %{packageversion}), libogg-dev, libvobis-dev, a52dec-dev, libdts-dev, libpcap-dev, libmad0-dev, libmodplug-dev
+Description: Free Pascal -- miscellaneous units
+ The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
+ Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
+ Free Pascal multimedia interfacing units for:
+  - oggvorbis
+  - a52
+  - dts
+  - pcap
+  - mad
+  - modplug
 
 Package: fp-units-i386
 Architecture: i386

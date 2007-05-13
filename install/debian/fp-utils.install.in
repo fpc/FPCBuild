@@ -19,6 +19,7 @@
 /usr/bin/makeskel
 /usr/bin/unitdiff
 /usr/bin/mkxmlrpc
+/usr/bin/rmcvsdir
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/lexyacc
 /usr/lib/fpc/lexyacc/yylex.cod
 /usr/lib/fpc/lexyacc/yyparse.cod
