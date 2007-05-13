@@ -198,7 +198,7 @@ Description: Free Pascal -- miscellaneous units
 
 Package: fp-units-multimedia
 Architecture: i386 powerpc sparc amd64
-Depends: fp-units-rtl (= %{packageversion}), libogg-dev, libvobis-dev, a52dec-dev, libdts-dev, libpcap-dev
+Depends: fp-units-rtl (= %{packageversion}), libogg-dev, libvobis-dev, a52dec-dev, libdts-dev, libpcap-dev, libmad0-dev, libmodplug-dev
 Description: Free Pascal -- miscellaneous units
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
@@ -207,6 +207,8 @@ Description: Free Pascal -- miscellaneous units
   - a52
   - dts
   - pcap
+  - mad
+  - modplug
 
 Package: fp-units-i386
 Architecture: i386
