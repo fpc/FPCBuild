@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 2.1.2
+                               Version 2.1.4
 
 
 ****************************************************************************
@@ -11,8 +11,8 @@
 This is a beta-release. It will be replaced with a newer version in less then
 three months. Please submit bugs on our bug-tracker, www.freepascal.org/mantis.
 To test if a bug is fixed in the meanwhile you can use a snapshot-version,
-based on the fixes_2_2 branch. For more information see the sections about
-reporting bugs and snapshots below.
+based on the fixes_2_2 branch (v21). For more information see the sections
+about reporting bugs and snapshots below.
 
 
 ****************************************************************************
@@ -27,7 +27,7 @@ several platforms. The language and the runtime library are almost compatible
 with Turbo Pascal 7.0 and recent Delphi releases. There is also partial
 support for the Macintosh pascal dialect.
 
-Free Pascal 2.1.2 is currently available for the following platforms:
+Free Pascal 2.1.4 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-arm
@@ -134,7 +134,7 @@ Mac OS (classic)
 * Quick start - Win32
 ****************************************************************************
 
-Download the distribution package (fpc-2.1.2.i386-win32.exe) and run it
+Download the distribution package (fpc-2.1.4.i386-win32.exe) and run it
 - it is a self-extracting installer, so just follow the instructions
 to install it. Don't forget to set the PATH environment variable if you
 install FPC under Win95/98/ME (the installer should do it automatically
@@ -167,7 +167,7 @@ and type
 * Quick start - Linux/FreeBSD
 ****************************************************************************
 
-Download fpc-2.1.2.<cpu>-<os>.tar and untar into a temporary directory.
+Download fpc-2.1.4.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
@@ -183,7 +183,7 @@ and type
 
 There are two methods to install Free Pascal for Mac OS X.
 
-1) Download and install the Mac OS X package (fpc-2.1.2.powerpc-macosx.dmg)
+1) Download and install the Mac OS X package (fpc-2.1.4.powerpc-macosx.dmg)
 
 This gives you the Free Pascal Compiler and the Xcode integration kit.
 
@@ -251,7 +251,7 @@ options.
 
 The documentation is available as HTML pages, PDF, PS, and text although the
 recommended format is pdf. These are all available on
-ftp://ftp.freepascal.org/fpc/dist/docs-2.1.2
+ftp://ftp.freepascal.org/fpc/dist/docs-2.1.4
 
 NB that there is at present no FPC specific documentation for the Win32
 system functions. There is a note in the ftp /doc explaining where

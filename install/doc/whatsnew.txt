@@ -1,23 +1,57 @@
 
                             Free Pascal Compiler
 
-                                Version 2.1.2
+                                Version 2.1.4
 
 ******************************************************************************
-                              What's New in 2.1.2
+                              What's New in 2.1.4
 ******************************************************************************
 
-More than 1000 changes have been made to 2.1.2 since 2.0.4. Except from new
-features, there are many bug fixes and several performance enhancements added.
+Free Pascal 2.1.4 is the first public beta of the upcoming 2.2 release. The
+work on Free Pascal 2.2 started halfway during the year 2005; this release is
+the first to demonstrate the work that has been done.
+
+Please also see http://wiki.freepascal.org/User_Changes_2.2.0 for a list
+of changes which may affect the behaviour of previously working code, and
+how to cope with these changes.
+
+Platforms:
+  * New platform: Win64. FPC is the first open source compiler for 64-bit
+     Windows operating systems.
+  * New processor architecture: 64-bit PowerPC
+    * PowerPC/64 support for Linux
+  * Mac OS X on Intel (i386) is now supported
+  * New platform: Windows CE
+  * New platform: Nintendo Game Boy Advance
+  * New platform: Nintendo DS
+  * Native support for ARM-platform
+  * GO32V2 DOS platform got a long needed update
 
 Compiler:
-  * Native support for ARM-platform
-  * Native support for Win64
-  * Internal linker for win32, win64 and wince
-  * Added several optimisations
-  * Added generics
+  * Internal linker for win32, win64 and wince, resulting in smaller
+    executables, less memory used during compilation, and faster compile
+    times for programs using large frameworks like for example the Lazarus
+    Component Library.
+  * Generics
+  * Bit packed arrays and records
+  * Resourcestrings can now be smartlinked, resulting in smaller executables
+  * pointer[low..high] syntax to pass C-style pointer arrays to procedures
+    using open arrays
+  * Interface delegation
+  * Added several speed optimisations, for example:
+    * Compiler can omit stack frames
+    * Compiler can store records in registers
+    * Tail recursion expansion
+    * Register renaming optimizations
+  * Compiler can initialise local variables, function results, and "out"
+    parameters with several values (command line parameters -gt till -gtttt)
+    to help find uses of uninitialised variables
+  * Compiler can now properly deal with paths > 255 characters in all cases
+  * Dwarf debug format support
+  * Reduced memory usage during compilation
 
 RTL:
+  * Heap uses less memory
   * Lot of small bug and compatibility fixes
 
 FCL:
@@ -29,16 +63,25 @@ FCL:
 Packages:
   * Added a new fppkg package manager
   * Improved database support
+  * Apple universal interfaces updated to r200 of the common FPC/GPC/MW
+    interfaces
 
 Free Vision:
-  *
+  * Now uses resourcestrings
 
 IDE:
+  * Evaluate window
+  * Improved HTML rendering
+  * Improved xterm support
   * Small bug fixes
 
 Misc:
   * Improved documentation
   * Better cross compilation support
+
+For a detailed list of reported bugs that are fixed in this release see the
+bugtracker report at http://www.freepascal.org/mantis/changelog_page.php
+
 
 ******************************************************************************
                               What's New in 2.0.4
