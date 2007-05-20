@@ -79,6 +79,10 @@ Misc:
   * Improved documentation
   * Better cross compilation support
 
+For a detailed list of reported bugs that are fixed in this release see the
+bugtracker report at http://www.freepascal.org/mantis/changelog_page.php
+
+
 ******************************************************************************
                               What's New in 2.0.4
 ******************************************************************************
