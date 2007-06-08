@@ -20,6 +20,8 @@ fpcdir=.
 rule=help
 
 [prerules]
+
+
 # Build dir
 ifndef BUILDDIR
 BUILDDIR=$(BASEDIR)/build
@@ -85,6 +87,16 @@ help:
 ##########################################################################
 # Packaging
 ##########################################################################
+
+ifdef LINKISCOPY
+ifndef LINKTREE
+LINKTREE:=$(CPPROG) -Rfp
+endif
+else
+ifndef LINKTREE
+LINKTREE:=$(CPPROG) -Rfpl
+endif
+endif
 
 BUILDSTAMP=fpcsrc/build-stamp.$(FULL_TARGET)
 
@@ -380,9 +392,9 @@ endif
 # Use default dirs if not available
 ifeq ($(LIBGDBFILE),)
 # Default locations <target>/<cpu> (linux) or <target> (win32,go32v2) only
-override GDBLIBDIR=$(wildcard $(FPCDIR)/libgdb/$(OS_TARGET)/$(CPU_TARGET))
+override GDBLIBDIR=$(wildcard fpcsrc/libgdb/$(OS_TARGET)/$(CPU_TARGET))
 ifeq ($(GDBLIBDIR),)
-override GDBLIBDIR=$(FPCDIR)/libgdb/$(OS_TARGET)
+override GDBLIBDIR=fpcsrc/libgdb/$(OS_TARGET)
 endif
 # Detect if libgdb.a is available
 override LIBGDBFILE:=$(firstword $(wildcard $(addsuffix /libgdb.a,$(GDBLIBDIR))))
@@ -411,24 +423,24 @@ endif
 debcopy: distclean
         rm -rf ${BUILDDIR}
         install -d $(DEBSRCDIR)
-        $(COPYTREE) fpcsrc/compiler $(DEBSRCDIR)
-        $(COPYTREE) fpcsrc/rtl $(DEBSRCDIR)
-        $(COPYTREE) fpcsrc/fv $(DEBSRCDIR)
-        $(COPYTREE) fpcsrc/ide $(DEBSRCDIR)
-        $(COPYTREE) fpcsrc/packages $(DEBSRCDIR)
-        $(COPYTREE) fpcsrc/utils $(DEBSRCDIR)
-        $(COPYTREE) demo $(DEBSRCDIR)
-        $(COPYTREE) logs $(DEBSRCDIR)
-ifdef GDB
-        $(COPYTREE) $(GDBLIBDIR) $(DEBSRCDIR)
+        $(LINKTREE) fpcsrc/compiler $(DEBSRCDIR)
+        $(LINKTREE) fpcsrc/rtl $(DEBSRCDIR)
+        $(LINKTREE) fpcsrc/fv $(DEBSRCDIR)
+        $(LINKTREE) fpcsrc/ide $(DEBSRCDIR)
+        $(LINKTREE) fpcsrc/packages $(DEBSRCDIR)
+        $(LINKTREE) fpcsrc/utils $(DEBSRCDIR)
+        $(LINKTREE) demo $(DEBSRCDIR)
+        $(LINKTREE) logs $(DEBSRCDIR)
+ifndef NOGDB
+        $(LINKTREE) $(GDBLIBDIR) $(DEBSRCDIR)
 endif
 ifndef NODOCS
-        $(COPYTREE) fpcdocs $(DEBSRCDIR)
+        $(LINKTREE) fpcdocs $(DEBSRCDIR)
 endif
-        $(COPYTREE) fpcsrc/Makefile* $(DEBSRCDIR)
-        $(COPYTREE) $(CVSINSTALL)/debian $(DEBSRCDIR)
-        $(COPYTREE) $(CVSINSTALL)/man $(DEBSRCDIR)
-        $(COPYTREE) $(CVSINSTALL)/doc $(DEBSRCDIR)
+        $(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)
+        $(LINKTREE) $(CVSINSTALL)/debian $(DEBSRCDIR)
+        $(LINKTREE) $(CVSINSTALL)/man $(DEBSRCDIR)
+        $(LINKTREE) $(CVSINSTALL)/doc $(DEBSRCDIR)
         find $(DEBSRCDIR) -name 'CVS*' | xargs -n1 rm -rf
         find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
         chmod 755 $(DEBSRCDIR)/debian/rules
@@ -498,21 +510,24 @@ ifndef NODOCS
 endif
         # Install files
         install -d $(RPMSRCDIR)
-        $(COPYTREE) fpcsrc/compiler $(RPMSRCDIR)
-        $(COPYTREE) fpcsrc/rtl $(RPMSRCDIR)
-        $(COPYTREE) fpcsrc/fv $(RPMSRCDIR)
-        $(COPYTREE) fpcsrc/ide $(RPMSRCDIR)
-        $(COPYTREE) fpcsrc/packages $(RPMSRCDIR)
-        $(COPYTREE) fpcsrc/utils $(RPMSRCDIR)
-        $(COPYTREE) demo $(RPMSRCDIR)
-#        $(COPYTREE) logs $(RPMSRCDIR)
-        $(COPYTREE) fpcsrc/Makefile* $(RPMSRCDIR)
-        $(COPYTREE) $(CVSINSTALL)/man $(RPMSRCDIR)
-        $(COPYTREE) $(CVSINSTALL)/doc $(RPMSRCDIR)
+        $(LINKTREE) fpcsrc/compiler $(RPMSRCDIR)
+        $(LINKTREE) fpcsrc/rtl $(RPMSRCDIR)
+        $(LINKTREE) fpcsrc/fv $(RPMSRCDIR)
+        $(LINKTREE) fpcsrc/ide $(RPMSRCDIR)
+        $(LINKTREE) fpcsrc/packages $(RPMSRCDIR)
+        $(LINKTREE) fpcsrc/utils $(RPMSRCDIR)
+ifndef NOGDB
+        $(LINKTREE) $(GDBLIBDIR) $(DEBSRCDIR)
+endif
+        $(LINKTREE) demo $(RPMSRCDIR)
+#        $(LINKTREE) logs $(RPMSRCDIR)
+        $(LINKTREE) fpcsrc/Makefile* $(RPMSRCDIR)
+        $(LINKTREE) $(CVSINSTALL)/man $(RPMSRCDIR)
+        $(LINKTREE) $(CVSINSTALL)/doc $(RPMSRCDIR)
         $(COPY) $(CVSINSTALL)/smart_strip.sh $(RPMSRCDIR)
         chmod +x $(RPMSRCDIR)/smart_strip.sh
 ifndef NODOCS
-        $(COPYTREE) fpcdocs $(RPMSRCDIR)
+        $(LINKTREE) fpcdocs $(RPMSRCDIR)
 endif
         find $(RPMSRCDIR) -name 'CVS*' | xargs -n1 rm -rf
         find $(RPMSRCDIR) -name '.svn' | xargs -n1 rm -rf
