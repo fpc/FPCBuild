@@ -73,7 +73,7 @@ cat <<EOFCFG > $thefile
 
 # For a release compile with optimizes and strip debuginfo
 #IFDEF RELEASE
-  -OG2p3
+  -O2
   -Xs
   #WRITE Compiling Release Version
 #ENDIF
