@@ -24,6 +24,6 @@ svn export fpcbuild fpcbuild-$1
 
 rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
 zip -D9r $OUTPUTDIR/$PACKNAME.zip fpcbuild-$1
-tar cfv - fpcbuild/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
+tar cfv - fpcbuild-$1/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
 cd ..
 rm -rf buildsrc

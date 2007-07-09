@@ -19,10 +19,12 @@ mkdir buildsrc
 cd buildsrc
 svn co http://svn.freepascal.org/svn/fpc/tags/$SVNPATH fpc
 
-find -name .svn -type d | xargs tar --remove-files -cvf $OUTPUTDIR/SVNfiles-$1.tar.gz 
+find -name .svn -type d | xargs tar -cvf $OUTPUTDIR/SVNfiles-$1.tar.gz 
+
+svn export fpc fpc-$1
 
 rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
-zip -D9r $OUTPUTDIR/$PACKNAME.zip fpc
-tar cfv - fpc/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
+zip -D9r $OUTPUTDIR/$PACKNAME.zip fpc-$1
+tar cfv - fpc-$1/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
 cd ..
 rm -rf buildsrc
