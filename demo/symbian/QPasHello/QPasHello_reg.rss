@@ -1,4 +1,4 @@
-// QHelloWorld_reg.rss
+// QPasHello_reg.rss
 #include <AppInfo.rh>
 UID2 0x100039CE
 UID3 0xE1000002
