@@ -7,9 +7,9 @@
                               What's New in 2.1.4
 ******************************************************************************
 
-Free Pascal 2.1.4 is the first public beta of the upcoming 2.2 release. The
-work on Free Pascal 2.2 started halfway during the year 2005; this release is
-the first to demonstrate the work that has been done.
+Free Pascal 2.2.0 contains a lot of bux-fixes and new features. The work on
+Free Pascal 2.20 started halfway during the year 2005. A lot has been improved
+since then.
 
 Please also see http://wiki.freepascal.org/User_Changes_2.2.0 for a list
 of changes which may affect the behaviour of previously working code, and
@@ -32,7 +32,7 @@ Compiler:
     executables, less memory used during compilation, and faster compile
     times for programs using large frameworks like for example the Lazarus
     Component Library.
-  * Generics
+  * Generics (experimental)
   * Bit packed arrays and records
   * Resourcestrings can now be smartlinked, resulting in smaller executables
   * pointer[low..high] syntax to pass C-style pointer arrays to procedures
