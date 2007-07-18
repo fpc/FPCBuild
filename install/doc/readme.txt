@@ -48,9 +48,9 @@ but they might follow later:
 - Netware-i386
 - NetwLibc-i386 (LibC is preferred API under newer Netware versions)
 
-There are other platforms which are more or less working, but there is
-currently no maintainer for them and thus we cannot provide adequate support.
-Like other BSD variants, etc. If you want to change this and create and
+There are other platforms (like other BSD variants) which are more or less
+working, but there is currently no maintainer for them and thus we cannot
+provide adequate support. If you want to change this and create and
 maintain versions for other platforms and targets, feel free to contact us,
 e-mail addresses are listed below.
 
@@ -70,7 +70,7 @@ e-mail addresses are listed below.
   - exception support
   - RTTI support
   - procedure overloading
-  - generics
+  - generics (experimental)
   - operator overloading
   - COM, CORBA and raw interfaces support
   - dynamic array support
