@@ -7,8 +7,8 @@
                               What's New in 2.1.4
 ******************************************************************************
 
-Free Pascal 2.2.0 contains a lot of bux-fixes and new features. The work on
-Free Pascal 2.20 started halfway during the year 2005. A lot has been improved
+Free Pascal 2.2.0 contains a lot of bug-fixes and new features. The work on
+Free Pascal 2.2.0 started halfway during the year 2005. A lot has been improved
 since then.
 
 Please also see http://wiki.freepascal.org/User_Changes_2.2.0 for a list
@@ -21,7 +21,7 @@ Platforms:
   * New processor architecture: 64-bit PowerPC
     * PowerPC/64 support for Linux
   * Mac OS X on Intel (i386) is now supported
-  * New platform: Windows CE
+  * New platform: Windows CE (Windows Mobile)
   * New platform: Nintendo Game Boy Advance
   * New platform: Nintendo DS
   * Native support for ARM-platform
@@ -35,36 +35,46 @@ Compiler:
   * Generics (experimental)
   * Bit packed arrays and records
   * Resourcestrings can now be smartlinked, resulting in smaller executables
+  * Multiple resource files support
   * pointer[low..high] syntax to pass C-style pointer arrays to procedures
     using open arrays
   * Interface delegation
+  * Proper safecall implementation
+  * Wide strings are COM/OLE compatible on Windows
   * Added several speed optimisations, for example:
-    * Compiler can omit stack frames
+    * Compiler can omit stack frames (x86 and ARM)
     * Compiler can store records in registers
     * Tail recursion expansion
     * Register renaming optimizations
+  * Improved optimizer for ARM CPU
   * Compiler can initialise local variables, function results, and "out"
     parameters with several values (command line parameters -gt till -gtttt)
     to help find uses of uninitialised variables
   * Compiler can now properly deal with paths > 255 characters in all cases
   * Dwarf debug format support
   * Reduced memory usage during compilation
+  * Lot of small bugs and compatibility fixes
 
 RTL:
   * Heap uses less memory
+  * Improved variants support
+  * Improved currency support
+  * Exception handling can be used without SysUtils unit
   * Lot of small bug and compatibility fixes
 
 FCL:
-  * Lot of small bugs and compatibility fixes
   * Improved database support
   * The obsolete sqlitedataset, interbase, fpodbc, ddg, mysqldb3 and mysqldb4
     units are removed
+  * Lot of small bugs and compatibility fixes
 
 Packages:
   * Added a new fppkg package manager
   * Improved database support
+  * Added Delphi compatible RichEdit unit
   * Apple universal interfaces updated to r200 of the common FPC/GPC/MW
     interfaces
+  * Lot of small bugs and compatibility fixes
 
 Free Vision:
   * Now uses resourcestrings
