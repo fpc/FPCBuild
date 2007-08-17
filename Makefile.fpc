@@ -384,17 +384,19 @@ DEBSRCDIR:=$(BUILDDIR)/fpc-$(DEBFPCVERSION)
 ifndef NOGDB
 
 # Try to find GDB library
-# Look for a valid GDBLIBDIR environment variable
-ifdef GDBLIBDIR
-override LIBGDBFILE:=$(firstword $(wildcard $(addsuffix /libgdb.a,$(GDBLIBDIR))))
+# Look for a valid LIBGDBDIR environment variable
+ifdef LIBGDBDIR
+override LIBGDBFILE:=$(firstword $(wildcard $(addsuffix /libgdb.a,$(LIBGDBDIR))))
 endif
 
 # Use default dirs if not available
 ifeq ($(LIBGDBFILE),)
 # Default locations <target>/<cpu> (linux) or <target> (win32,go32v2) only
 override GDBLIBDIR=$(wildcard fpcsrc/libgdb/$(OS_TARGET)/$(CPU_TARGET))
+override LIBGDBDIR=fpcsrc/libgdb
 ifeq ($(GDBLIBDIR),)
 override GDBLIBDIR=fpcsrc/libgdb/$(OS_TARGET)
+override LIBGDBDIR=fpcsrc/libgdb
 endif
 # Detect if libgdb.a is available
 override LIBGDBFILE:=$(firstword $(wildcard $(addsuffix /libgdb.a,$(GDBLIBDIR))))
@@ -432,7 +434,7 @@ debcopy: distclean
         $(LINKTREE) demo $(DEBSRCDIR)
         $(LINKTREE) logs $(DEBSRCDIR)
 ifndef NOGDB
-        $(LINKTREE) $(GDBLIBDIR) $(DEBSRCDIR)
+        $(LINKTREE) $(LIBGDBDIR) $(DEBSRCDIR)
 endif
 ifndef NODOCS
         $(LINKTREE) fpcdocs $(DEBSRCDIR)
@@ -517,7 +519,7 @@ endif
         $(LINKTREE) fpcsrc/packages $(RPMSRCDIR)
         $(LINKTREE) fpcsrc/utils $(RPMSRCDIR)
 ifndef NOGDB
-        $(LINKTREE) $(GDBLIBDIR) $(DEBSRCDIR)
+        $(LINKTREE) $(LIBGDBDIR) $(RPMSRCDIR)
 endif
         $(LINKTREE) demo $(RPMSRCDIR)
 #        $(LINKTREE) logs $(RPMSRCDIR)
