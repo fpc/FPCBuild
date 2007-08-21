@@ -54,7 +54,7 @@
 /* Begin PBXFileReference section */
 		4809C4EA0AB9580800D1B097 /* libfpc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfpc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		486946350AB9EA2B009E9150 /* MainUnit.pas */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.pascal; path = MainUnit.pas; sourceTree = "<group>"; };
-		488D39650AB597CC00DA2F98 /* «PROJECTNAME».app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = «PROJECTNAME».app; sourceTree = BUILT_PRODUCTS_DIR; };
+		488D39650AB597CC00DA2F98 /* «PROJECTNAME».app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "«PROJECTNAME».app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		488D39A30AB59A5B00DA2F98 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		488D3A200AB5F3E800DA2F98 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/main.nib; sourceTree = "<group>"; };
 		488D3ACF0AB60A0100DA2F98 /* Start.pas */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.pascal; path = Start.pas; sourceTree = "<group>"; };
