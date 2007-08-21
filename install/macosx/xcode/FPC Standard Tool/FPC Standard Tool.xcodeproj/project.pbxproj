@@ -60,9 +60,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8DD76FB20486AB0100D96B5E /* «PROJECTNAME» */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = «PROJECTNAME»; sourceTree = BUILT_PRODUCTS_DIR; };
-		C6A0FF2C0290799A04C91782 /* «PROJECTNAME».1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = «PROJECTNAME».1; sourceTree = "<group>"; };
-		DD369A0C09F64EFB0071E9DB /* «PROJECTNAME».pas */ = {isa = PBXFileReference; fileEncoding = 12; lastKnownFileType = sourcecode.pascal; path = «PROJECTNAME».pas; sourceTree = "<group>"; };
+		8DD76FB20486AB0100D96B5E /* «PROJECTNAME» */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "«PROJECTNAME»"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6A0FF2C0290799A04C91782 /* «PROJECTNAME».1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "«PROJECTNAME».1"; sourceTree = "<group>"; };
+		DD369A0C09F64EFB0071E9DB /* «PROJECTNAME».pas */ = {isa = PBXFileReference; fileEncoding = 12; lastKnownFileType = sourcecode.pascal; path = "«PROJECTNAME».pas"; sourceTree = "<group>"; };
 		DD369A9709F651920071E9DB /* EmptyPlaceHolderUnit.pas */ = {isa = PBXFileReference; fileEncoding = 12; lastKnownFileType = sourcecode.pascal; path = EmptyPlaceHolderUnit.pas; sourceTree = "<group>"; };
 		DD5DA3BF0A6052D2007E4C04 /* libfpc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfpc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
