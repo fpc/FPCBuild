@@ -1,3 +1,9 @@
+fpc (2.2.1-0) unstable; urgency=low
+
+  * Snapshot build
+
+ -- Joost van der Sluis <joost@freepascal.org>  Wed, 29 aug 2007 23:48:00 +0100
+
 fpc (2.2.0-1) unstable; urgency=low
 
   * New release
