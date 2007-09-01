@@ -1,3 +1,3 @@
-/usr/share/doc/fp-units-misc
+/usr/share/doc/fp-units-i386
 
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libc
