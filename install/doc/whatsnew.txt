@@ -72,7 +72,7 @@ Packages:
   * Added a new fppkg package manager
   * Improved database support
   * Added Delphi compatible RichEdit unit
-  * Apple universal interfaces updated to r200 of the common FPC/GPC/MW
+  * Apple universal interfaces updated to r204 of the common FPC/GPC/MW
     interfaces
   * Lot of small bugs and compatibility fixes
 
