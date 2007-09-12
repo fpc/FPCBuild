@@ -74,6 +74,8 @@ help:
         @$(ECHO)    rpm       Build linux .rpm packages
         @$(ECHO)    deb       Build linux .deb packages
         @$(ECHO)    inno      "Build Windows (Innosetup) based installer"
+        @$(ECHO)    innox64   "Build Win32-Win64 cross compiler installer"
+        @$(ECHO)    innoce    "Build Win32-Wince cross compiler installer" 
         @$(ECHO)    tar       Build .tar installer
         @$(ECHO)
         @$(ECHO) FV based installer Targets:
