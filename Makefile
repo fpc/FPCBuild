@@ -2185,12 +2185,8 @@ endif
 override LIBGDBFILE:=$(firstword $(wildcard $(addsuffix /libgdb.a,$(GDBLIBDIR))))
 endif
 ifeq ($(LIBGDBFILE),)
-GDB=
-else
-GDB=1
+$(error No libgdb.a found, supply NOGDB=1 to disable debugger support)
 endif
-else
-GDB=
 endif  #NOGDB
 debcheck:
 ifneq ($(DEBFPCVERSION),$(PACKAGE_VERSION))
