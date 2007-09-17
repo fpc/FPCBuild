@@ -340,6 +340,7 @@ renametoshort:
         -mv $(PKGUNITSPRE)oggvorbis$(ZIPSUFFIX).zip uoggv$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)openal$(ZIPSUFFIX).zip uoal$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)openssl$(ZIPSUFFIX).zip uossl$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fpmkunit$(ZIPSUFFIX).zip ufpmk$(ZIPSUFFIXSHORT).zip
 
 shortsrc:
         $(MAKE) renametoshort ZIPSUFFIX=$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
@@ -404,17 +405,10 @@ endif
 override LIBGDBFILE:=$(firstword $(wildcard $(addsuffix /libgdb.a,$(GDBLIBDIR))))
 endif
 
-# Disable GDB when no libgdb.a found
+# Give an error when no libgdb.a found
 ifeq ($(LIBGDBFILE),)
-GDB=
-else
-GDB=1
+$(error No libgdb.a found, supply NOGDB=1 to disable debugger support)
 endif
-
-else
-
-# Disable
-GDB=
 
 endif  #NOGDB
 
