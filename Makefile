@@ -2145,6 +2145,7 @@ renametoshort:
 	-mv $(PKGUNITSPRE)fcl-registry$(ZIPSUFFIX).zip ufclr$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)fcl-web$(ZIPSUFFIX).zip ufclw$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)fcl-xml$(ZIPSUFFIX).zip ufclx$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGUNITSPRE)fcl-json$(ZIPSUFFIX).zip ufclj$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)httpd-1.3$(ZIPSUFFIX).zip uhd13$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)httpd-2.0$(ZIPSUFFIX).zip uhd20$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)httpd-2.2$(ZIPSUFFIX).zip uhd22$(ZIPSUFFIXSHORT).zip
