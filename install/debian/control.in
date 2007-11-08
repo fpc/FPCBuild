@@ -2,7 +2,7 @@ Source: fpc
 Section: devel
 Priority: optional
 Maintainer: Carlos Laviola <claviola@debian.org>
-Standards-Version: 3.6.2
+Standards-Version: 3.7.2
 Build-Depends: fp-compiler, fp-utils, debhelper (>= 5), findutils, awk, gs-common, libncurses5-dev, libgpmg1-dev
 
 Package: fpc
@@ -32,6 +32,8 @@ Description: Free Pascal -- Compiler
  implemented (classes, exceptions, ansistrings). This package contains the
  command line compiler. You need at least the RTL package before you can start
  compiling anything.
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-ide
 Architecture: i386 powerpc sparc amd64
@@ -45,6 +47,8 @@ Description: Free Pascal -- IDE
  implemented (classes, exceptions, ansistrings). This package contains the
  Integrated Development Environment (IDE). The IDE has an internal compiler.
  You need at least the RTL package before you can start  compiling anything.
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-utils
 Architecture: i386 powerpc sparc amd64
@@ -63,6 +67,8 @@ Description: Free Pascal -- Utils
    - ptop        Source beautifier
    - data2inc    Convert binary/text data to include files
    - plex/pyacc  Pascal Lex/Yacc implementation
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-docs
 Section: doc
@@ -73,6 +79,8 @@ Description: Free Pascal -- Documentation
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
  This package contains the documentation for the Free Pascal Compiler.
  The documentation is available in HTML and in PDF.
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-rtl
 Architecture: i386 powerpc sparc amd64
@@ -81,6 +89,8 @@ Description: Free Pascal -- Runtime Library
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
  This package contains the Runtime Libraries for the Free Pascal Compiler.
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-base
 Architecture: i386 powerpc sparc amd64
@@ -93,6 +103,8 @@ Description: Free Pascal -- base units
   - X11 (Xlib, Xutil)
   - NCurses
   - ZLib
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-fcl
 Architecture: i386 powerpc sparc amd64
@@ -101,6 +113,8 @@ Description: Free Pascal -- Free Component Library
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
  This package contains the Free Component Library for the Free Pascal Compiler.
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-fv
 Architecture: i386 powerpc sparc amd64
@@ -109,6 +123,8 @@ Description: Free Pascal -- Free Vision units
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
  This package contains the Free Vision units for the Free Pascal Compiler.
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-gtk
 Architecture: i386 powerpc sparc amd64
@@ -118,6 +134,8 @@ Description: Free Pascal -- GTK 1.2 units
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
  This package contains Free Pascal units and examples to create
  programs with GTK 1.2.
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-gtk2
 Architecture: i386 powerpc sparc amd64
@@ -127,6 +145,8 @@ Description: Free Pascal -- GTK 2.x units
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
  This package contains Free Pascal units and examples to create
  programs with GTK 2.x.
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-gnome1
 Architecture: i386 powerpc sparc amd64
@@ -136,6 +156,8 @@ Description: Free Pascal -- GNOME 1 units
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
  This package contains Free Pascal units and examples to create
  programs for GNOME 1.
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-db
 Architecture: i386 powerpc sparc amd64
@@ -151,6 +173,8 @@ Description: Free Pascal -- database libraries units
   - ODBC
   - GDBM
   - SQLite
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-gfx
 Architecture: i386 powerpc sparc amd64
@@ -168,6 +192,8 @@ Description: Free Pascal -- graphics libraries units
   - graph
   - openal
   - cairo
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-net
 Architecture: i386 powerpc sparc amd64
@@ -186,6 +212,8 @@ Description: Free Pascal -- networking units
   - ldap
   - openssl : Open SSL
   - pcap
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-misc
 Architecture: i386 powerpc sparc amd64
@@ -196,6 +224,8 @@ Description: Free Pascal -- miscellaneous units
  Free Pascal miscellaneous units for:
   - Utmp
   - PasZLib (Pascal-only zlib implementation)
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-multimedia
 Architecture: i386 powerpc sparc amd64
@@ -209,6 +239,8 @@ Description: Free Pascal -- miscellaneous units
   - dts
   - mad
   - modplug
+ .
+  Homepage: http://www.freepascal.org/
 
 Package: fp-units-i386
 Architecture: i386
@@ -218,3 +250,5 @@ Description: Free Pascal -- miscellaneous units
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
  Free Pascal spacific units for i386 architecture :
   - libc : used for compatibility with kylix, depreciated.
+ .
+  Homepage: http://www.freepascal.org/
