@@ -2136,12 +2136,14 @@ renametoshort:
 	-mv $(PKGUNITSPRE)oracle$(ZIPSUFFIX).zip uora$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)postgres$(ZIPSUFFIX).zip upgr$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)winunits$(ZIPSUFFIX).zip uwin$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGUNITSPRE)fcl-async$(ZIPSUFFIX).zip ufcla$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)fcl-base$(ZIPSUFFIX).zip ufclb$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)fcl-db$(ZIPSUFFIX).zip ufcld$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)fcl-fpcunit$(ZIPSUFFIX).zip ufclu$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)fcl-image$(ZIPSUFFIX).zip ufcli$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)fcl-net$(ZIPSUFFIX).zip ufcln$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)fcl-passrc$(ZIPSUFFIX).zip ufcls$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGUNITSPRE)fcl-process$(ZIPSUFFIX).zip ufclp$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)fcl-registry$(ZIPSUFFIX).zip ufclr$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)fcl-web$(ZIPSUFFIX).zip ufclw$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)fcl-xml$(ZIPSUFFIX).zip ufclx$(ZIPSUFFIXSHORT).zip
