@@ -1,8 +1,20 @@
 #!/usr/bin/make -f
 # debian/rules for Free Pascal
 
+#${fpcversion} is automatically defined but upstream
+ifeq (${fpcversion},)
+export fpcversion = 2.2.0
+endif
+
 # Documentation type to use pdf/html
-DOCTYPE=pdf
+ifeq (${DEBDOCTYPE},)
+DOCTYPE=html
+# HTML Converter l2h/4ht/hevea or html for (default)
+CONVERTER=hevea
+else
+DOCTYPE=${DEBDOCTYPE}
+CONVERTER=${DOCTYPE}
+endif
 
 # Detect name of new compiler, take care that debian uses amd64 instead of x86_64
 CPU_SOURCE=$(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_BUILD_ARCH))
@@ -46,15 +58,15 @@ PACKAGEVERSION:=$(shell head -n 1 debian/changelog | awk '{ print $$2 }' | tr -d
 FPCVERSION:=$(shell echo $(PACKAGEVERSION) | awk -F '-' '{ print $$1 }')
 FPCTARGET=$(CPU_TARGET)-linux
 # Get directories
-PWD:=$(shell pwd)
-BUILD_DIR=$(PWD)/debian/build
-INSTALL_DIR=$(PWD)/debian/tmp
+CURDIR:=$(shell pwd)
+BUILD_DIR=$(CURDIR)/debian/build
+INSTALL_DIR=$(CURDIR)/debian/tmp
 DOC_DIR=$(INSTALL_DIR)/usr/share/doc
 EXAMPLE_TEMP=$(DOC_DIR)/fpc-$(FPCVERSION)
 # Get utils
-NEWPP=$(PWD)/compiler/$(PPNEW)
-NEWFPDOC=$(PWD)/utils/fpdoc/fpdoc
-NEWFPCMAKE=$(PWD)/utils/fpcm/fpcmake
+NEWPP=$(CURDIR)/fpcsrc/compiler/$(PPNEW)
+NEWFPDOC=$(CURDIR)/fpcsrc/utils/fpdoc/fpdoc
+NEWFPCMAKE=$(CURDIR)/fpcsrc/utils/fpcm/fpcmake
 # Create default options
 BUILDOPTS=PP=$(NEWPP)
 INSTALLOPTS=PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE) INSTALL_PREFIX=$(INSTALL_DIR)/usr
@@ -65,32 +77,34 @@ INSTALLOPTS=PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE) INSTALL_PREFIX=$(INSTALL_DIR)/usr
 # Clean
 #
 
-clean:
+clean: clean-patched unpatch
+clean-patched:
 	@echo "--- Cleaning"
 	dh_testdir
 	dh_testroot
 	rm -f build-arch-stamp install-arch-stamp arrange-arch-stamp
 	rm -f build-indep-stamp install-indep-stamp
-
 	rm -f debian-files-stamp
 	rm -f debian/*.files debian/*.docs debian/*.examples debian/*.postinst debian/*.postrm
-
-	$(MAKE) compiler_distclean
-	$(MAKE) rtl_distclean
-	$(MAKE) packages_distclean
-	$(MAKE) fv_distclean
-	$(MAKE) ide_distclean
-	$(MAKE) utils_distclean
-
+	$(MAKE) -C fpcsrc compiler_distclean
+	$(MAKE) -C fpcsrc rtl_distclean
+	$(MAKE) -C fpcsrc packages_distclean
+	$(MAKE) -C fpcsrc fv_distclean
+	$(MAKE) -C fpcsrc ide_distclean
+	$(MAKE) -C fpcsrc utils_distclean
 	$(MAKE) -C fpcdocs clean
-
 	-(find . -name \*.a | xargs rm)
-
 	dh_clean
 
-# Cannot do that because the control-file is often needed after a cleanup
-#	rm -f debian/control
+patch: patch-stamp
 
+patch-stamp:
+#	dpatch apply-all
+	touch patch-stamp
+
+unpatch:
+#	dpatch deapply-all
+	rm -rf patch-stamp debian/patched
 
 ###################
 # Debian files
@@ -98,11 +112,9 @@ clean:
 
 debian-files: debian-files-stamp
 debian-files-stamp:
-	@echo "--- Creating debian files"
-	bash debian/fixdeb debian $(FPCTARGET) $(PPNEW)
-
+	@echo "--- Creating/fixing *.install files"
+	/bin/bash debian/fixdeb debian $(FPCTARGET) $(PPNEW)
 	touch debian-files-stamp
-
 
 ###################
 # Arch packages
@@ -112,19 +124,16 @@ build-arch: build-arch-stamp
 build-arch-stamp: debian-files-stamp
 	@echo "--- Building"
 	dh_testdir
-
 # First make a new Compiler and RTL using a make cycle
-	$(MAKE) compiler_cycle
-	$(MAKE) rtl_clean rtl_smart $(BUILDOPTS)
-	$(MAKE) packages_base_smart $(BUILDOPTS)
-	$(MAKE) packages_fcl_smart $(BUILDOPTS)
-	$(MAKE) fv_smart $(BUILDOPTS)
-	$(MAKE) packages_extra_smart $(BUILDOPTS)
-	$(MAKE) ide_all $(BUILDOPTS)
-	$(MAKE) utils_all $(BUILDOPTS)
-
+	$(MAKE) -C fpcsrc compiler_cycle
+	$(MAKE) -C fpcsrc rtl_clean rtl_smart $(BUILDOPTS)
+	$(MAKE) -C fpcsrc packages_base_smart $(BUILDOPTS)
+	$(MAKE) -C fpcsrc packages_fcl_smart $(BUILDOPTS)
+	$(MAKE) -C fpcsrc fv_smart $(BUILDOPTS)
+	$(MAKE) -C fpcsrc packages_extra_smart $(BUILDOPTS)
+	$(MAKE) -C fpcsrc ide_all $(BUILDOPTS)
+	$(MAKE) -C fpcsrc utils_all $(BUILDOPTS)
 	touch build-arch-stamp
-
 
 install-arch: install-arch-stamp
 install-arch-stamp: build-arch-stamp debian-files-stamp
@@ -132,52 +141,47 @@ install-arch-stamp: build-arch-stamp debian-files-stamp
 	dh_testdir
 	dh_testroot
 	dh_clean -k
-
 # Specify the compiler to use so installing will use the correct versioned dir
-	$(MAKE) compiler_distinstall $(INSTALLOPTS)
-	$(MAKE) rtl_distinstall $(INSTALLOPTS)
-	$(MAKE) fv_distinstall $(INSTALLOPTS)
-	$(MAKE) packages_distinstall $(INSTALLOPTS)
-	$(MAKE) ide_distinstall $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-ide
-	$(MAKE) utils_distinstall $(INSTALLOPTS)
-
+	$(MAKE) -C fpcsrc compiler_distinstall $(INSTALLOPTS)
+	$(MAKE) -C fpcsrc rtl_distinstall $(INSTALLOPTS)
+	$(MAKE) -C fpcsrc fv_distinstall $(INSTALLOPTS)
+	$(MAKE) -C fpcsrc packages_distinstall $(INSTALLOPTS)
+	$(MAKE) -C fpcsrc ide_distinstall $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-ide
+	$(MAKE) -C fpcsrc utils_distinstall $(INSTALLOPTS)
 # Copy examples to the correct doc dir
-	bash debian/moveexamples $(EXAMPLE_TEMP) $(DOC_DIR)
-
+	/bin/bash debian/moveexamples $(EXAMPLE_TEMP) $(DOC_DIR)
 # Install man pages and RTL demos and whatsnew and readme
-	$(MAKE) -C man installman $(INSTALLOPTS) INSTALL_PREFIX=$(INSTALL_DIR)/usr/share
+	$(MAKE) -C install/man installman $(INSTALLOPTS) INSTALL_PREFIX=$(INSTALL_DIR)/usr/share
 	$(MAKE) -C demo sourceinstall $(INSTALLOPTS) INSTALL_SOURCEDIR=$(DOC_DIR)/fp-compiler
-	$(MAKE) -C doc installdoc $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-compiler
-
+	$(MAKE) -C install/doc installdoc $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-compiler
 # Create fpc.cfg which is included as conffile
-	chmod 755 compiler/utils/samplecfg
-	compiler/utils/samplecfg "/usr/lib/fpc/\$$fpcversion" $(INSTALL_DIR)/etc
+	chmod 755 fpcsrc/compiler/utils/samplecfg
+	/bin/bash fpcsrc/compiler/utils/samplecfg "/usr/lib/fpc/\$$fpcversion" $(INSTALL_DIR)/etc
 	touch install-arch-stamp
-
 
 arrange-arch: arrange-arch-stamp
 arrange-arch-stamp: install-arch-stamp debian-files-stamp
 	dh_testdir
 	dh_testroot
-	dh_install -a --sourcedir=debian/tmp --list-missing
+	dh_install -s --sourcedir=debian/tmp --list-missing
 
 	touch arrange-arch-stamp
 
+build-indep: patch
+install-indep:
+	touch install-indep-stamp
 
 ###################
 # Documentation
 #
 
-build-indep: build-indep-stamp
+build-indep: patch build-indep-stamp
 # We depend on the new fpdoc
-build-indep-stamp: debian-files-stamp build-arch-stamp
+build-indep-stamp: debian-files-stamp
 	@echo "--- Building Documentation"
 	dh_testdir
-
-	$(MAKE) -C fpcdocs $(DOCTYPE) $(BUILDOPTS) FPDOC=$(NEWFPDOC)
-
+	$(MAKE) -C fpcdocs $(CONVERTER) $(BUILDOPTS) FPDOC=$(NEWFPDOC)
 	touch build-indep-stamp
-
 
 install-indep: install-indep-stamp
 install-indep-stamp: debian-files build-indep
@@ -185,20 +189,42 @@ install-indep-stamp: debian-files build-indep
 	dh_testdir
 	dh_testroot
 	dh_clean -k
-
 	$(MAKE) -C fpcdocs $(DOCTYPE)install $(INSTALLOPTS) INSTALL_DOCDIR=$(INSTALL_DIR)/usr/share/doc/fp-docs
-
 	touch install-indep-stamp
 
+###################
+# Source
+#
+
+install-source: install-source-stamp
+install-source-stamp: 
+	@echo "--- Cleaning the tree and copying the source code"
+	dh_testdir
+	dh_testroot
+	$(MAKE) -C fpcsrc compiler_distclean
+	$(MAKE) -C fpcsrc rtl_distclean
+	$(MAKE) -C fpcsrc packages_distclean
+	$(MAKE) -C fpcsrc fv_distclean
+	$(MAKE) -C fpcsrc ide_distclean
+	$(MAKE) -C fpcsrc utils_distclean
+	-(find . -name \*.a | xargs rm)
+	install -d $(INSTALL_DIR)/usr/share/fpc-source/
+	cp -r $(CURDIR)/fpcsrc/compiler $(INSTALL_DIR)/usr/share/fpc-source/
+	cp -r $(CURDIR)/fpcsrc/fv $(INSTALL_DIR)/usr/share/fpc-source/
+	cp -r $(CURDIR)/fpcsrc/ide $(INSTALL_DIR)/usr/share/fpc-source/
+	cp -r $(CURDIR)/fpcsrc/installer $(INSTALL_DIR)/usr/share/fpc-source/
+	cp -r $(CURDIR)/fpcsrc/packages $(INSTALL_DIR)/usr/share/fpc-source/
+	cp -r $(CURDIR)/fpcsrc/rtl $(INSTALL_DIR)/usr/share/fpc-source/
+	cp -r $(CURDIR)/fpcsrc/tests $(INSTALL_DIR)/usr/share/fpc-source/
+	cp -r $(CURDIR)/fpcsrc/utils $(INSTALL_DIR)/usr/share/fpc-source/
+	touch install-source-stamp
 
 ###################
 # Generic
 #
 
 build: build-arch build-indep
-
 install: install-arch install-indep
-
 binary: binary-arch binary-indep
 
 
@@ -206,7 +232,7 @@ binary: binary-arch binary-indep
 # Deb building
 #
 
-binary-indep: build-indep install-indep debian-files
+binary-indep: build-indep install-indep install-source debian-files
 	@echo "--- Building: arch-indep packages"
 	dh_testdir
 	dh_testroot
@@ -214,7 +240,11 @@ binary-indep: build-indep install-indep debian-files
 	dh_installchangelogs -i
 #	dh_installchangelogs -pfp-docs logs/Changes.docs
 	dh_install -i --sourcedir=debian/tmp --list-missing
+ifeq (${DOCTYPE},pdf)
 	dh_compress -i -X.pdf
+else
+	dh_compress -i
+endif
 	dh_fixperms -i
 	dh_installdeb -i
 	dh_gencontrol -i
@@ -227,11 +257,9 @@ binary-arch: build-arch arrange-arch debian-files
 	dh_testroot
 	dh_installdocs -a
 	dh_installchangelogs -a
-
 #	dh_installchangelogs -pfp-compiler logs/Changes.compiler
 #	dh_installchangelogs -pfp-units-rtl logs/Changes.rtl
 #	dh_installchangelogs -pfp-utils logs/Changes.utils
-
 	dh_installexamples -a
 	dh_compress -a
 	dh_fixperms -a
@@ -241,7 +269,6 @@ binary-arch: build-arch arrange-arch debian-files
 	dh_md5sums -s
 	dh_builddeb -s
 
-
-.PHONY: build clean binary debian-files \
-        build-arch install-arch binary-arch \
-        binary-indep
+.PHONY: build clean binary binary-arch \
+        binary-indep debian-files build-arch \
+		install install-indep install-arch
