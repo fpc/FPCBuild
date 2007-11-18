@@ -5,3 +5,4 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/dts
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/mad
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/modplug
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/sdl

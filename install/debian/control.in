@@ -239,6 +239,7 @@ Description: Free Pascal -- miscellaneous units
   - dts
   - mad
   - modplug
+  - sdl
  .
   Homepage: http://www.freepascal.org/
 
