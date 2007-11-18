@@ -8,4 +8,3 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/regexpr
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/hash
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/uuid
-/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fppkg
