@@ -1991,7 +1991,7 @@ buildce: fpcsrc/build-stamp.arm-wince
 fpcsrc/build-stamp.arm-wince:
 	$(MAKE) -C fpcsrc build OS_TARGET=wince CPU_TARGET=arm
 clean: $(addsuffix _distclean,$(TARGET_DIRS))
-	-rm fpcsrc/build-stamp.*
+	-rm -f fpcsrc/build-stamp.*
 distclean: clean
 installbase:
 	$(MKDIR) $(INSTALL_BASEDIR)
@@ -2043,6 +2043,7 @@ crosszipinstall: $(BUILDSTAMP)
 	$(MAKE) -C fpcsrc zipinstallother CROSSINSTALL=1
 .PHONY: docspdf makepackdocs docsrcinstall docsrc
 DOCSOURCEDIR=$(INSTALL_SOURCEDIR)/../docs
+export DEBDOCTYPE=pdf
 docspdf:
 	$(MAKE) -C fpcdocs pdfinstall DOCINSTALLDIR=$(PACKDIR)
 makepackdocs:
@@ -2189,13 +2190,15 @@ ifneq ($(DEBFPCVERSION),$(PACKAGE_VERSION))
 endif
 debcopy: distclean
 	rm -rf ${BUILDDIR}
-	install -d $(DEBSRCDIR)
-	$(LINKTREE) fpcsrc/compiler $(DEBSRCDIR)
-	$(LINKTREE) fpcsrc/rtl $(DEBSRCDIR)
-	$(LINKTREE) fpcsrc/fv $(DEBSRCDIR)
-	$(LINKTREE) fpcsrc/ide $(DEBSRCDIR)
-	$(LINKTREE) fpcsrc/packages $(DEBSRCDIR)
-	$(LINKTREE) fpcsrc/utils $(DEBSRCDIR)
+	install -d $(DEBSRCDIR)/fpcsrc
+	$(LINKTREE) fpcsrc/compiler $(DEBSRCDIR)/fpcsrc
+	$(LINKTREE) fpcsrc/rtl $(DEBSRCDIR)/fpcsrc
+	$(LINKTREE) fpcsrc/fv $(DEBSRCDIR)/fpcsrc
+	$(LINKTREE) fpcsrc/ide $(DEBSRCDIR)/fpcsrc
+	$(LINKTREE) fpcsrc/installer $(DEBSRCDIR)/fpcsrc
+	$(LINKTREE) fpcsrc/packages $(DEBSRCDIR)/fpcsrc
+	$(LINKTREE) fpcsrc/tests $(DEBSRCDIR)/fpcsrc
+	$(LINKTREE) fpcsrc/utils $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) demo $(DEBSRCDIR)
 	$(LINKTREE) logs $(DEBSRCDIR)
 ifndef NOGDB
@@ -2204,10 +2207,11 @@ endif
 ifndef NODOCS
 	$(LINKTREE) fpcdocs $(DEBSRCDIR)
 endif
-	$(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)
+	$(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) $(CVSINSTALL)/debian $(DEBSRCDIR)
-	$(LINKTREE) $(CVSINSTALL)/man $(DEBSRCDIR)
-	$(LINKTREE) $(CVSINSTALL)/doc $(DEBSRCDIR)
+	install -d $(DEBSRCDIR)/install
+	$(LINKTREE) $(CVSINSTALL)/man $(DEBSRCDIR)/install
+	$(LINKTREE) $(CVSINSTALL)/doc $(DEBSRCDIR)/install
 	find $(DEBSRCDIR) -name 'CVS*' | xargs -n1 rm -rf
 	find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
 	chmod 755 $(DEBSRCDIR)/debian/rules

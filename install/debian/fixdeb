@@ -36,6 +36,6 @@ echo 'SVNPath       : ' $FPCSVNPATH
 
 for i in $1/*.in
 do
-  j=${i/%.in/}
+  j=$1/$(basename $i .in)
   sed -e 's/%{fpcversion}/'$FPCVERSION'/g;s/%{packageversion}/'$PACKAGEVERSION'/g;s/%{ppcbin}/'$PPCBIN'/g;s/%{fpctarget}/'$FPCTARGET'/g;s/%{fpcsvnpath}/'$FPCSVNPATH'/g' $i > $j
 done

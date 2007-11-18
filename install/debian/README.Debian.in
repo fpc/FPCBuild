@@ -1,5 +1,5 @@
 The Free Pascal Compiler for Debian
-----------------------
+-----------------------------------
 
 The source tree was checked out from the subversion repository at
 svn.freepascal.org with
@@ -43,3 +43,5 @@ FTP Mirrored at
   ftp://ftp.no.freepascal.org/pub/fpc/
   ftp://ftp.chg.ru/pub/lang/pascal/fpc/
   ftp://ftp.us.freepascal.org/pub/fpc/
+
+ -- Varun Hiremath <varunhiremath@gmail.com>, Sat, 20 Jan 2007 01:28:28 +0530
