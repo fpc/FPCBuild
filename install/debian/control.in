@@ -6,14 +6,14 @@ Uploaders: Torsten Werner <twerner@debian.org>
 Standards-Version: 3.7.2.2
 Build-Depends: fp-compiler, fp-utils, debhelper (>= 5), awk, gs-common,
  libncurses5-dev, libgpmg1-dev, dpatch, hevea, findutils
-#Vcs-Svn: https://bollin.googlecode.com/svn/fpc/trunk/
-#Vcs-Browser: http://bollin.googlecode.com/svn/fpc/trunk/
+Vcs-Svn: https://bollin.googlecode.com/svn/fpc/trunk/
+Vcs-Browser: http://bollin.googlecode.com/svn/fpc/trunk/
 Homepage: http://www.freepascal.org/
 
 Package: fpc
 Architecture: i386 powerpc sparc amd64 arm
 Depends: fp-units-rtl, fp-compiler, fp-units-base, fp-ide, fp-units-fcl, fp-units-fv, fp-units-gtk, fp-units-gtk2, fp-units-gnome1, fp-units-db, fp-units-gfx, fp-units-net, fp-units-misc, fp-units-multimedia
-Suggests: fp-utils, fp-docs (>= 2.1.1)
+Suggests: fp-utils, fp-docs (>= %{fpcversion})
 Description: Free Pascal Compiler -- Meta Package
  The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
  Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
