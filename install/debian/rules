@@ -208,15 +208,15 @@ install-source-stamp:
 	$(MAKE) -C fpcsrc ide_distclean
 	$(MAKE) -C fpcsrc utils_distclean
 	-(find . -name \*.a | xargs rm)
-	install -d $(INSTALL_DIR)/usr/share/fpc-source/
-	cp -r $(CURDIR)/fpcsrc/compiler $(INSTALL_DIR)/usr/share/fpc-source/
-	cp -r $(CURDIR)/fpcsrc/fv $(INSTALL_DIR)/usr/share/fpc-source/
-	cp -r $(CURDIR)/fpcsrc/ide $(INSTALL_DIR)/usr/share/fpc-source/
-	cp -r $(CURDIR)/fpcsrc/installer $(INSTALL_DIR)/usr/share/fpc-source/
-	cp -r $(CURDIR)/fpcsrc/packages $(INSTALL_DIR)/usr/share/fpc-source/
-	cp -r $(CURDIR)/fpcsrc/rtl $(INSTALL_DIR)/usr/share/fpc-source/
-	cp -r $(CURDIR)/fpcsrc/tests $(INSTALL_DIR)/usr/share/fpc-source/
-	cp -r $(CURDIR)/fpcsrc/utils $(INSTALL_DIR)/usr/share/fpc-source/
+	install -d $(INSTALL_DIR)/usr/share/fpcsrc/
+	cp -r $(CURDIR)/fpcsrc/compiler $(INSTALL_DIR)/usr/share/fpcsrc/
+	cp -r $(CURDIR)/fpcsrc/fv $(INSTALL_DIR)/usr/share/fpcsrc/
+	cp -r $(CURDIR)/fpcsrc/ide $(INSTALL_DIR)/usr/share/fpcsrc/
+	cp -r $(CURDIR)/fpcsrc/installer $(INSTALL_DIR)/usr/share/fpcsrc/
+	cp -r $(CURDIR)/fpcsrc/packages $(INSTALL_DIR)/usr/share/fpcsrc/
+	cp -r $(CURDIR)/fpcsrc/rtl $(INSTALL_DIR)/usr/share/fpcsrc/
+	cp -r $(CURDIR)/fpcsrc/tests $(INSTALL_DIR)/usr/share/fpcsrc/
+	cp -r $(CURDIR)/fpcsrc/utils $(INSTALL_DIR)/usr/share/fpcsrc/
 	touch install-source-stamp
 
 ###################
