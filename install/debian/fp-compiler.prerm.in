@@ -7,12 +7,3 @@ update-alternatives --remove pc /usr/bin/fpc
 
 # Debhelper code
 #DEBHELPER#
-#! /bin/sh
-
-set -e
-
-# remove alternative
-update-alternatives --remove pc /usr/bin/fpc
-
-# Debhelper code
-#DEBHELPER#

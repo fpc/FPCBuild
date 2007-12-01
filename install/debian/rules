@@ -1,20 +1,15 @@
 #!/usr/bin/make -f
 # debian/rules for Free Pascal
 
-#${fpcversion} is automatically defined but upstream
-ifeq (${fpcversion},)
-export fpcversion = 2.2.0
-endif
+# stolen from cdbs:
+DEB_VERSION := $(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
+DEB_NOEPOCH_VERSION := $(shell echo $(DEB_VERSION) | cut -d: -f2-)
+DEB_UPSTREAM_VERSION := $(shell echo $(DEB_NOEPOCH_VERSION) | sed 's/-[^-]*$$//')
 
 # Documentation type to use pdf/html
-ifeq (${DEBDOCTYPE},)
 DOCTYPE=html
 # HTML Converter l2h/4ht/hevea or html for (default)
 CONVERTER=hevea
-else
-DOCTYPE=${DEBDOCTYPE}
-CONVERTER=${DOCTYPE}
-endif
 
 # Detect name of new compiler, take care that debian uses amd64 instead of x86_64
 CPU_SOURCE=$(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_BUILD_ARCH))
@@ -83,6 +78,7 @@ clean-patched:
 	dh_testdir
 	dh_testroot
 	rm -f build-arch-stamp install-arch-stamp arrange-arch-stamp
+	rm -f build-doc-stamp install-doc-stamp
 	rm -f build-indep-stamp install-indep-stamp
 	rm -f debian-files-stamp
 	rm -f debian/*.files debian/*.docs debian/*.examples debian/*.postinst debian/*.postrm
@@ -99,11 +95,11 @@ clean-patched:
 patch: patch-stamp
 
 patch-stamp:
-#	dpatch apply-all
+	dpatch apply-all
 	touch patch-stamp
 
 unpatch:
-#	dpatch deapply-all
+	dpatch deapply-all
 	rm -rf patch-stamp debian/patched
 
 ###################
@@ -155,8 +151,8 @@ install-arch-stamp: build-arch-stamp debian-files-stamp
 	$(MAKE) -C demo sourceinstall $(INSTALLOPTS) INSTALL_SOURCEDIR=$(DOC_DIR)/fp-compiler
 	$(MAKE) -C install/doc installdoc $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-compiler
 # Create fpc.cfg which is included as conffile
-	chmod 755 fpcsrc/compiler/utils/samplecfg
-	/bin/bash fpcsrc/compiler/utils/samplecfg "/usr/lib/fpc/\$$fpcversion" $(INSTALL_DIR)/etc
+	/bin/bash fpcsrc/compiler/utils/samplecfg \
+		/usr/lib/fpc/$(DEB_UPSTREAM_VERSION) $(INSTALL_DIR)/etc
 	touch install-arch-stamp
 
 arrange-arch: arrange-arch-stamp
@@ -175,22 +171,21 @@ install-indep:
 # Documentation
 #
 
-build-indep: patch build-indep-stamp
-# We depend on the new fpdoc
-build-indep-stamp: debian-files-stamp
+build-doc: patch build-doc-stamp
+build-doc-stamp: debian-files-stamp
 	@echo "--- Building Documentation"
 	dh_testdir
 	$(MAKE) -C fpcdocs $(CONVERTER) $(BUILDOPTS) FPDOC=$(NEWFPDOC)
 	touch build-indep-stamp
 
-install-indep: install-indep-stamp
-install-indep-stamp: debian-files build-indep
+install-doc: install-doc-stamp
+install-doc-stamp: build-doc-stamp debian-files-stamp
 	@echo "--- Installing Documentation"
 	dh_testdir
 	dh_testroot
 	dh_clean -k
 	$(MAKE) -C fpcdocs $(DOCTYPE)install $(INSTALLOPTS) INSTALL_DOCDIR=$(INSTALL_DIR)/usr/share/doc/fp-docs
-	touch install-indep-stamp
+	touch install-doc-stamp
 
 ###################
 # Source
@@ -232,19 +227,14 @@ binary: binary-arch binary-indep
 # Deb building
 #
 
-binary-indep: build-indep install-indep install-source debian-files
+binary-indep: build-doc install-doc install-source debian-files
 	@echo "--- Building: arch-indep packages"
 	dh_testdir
 	dh_testroot
 	dh_installdocs -i
 	dh_installchangelogs -i
-#	dh_installchangelogs -pfp-docs logs/Changes.docs
 	dh_install -i --sourcedir=debian/tmp --list-missing
-ifeq (${DOCTYPE},pdf)
 	dh_compress -i -X.pdf
-else
-	dh_compress -i
-endif
 	dh_fixperms -i
 	dh_installdeb -i
 	dh_gencontrol -i
@@ -257,9 +247,6 @@ binary-arch: build-arch arrange-arch debian-files
 	dh_testroot
 	dh_installdocs -a
 	dh_installchangelogs -a
-#	dh_installchangelogs -pfp-compiler logs/Changes.compiler
-#	dh_installchangelogs -pfp-units-rtl logs/Changes.rtl
-#	dh_installchangelogs -pfp-utils logs/Changes.utils
 	dh_installexamples -a
 	dh_compress -a
 	dh_fixperms -a
@@ -270,5 +257,8 @@ binary-arch: build-arch arrange-arch debian-files
 	dh_builddeb -s
 
 .PHONY: build clean binary binary-arch \
-        binary-indep debian-files build-arch \
-		install install-indep install-arch
+	binary-indep debian-files build-arch \
+	install install-indep install-arch
+
+get-orig-source:
+	-uscan --upstream-version 0 --rename
