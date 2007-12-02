@@ -1,5 +1,9 @@
 /usr/share/doc/fp-units-misc
 
+/usr/bin/chmcmd
+/usr/bin/chmls
+
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/chm
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/utmp
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/pthreads
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/unixutil
@@ -12,3 +16,4 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/unzip
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/newt
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fftw
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/aspell
