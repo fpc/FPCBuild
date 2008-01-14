@@ -63,10 +63,7 @@ NEWPP=`pwd`/compiler/%{ppcname}
 NEWFPDOC=`pwd`/utils/fpdoc/fpdoc
 	make compiler_cycle
 	make rtl_clean rtl_smart FPC=${NEWPP}
-        make packages_base_smart FPC=${NEWPP}
-        make packages_fcl_smart FPC=${NEWPP}
-	make fv_smart FPC=${NEWPP}
-        make packages_extra_smart FPC=${NEWPP}
+        make packages_smart FPC=${NEWPP}
 	make ide_all FPC=${NEWPP}
 	make utils_all FPC=${NEWPP}
 if [ -z ${NODOCS} ]; then
@@ -84,7 +81,6 @@ INSTALLOPTS="FPC=${NEWPP} INSTALL_PREFIX=%{buildroot}/usr INSTALL_LIBDIR=%{build
 	make compiler_distinstall ${INSTALLOPTS}
 	make rtl_distinstall ${INSTALLOPTS}
 	make packages_distinstall ${INSTALLOPTS}
-	make fv_distinstall ${INSTALLOPTS}
 	make ide_distinstall ${INSTALLOPTS}
 	make utils_distinstall ${INSTALLOPTS}
 
