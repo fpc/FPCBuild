@@ -135,15 +135,44 @@ and type
 
 
 ****************************************************************************
-* Quick start - OS/2 / DOS
+* Quick start - DOS
 ****************************************************************************
 
-Download distribution archive (os2220.zip for OS/2 or dos220.zip for
-GO32v2) and unzip it into a temporary directory.
+Download distribution archive (dos220.zip for GO32v2) and unzip it into
+a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
 
-Don't forget to set the path as mentioned by the install program.
+Don't forget to set PATH as mentioned by the install program. If running
+under plain DOS, this can be done by opening file named AUTOEXEC.BAT located
+in the root directory of your boot drive (usually C:\) with a plain text
+editor (like EDIT.COM), extending the line starting with "set PATH=" (case
+insensitive) with path to newly installed binaries (installation root as
+selected in the installation program appended with "\BIN\GO32v2") and save
+it.
+
+To test the compiler, change to the demo\texts directory of the FPC tree
+and type
+        fpc hello
+        hello
+
+
+****************************************************************************
+* Quick start - OS/2 / eComStation
+****************************************************************************
+
+Download distribution archive (os2220.zip for OS/2 or eComStation) and unzip
+it into a temporary directory.
+
+Start the install program INSTALL.EXE and follow the instructions.
+
+Don't forget to set PATH and LIBPATH as mentioned by the install program.
+This can be done by opening file named CONFIG.SYS located in the root
+directory of your boot drive (e.g. C:\) with a plain text editor (e.g.
+E.EXE), extending the lines starting with "set PATH=" and "LIBPATH=" (both
+are case insensitive) with path to newly installed binaries (installation
+root as selected in the installation program appended with "\BIN\OS2") and
+save it again as a plain text file.
 
 To test the compiler, change to the demo\texts directory of the FPC tree
 and type
@@ -241,9 +270,11 @@ The documentation is available as HTML pages, PDF, PS, and text although the
 recommended format is pdf. These are all available on
 ftp://ftp.freepascal.org/fpc/dist/docs-2.2.0
 
-NB that there is at present no FPC specific documentation for the Win32
-system functions. There is a note in the ftp /doc explaining where
-the MS help file for this can be obtained.
+NB that there is at present no FPC specific documentation for the platform
+specific API (like Win32 system functions, etc.). There is a note in the ftp
+/doc explaining where MS help file documenting Win32 API can be obtained,
+other platforms (especially Unix-based ones) often come with this
+documentation included in system installation.
 
 
 ****************************************************************************
