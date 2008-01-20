@@ -116,14 +116,14 @@ CONST GraphFigures : ARRAY[0..4] OF String[80] =(
 {Diverse AND/OR masks to manipulate graphics}
 
 {general table to mask out a bit 31=msb 0=lsb}
- AndTable : ARRAY[0..31] OF LONGINT=($80000000,$40000000,$20000000,$10000000,
+ AndTable : ARRAY[0..31] OF CARDINAL=($80000000,$40000000,$20000000,$10000000,
     $8000000,$4000000,$2000000,$1000000,$800000,$400000,$200000,$100000,
     $80000,$40000,$20000,$10000,$8000,$4000,$2000,$1000,$800,$400,$200,$100,
     $80,$40,$20,$10,8,4,2,1);
 
 {Mask to isolate a row of a (FigureType)}
 
- MagicMasks : ARRAY[0..4] OF LONGINT = ($F8000000,$07C00000,$003E0000,$0001F000,$00000F80);
+ MagicMasks : ARRAY[0..4] OF CARDINAL = ($F8000000,$07C00000,$003E0000,$0001F000,$00000F80);
 
 {Mask to check if a line is full; a bit for every column aligned to left.}
  RowMask    = $FFE00000;
@@ -131,8 +131,8 @@ CONST GraphFigures : ARRAY[0..4] OF String[80] =(
 {Masks to calculate if the left or rightside is partially empty, write them
 in binary, and put 5 bits on a row. }
 
- LeftMask : ARRAY[0..4] OF LONGINT = ($84210800,$C6318C00,$E739CE00,$F7BDEF00,$FFFFFFE0);
- RightMask: ARRAY[0..4] OF LONGINT = ($08421080,$18C63180,$39CE7380,$7BDEF780,$FFFFFF80);
+ LeftMask : ARRAY[0..4] OF CARDINAL = ($84210800,$C6318C00,$E739CE00,$F7BDEF00,$FFFFFFE0);
+ RightMask: ARRAY[0..4] OF CARDINAL = ($08421080,$18C63180,$39CE7380,$7BDEF780,$FFFFFF80);
 
 {Allowed characters entering highscores}
 

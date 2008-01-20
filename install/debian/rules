@@ -85,7 +85,6 @@ clean-patched:
 	$(MAKE) -C fpcsrc compiler_distclean
 	$(MAKE) -C fpcsrc rtl_distclean
 	$(MAKE) -C fpcsrc packages_distclean
-	$(MAKE) -C fpcsrc fv_distclean
 	$(MAKE) -C fpcsrc ide_distclean
 	$(MAKE) -C fpcsrc utils_distclean
 	$(MAKE) -C fpcdocs clean
@@ -123,10 +122,7 @@ build-arch-stamp: debian-files-stamp
 # First make a new Compiler and RTL using a make cycle
 	$(MAKE) -C fpcsrc compiler_cycle
 	$(MAKE) -C fpcsrc rtl_clean rtl_smart $(BUILDOPTS)
-	$(MAKE) -C fpcsrc packages_base_smart $(BUILDOPTS)
-	$(MAKE) -C fpcsrc packages_fcl_smart $(BUILDOPTS)
-	$(MAKE) -C fpcsrc fv_smart $(BUILDOPTS)
-	$(MAKE) -C fpcsrc packages_extra_smart $(BUILDOPTS)
+	$(MAKE) -C fpcsrc packages_smart $(BUILDOPTS)
 	$(MAKE) -C fpcsrc ide_all $(BUILDOPTS)
 	$(MAKE) -C fpcsrc utils_all $(BUILDOPTS)
 	touch build-arch-stamp
@@ -140,7 +136,6 @@ install-arch-stamp: build-arch-stamp debian-files-stamp
 # Specify the compiler to use so installing will use the correct versioned dir
 	$(MAKE) -C fpcsrc compiler_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc rtl_distinstall $(INSTALLOPTS)
-	$(MAKE) -C fpcsrc fv_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc packages_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc ide_distinstall $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-ide
 	$(MAKE) -C fpcsrc utils_distinstall $(INSTALLOPTS)
@@ -199,13 +194,11 @@ install-source-stamp:
 	$(MAKE) -C fpcsrc compiler_distclean
 	$(MAKE) -C fpcsrc rtl_distclean
 	$(MAKE) -C fpcsrc packages_distclean
-	$(MAKE) -C fpcsrc fv_distclean
 	$(MAKE) -C fpcsrc ide_distclean
 	$(MAKE) -C fpcsrc utils_distclean
 	-(find . -name \*.a | xargs rm)
 	install -d $(INSTALL_DIR)/usr/share/fpcsrc/
 	cp -r $(CURDIR)/fpcsrc/compiler $(INSTALL_DIR)/usr/share/fpcsrc/
-	cp -r $(CURDIR)/fpcsrc/fv $(INSTALL_DIR)/usr/share/fpcsrc/
 	cp -r $(CURDIR)/fpcsrc/ide $(INSTALL_DIR)/usr/share/fpcsrc/
 	cp -r $(CURDIR)/fpcsrc/installer $(INSTALL_DIR)/usr/share/fpcsrc/
 	cp -r $(CURDIR)/fpcsrc/packages $(INSTALL_DIR)/usr/share/fpcsrc/

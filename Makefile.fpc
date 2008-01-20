@@ -262,7 +262,6 @@ sourcezip:
         $(MAKE) -C fpcsrc compiler_zipsourceinstall
         $(MAKE) -C fpcsrc rtl_zipsourceinstall
         $(MAKE) -C fpcsrc packages_zipsourceinstall ZIPPREFIX=$(PKGUNITSPRE)
-        $(MAKE) -C fpcsrc fv_zipsourceinstall
         $(MAKE) -C fpcsrc utils_zipsourceinstall
         $(MAKE) -C fpcsrc ide_zipsourceinstall
         $(MAKE) -C fpcsrc installer_zipsourceinstall
@@ -328,12 +327,14 @@ renametoshort:
         -mv $(PKGUNITSPRE)oracle$(ZIPSUFFIX).zip uora$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)postgres$(ZIPSUFFIX).zip upgr$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)winunits$(ZIPSUFFIX).zip uwin$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fcl-async$(ZIPSUFFIX).zip ufcla$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)fcl-base$(ZIPSUFFIX).zip ufclb$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)fcl-db$(ZIPSUFFIX).zip ufcld$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)fcl-fpcunit$(ZIPSUFFIX).zip ufclu$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)fcl-image$(ZIPSUFFIX).zip ufcli$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)fcl-net$(ZIPSUFFIX).zip ufcln$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)fcl-passrc$(ZIPSUFFIX).zip ufcls$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGUNITSPRE)fcl-process$(ZIPSUFFIX).zip ufclp$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)fcl-registry$(ZIPSUFFIX).zip ufclr$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)fcl-web$(ZIPSUFFIX).zip ufclw$(ZIPSUFFIXSHORT).zip
         -mv $(PKGUNITSPRE)fcl-xml$(ZIPSUFFIX).zip ufclx$(ZIPSUFFIXSHORT).zip
@@ -427,7 +428,6 @@ debcopy: distclean
         install -d $(DEBSRCDIR)/fpcsrc
         $(LINKTREE) fpcsrc/compiler $(DEBSRCDIR)/fpcsrc
         $(LINKTREE) fpcsrc/rtl $(DEBSRCDIR)/fpcsrc
-        $(LINKTREE) fpcsrc/fv $(DEBSRCDIR)/fpcsrc
         $(LINKTREE) fpcsrc/ide $(DEBSRCDIR)/fpcsrc
         $(LINKTREE) fpcsrc/installer $(DEBSRCDIR)/fpcsrc
         $(LINKTREE) fpcsrc/packages $(DEBSRCDIR)/fpcsrc
@@ -517,7 +517,6 @@ endif
         install -d $(RPMSRCDIR)
         $(LINKTREE) fpcsrc/compiler $(RPMSRCDIR)
         $(LINKTREE) fpcsrc/rtl $(RPMSRCDIR)
-        $(LINKTREE) fpcsrc/fv $(RPMSRCDIR)
         $(LINKTREE) fpcsrc/ide $(RPMSRCDIR)
         $(LINKTREE) fpcsrc/packages $(RPMSRCDIR)
         $(LINKTREE) fpcsrc/utils $(RPMSRCDIR)
