@@ -35,7 +35,7 @@ const
 
 {* var ************************************************************************}
 var
-    SREMOTEEXEPATH   : string = '\fpctests';
+    SREMOTEEXEPATH   : widestring = '\fpctests';
     SLOCALLOGPATHFILE: string;
     flog             : Text;
     sTestExeName     : String;
@@ -205,7 +205,7 @@ begin
     if (WaitForSingleObject(ri.heRapiInit, 10*1000) = WAIT_OBJECT_0) then
       res:=ri.hrRapiInit
     else
-      res:=E_FAIL;
+      res:=cardinal(E_FAIL);
   end;
   Result:=res = S_OK;
   if not Result then begin
@@ -285,6 +285,7 @@ begin
  try
    if not InitRapi then
      Halt(255);
+   CeCreateDirectory(PWideChar(widestring(ExcludeTrailingPathDelimiter(SREMOTEEXEPATH))), nil);
    //copy file
    remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
    log('remote copy "'+sTestExeName+'" to "'+SREMOTEEXEPATH+sTestExeName+'"');

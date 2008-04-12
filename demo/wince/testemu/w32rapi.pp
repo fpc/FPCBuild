@@ -58,6 +58,7 @@ function CeRapiInit:Longint; external RAPILIB name 'CeRapiInit';
 function CeRapiInitEx(var RInit:TRapiInit) : LongInt; external RAPILIB name 'CeRapiInitEx';
 function CeRapiUninit:Longint; external RAPILIB name 'CeRapiUninit';
 function CeGetFileAttributes(lpFileName:LPCWSTR): longint; external RAPILIB name 'CeGetFileAttributes';
+function CeCreateDirectory(lpPathName:LPCWSTR;lpSecurityAttributes:pointer):WINBOOL; external RAPILIB name 'CeCreateDirectory';
 
 
 implementation
