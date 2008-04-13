@@ -31,7 +31,7 @@ const
   SREMOTERUNPROG    = 'wcetrun.exe';
   IBLOCKBUFFERSIZE  = 256*1024;
   ISEEKWAITTEMPOMS  = 100;
-  ISEEKRETRYMAX     = 1800000; // 180 seconds
+  ISEEKRETRYMAX     = 180000; // 180 seconds
 
 {* var ************************************************************************}
 var
