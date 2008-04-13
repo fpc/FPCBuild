@@ -29,9 +29,9 @@ uses Sysutils, w32rapi, windows;
 
 const
   SREMOTERUNPROG    = 'wcetrun.exe';
-  IBLOCKBUFFERSIZE  = 65535;
-  ISEEKWAITTEMPOMS  = 1000;
-  ISEEKRETRYMAX     = 180;
+  IBLOCKBUFFERSIZE  = 256*1024;
+  ISEEKWAITTEMPOMS  = 100;
+  ISEEKRETRYMAX     = 1800000; // 180 seconds
 
 {* var ************************************************************************}
 var
@@ -40,7 +40,7 @@ var
     flog             : Text;
     sTestExeName     : String;
     lRes,
-    lSeekFileCount   : Longint;
+    WaitTime         : cardinal;
     bExitCode        : Byte;
     RBLOCKBUFFER     : Array[1..IBLOCKBUFFERSIZE] of Byte;
     bFileFound       : boolean;
@@ -310,20 +310,22 @@ begin
 
    // waiting for result file creation (waitforsingleobject and getexitcodprocess not available with rapi)
    log('Waiting for result file...');
-   lSeekFileCount:=ISEEKRETRYMAX;
+   WaitTime:=GetTickCount;
    bFileFound:=False;
-   for lSeekFileCount:=1 to ISEEKRETRYMAX do
+   repeat
      if CeGetFileAttributes(PWideChar(widestring(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext')))) <> -1  then begin
        bFileFound:=True;
        break;
      end
      else
        Sleep(ISEEKWAITTEMPOMS);
+   until GetTickCount - WaitTime >= ISEEKRETRYMAX;
 
    if bFileFound then begin
      // reading result file
+     WaitTime:=GetTickCount;
      bFileFound:=False;
-     for lSeekFileCount:=1 to 30 do begin
+     repeat
        log('remote read exitcode"'+SREMOTEEXEPATH+sTestExeName+'"');
        lRes:=remotereadexitcode(SREMOTEEXEPATH+sTestExeName, bExitCode);
        bFileFound:=(lRes=0);
@@ -331,9 +333,8 @@ begin
          remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
          break;
        end;
-       log('sleeping '+IntToStr(ISEEKWAITTEMPOMS));
        Sleep(ISEEKWAITTEMPOMS);
-     end;
+     until GetTickCount - WaitTime >= 30000;
    end;
    
    // deleting remote file
