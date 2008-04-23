@@ -311,10 +311,9 @@ begin
  try
    if not InitRapi then
      Halt(255);
-   if CopyFileToDevice then
-     CeCreateDirectory(PWideChar(widestring(ExcludeTrailingPathDelimiter(SREMOTEEXEPATH))), nil);
-   remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
    if CopyFileToDevice then begin
+     CeCreateDirectory(PWideChar(widestring(ExcludeTrailingPathDelimiter(SREMOTEEXEPATH))), nil);
+     remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
      //copy file
      log('remote copy "'+sTestExeName+'" to "'+SREMOTEEXEPATH+sTestExeName+'"');
      lRes:=remotecopyto(sTestExeName, SREMOTEEXEPATH+sTestExeName);
@@ -359,7 +358,8 @@ begin
        lRes:=remotereadexitcode(SREMOTEEXEPATH+sTestExeName, bExitCode);
        bFileFound:=(lRes=0);
        if bFileFound then begin
-         remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
+         if CopyFileToDevice then
+           remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
          break;
        end;
        Sleep(ISEEKWAITTEMPOMS);
@@ -367,7 +367,8 @@ begin
    end;
    
    // deleting remote file
-   remotedelete(SREMOTEEXEPATH+sTestExeName);
+   if CopyFileToDevice then
+     remotedelete(SREMOTEEXEPATH+sTestExeName);
 
    CeRapiUninit;
    
