@@ -163,10 +163,10 @@ install-arch-stamp: build-arch-stamp debian-files-stamp
 	/bin/bash fpcsrc/compiler/utils/samplecfg \
 		/usr/lib/fpc/$(FPCVERSION) $(INSTALL_DIR)/etc
 	install -D debian/fpc-depends debian/tmp/usr/bin/
-	set -x; for PACKAGE in fp-compiler fp-units-gfx fp-units-net fp-utils; do \
-	  install -m644 -D debian/overrides/$$PACKAGE                             \
-	    debian/$$PACKAGE/usr/share/lintian/overrides/$$PACKAGE;               \
-	done
+#	set -x; for PACKAGE in fp-compiler fp-units-gfx fp-units-net fp-utils; do \
+#	  install -m644 -D debian/overrides/$$PACKAGE                             \
+#	    debian/$$PACKAGE/usr/share/lintian/overrides/$$PACKAGE;               \
+#	done
 	touch install-arch-stamp
 
 arrange-arch: arrange-arch-stamp
