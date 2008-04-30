@@ -7,5 +7,5 @@ units=flist
 programs=lister
 
 [default]
-fpcdir=../..
+fpcdir=../../fpcsrc
 

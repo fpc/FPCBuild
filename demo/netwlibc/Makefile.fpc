@@ -6,7 +6,7 @@
 programs_netwlibc=nuttest
 
 [default]
-fpcdir=../..
+fpcdir=../../fpcsrc
 
 [prerules]
 # binutils are the same for targets netware and netwlibc

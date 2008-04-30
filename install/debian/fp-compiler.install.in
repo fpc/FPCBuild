@@ -12,3 +12,4 @@
 /usr/share/man/man1/ppc*.1
 /usr/share/man/man1/grab_vcsa.1
 /usr/share/man/man5/fpc.cfg.5
+/usr/bin/fpc-depends

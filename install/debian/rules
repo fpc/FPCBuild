@@ -1,15 +1,17 @@
 #!/usr/bin/make -f
 # debian/rules for Free Pascal
 
-# stolen from cdbs:
-DEB_VERSION := $(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
-DEB_NOEPOCH_VERSION := $(shell echo $(DEB_VERSION) | cut -d: -f2-)
-DEB_UPSTREAM_VERSION := $(shell echo $(DEB_NOEPOCH_VERSION) | sed 's/-[^-]*$$//')
+DEB_DH_BUILDDEB_ARGS := -- -Z bzip2
 
 # Documentation type to use pdf/html
+ifeq (${DEBDOCTYPE},)
 DOCTYPE=html
 # HTML Converter l2h/4ht/hevea or html for (default)
 CONVERTER=hevea
+else
+DOCTYPE=${DEBDOCTYPE}
+CONVERTER=${DOCTYPE}
+endif
 
 # Detect name of new compiler, take care that debian uses amd64 instead of x86_64
 CPU_SOURCE=$(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_BUILD_ARCH))
@@ -49,8 +51,7 @@ PPNEW=$(PPPRE)$(PPSUF)
 FPC=
 FPCDIR=
 # Get Package version and FPC version out of changelog file
-PACKAGEVERSION:=$(shell head -n 1 debian/changelog | awk '{ print $$2 }' | tr -d '[()]')
-FPCVERSION:=$(shell echo $(PACKAGEVERSION) | awk -F '-' '{ print $$1 }')
+FPCVERSION:=$(shell dpkg-parsechangelog | sed -ne's,^Version: \([0-9.]*\).*,\1,p')
 FPCTARGET=$(CPU_TARGET)-linux
 # Get directories
 CURDIR:=$(shell pwd)
@@ -66,6 +67,8 @@ NEWFPCMAKE=$(CURDIR)/fpcsrc/utils/fpcm/fpcmake
 BUILDOPTS=PP=$(NEWPP)
 INSTALLOPTS=PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE) INSTALL_PREFIX=$(INSTALL_DIR)/usr
 
+export GDBLIBDIR := /usr/lib
+
 # export DH_VERBOSE=1
 
 ###################
@@ -77,11 +80,12 @@ clean-patched:
 	@echo "--- Cleaning"
 	dh_testdir
 	dh_testroot
-	rm -f build-arch-stamp install-arch-stamp arrange-arch-stamp
+	rm -f build-arch-stamp install-arch-stamp arrange-arch-stamp configure-stamp
 	rm -f build-doc-stamp install-doc-stamp
 	rm -f build-indep-stamp install-indep-stamp
 	rm -f debian-files-stamp
 	rm -f debian/*.files debian/*.docs debian/*.examples debian/*.postinst debian/*.postrm
+	rm -f debian/fpc-depends.1 debian/fpc-source.install
 	$(MAKE) -C fpcsrc compiler_distclean
 	$(MAKE) -C fpcsrc rtl_distclean
 	$(MAKE) -C fpcsrc packages_distclean
@@ -106,7 +110,7 @@ unpatch:
 #
 
 debian-files: debian-files-stamp
-debian-files-stamp:
+debian-files-stamp: patch
 	@echo "--- Creating/fixing *.install files"
 	/bin/bash debian/fixdeb debian $(FPCTARGET) $(PPNEW)
 	touch debian-files-stamp
@@ -115,8 +119,16 @@ debian-files-stamp:
 # Arch packages
 #
 
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	# Remove make files and regenrate them using fpcmake.
+	find -name Makefile.fpc -execdir 'sh' '-c' '${RM} $$(basename {} .fpc)' ';'
+	fpcmake -r -Tall */Makefile.fpc
+	touch configure-stamp
+
 build-arch: build-arch-stamp
-build-arch-stamp: debian-files-stamp
+build-arch-stamp: debian-files-stamp configure-stamp
 	@echo "--- Building"
 	dh_testdir
 # First make a new Compiler and RTL using a make cycle
@@ -141,13 +153,20 @@ install-arch-stamp: build-arch-stamp debian-files-stamp
 	$(MAKE) -C fpcsrc utils_distinstall $(INSTALLOPTS)
 # Copy examples to the correct doc dir
 	/bin/bash debian/moveexamples $(EXAMPLE_TEMP) $(DOC_DIR)
-# Install man pages and RTL demos and whatsnew and readme
+# Install man pages
 	$(MAKE) -C install/man installman $(INSTALLOPTS) INSTALL_PREFIX=$(INSTALL_DIR)/usr/share
+# Install RTL demos
 	$(MAKE) -C demo sourceinstall $(INSTALLOPTS) INSTALL_SOURCEDIR=$(DOC_DIR)/fp-compiler
+# Install whatsnew and readme
 	$(MAKE) -C install/doc installdoc $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-compiler
 # Create fpc.cfg which is included as conffile
 	/bin/bash fpcsrc/compiler/utils/samplecfg \
-		/usr/lib/fpc/$(DEB_UPSTREAM_VERSION) $(INSTALL_DIR)/etc
+		/usr/lib/fpc/$(FPCVERSION) $(INSTALL_DIR)/etc
+	install -D debian/fpc-depends debian/tmp/usr/bin/
+	set -x; for PACKAGE in fp-compiler fp-units-gfx fp-units-net fp-utils; do \
+	  install -m644 -D debian/overrides/$$PACKAGE                             \
+	    debian/$$PACKAGE/usr/share/lintian/overrides/$$PACKAGE;               \
+	done
 	touch install-arch-stamp
 
 arrange-arch: arrange-arch-stamp
@@ -200,10 +219,8 @@ install-source-stamp:
 	install -d $(INSTALL_DIR)/usr/share/fpcsrc/
 	cp -r $(CURDIR)/fpcsrc/compiler $(INSTALL_DIR)/usr/share/fpcsrc/
 	cp -r $(CURDIR)/fpcsrc/ide $(INSTALL_DIR)/usr/share/fpcsrc/
-	cp -r $(CURDIR)/fpcsrc/installer $(INSTALL_DIR)/usr/share/fpcsrc/
 	cp -r $(CURDIR)/fpcsrc/packages $(INSTALL_DIR)/usr/share/fpcsrc/
 	cp -r $(CURDIR)/fpcsrc/rtl $(INSTALL_DIR)/usr/share/fpcsrc/
-	cp -r $(CURDIR)/fpcsrc/tests $(INSTALL_DIR)/usr/share/fpcsrc/
 	cp -r $(CURDIR)/fpcsrc/utils $(INSTALL_DIR)/usr/share/fpcsrc/
 	touch install-source-stamp
 
@@ -232,26 +249,32 @@ binary-indep: build-doc install-doc install-source debian-files
 	dh_installdeb -i
 	dh_gencontrol -i
 	dh_md5sums -i
-	dh_builddeb -i
+	dh_builddeb -i $(DEB_DH_BUILDDEB_ARGS)
 
 binary-arch: build-arch arrange-arch debian-files
 	@echo "--- Building: arch packages"
 	dh_testdir
 	dh_testroot
+	dh_link
 	dh_installdocs -a
 	dh_installchangelogs -a
 	dh_installexamples -a
+	pod2man -c 'Free pascal for Debian GNU/Linux' \
+	  debian/fpc-depends > debian/fpc-depends.1
+	dh_installman -s
+	dh_strip
 	dh_compress -a
 	dh_fixperms -a
 	dh_installdeb -s
 	dh_shlibdeps -s
 	dh_gencontrol -s
 	dh_md5sums -s
-	dh_builddeb -s
+	dh_builddeb -s $(DEB_DH_BUILDDEB_ARGS)
 
 .PHONY: build clean binary binary-arch \
 	binary-indep debian-files build-arch \
-	install install-indep install-arch
+	install install-indep install-arch \
+	configure
 
 get-orig-source:
-	-uscan --upstream-version 0 --rename
+	-uscan --upstream-version=0 --rename

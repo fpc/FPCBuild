@@ -6,4 +6,4 @@
 programs_go32v2=voxel
 
 [default]
-fpcdir=../..
+fpcdir=../../fpcsrc

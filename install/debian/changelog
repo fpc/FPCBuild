@@ -1,8 +1,79 @@
 fpc (2.3.1-0) unstable; urgency=low
 
-  * Snapshot build
+  * Buils daily snapshots
 
- -- Mazen Neifer <mazen@freepascal.org>  Mon, 07 May 2007 23:21:00 +0200
+ -- Mazen Neifer <mazen@freepascal.org>  Sat, 29 Mar 2008 11:26:36 +0100
+
+fpc (2.2.0-dfsg1-5) unstable; urgency=low
+
+  [ Mazen Neifer ]
+  * Applied fixes from upstream to packages/fcl-xml
+
+  [ Torsten Werner ]
+  * Add a new patch 09_powerpc to make the package builds on powerpc
+    architecture.
+
+ -- Torsten Werner <twerner@debian.org>  Sat, 29 Mar 2008 10:39:26 +0100
+
+fpc (2.2.0-dfsg1-4) unstable; urgency=low
+
+  * Build fp-ide with debugger support. (Closes: #328701)
+  * Remove unneeded Build-Depends: findutils.
+  * Update Standards-Version: 3.7.3.
+  * Change Depends: mawk | awk.
+  * Clean up some lintian errors and warnings.
+
+ -- Torsten Werner <twerner@debian.org>  Sat, 15 Mar 2008 19:18:23 +0100
+
+fpc (2.2.0-dfsg1-3) unstable; urgency=low
+
+  * Add files matching *.inc to package fpc-source.
+
+ -- Torsten Werner <twerner@debian.org>  Sat, 29 Dec 2007 22:29:07 +0100
+
+fpc (2.2.0-dfsg1-2) unstable; urgency=low
+
+  [ Torsten Werner ]
+  * Set Architecture: all for fpc package.
+  * Fix bug in debian/rules: it's $(FPCVERSION) not $(FPC_VERSION).
+    (Closes: #457951)
+
+  [ Mazen Neifer ]
+  * New patch from upstream fixes non-deterministic register allocation on
+    sparc
+  * Modified rules to apply patches before building compiler
+
+ -- Torsten Werner <twerner@debian.org>  Sat, 29 Dec 2007 15:49:57 +0100
+
+fpc (2.2.0-dfsg1-1) unstable; urgency=low
+
+  * Remove all files matching *.o from upstream's tarball.
+  * Change fpc-source package:
+    - Do not copy directories installer and tests because they are not needed
+      by lazarus.
+    - Install only files matching *.pas and *.pp.
+  * Clean up the XXXVERSION cruft in debian/rules and debian/fixdeb.
+  * Update FSF address in debian/copyright.
+
+ -- Torsten Werner <twerner@debian.org>  Thu, 20 Dec 2007 18:46:55 +0100
+
+fpc (2.2.0-3) unstable; urgency=low
+
+  * Create binary package fpc-source again after having some discussion on
+    debian-devel. (Closes: #413805)
+  * Use bzip2 when creating binary packages and add
+    Pre-Depends: dpkg (>= 1.10.24).
+  * Add the fpc-depends tool.
+
+ -- Torsten Werner <twerner@debian.org>  Sun, 09 Dec 2007 22:35:01 +0100
+
+fpc (2.2.0-2) unstable; urgency=low
+
+  [ Mazen Neifer ]
+  * Added dbase to fcl-db packaged units for arch other than i386.
+  * Fixed build issue for sparc and powerpc arch.
+
+ -- Torsten Werner <twerner@debian.org>  Fri, 07 Dec 2007 09:22:17 +0100
 
 fpc (2.2.0-1) unstable; urgency=low
 

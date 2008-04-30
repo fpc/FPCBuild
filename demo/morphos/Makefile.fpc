@@ -6,4 +6,4 @@
 programs_morphos=ahitest asltest window getvolumes openlib process
 
 [default]
-fpcdir=../..
+fpcdir=../../fpcsrc

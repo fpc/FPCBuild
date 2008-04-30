@@ -1,11 +1,10 @@
 /usr/share/doc/fp-units-net
 
-/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/netdb
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libcurl
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/dbus
-/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/httpd-1.3
-/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/httpd-2.0
-/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/httpd-2.2
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/httpd13
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/httpd20
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/httpd22
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/ldap
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/openssl
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/pcap

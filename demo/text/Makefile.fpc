@@ -6,4 +6,4 @@
 programs=eratos qsort hello blackbox magic lines
 
 [default]
-fpcdir=../..
+fpcdir=../../fpcsrc
