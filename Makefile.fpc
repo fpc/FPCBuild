@@ -21,6 +21,9 @@ rule=help
 
 [prerules]
 
+ifndef DEBDIR
+DEBDIR=${CVSINSTALL}/debian
+endif
 
 # Build dir
 ifndef BUILDDIR
@@ -378,11 +381,11 @@ endif
 
 ifdef inUnix
 
-ifneq ($(wildcard $(CVSINSTALL)/debian/changelog),)
+ifneq ($(wildcard ${DEBDIR}/changelog),)
 
 .PHONY: debcopy deb
 
-DEBPACKAGEVERSION:=$(shell head -n 1 $(CVSINSTALL)/debian/changelog | awk '{ print $$2 }' | tr -d '[()]')
+DEBPACKAGEVERSION:=$(shell head -n 1 ${DEBDIR}/changelog | awk '{ print $$2 }' | tr -d '[()]')
 DEBFPCVERSION:=$(shell echo $(DEBPACKAGEVERSION) | awk -F '-' '{ print $$1 }')
 DEBSRCDIR:=$(BUILDDIR)/fpc-$(DEBFPCVERSION)
 
@@ -427,6 +430,7 @@ endif
 debcopy: distclean
         rm -rf ${BUILDDIR}
         install -d $(DEBSRCDIR)/fpcsrc
+        $(LINKTREE) ${DEBDIR} $(DEBSRCDIR)/debian
         $(LINKTREE) fpcsrc/compiler $(DEBSRCDIR)/fpcsrc
         $(LINKTREE) fpcsrc/rtl $(DEBSRCDIR)/fpcsrc
         $(LINKTREE) fpcsrc/ide $(DEBSRCDIR)/fpcsrc
@@ -443,7 +447,6 @@ ifndef NODOCS
         $(LINKTREE) fpcdocs $(DEBSRCDIR)
 endif
         $(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)/fpcsrc
-        $(LINKTREE) $(CVSINSTALL)/debian $(DEBSRCDIR)
         install -d $(DEBSRCDIR)/install
         $(LINKTREE) $(CVSINSTALL)/man $(DEBSRCDIR)/install
         $(LINKTREE) $(CVSINSTALL)/doc $(DEBSRCDIR)/install

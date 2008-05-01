@@ -7,3 +7,4 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/odbc
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/gdbm
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/sqlite
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/pxlib

@@ -6,7 +6,7 @@
 programs_netware=nutmon check nuttest
 
 [default]
-fpcdir=../..
+fpcdir=../../fpcsrc
 
 [rules]
 nutmon.nlm: nutmon.pp nutconnection.pp

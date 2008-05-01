@@ -6,4 +6,4 @@
 programs_linux=epoll-pipe
 
 [default]
-fpcdir=../..
+fpcdir=../../fpcsrc

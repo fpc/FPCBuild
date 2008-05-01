@@ -7,5 +7,5 @@ units=
 programs=fontdemo sysmousetest demo_kqueue demo_sendfile
 
 [default]
-fpcdir=../..
+fpcdir=../../fpcsrc
 

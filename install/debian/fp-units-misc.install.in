@@ -17,3 +17,4 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/newt
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fftw
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/aspell
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/users

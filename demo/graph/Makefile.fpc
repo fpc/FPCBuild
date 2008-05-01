@@ -7,7 +7,7 @@ units=gameunit
 programs=fpctris mandel samegame quad maze gravwars
 
 [default]
-fpcdir=../..
+fpcdir=../../fpcsrc
 
 [prerules]
 ifdef GRAPHICS

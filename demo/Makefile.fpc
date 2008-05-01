@@ -34,4 +34,4 @@ installexamples:
 demozip: zipsourceinstall
 
 [default]
-fpcdir=..
+fpcdir=../fpcsrc

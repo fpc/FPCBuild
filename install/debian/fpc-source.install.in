@@ -1,1 +1,3 @@
-/usr/share/fpcsrc/*
+/usr/share/fpcsrc/compiler
+/usr/share/fpcsrc/packages
+/usr/share/fpcsrc/rtl

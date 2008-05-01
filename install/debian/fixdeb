@@ -11,9 +11,9 @@ if [ $# != 3 ]; then
   exit 1
 fi
 
-PACKAGEVERSION=`head -n 1 $1/changelog | awk '{ print $2 }' | tr -d '[()]'`
+PACKAGEVERSION=`dpkg-parsechangelog | sed -ne's,^Version: \(.*\),\1,p'`
 FPCVERSION=`echo $PACKAGEVERSION | awk -F '-' '{ print $1 }'`
-DEBVERSION=`echo $PACKAGEVERSION | awk -F '-' '{ print $2 }'`
+DEBVERSION=`echo $PACKAGEVERSION | awk -F '-' '{ print $NF }'`
 FPCSVNPATH=`echo $FPCVERSION | awk -F '.' '{ print "release_"$1"_"$2"_"$3 }'`
 FPCTARGET="$2"
 PPCBIN="$3"

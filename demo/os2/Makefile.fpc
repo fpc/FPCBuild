@@ -6,7 +6,7 @@
 programs_os2=basicpm pmdemo1 getctry
 
 [default]
-fpcdir=../..
+fpcdir=../../fpcsrc
 
 [rules]
 basicpm.exe: basicpm.pas

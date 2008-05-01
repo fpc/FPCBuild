@@ -6,4 +6,4 @@
 programs=cgibmp daemon
 
 [default]
-fpcdir=../..
+fpcdir=../../fpcsrc
