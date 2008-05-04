@@ -153,6 +153,12 @@ Name: {userdesktop}\Free Pascal IDE; Filename: {app}\bin\i386-win32\fp.exe; comp
 Name: {group}\Free Pascal; Filename: {app}\bin\i386-win32\fp.exe; components: ide; IconFileName: {app}\bin\i386-win32\fp32.ico; WorkingDir: {app}\bin\i386-win32
 Name: {group}\{cm:ProgramOnTheWeb,Free Pascal}; Filename: {app}\Free Pascal.url; IconFileName: {app}\bin\i386-win32\fp32.ico;
 Name: {group}\{cm:UninstallProgram,Free Pascal}; Filename: {uninstallexe}
+Name: {group}\Documentation\User's manual; Filename: {app}\doc\user.pdf; Components: docs
+Name: {group}\Documentation\Programmer's manual; Filename: {app}\doc\prog.pdf; Components: docs
+Name: {group}\Documentation\Reference manual; Filename: {app}\doc\ref.pdf; Components: docs
+Name: {group}\Documentation\Run-Time Library Reference guide; Filename: {app}\doc\rtl.pdf; Components: docs
+Name: {group}\Documentation\Free Component Library Reference guide; Filename: {app}\doc\fcl.pdf; Components: docs
+Name: {group}\Documentation\Free Pascal code documenter Reference manual; Filename: {app}\doc\fpdoc.pdf; Components: docs
 
 [UninstallDelete]
 Type: files; Name: {app}\Free Pascal.url
