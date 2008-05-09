@@ -2,7 +2,38 @@ fpc (2.3.1-0) unstable; urgency=low
 
   * Buils daily snapshots
 
- -- Mazen Neifer <mazen@freepascal.org>  Sat, 29 Mar 2008 11:26:36 +0100
+ -- Mazen Neifer <mazen@freepascal.org>  Fri, 09 May 2008 10:20:48 +0200
+fpc (2.2.0-dfsg1-8) unstable; urgency=low
+
+  [ Mazen Neifer ]
+  * Fixed build of fpc-source package cased by accidental remove of
+  	fpc-source.install file during clean-patched target execution.
+  * Fixed Build-Depend clause (needs binutils instead of binutils-dev and no
+  	need for libgpmg1-dev).
+  * Added man pages to the same packages including corresponding binaries.
+  * Removed from fpc-source code which isn't required by Lazarus code tool.
+
+ -- Mazen Neifer <mazen@freepascal.org>  Thu, 08 May 2008 17:45:19 +0200
+
+fpc (2.2.0-dfsg1-7) unstable; urgency=low
+
+  [ Mazen Neifer ]
+  * Added make files to source package. This required by fpcmake tool to succeed
+    cross platform compilation.
+  * Added man pages for fpcmkcfg, fpcsubst, fpcres, mkxmlrpc and rmcvsdir
+    binaries.
+
+ -- Mazen Neifer <mazen@freepascal.org>  Wed, 30 Apr 2008 16:01:50 +0200
+
+fpc (2.2.0-dfsg1-6) unstable; urgency=medium
+
+  * Remove the patch 09_powerpc again because the bug is in libgdb-dev and
+    will be fixed there.
+  * Disable Build-Depends: libexpat1-dev, libgdb-dev because fpc is
+    incompatible to gdb 6.8. (Closes: #473955)
+  * Set urgency to medium because we are fixing a FTBFS bug only.
+
+ -- Torsten Werner <twerner@debian.org>  Sat, 29 Mar 2008 23:31:44 +0100
 
 fpc (2.2.0-dfsg1-5) unstable; urgency=low
 
