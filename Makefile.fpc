@@ -20,16 +20,6 @@ fpcdir=.
 rule=help
 
 [prerules]
-
-ifndef DEBDIR
-DEBDIR=${CVSINSTALL}/debian
-endif
-
-# Build dir
-ifndef BUILDDIR
-BUILDDIR=$(BASEDIR)/build
-endif
-
 # Check if install/ subdir is available
 ifneq ($(wildcard install),)
 CVSINSTALL=install
@@ -374,12 +364,20 @@ ifneq ($(findstring $(OS_TARGET),$(LIMIT83fs)),)
         $(MAKE) shortnames
 endif
 
-
 ##########################################################################
 # Debian
 ##########################################################################
 
-ifdef inUnix
+ifeq ($(OS_TARGET),linux)
+
+ifndef DEBDIR
+DEBDIR=${CVSINSTALL}/debian
+endif
+
+# Build dir
+ifndef BUILDDIR
+BUILDDIR=$(BASEDIR)/build
+endif
 
 ifneq ($(wildcard ${DEBDIR}/changelog),)
 
@@ -431,6 +429,7 @@ debcopy: distclean
         rm -rf ${BUILDDIR}
         install -d $(DEBSRCDIR)/fpcsrc
         $(LINKTREE) ${DEBDIR} $(DEBSRCDIR)/debian
+        $(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)/fpcsrc
         $(LINKTREE) fpcsrc/compiler $(DEBSRCDIR)/fpcsrc
         $(LINKTREE) fpcsrc/rtl $(DEBSRCDIR)/fpcsrc
         $(LINKTREE) fpcsrc/ide $(DEBSRCDIR)/fpcsrc
@@ -446,9 +445,8 @@ endif
 ifndef NODOCS
         $(LINKTREE) fpcdocs $(DEBSRCDIR)
 endif
-        $(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)/fpcsrc
-        install -d $(DEBSRCDIR)/install
-        $(LINKTREE) $(CVSINSTALL)/man $(DEBSRCDIR)/install
+        ${MKDIR} -p $(DEBSRCDIR)/install
+        $(LINKTREE) install/man $(DEBSRCDIR)/install
         $(LINKTREE) $(CVSINSTALL)/doc $(DEBSRCDIR)/install
         find $(DEBSRCDIR) -name 'CVS*' | xargs -n1 rm -rf
         find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
@@ -456,20 +454,20 @@ endif
 
 debbuild:
 ifdef NODOCS
-        cd $(DEBSRCDIR) ; fakeroot debian/rules binary-arch
+	cd $(DEBSRCDIR) ; dpkg-buildpackage -us -uc -B
 else
-        cd $(DEBSRCDIR) ; fakeroot debian/rules binary
+	cd $(DEBSRCDIR) ; dpkg-buildpackage -us -uc
 endif
-        mv $(DEBSRCDIR)/../*.deb .
+	mv -v -t . $(DEBSRCDIR)/../*.{deb,dsc,changes,tar.gz}
 
 debclean:
         rm -rf $(DEBSRCDIR)
         -rmdir $(BUILDDIR)
 
+deb: checkfpcdir debcheck debcopy debbuild debclean
+
 debtargz: checkfpcdir
         $(MAKE) fpc_zipinstall USETAR=y ZIPTARGET=debcopy PACKDIR=$(DEBSRCDIR) FULLZIPNAME=fpc-$(DEBFPCVERSION).orig
-
-deb: checkfpcdir debcheck debcopy debbuild debclean
 
 endif   # changelog found
 

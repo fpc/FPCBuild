@@ -2,13 +2,14 @@
 /usr/bin/fpc
 /usr/bin/fpcsubst
 /usr/bin/fpcmkcfg
-/usr/bin/fppkg
 /usr/bin/grab_vcsa
 /usr/lib/fpc/%{fpcversion}/ppc*
 /usr/lib/fpc/%{fpcversion}/samplecfg
 /usr/lib/fpc/%{fpcversion}/msg
 /usr/share/doc/fp-compiler
 /usr/share/man/man1/fpc.1
+/usr/share/man/man1/fpcsubst.1
+/usr/share/man/man1/fpcmkcfg.1
 /usr/share/man/man1/ppc*.1
 /usr/share/man/man1/grab_vcsa.1
 /usr/share/man/man5/fpc.cfg.5

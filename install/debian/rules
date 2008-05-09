@@ -59,6 +59,7 @@ BUILD_DIR=$(CURDIR)/debian/build
 INSTALL_DIR=$(CURDIR)/debian/tmp
 DOC_DIR=$(INSTALL_DIR)/usr/share/doc
 EXAMPLE_TEMP=$(DOC_DIR)/fpc-$(FPCVERSION)
+SRC_DIR=$(INSTALL_DIR)/usr/share/fpcsrc/${FPCVERSION}
 # Get utils
 NEWPP=$(CURDIR)/fpcsrc/compiler/$(PPNEW)
 NEWFPDOC=$(CURDIR)/fpcsrc/utils/fpdoc/fpdoc
@@ -75,6 +76,7 @@ export GDBLIBDIR := /usr/lib
 # Clean
 #
 
+CLEAN_ALL = (find -name '*.a' -or -name '*.o' -or -name '*.ppu' | xargs rm)
 clean: clean-patched unpatch
 clean-patched:
 	@echo "--- Cleaning"
@@ -85,14 +87,14 @@ clean-patched:
 	rm -f build-indep-stamp install-indep-stamp
 	rm -f debian-files-stamp
 	rm -f debian/*.files debian/*.docs debian/*.examples debian/*.postinst debian/*.postrm
-	rm -f debian/fpc-depends.1 debian/fpc-source.install
+	rm -f debian/fpc-depends.1
 	$(MAKE) -C fpcsrc compiler_distclean
 	$(MAKE) -C fpcsrc rtl_distclean
 	$(MAKE) -C fpcsrc packages_distclean
 	$(MAKE) -C fpcsrc ide_distclean
 	$(MAKE) -C fpcsrc utils_distclean
 	$(MAKE) -C fpcdocs clean
-	-(find . -name \*.a | xargs rm)
+	-${CLEAN_ALL}
 	dh_clean
 
 patch: patch-stamp
@@ -122,8 +124,9 @@ debian-files-stamp: patch
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	# Remove make files and regenrate them using fpcmake.
+	# Remove auto-generated make files.
 	find -name Makefile.fpc -execdir 'sh' '-c' '${RM} $$(basename {} .fpc)' ';'
+	# Regenrate make files using fpcmake.
 	fpcmake -r -Tall */Makefile.fpc
 	touch configure-stamp
 
@@ -215,13 +218,12 @@ install-source-stamp:
 	$(MAKE) -C fpcsrc packages_distclean
 	$(MAKE) -C fpcsrc ide_distclean
 	$(MAKE) -C fpcsrc utils_distclean
-	-(find . -name \*.a | xargs rm)
-	install -d $(INSTALL_DIR)/usr/share/fpcsrc/
-	cp -r $(CURDIR)/fpcsrc/compiler $(INSTALL_DIR)/usr/share/fpcsrc/
-	cp -r $(CURDIR)/fpcsrc/ide $(INSTALL_DIR)/usr/share/fpcsrc/
-	cp -r $(CURDIR)/fpcsrc/packages $(INSTALL_DIR)/usr/share/fpcsrc/
-	cp -r $(CURDIR)/fpcsrc/rtl $(INSTALL_DIR)/usr/share/fpcsrc/
-	cp -r $(CURDIR)/fpcsrc/utils $(INSTALL_DIR)/usr/share/fpcsrc/
+	-${CLEAN_ALL}
+	${MKDIR} ${SRC_DIR}
+	cp -Rfpl -t ${SRC_DIR} \
+	$(CURDIR)/fpcsrc/compiler \
+	$(CURDIR)/fpcsrc/packages \
+	$(CURDIR)/fpcsrc/rtl
 	touch install-source-stamp
 
 ###################
@@ -262,7 +264,7 @@ binary-arch: build-arch arrange-arch debian-files
 	pod2man -c 'Free pascal for Debian GNU/Linux' \
 	  debian/fpc-depends > debian/fpc-depends.1
 	dh_installman -s
-	dh_strip
+	dh_strip -s
 	dh_compress -a
 	dh_fixperms -a
 	dh_installdeb -s

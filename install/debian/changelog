@@ -1,43 +1,113 @@
 fpc (2.2.1-0) unstable; urgency=low
 
-  * Snapshot build
+  * Buils daily snapshots
 
- -- Joost van der Sluis <joost@freepascal.org>  Wed, 29 aug 2007 23:48:00 +0100
+ -- Mazen Neifer <mazen@freepascal.org>  Fri, 09 May 2008 10:20:48 +0200
+
+fpc (2.2.0-dfsg1-8) unstable; urgency=low
+
+  [ Mazen Neifer ]
+  * Fixed build of fpc-source package cased by accidental remove of
+  	fpc-source.install file during clean-patched target execution.
+  * Fixed Build-Depend clause (needs binutils instead of binutils-dev and no
+  	need for libgpmg1-dev).
+  * Added man pages to the same packages including corresponding binaries.
+  * Removed from fpc-source code which isn't required by Lazarus code tool.
+
+ -- Mazen Neifer <mazen@freepascal.org>  Thu, 08 May 2008 17:45:19 +0200
+
+fpc (2.2.0-dfsg1-7) unstable; urgency=low
+
+  [ Mazen Neifer ]
+  * Added make files to source package. This required by fpcmake tool to succeed
+    cross platform compilation.
+  * Added man pages for fpcmkcfg, fpcsubst, fpcres, mkxmlrpc and rmcvsdir
+    binaries.
+
+ -- Mazen Neifer <mazen@freepascal.org>  Wed, 30 Apr 2008 16:01:50 +0200
+
+fpc (2.2.0-dfsg1-6) unstable; urgency=medium
+
+  * Remove the patch 09_powerpc again because the bug is in libgdb-dev and
+    will be fixed there.
+  * Disable Build-Depends: libexpat1-dev, libgdb-dev because fpc is
+    incompatible to gdb 6.8. (Closes: #473955)
+  * Set urgency to medium because we are fixing a FTBFS bug only.
+
+ -- Torsten Werner <twerner@debian.org>  Sat, 29 Mar 2008 23:31:44 +0100
+
+fpc (2.2.0-dfsg1-5) unstable; urgency=low
+
+  [ Mazen Neifer ]
+  * Applied fixes from upstream to packages/fcl-xml
+
+  [ Torsten Werner ]
+  * Add a new patch 09_powerpc to make the package builds on powerpc
+    architecture.
+
+ -- Torsten Werner <twerner@debian.org>  Sat, 29 Mar 2008 10:39:26 +0100
+
+fpc (2.2.0-dfsg1-4) unstable; urgency=low
+
+  * Build fp-ide with debugger support. (Closes: #328701)
+  * Remove unneeded Build-Depends: findutils.
+  * Update Standards-Version: 3.7.3.
+  * Change Depends: mawk | awk.
+  * Clean up some lintian errors and warnings.
+
+ -- Torsten Werner <twerner@debian.org>  Sat, 15 Mar 2008 19:18:23 +0100
+
+fpc (2.2.0-dfsg1-3) unstable; urgency=low
+
+  * Add files matching *.inc to package fpc-source.
+
+ -- Torsten Werner <twerner@debian.org>  Sat, 29 Dec 2007 22:29:07 +0100
+
+fpc (2.2.0-dfsg1-2) unstable; urgency=low
+
+  [ Torsten Werner ]
+  * Set Architecture: all for fpc package.
+  * Fix bug in debian/rules: it's $(FPCVERSION) not $(FPC_VERSION).
+    (Closes: #457951)
+
+  [ Mazen Neifer ]
+  * New patch from upstream fixes non-deterministic register allocation on
+    sparc
+  * Modified rules to apply patches before building compiler
+
+ -- Torsten Werner <twerner@debian.org>  Sat, 29 Dec 2007 15:49:57 +0100
+
+fpc (2.2.0-dfsg1-1) unstable; urgency=low
+
+  * Remove all files matching *.o from upstream's tarball.
+  * Change fpc-source package:
+    - Do not copy directories installer and tests because they are not needed
+      by lazarus.
+    - Install only files matching *.pas and *.pp.
+  * Clean up the XXXVERSION cruft in debian/rules and debian/fixdeb.
+  * Update FSF address in debian/copyright.
+
+ -- Torsten Werner <twerner@debian.org>  Thu, 20 Dec 2007 18:46:55 +0100
+
+fpc (2.2.0-3) unstable; urgency=low
+
+  * Create binary package fpc-source again after having some discussion on
+    debian-devel. (Closes: #413805)
+  * Use bzip2 when creating binary packages and add
+    Pre-Depends: dpkg (>= 1.10.24).
+  * Add the fpc-depends tool.
+
+ -- Torsten Werner <twerner@debian.org>  Sun, 09 Dec 2007 22:35:01 +0100
+
+fpc (2.2.0-2) unstable; urgency=low
+
+  [ Mazen Neifer ]
+  * Added dbase to fcl-db packaged units for arch other than i386.
+  * Fixed build issue for sparc and powerpc arch.
+
+ -- Torsten Werner <twerner@debian.org>  Fri, 07 Dec 2007 09:22:17 +0100
 
 fpc (2.2.0-1) unstable; urgency=low
-
-  * New release
-
- -- Joost van der Sluis <joost@freepascal.org>  Wed, 29 aug 2007 22:27:00 +0100
-
-fpc (2.1.5-0) unstable; urgency=low
-
-  * Snapshot build
-
- -- Mazen Neifer <mazen@freepascal.org>  Sat, 12 may 2007 22:58:00 +0100
-
-fpc (2.1.4-0) unstable; urgency=low
-
-  * New beta-release
-
- -- Joost van der Sluis <joost@freepascal.org>  Sun, 6 may 2007 1:19:00 +0100
-
-fpc (2.1.3-0) unstable; urgency=low
-
-  * Snapshot build
-
- -- Peter Vreman <peter@freepascal.org>  Mon, 21 Aug 2006 12:00:00 +0200
-
-fpc (2.1.2-0) unstable; urgency=low
-
-  * New release
-  * Fixed ppcppc segfault on powerpc with 64 bit kernel (closes: 362410)
-  * Supported arm architecture (closes: #408693)
-  * Allow building runtime libraries for cross-targets (closes: 56637)
-
- -- Mazen Neifer <mazen@freepascal.org>  Mon, 19 Mar 2007 17:37:08 +0100
-
-fpc (2.1.1-0) unstable; urgency=low
 
   [ Carlos Laviola ]
   * New upstream release.  (Closes: #442206)
