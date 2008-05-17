@@ -2188,6 +2188,11 @@ ifeq ($(LIBGDBFILE),)
 $(error No libgdb.a found, supply NOGDB=1 to disable debugger support)
 endif
 endif  #NOGDB
+PACKAGEVERSION=$(shell dpkg-parsechangelog -l${DEBDIR}/changelog | sed -ne's,^Version: \(.*\),\1,p')
+FPCVERSION=$(shell echo ${PACKAGEVERSION} | awk -F '-' '{ print $$1 }')
+DEBVERSION=$(shell echo ${PACKAGEVERSION} | awk -F '-' '{ print $$NF }')
+FPCSVNPATH=$(shell echo ${FPCVERSION} | awk -F '.' '{ print "release_"$$1"_"$$2"_"$$3 }')
+BUILDDATE=$(shell /bin/date --utc +%Y%m%d)
 debcheck:
 ifneq ($(DEBFPCVERSION),$(PACKAGE_VERSION))
 	@$(ECHO) "Debian version ($(DEBFPCVERSION)) is not correct, expect $(PACKAGE_VERSION)"
@@ -2197,6 +2202,10 @@ debcopy: distclean
 	rm -rf ${BUILDDIR}
 	install -d $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) ${DEBDIR} $(DEBSRCDIR)/debian
+ifeq (${DEBVERSION},0)
+	sed s+${PACKAGEVERSION}+${FPCVERSION}-${BUILDDATE}+ $(DEBSRCDIR)/debian/changelog > $(DEBSRCDIR)/debian/changelog.tmp
+	mv $(DEBSRCDIR)/debian/changelog.tmp $(DEBSRCDIR)/debian/changelog
+endif
 	$(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/compiler $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/rtl $(DEBSRCDIR)/fpcsrc
