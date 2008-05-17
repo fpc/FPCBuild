@@ -18,15 +18,6 @@ FPCSVNPATH=`echo $FPCVERSION | awk -F '.' '{ print "release_"$1"_"$2"_"$3 }'`
 FPCTARGET="$2"
 PPCBIN="$3"
 
-# Snapshot ?
-if [ "$DEBVERSION" == "0" ]; then
-  OLDPACKAGEVERSION=$PACKAGEVERSION
-  DEBVERSION=`/bin/date --utc +%Y%m%d`
-  PACKAGEVERSION=$FPCVERSION-$DEBVERSION
-  sed s+$OLDPACKAGEVERSION+$PACKAGEVERSION+ $1/changelog > $1/changelog.tmp
-  mv $1/changelog.tmp $1/changelog
-fi
-
 echo 'PackageVersion: ' $PACKAGEVERSION
 echo 'FPCVersion    : ' $FPCVERSION
 echo 'FPCTarget     : ' $FPCTARGET
