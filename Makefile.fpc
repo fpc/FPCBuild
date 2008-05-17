@@ -187,9 +187,6 @@ crosszipinstall: $(BUILDSTAMP)
 # We don't want the package name fpc in the path
 DOCSOURCEDIR=$(INSTALL_SOURCEDIR)/../docs
 
-# We want to package pdf docs while official debian package are shipped in html
-export DEBDOCTYPE=pdf
-
 docspdf:
         $(MAKE) -C fpcdocs pdfinstall DOCINSTALLDIR=$(PACKDIR)
 
@@ -456,9 +453,9 @@ endif
 ifndef NODOCS
 	$(LINKTREE) fpcdocs $(DEBSRCDIR)
 endif
-	${MKDIR} -p $(DEBSRCDIR)/install
+	${MKDIR} $(DEBSRCDIR)/install
 	$(LINKTREE) install/man $(DEBSRCDIR)/install
-	$(LINKTREE) $(CVSINSTALL)/doc $(DEBSRCDIR)/install
+	$(LINKTREE) install/doc $(DEBSRCDIR)/install
 	find $(DEBSRCDIR) -name 'CVS*' | xargs -n1 rm -rf
 	find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
 	chmod 755 $(DEBSRCDIR)/debian/rules
