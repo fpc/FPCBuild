@@ -67,6 +67,10 @@ NEWFPCMAKE=$(CURDIR)/fpcsrc/utils/fpcm/fpcmake
 # Create default options
 BUILDOPTS=PP=$(NEWPP)
 INSTALLOPTS=PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE) INSTALL_PREFIX=$(INSTALL_DIR)/usr
+# Get fpcmake from path if none is specified.
+ifndef FPCMAKE
+FPCMAKE=fpcmake
+endif
 
 export GDBLIBDIR := /usr/lib
 
@@ -127,7 +131,7 @@ configure-stamp:
 	# Remove auto-generated make files.
 	find -name Makefile.fpc -execdir 'sh' '-c' '${RM} $$(basename {} .fpc)' ';'
 	# Regenrate make files using fpcmake.
-	fpcmake -r -Tall */Makefile.fpc
+	${FPCMAKE} -r -Tall */Makefile.fpc
 	touch configure-stamp
 
 build-arch: build-arch-stamp

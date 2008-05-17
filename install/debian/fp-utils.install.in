@@ -30,10 +30,13 @@
 /usr/share/man/man1/fprcp.1
 /usr/share/man/man1/h2paspp.1
 /usr/share/man/man1/makeskel.1
+/usr/share/man/man1/mkxmlrpc.1
 /usr/share/man/man1/postw32.1
+/usr/share/man/man1/rmcvsdir.1
 /usr/share/man/man1/unitdiff.1
 /usr/share/man/man1/delp.1
 /usr/share/man/man1/fpcmake.1
+/usr/share/man/man1/fpcres.1
 /usr/share/man/man1/h2pas.1
 /usr/share/man/man1/plex.1
 /usr/share/man/man1/ppdep.1
