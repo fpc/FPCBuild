@@ -6,7 +6,6 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/chm
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/utmp
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/pthreads
-/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/unixutil
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/zlib
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/tcl
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/cdrom
