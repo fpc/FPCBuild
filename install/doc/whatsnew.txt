@@ -4,6 +4,17 @@
                                 Version 2.2.0
 
 ******************************************************************************
+                              What's New in 2.2.2
+******************************************************************************
+
+Free Pascal 2.2.0 contain many bug-fixes and new features. The work on this
+release started since beginning of 2008 in the purpose of improving the release
+2.2.0.
+
+Please refer to http://wiki.freepascal.org/User_Changes_2.2.2 for an exhaustive
+list of changes.
+
+******************************************************************************
                               What's New in 2.2.0
 ******************************************************************************
 
