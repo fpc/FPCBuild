@@ -11,6 +11,11 @@ Free Pascal 2.2.0 contain many bug-fixes and new features. The work on this
 release started since beginning of 2008 in the purpose of improving the release
 2.2.0.
 
+- Documentation was updated completely to conform to the actual state of the
+  compiler and RTL.
+- Possible CodeGear Copyright infringements in the source were reworked
+  using cleanroom approach.
+
 Please refer to http://wiki.freepascal.org/User_Changes_2.2.2 for an exhaustive
 list of changes.
 
