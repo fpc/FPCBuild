@@ -2217,6 +2217,7 @@ renametoshort:
 	-mv $(PKGUNITSPRE)fpmkunit$(ZIPSUFFIX).zip ufpmk$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)os2units$(ZIPSUFFIX).zip uos2$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)libgd$(ZIPSUFFIX).zip ulgd$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGUNITSPRE)fcl-res$(ZIPSUFFIX).zip ufcle$(ZIPSUFFIXSHORT).zip
 shortsrc:
 	$(MAKE) renametoshort ZIPSUFFIX=$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
 shortbin:
