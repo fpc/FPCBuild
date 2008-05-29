@@ -68,7 +68,7 @@ help:
         @$(ECHO)    deb       Build linux .deb packages
         @$(ECHO)    inno      "Build Windows (Innosetup) based installer"
         @$(ECHO)    innox64   "Build Win32-Win64 cross compiler installer"
-        @$(ECHO)    innoce    "Build Win32-Wince cross compiler installer" 
+        @$(ECHO)    innoce    "Build Win32-Wince cross compiler installer"
         @$(ECHO)    tar       Build .tar installer
         @$(ECHO)
         @$(ECHO) FV based installer Targets:
@@ -348,43 +348,10 @@ shortbin:
 
 shortnames: shortsrc shortbin
 
-
-##########################################################################
-# Win32, Go32v2, OS/2
-##########################################################################
-
-.PHONY: dist
-
-dist:
-        $(MAKE) sourcezip
-        $(MAKE) demozip
-        $(MAKE) zipinstall
-ifneq ($(findstring $(OS_TARGET),$(LIMIT83fs)),)
-        $(MAKE) shortnames
-endif
-
-##########################################################################
-# Debian
-##########################################################################
-
-ifeq ($(OS_TARGET),linux)
-
-ifndef DEBDIR
-DEBDIR=${CVSINSTALL}/debian
-endif
-
 # Build dir
 ifndef BUILDDIR
 BUILDDIR=$(BASEDIR)/build
 endif
-
-ifneq ($(wildcard ${DEBDIR}/changelog),)
-
-.PHONY: debcopy deb
-
-DEBPACKAGEVERSION:=$(shell head -n 1 ${DEBDIR}/changelog | awk '{ print $$2 }' | tr -d '[()]')
-DEBFPCVERSION:=$(shell echo $(DEBPACKAGEVERSION) | awk -F '-' '{ print $$1 }')
-DEBSRCDIR:=$(BUILDDIR)/fpc-$(DEBFPCVERSION)
 
 #
 # Automatic detection if libgdb.a is present (logic copied from ide/Makefile.fpc)
@@ -417,6 +384,39 @@ $(error No libgdb.a found, supply NOGDB=1 to disable debugger support)
 endif
 
 endif  #NOGDB
+
+
+##########################################################################
+# Win32, Go32v2, OS/2
+##########################################################################
+
+.PHONY: dist
+
+dist:
+        $(MAKE) sourcezip
+        $(MAKE) demozip
+        $(MAKE) zipinstall
+ifneq ($(findstring $(OS_TARGET),$(LIMIT83fs)),)
+        $(MAKE) shortnames
+endif
+
+##########################################################################
+# Debian
+##########################################################################
+
+ifeq ($(OS_TARGET),linux)
+
+ifndef DEBDIR
+DEBDIR=${CVSINSTALL}/debian
+endif
+
+ifneq ($(wildcard ${DEBDIR}/changelog),)
+
+.PHONY: debcopy deb
+
+DEBPACKAGEVERSION:=$(shell head -n 1 ${DEBDIR}/changelog | awk '{ print $$2 }' | tr -d '[()]')
+DEBFPCVERSION:=$(shell echo $(DEBPACKAGEVERSION) | awk -F '-' '{ print $$1 }')
+DEBSRCDIR:=$(BUILDDIR)/fpc-$(DEBFPCVERSION)
 
 PACKAGEVERSION=$(shell dpkg-parsechangelog -l${DEBDIR}/changelog | sed -ne's,^Version: \(.*\),\1,p')
 FPCVERSION=$(shell echo ${PACKAGEVERSION} | awk -F '-' '{ print $$1 }')
@@ -582,7 +582,7 @@ INNODIR=$(BUILDDIR)/inno
 INNOWRAPPER=$(subst /,$(PATHSEP),$(DIST_DESTDIR)/fpcinno$(SRCBATCHEXT))
 INNOCMD_CDINNO:=cd $(subst /,$(ZIPPATHSEP),$(INNODIR))
 INNOCMD_CDBASE:=cd $(subst /,$(ZIPPATHSEP),$(BASEDIR))
-INNOCMD_ISCC:="$(ISCCPROG)" $(INNODIR)/fpc.iss
+INNOCMD_ISCC:="$(ISCCPROG)" "$(subst /,$(PATHSEP),$(INNODIR)/fpc.iss)"
 FPCISSSUBST=-d BUILDDIR=$(subst /,$(PATHSEP),$(INNODIR))
 ifdef NODOCS
 FPCISSSUBST+=-d DisableDocs=;
@@ -643,11 +643,11 @@ innoclean:
         $(DELTREE) $(INNODIR)
 
 innoce : checkfpcdir
-	$(MAKE) OS_TARGET=wince CPU_TARGET=arm innocebuild
+	$(MAKE) OS_TARGET=wince CPU_TARGET=arm innocebuild NOGDB=1
         $(MAKE) innoclean	
 
 innox64 : checkfpcdir
-	$(MAKE) OS_TARGET=win64 CPU_TARGET=x86_64 innox64build
+	$(MAKE) OS_TARGET=win64 CPU_TARGET=x86_64 innox64build NOGDB=1
         $(MAKE) innoclean	
 
 inno: checkfpcdir innobuild innoclean
