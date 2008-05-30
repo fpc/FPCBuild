@@ -210,10 +210,14 @@ docsrc:
 .PHONY: demozip
 
 # We don't want the package name fpc in the path
+ifeq ($(MAKEPACK),)
 ifdef UNIXHier
 DEMOSOURCEDIR=$(INSTALL_DOCDIR)/../demo
 else
 DEMOSOURCEDIR=$(INSTALL_PREFIX)/demo
+endif
+else
+DEMOSOURCEDIR=$(PACKDIR)
 endif
 
 demosrcinstall:

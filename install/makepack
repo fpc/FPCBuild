@@ -102,7 +102,7 @@ if [ "$CROSS" = "" ]; then
       fi
     fi
   fi
-  ${MAKE}  demozip CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS FPC_VERSION=$VERSION
+  ${MAKE}  demozip CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS FPC_VERSION=$VERSION MAKEPACK=1
   if [ $? != 0 ]; then
     echo "Failed to make demo source archive."
     exit 1
