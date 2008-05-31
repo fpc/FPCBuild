@@ -7,7 +7,7 @@
 set -e
 
 # Set this to "yes" if you want to force making the documentation.
-# if it is not equal to yes, the documentation is assumed present in a file fpcdoc.tar.gz
+# if it is not equal to yes, the documentation is assumed present in a file doc-pdf.tar.gz
 MAKEDOCS=no
 
 # Set this to "no" if you want don't want to check for libgdb.a
