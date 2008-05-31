@@ -51,15 +51,16 @@ PPNEW=$(PPPRE)$(PPSUF)
 FPC=
 FPCDIR=
 # Get Package version and FPC version out of changelog file
-FPCVERSION:=$(shell dpkg-parsechangelog | sed -ne's,^Version: \([0-9.]*\).*,\1,p')
+FPCMAINVERSION:=$(shell dpkg-parsechangelog | sed -ne's,^Version: \([0-9.]*\).*,\1,p')
+FPCFULLVERSION:=$(shell dpkg-parsechangelog | sed -ne's,^Version: \([0-9.rc]*\).*,\1,p')
 FPCTARGET=$(CPU_TARGET)-linux
 # Get directories
 CURDIR:=$(shell pwd)
 BUILD_DIR=$(CURDIR)/debian/build
 INSTALL_DIR=$(CURDIR)/debian/tmp
 DOC_DIR=$(INSTALL_DIR)/usr/share/doc
-EXAMPLE_TEMP=$(DOC_DIR)/fpc-$(FPCVERSION)
-SRC_DIR=$(INSTALL_DIR)/usr/share/fpcsrc/${FPCVERSION}
+EXAMPLE_TEMP=$(DOC_DIR)/fpc-$(FPCMAINVERSION)
+SRC_DIR=$(INSTALL_DIR)/usr/share/fpcsrc/${FPCMAINVERSION}
 # Get utils
 NEWPP=$(CURDIR)/fpcsrc/compiler/$(PPNEW)
 NEWFPDOC=$(CURDIR)/fpcsrc/utils/fpdoc/fpdoc
@@ -168,7 +169,7 @@ install-arch-stamp: build-arch-stamp debian-files-stamp
 	$(MAKE) -C install/doc installdoc $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-compiler
 # Create fpc.cfg which is included as conffile
 	/bin/bash fpcsrc/compiler/utils/samplecfg \
-		/usr/lib/fpc/$(FPCVERSION) $(INSTALL_DIR)/etc
+		/usr/lib/fpc/$(FPCFULLVERSION) $(INSTALL_DIR)/etc
 	install -D debian/fpc-depends debian/tmp/usr/bin/
 #	set -x; for PACKAGE in fp-compiler fp-units-gfx fp-units-net fp-utils; do \
 #	  install -m644 -D debian/overrides/$$PACKAGE                             \

@@ -20,6 +20,8 @@ else
   SVN=svn
 fi
 
+#set LANG to C to avoid localization issues
+export LANG='C'
 # Decode SVN URL from current fpcbuild URL
 FPCBUILDURL=`svn info . | grep URL | grep fpcbuild`
 if [ $? -ne 0 ]; then

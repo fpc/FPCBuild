@@ -12,7 +12,7 @@ if [ $# != 3 ]; then
 fi
 
 PACKAGEVERSION=`dpkg-parsechangelog | sed -ne's,^Version: \(.*\),\1,p'`
-FPCVERSION=`echo $PACKAGEVERSION | awk -F '-' '{ print $1 }'`
+FPCVERSION=`echo $PACKAGEVERSION | sed -ne's,^\([0-9.]*\).*,\1,p'`
 DEBVERSION=`echo $PACKAGEVERSION | awk -F '-' '{ print $NF }'`
 FPCSVNPATH=`echo $FPCVERSION | awk -F '.' '{ print "release_"$1"_"$2"_"$3 }'`
 FPCTARGET="$2"
