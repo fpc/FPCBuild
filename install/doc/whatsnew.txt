@@ -1,28 +1,28 @@
 
                             Free Pascal Compiler
 
-                                Version 2.2.0
+                                Version 2.2.2
 
 ******************************************************************************
                               What's New in 2.2.2
 ******************************************************************************
 
 Free Pascal 2.2.2 contains many bug-fixes and some new features. The 
-work on this release started since beginning of 2008 in the purpose of 
-improving the release 2.2.0.
+main purpose of this release is to fix problems reported with FPC 2.2.0,
+and to remove all potentially tainted code from our source code base.
 
 Please also see http://wiki.freepascal.org/User_Changes_2.2.2 for a list
 of changes which may affect the behaviour of previously working code, and
 how to cope with these changes.
 
-Some other highlights are:
+Some highlights are:
 
 All:
   *  All code potentially infringing on CodeGear copyrighted code has been
      reimplemented using a cleanroom approach.
 
 Platforms:
-  * Incompatibilities with Mac OS X 10.5.x new default linker have been
+  * Incompatibilities with Mac OS X 10.5's new default linker have been
     resolved.
 
 Compiler:
@@ -51,7 +51,7 @@ Documentation
      state of the compiler and RTL.
 
 See http://bugs.freepascal.org/changelog_page.php for the list of reported
-bugs which has been fixed in this release.
+bugs which have been fixed in this release.
 
 
 ******************************************************************************
