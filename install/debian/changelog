@@ -1,11 +1,11 @@
-fpc (2.2.1rc1-0) unstable; urgency=low
+fpc (2.2.2rc1-0) unstable; urgency=low
 
   * Documentation was updated completely to conform to the actual state of the
     compiler and RTL.
   * Possible CodeGear Copyright infringements in the source were reworked
     using cleanroom approach.
 
- -- Mazen Neifer <mazen@freepascal.org>  Fri, 09 May 2008 10:20:48 +0200
+ -- Mazen Neifer <mazen@freepascal.org>  Sun, 01 Jun 2008 00:02:32 +0200
 
 fpc (2.2.0-dfsg1-8) unstable; urgency=low
 
