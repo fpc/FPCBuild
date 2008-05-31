@@ -1,23 +1,58 @@
 
                             Free Pascal Compiler
 
-                                Version 2.2.0
+                                Version 2.2.2
 
 ******************************************************************************
                               What's New in 2.2.2
 ******************************************************************************
 
-Free Pascal 2.2.0 contain many bug-fixes and new features. The work on this
-release started since beginning of 2008 in the purpose of improving the release
-2.2.0.
+Free Pascal 2.2.2 contains many bug-fixes and some new features. The 
+main purpose of this release is to fix problems reported with FPC 2.2.0,
+and to remove all potentially tainted code from our source code base.
 
-- Documentation was updated completely to conform to the actual state of the
-  compiler and RTL.
-- Possible CodeGear Copyright infringements in the source were reworked
-  using cleanroom approach.
+Please also see http://wiki.freepascal.org/User_Changes_2.2.2 for a list
+of changes which may affect the behaviour of previously working code, and
+how to cope with these changes.
 
-Please refer to http://wiki.freepascal.org/User_Changes_2.2.2 for an exhaustive
-list of changes.
+Some highlights are:
+
+All:
+  *  All code potentially infringing on CodeGear copyrighted code has been
+     reimplemented using a cleanroom approach.
+
+Platforms:
+  * Incompatibilities with Mac OS X 10.5's new default linker have been
+    resolved.
+
+Compiler:
+  * PIC support for Mac OS X (on by default, disable with -Cg-)
+  * several bugs in the experimental generics support have been fixed,
+    but this feature is still in beta
+  * initialisation and finalisation of shared libraries has been fixed
+    for all Darwin platforms, and for Linux/i386
+  * support for {$packset x} directive to enable set packing
+    (use {$packset 1} for Delphi-compatible sets, but note that the
+     format is different on little and big endian platforms)
+
+RTL:
+  * thread resource leaking under unix has been fixed
+  * the widestring manager for unix has been completed
+  * several floating point to string conversion errors have been fixed
+  * significantly improved variant support
+
+Packages:
+  * the Windows API interface units have been significantly updated
+  * Apple universal interfaces updated to r234 of the common FPC/GPC/MW
+    interfaces
+
+Documentation
+  *  Documentation was updated completely to conform to the actual
+     state of the compiler and RTL.
+
+See http://bugs.freepascal.org/changelog_page.php for the list of reported
+bugs which have been fixed in this release.
+
 
 ******************************************************************************
                               What's New in 2.2.0
