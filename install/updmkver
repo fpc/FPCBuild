@@ -2,15 +2,21 @@
 
 set -e
 
-if [ $# -ne 1 ]; then
+if [[ $# -lt 1 ]] || [[ $# -gt 2 ]]
+then
   echo "Usage: $0 <version>"
   exit 1
 fi
 
-makefiles=`find . -name Makefile.fpc`
+NEWVER="$1"
+if [[ $# -eq 1 ]]
+then
+	FPCMAKE=`which fpcmake`
+else
+	FPCMAKE="$2"
+fi
 
-for f in $makefiles; do
-  sed s+version=[0-9\.]*$+version=$1+ $f > $f.tmp
-  mv $f.tmp $f
-  fpcmake -Tall $f
-done
+find -name Makefile.fpc\
+	-exec sed -i -e 's/^version=.*/version='"${NEWVER}"'/' '{}' ';'\
+	-exec "${FPCMAKE}" -q -Tall '{}' ';'
+
