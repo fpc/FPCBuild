@@ -2161,13 +2161,9 @@ sourcebase:
 	$(MKDIR) $(INSTALL_BASESOURCEDIR)
 	$(MKDIR) $(INSTALL_BASESOURCEDIR)/rtl
 	$(MKDIR) $(INSTALL_BASESOURCEDIR)/packages
-	$(MKDIR) $(INSTALL_BASESOURCEDIR)/packages/base
-	$(MKDIR) $(INSTALL_BASESOURCEDIR)/packages/extra
 	$(COPY) fpcsrc/Makefile*  $(INSTALL_BASESOURCEDIR)
 	$(COPY) fpcsrc/rtl/Makefile* $(INSTALL_BASESOURCEDIR)/rtl
 	$(COPY) fpcsrc/packages/Makefile* $(INSTALL_BASESOURCEDIR)/packages
-	$(COPY) fpcsrc/packages/base/Makefile* $(INSTALL_BASESOURCEDIR)/packages/base
-	$(COPY) fpcsrc/packages/extra/Makefile* $(INSTALL_BASESOURCEDIR)/packages/extra
 sourcezip:
 	$(MAKE) fpc_zipinstall ZIPTARGET=sourcebase ZIPNAME=base ZIPSUFFIX=$(ZIPSOURCESUFFIX)
 	$(MAKE) -C fpcsrc compiler_zipsourceinstall
