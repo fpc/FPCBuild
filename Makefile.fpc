@@ -385,6 +385,30 @@ endif  #NOGDB
 
 
 ##########################################################################
+# Utilities (asld*.zip, make*.zip, gdb*.zip) for go32v2 and possibly os2
+##########################################################################
+.PHONY: utilities zip_util copy_utilfiles
+
+UTILS_OUTDIR=$(INSTALL_PREFIX)/bin/$(TARGETSUFFIX)
+ifeq ($(OS_TARGET),go32v2)
+UTILS_BINSUFFIX=go32
+else
+UTILS_BINSUFFIX=$(SHORTSUFFIX)
+endif
+
+copy_utilfiles:
+	$(MKDIRTREE) $(UTILS_OUTDIR)
+	$(COPY) $(CVSINSTALL)/bin$(UTILS_BINSUFFIX)/$(UTILNAME)$(SHORTSUFFIX)/* $(UTILS_OUTDIR)
+
+zip_util:
+	$(MAKE) fpc_zipinstall ZIPTARGET=copy_utilfiles ZIPNAME=$(UTILNAME)
+
+utilities:
+	$(MAKE) zip_util UTILNAME=asld
+	$(MAKE) zip_util UTILNAME=make
+	$(MAKE) zip_util UTILNAME=gdb
+
+##########################################################################
 # Win32, Go32v2, OS/2
 ##########################################################################
 
