@@ -2304,7 +2304,7 @@ endif
 	$(LINKTREE) demo $(DEBSRCDIR)
 	$(LINKTREE) logs $(DEBSRCDIR)
 ifndef NOGDB
-	$(LINKTREE) $(LIBGDBDIR) $(DEBSRCDIR)
+	$(LINKTREE) $(LIBGDBDIR) $(DEBSRCDIR)/fpcsrc
 endif
 ifndef NODOCS
 	$(LINKTREE) fpcdocs $(DEBSRCDIR)
