@@ -38,7 +38,7 @@ Files from GNU make 3.79.1 (djgpp 2.03). Original file: mak3791b.zip
  * make.exe
 Files from Info-ZIP's Zip 2.32. Original file: zip232x.zip
  * zip.exe
-Files from UPX 1.25. Original file: upx125d.zip
+Files from UPX 3.03. Original file: upx303d.zip
  * upx.exe
 
 gdbdos:
