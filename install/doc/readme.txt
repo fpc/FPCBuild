@@ -11,9 +11,9 @@ Please also read the platform specific README file, if it exists.
 
 
 This package contains an advanced freeware 32-bit/64-bit pascal compiler for
-several platforms. The language and the runtime library are almost compatible
-with Turbo Pascal 7.0 and recent Delphi releases. There is also partial
-support for the Macintosh pascal dialect.
+several platforms. The language and the runtime library are almost
+compatible with Turbo Pascal 7.0 and recent Delphi releases. There is also
+partial support for the Macintosh pascal dialect.
 
 Free Pascal 2.2.2 is currently available for the following platforms:
 - Linux-i386
@@ -27,13 +27,13 @@ Free Pascal 2.2.2 is currently available for the following platforms:
 - FreeBSD-i386
 - Mac OS X/Darwin for PowerPC
 - Mac OS X/Darwin for Intel (i386)
+- GO32v2-i386
 
 The following platforms were not release-ready at the moment of the release
 but they might follow later:
 - OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 - Netware-i386
 - NetwLibc-i386 (LibC is preferred API under newer Netware versions)
-- go32v2-i386
 
 There are other platforms (like other BSD variants) which are more or less
 working, but there is currently no maintainer for them and thus we cannot
@@ -85,12 +85,12 @@ e-mail addresses are listed below.
 - support for the GNU debugger
 - integrated development environment (disabled by default on Mac OS X)
   - powerfull user friendly Wordstar compatible multi file editor
-  - context sensitive help supports help files in HTML, Windows HLP and Borland
-    TPH format.
+  - context sensitive help supports help files in HTML, Windows HLP and
+    Borland TPH format.
   - debugger on most platforms
 - can create binaries running natively under both DOS and OS/2 (EMX version)
-- no need for Linux distribution specific binaries, programs you write run on
-  all distributions
+- no need for Linux distribution specific binaries, programs you write run
+  on all distributions
 - high quality documentation
 
 
@@ -137,7 +137,7 @@ and type
 * Quick start - DOS
 ****************************************************************************
 
-Download distribution archive (dos220.zip for GO32v2) and unzip it into
+Download distribution archive (dos222.zip for GO32v2) and unzip it into
 a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -160,7 +160,7 @@ and type
 * Quick start - OS/2 / eComStation
 ****************************************************************************
 
-Download distribution archive (os2220.zip for OS/2 or eComStation) and unzip
+Download distribution archive (os2222.zip for OS/2 or eComStation) and unzip
 it into a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -305,14 +305,15 @@ SNAPSHOTS & SOURCES
 -------------------
 One of the features of FPC is the snapshots. These are made daily or weekly
 from the developers' latest versions of the source. Snapshots are available
-for GO32v2, Win32, OS/2, Linux and Netware versions. The latest snapshots
-are in: ftp://ftp.freepascal.org/fpc/snapshot/ in appropriately named
-.zip/tar files.
+for GO32v2, Win32, OS/2 and Linux versions. The latest snapshots are in:
+ftp://ftp.freepascal.org/fpc/snapshot/ in appropriately named .zip/tar
+files.
 
 You will also normally find in the snapshot archive file a readme, with
-a note about the latest included changes. It is quite common, though it doesn't
-always happen, that when a bug is reported it is fixed and a fixed version
-can be obtained the NEXT day in the appropriate snapshot.... yes really!
+a note about the latest included changes. It is quite common, though it
+doesn't always happen, that when a bug is reported it is fixed and a fixed
+version can be obtained the NEXT day in the appropriate snapshot.... yes
+really!
 
 Also on the ftp site you'll find a /dist directory, with the latest
 distributed releases, a /docs directory, and a /source directory, in
