@@ -40,6 +40,11 @@ RTL:
   * the widestring manager for unix has been completed
   * several floating point to string conversion errors have been fixed
   * significantly improved variant support
+  * implementation of RTL exception handler for OS/2 allowing proper
+    translation of some runtime errors
+  * various fixes for GO32v2 improving useability of this target
+  * OS/2 RTL enhanced to allow seamless working with large files (64-bit
+    file system API calls) where available (WSeB/MCP/eCS/Warp 4 with FP15)
 
 Packages:
   * the Windows API interface units have been significantly updated
