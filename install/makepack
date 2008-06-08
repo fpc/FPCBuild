@@ -23,7 +23,8 @@ unset FPCDIR
 [ -d install ] || cd ..
 
 # Retrieve version from fpcsrc/Makefile.fpc
-VERSION=`grep '^version' fpcsrc/Makefile.fpc | sed 's+[^=]*= *\(.*\)+\1+'`
+FULLVERSION=`grep '^version' fpcsrc/Makefile.fpc | sed 's+[^=]*= *\(.*\)+\1+'`
+VERSION=`grep '^version' fpcsrc/Makefile.fpc | sed 's+[^=]*= *\([0-9\.]*\).*+\1+'`
 
 # Retrieve current system info by calling FPC. We need
 # to use the | head -n1 to fix a bug in fpc 1.9.4 and earlier
