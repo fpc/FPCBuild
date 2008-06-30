@@ -1,0 +1,47 @@
+Directories aslddos, makedos and gdbdos contain the utilities that are delivered
+with the go32v2 release of fpc.
+
+The djgpp utilities come from the djggp distribution (http://www.delorie.com/djgpp),
+directory current/v2gnu.
+
+zip.exe comes from Info-ZIP's Zip (http://www.info-zip.org).
+
+upx.exe comes from UPX (http://upx.sourceforge.net/).
+
+aslddos:
+Files from GNU binutils 2.17 (djgpp 2.03). Original file: bnu217b.zip
+ * ar.exe
+ * as.exe
+ * ld.exe
+ * objdump.exe
+ * strip.exe
+
+makedos:
+Files from GNU diffutils 2.8.7 (djgpp 2.03). Original file: dif287b.zip
+ * diff.exe
+ * cmp.exe
+Files from GNU sh-utils 2.0.11 (djgpp 2.03). Original file: shl2011b.zip
+ * gdate.exe   (renamed from date.exe)
+ * gecho.exe   (renamed from echo.exe)
+ * pwd.exe
+Files from GNU fileutils 4.1 (djgpp 2.03). Original file: fil41b.zip
+ * cp.exe
+ * mv.exe
+ * ginstall.exe
+ * rm.exe
+ * gmkdir.exe  (renamed from mkdir.exe)
+Files from GNU grep 2.5.3 (djgpp 2.03). Original file: grep253b.zip
+ * grep.exe
+Files from GNU patch 2.5.9 (djgpp 2.03). Original file: pat259b.zip
+ * patch.exe
+Files from GNU make 3.79.1 (djgpp 2.03). Original file: mak3791b.zip
+ * make.exe
+Files from Info-ZIP's Zip 2.32. Original file: zip232x.zip
+ * zip.exe
+Files from UPX 3.03. Original file: upx303d.zip
+ * upx.exe
+
+gdbdos:
+Files from GNU gdb 6.1.1 (djgpp 2.03). Original file: gdb611b.zip
+ * gdb.exe
+
