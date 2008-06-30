@@ -357,7 +357,7 @@ The compiler and most utilities and executables distributed in this package
 fall under the GPL, for more information read the file COPYING.
 
 Some specific utilities and programs come under the license described in
-COPYING.DJ, COPYING.EMX and COPYING.RSX.
+COPYING.DJ, COPYING.EMX, COPYING.RSX, license.upx and licensez.ip.
 
 The documentation, unless otherwise noted, is distributed as free
 text, and is distributed under the GNU Library General Public
