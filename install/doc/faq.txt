@@ -952,8 +952,8 @@ function strcmp(s1 : pchar;s2 : pchar) : integer;cdecl;external;
             The  GNU  debugger  v4.16  and  later  have  been tested, and
             generally  work as they should. Because the GNU debugger is C
             oriented,  some pascal types might not be represented as they
-            should.  It  is  suggested to use gdbpas or the text mode IDE
-            instead of GDB, which are both available for the DOS target.
+            should.  It  is suggested to use the text mode IDE instead of
+            GDB, which is available for the DOS target.
          3. Dynamic Libraries
             Creation or use of shared libraries (also called dynamic link
             libraries) is not supported under this platform.
@@ -1042,8 +1042,8 @@ function strcmp(s1 : pchar;s2 : pchar) : integer;cdecl;external;
             The  GNU  debugger  v4.16  and  later  have  been tested, and
             generally  work as they should. Because the GNU debugger is C
             oriented,  some pascal types might not be represented as they
-            should.  It  is  suggested to use gdbpas or the text mode IDE
-            instead of GDB, which are both available for windows targets.
+            should.  It  is suggested to use the text mode IDE instead of
+            GDB, which is available for windows targets.
          3. Dynamic libraries
             Creation  and  use  of  shared libraries (also called dynamic
             link  libraries) is fully supported by the compiler. Refer to
