@@ -50,6 +50,7 @@ Packages:
   * the Windows API interface units have been significantly updated
   * Apple universal interfaces updated to r234 of the common FPC/GPC/MW
     interfaces
+  * New TRegexEngine class to parse regular expressions
 
 Documentation
   *  Documentation was updated completely to conform to the actual
