@@ -2089,7 +2089,7 @@ endif
 ifndef SNAPSHOT
 ifndef CROSSINSTALL
 	$(MKDIR) $(INSTALL_DOCDIR)
-	-$(COPY) $(addprefix $(CVSINSTALL)/doc/,*.txt copying* faq.*) $(INSTALL_DOCDIR)
+	-$(COPY) $(addprefix $(CVSINSTALL)/doc/,*.txt copying* license* faq.*) $(INSTALL_DOCDIR)
 ifeq ($(OS_TARGET),go32v2)
 	$(COPY) $(CVSINSTALL)/bingo32/*.dxe $(INSTALL_BINDIR)
 	$(COPY) $(CVSINSTALL)/bingo32/*.exe $(INSTALL_BINDIR)
