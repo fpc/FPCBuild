@@ -10,7 +10,7 @@ fi
 makefiles=`find . -name Makefile.fpc`
 
 for f in $makefiles; do
-  sed s+version=[0-9\.]*$+version=$1+ $f > $f.tmp
+  sed s+version=[rc0-9\.]*$+version=$1+ $f > $f.tmp
   mv $f.tmp $f
   fpcmake -Tall $f
 done
