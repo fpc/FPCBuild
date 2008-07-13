@@ -7,7 +7,7 @@
 set -e
 
 # Set this to "yes" if you want to force making the documentation.
-# if it is not equal to yes, the documentation is assumed present in a file fpcdoc.tar.gz
+# if it is not equal to yes, the documentation is assumed present in a file doc-pdf.tar.gz
 MAKEDOCS=no
 
 # Set this to "no" if you want don't want to check for libgdb.a
@@ -86,10 +86,12 @@ if [ "$CROSS" = "" ]; then
       echo "Libgdb ($GDBLIBDIR/libgdb.a) not found, aborting"
       exit 1
     fi
+  else
+    NOGDB=1
   fi
 fi
 
-# First check for fpcdoc.tar.gz before building anything
+# First check for doc-pdf.tar.gz before building anything
 if [ "$CROSS" = "" ]; then
   if [ ! -f doc-pdf.tar.gz ]; then
     if [ "$MAKEDOCS" != "yes" ]; then
