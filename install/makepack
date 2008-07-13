@@ -86,10 +86,12 @@ if [ "$CROSS" = "" ]; then
       echo "Libgdb ($GDBLIBDIR/libgdb.a) not found, aborting"
       exit 1
     fi
+  else
+    NOGDB=1
   fi
 fi
 
-# First check for fpcdoc.tar.gz before building anything
+# First check for doc-pdf.tar.gz before building anything
 if [ "$CROSS" = "" ]; then
   if [ ! -f doc-pdf.tar.gz ]; then
     if [ "$MAKEDOCS" != "yes" ]; then
