@@ -1,3 +1,8 @@
+fpc (2.2.2-0) unstable; urgency=low
+  * shlobj changes
+  * fix for wince library support
+  * fix for windows 64 bit support for >2GB memory
+  
 fpc (2.2.2rc1-0) unstable; urgency=low
 
   * Documentation was updated completely to conform to the actual state of the
