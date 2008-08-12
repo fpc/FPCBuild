@@ -107,7 +107,7 @@ OS/2:
    OS/2 Warp v4.0 with FP 5 and above, WSeB, MCP or any eComStation version
    (OS/2 2.0/2.1 currently not supported, not even for compiled programs)
 Linux:
- - system running a 2.2.x kernel
+ - system running a 2.4.x kernel
 FreeBSD:
 - FreeBSD 4.x system or 5.x system that has COMPAT_4 system (which is
   default)
