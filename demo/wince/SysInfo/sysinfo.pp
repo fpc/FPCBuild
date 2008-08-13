@@ -21,7 +21,7 @@ Program sysinfo;
 {$MODE DELPHI}
 {$PACKRECORDS C}
 
-Uses Strings, Windows, SysUtils, strutils;
+Uses Strings, Windows, SysUtils, strutils, aygshell;
 
 {$include appconst.inc}
 

@@ -22,28 +22,31 @@ program wcetemu;
 
 {$mode objfpc}
 
-uses Sysutils, w32rapi, windows;
+uses Sysutils, w32rapi, windows, IniFiles;
 
 
 {* const **********************************************************************}
 
 const
   SREMOTERUNPROG    = 'wcetrun.exe';
-  IBLOCKBUFFERSIZE  = 65535;
-  ISEEKWAITTEMPOMS  = 1000;
-  ISEEKRETRYMAX     = 180;
+  IBLOCKBUFFERSIZE  = 256*1024;
+  ISEEKWAITTEMPOMS  = 200;
+  ISEEKRETRYMAX     = 180000; // 180 seconds
 
 {* var ************************************************************************}
 var
-    SREMOTEEXEPATH   : string = '\fpctests';
+    SREMOTEEXEPATH   : widestring = '\fpctests';
     SLOCALLOGPATHFILE: string;
     flog             : Text;
     sTestExeName     : String;
     lRes,
-    lSeekFileCount   : Longint;
+    WaitTime         : cardinal;
     bExitCode        : Byte;
     RBLOCKBUFFER     : Array[1..IBLOCKBUFFERSIZE] of Byte;
     bFileFound       : boolean;
+    CopyFileToDevice : boolean = True;
+    LocalTestsRoot   : string;
+    RemoteRunner     : string;
 
 {* log ************************************************************************}
 procedure log(const csString: String; Error: boolean = False);
@@ -205,7 +208,7 @@ begin
     if (WaitForSingleObject(ri.heRapiInit, 10*1000) = WAIT_OBJECT_0) then
       res:=ri.hrRapiInit
     else
-      res:=E_FAIL;
+      res:=cardinal(E_FAIL);
   end;
   Result:=res = S_OK;
   if not Result then begin
@@ -220,7 +223,7 @@ procedure ProcessCmdLine;
 var
   i: integer;
   s: string;
-  
+
   function GetNextParam(HaltOnEnd: boolean): string;
   begin
     Inc(i);
@@ -235,6 +238,9 @@ var
       Result:=ParamStr(i);
   end;
   
+var
+  ini: TIniFile;
+  
 begin
  if ParamCount = 0 then begin
    writeln('Usage: ' + ExtractFileName(ParamStr(0)) + ' [-L <log_file>] [-R <remote_path>] <test_to_run>');
@@ -242,6 +248,19 @@ begin
    writeln('-R - path in Pocket PC device where <test_to_run> program will be copied.');
    writeln('     default path: ' + SREMOTEEXEPATH);
    Halt(1);
+ end;
+ 
+ s:=ChangeFileExt(ParamStr(0), '.ini');
+ if FileExists(s) then begin
+   ini:=TIniFile.Create(s);
+   try
+     SLOCALLOGPATHFILE:=ini.ReadString('Options', 'LogToFile', SLOCALLOGPATHFILE);
+     SREMOTEEXEPATH:=ini.ReadString('Options', 'RemotePath', SREMOTEEXEPATH);
+     CopyFileToDevice:=ini.ReadBool('Options', 'CopyFile', CopyFileToDevice);
+     LocalTestsRoot:=ini.ReadString('Options', 'LocalTestsRoot', LocalTestsRoot);
+   finally
+     ini.Free;
+   end;
  end;
  
  i:=0;
@@ -264,6 +283,13 @@ begin
        end;
  end;
  SREMOTEEXEPATH:=IncludeTrailingPathDelimiter(SREMOTEEXEPATH);
+ RemoteRunner:=SREMOTEEXEPATH + SREMOTERUNPROG;
+ if not CopyFileToDevice and (LocalTestsRoot<>'') then begin
+   s:=IncludeTrailingPathDelimiter(GetCurrentDir);
+   LocalTestsRoot:=IncludeTrailingPathDelimiter(LocalTestsRoot);
+   if AnsiCompareText(LocalTestsRoot, Copy(s, 1, Length(LocalTestsRoot))) = 0 then
+     SREMOTEEXEPATH:=IncludeTrailingPathDelimiter(SREMOTEEXEPATH + Copy(s, Length(LocalTestsRoot)+1, MaxInt));
+ end;
 end;
 
 {******************************************************************************}
@@ -285,22 +311,25 @@ begin
  try
    if not InitRapi then
      Halt(255);
-   //copy file
-   remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
-   log('remote copy "'+sTestExeName+'" to "'+SREMOTEEXEPATH+sTestExeName+'"');
-   lRes:=remotecopyto(sTestExeName, SREMOTEEXEPATH+sTestExeName);
-   if lRes<>0 then
-     Halt(255);  // source file not found
+   if CopyFileToDevice then begin
+     CeCreateDirectory(PWideChar(widestring(ExcludeTrailingPathDelimiter(SREMOTEEXEPATH))), nil);
+     remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
+     //copy file
+     log('remote copy "'+sTestExeName+'" to "'+SREMOTEEXEPATH+sTestExeName+'"');
+     lRes:=remotecopyto(sTestExeName, SREMOTEEXEPATH+sTestExeName);
+     if lRes<>0 then
+       Halt(255);  // source file not found
+   end;
 
    while True do begin
-     lRes:=remoterun(SREMOTEEXEPATH+SREMOTERUNPROG,'"'+SREMOTEEXEPATH+sTestExeName+'"');
+     lRes:=remoterun(RemoteRunner,'"'+SREMOTEEXEPATH+sTestExeName+'"');
      if lRes<>0 then begin
        // check exec stub file
-       if CeGetFileAttributes(PWideChar(widestring(SREMOTEEXEPATH+SREMOTERUNPROG))) <> -1  then begin
-         log('Unable to run "'+SREMOTEEXEPATH+SREMOTERUNPROG+'"', True);
+       if CeGetFileAttributes(PWideChar(widestring(RemoteRunner))) <> -1  then begin
+         log('Unable to run "'+RemoteRunner+'"', True);
          Halt(255);
        end;
-       if remotecopyto(ExtractFilePath(ParamStr(0)) + SREMOTERUNPROG, SREMOTEEXEPATH+SREMOTERUNPROG) <> 0 then
+       if remotecopyto(ExtractFilePath(ParamStr(0)) + SREMOTERUNPROG, RemoteRunner) <> 0 then
          Halt(255);  // exec stub file not found
      end
      else
@@ -309,34 +338,37 @@ begin
 
    // waiting for result file creation (waitforsingleobject and getexitcodprocess not available with rapi)
    log('Waiting for result file...');
-   lSeekFileCount:=ISEEKRETRYMAX;
+   WaitTime:=GetTickCount;
    bFileFound:=False;
-   for lSeekFileCount:=1 to ISEEKRETRYMAX do
+   repeat
      if CeGetFileAttributes(PWideChar(widestring(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext')))) <> -1  then begin
        bFileFound:=True;
        break;
      end
      else
        Sleep(ISEEKWAITTEMPOMS);
+   until GetTickCount - WaitTime >= ISEEKRETRYMAX;
 
    if bFileFound then begin
      // reading result file
+     WaitTime:=GetTickCount;
      bFileFound:=False;
-     for lSeekFileCount:=1 to 30 do begin
+     repeat
        log('remote read exitcode"'+SREMOTEEXEPATH+sTestExeName+'"');
        lRes:=remotereadexitcode(SREMOTEEXEPATH+sTestExeName, bExitCode);
        bFileFound:=(lRes=0);
        if bFileFound then begin
-         remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
+         if CopyFileToDevice then
+           remotedelete(ChangeFileExt(SREMOTEEXEPATH+sTestExeName, '.ext'));
          break;
        end;
-       log('sleeping '+IntToStr(ISEEKWAITTEMPOMS));
        Sleep(ISEEKWAITTEMPOMS);
-     end;
+     until GetTickCount - WaitTime >= 30000;
    end;
    
    // deleting remote file
-   remotedelete(SREMOTEEXEPATH+sTestExeName);
+   if CopyFileToDevice then
+     remotedelete(SREMOTEEXEPATH+sTestExeName);
 
    CeRapiUninit;
    

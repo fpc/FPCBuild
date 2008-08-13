@@ -59,7 +59,7 @@ Var
   HWindow,HStatus,HEdit : HWnd;
   TheFont               : HFont;
   TheLogFont            : TLogFont;
-  TheColor              : DWORD;
+  TheColor              : COLORREF;
   FileName              : TFileName;
 
 {********************************************************************}
@@ -294,7 +294,7 @@ Begin
       End;
     wm_CtlColorEdit :
       Begin
-        SetTextColor(WParam,TheColor);
+        SetTextColor(HDC(WParam),TheColor);
         Exit(GetSysColorBrush(COLOR_WINDOW));
       End;
   End;

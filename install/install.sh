@@ -160,7 +160,7 @@ installbinary ()
     listtarfiles $BINARYTAR packages units
     for f in $packages
     do
-      if echo "$f" | grep -o fcl > /dev/null ; then
+      if echo "$f" | grep -q fcl > /dev/null ; then
         p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
 	echo "Installing $p"
         unztarfromtar $BINARYTAR $f $PREFIX
@@ -171,7 +171,7 @@ installbinary ()
     listtarfiles $BINARYTAR packages units
     for f in $packages
     do
-      if ! echo "$f" | grep -o fcl > /dev/null ; then
+      if ! echo "$f" | grep -q fcl > /dev/null ; then
         p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
 	echo "Installing $p"
         unztarfromtar $BINARYTAR $f $PREFIX
