@@ -24,8 +24,8 @@ function move_examples()
             else
                 mv -v -f "${EXAMPLE_TEMP_DIR}" "${EXAMPLE_INSTALL_DIR}"
                 rmdir $EXAMPLE_TEMP/$package
-		# Remove empty directories:
-		rmdir --ignore-fail-on-non-empty "${EXAMPLE_INSTALL_DIR}"
+                # Remove empty directories:
+                rmdir --ignore-fail-on-non-empty "${EXAMPLE_INSTALL_DIR}"
             fi
         fi
     done

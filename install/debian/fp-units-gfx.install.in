@@ -1,5 +1,4 @@
 /usr/share/doc/fp-units-gfx
-
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/opengl
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/xforms
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/svgalib

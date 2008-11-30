@@ -1,0 +1,2 @@
+# The name of the unit is dbus not D-Bus.
+fp-units-net binary: spelling-error-in-description dbus D-Bus
