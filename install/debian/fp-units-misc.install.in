@@ -4,6 +4,8 @@
 /usr/bin/chmls
 
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/chm
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/iconvenc
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libxml2
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/utmp
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/pthreads
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/zlib
