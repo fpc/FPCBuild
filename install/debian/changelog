@@ -1,11 +1,90 @@
-fpc (2.2.2rc1-0) unstable; urgency=low
+fpc (2.2.3-0) unstable; urgency=low
 
   * Documentation was updated completely to conform to the actual state of the
     compiler and RTL.
   * Possible CodeGear Copyright infringements in the source were reworked
     using cleanroom approach.
 
- -- Mazen Neifer <mazen@freepascal.org>  Sun, 01 Jun 2008 00:02:32 +0200
+ -- Mazen Neifer <mazen@freepascal.org>  Fri, 02 Nov 2008 17:23:48 +0100
+
+fpc (2.2.2-5) unstable; urgency=low
+
+  * Added missing man pages to remove linitian warnings.
+  * Fixed bug in clean-patched target causing configuration files to be removed
+    before arch independent packages are build.
+  * Updated description of fp-docs package. (Closes: Bug#506065)
+    customizations.
+  * Fixed dependencies in rules file speeding package generation by avoiding
+    rebuilding binaries up to four times.
+
+ -- Mazen Neifer <mazen@freepascal.org>  Thu, 18 Nov 2008 16:50:00 +0100
+
+fpc (2.2.2-4) unstable; urgency=low
+
+  [ Torsten Werner ]
+  * Update ABI version in fpc-depends automatically.
+  * Remove empty directories from binary package fpc-source.
+
+  [ Mazen Neifer ]
+  * Removed leading path when calling update-alternatives to remove a Linitian
+    error.
+  * Fixed clean target.
+  * Improved description of packages. (Closes: #498882)
+
+ -- Mazen Neifer <mazen@freepascal.org>  Thu, 09 Oct 2008 23:29:00 +0200
+
+fpc (2.2.2-3) unstable; urgency=low
+
+  * Add *.fpc files to the binary package fpc-source.
+
+ -- Torsten Werner <twerner@debian.org>  Wed, 20 Aug 2008 01:07:06 +0200
+
+fpc (2.2.2-2) unstable; urgency=low
+
+  * Add patch manpages.diff that fixes various errors in the man pages.
+  * Switch from dpatch to quilt.
+  * Yak shaving to make lintian happy: remove unneeded files from binary
+    package fpc-source.
+  * Fix Provides: field of fp-unit-rtl.
+
+ -- Torsten Werner <twerner@debian.org>  Sun, 17 Aug 2008 15:10:22 +0200
+
+fpc (2.2.2-1) unstable; urgency=low
+
+  [ Mazen Neifer ]
+  * new upstream release
+    - shlobj changes
+    - fix for wince library support
+    - fix for windows 64 bit support for >2GB memory
+    - Documentation was updated completely to conform to the actual state of
+      the compiler and RTL.
+    - Possible CodeGear Copyright infringements in the source were reworked
+      using cleanroom approach.
+  * Remove all patches that are now obsolete.
+
+  [ Torsten Werner ]
+  * Bump up Standards-Version: 3.8.0 (no changes needed).
+  * Do not install extra license files.
+  * Fix some other lintian warnings.
+
+ -- Torsten Werner <twerner@debian.org>  Tue, 12 Aug 2008 16:55:14 +0200
+
+fpc (2.2.0-dfsg1-9) unstable; urgency=low
+
+  [ Torsten Werner ]
+  * Add Mazen Neifer to Uploaders field.
+
+  [ Mazen Neifer ]
+  * Moved FPC sources into a version dependent directory from /usr/share/fpcsrc
+    to /usr/share/fpcsrc/${FPCVERSION}. This allow installing more than on FPC
+    release.
+  * Fixed far call issue in compiler preventing building huge binearies.
+    (closes: #477743)
+  * Updated building dependencies, recomennded and suggested packages.
+  * Moved fppkg to fp-utils as it is just a helper tool and is not required by
+    compiler.
+
+ -- Mazen Neifer <mazen@freepascal.org>  Sat, 17 May 2008 17:12:11 +0200
 
 fpc (2.2.0-dfsg1-8) unstable; urgency=low
 

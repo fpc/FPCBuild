@@ -1,0 +1,2 @@
+# Free pascal binaries are often statically linked.
+fp-utils binary: statically-linked-binary

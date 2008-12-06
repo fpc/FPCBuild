@@ -474,9 +474,7 @@ endif
 ifndef NOGDB
 	$(LINKTREE) $(LIBGDBDIR) $(DEBSRCDIR)/fpcsrc
 endif
-ifndef NODOCS
 	$(LINKTREE) fpcdocs $(DEBSRCDIR)
-endif
 	${MKDIR} $(DEBSRCDIR)/install
 	$(LINKTREE) install/man $(DEBSRCDIR)/install
 	$(LINKTREE) install/doc $(DEBSRCDIR)/install

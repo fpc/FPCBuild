@@ -44,12 +44,9 @@ If you use this program, your package must build-depend on fp-compiler
 
 init ();
 
-# The current fpc version
-my $version = '2.2';
-
 foreach my $package (@{$dh{DOPACKAGES}}) {
   delsubstvar($package, "fpc-abi:Depends");
-  addsubstvar($package, "fpc-abi:Depends", "fpc-abi-$version");
+  addsubstvar($package, "fpc-abi:Depends", "fpc-abi-%{fpcversion}");
 }
 
 =head1 SEE ALSO
