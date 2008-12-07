@@ -25,7 +25,7 @@ rm -rf buildsrc
 mkdir buildsrc
 cd buildsrc
 
-svn co http://svn.freepascal.org/svn/fpcbuild/$SVNPATH fpcbuild-$VERSION
+svn export http://svn.freepascal.org/svn/fpcbuild/$SVNPATH fpcbuild-$VERSION
 
 #find -name .svn -type d | xargs tar --remove-files -cvf $OUTPUTDIR/SVNfiles-$VERSION.tar.gz 
 
