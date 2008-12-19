@@ -2,28 +2,35 @@
 
 set -e
 
-if [ $# -ne 1 ]; then
-  echo "Usage: makefpcbuild <release>"
+if [ $# -eq 1 ]; then
+  VERSION=$1
+  SVNTAGVER=`echo $VERSION | tr '.' '_'`
+  SVNPATH="tags/release_$SVNTAGVER"
+elif [ $# -eq 3 ] && [ $1 = "-svnpath" ]; then
+  SVNPATH=$2
+  VERSION=$3
+else
+  echo "Usage: makefpcbuild [-svnpath <svnpath>] <release>"
+  echo "Examples: makefpcbuild -svnpath branches/fixes_2_2 2.2.3"
+  echo "          makefpcbuild 2.2.4"
   exit 1
 fi
 
-SVNTAGVER=`echo $1 | tr '.' '_'`
-SVNPATH="release_$SVNTAGVER"
 
-PACKNAME=fpcbuild-$1
+PACKNAME=fpcbuild-$VERSION
 OUTPUTDIR=..
 
 rm -rf buildsrc
 
 mkdir buildsrc
 cd buildsrc
-svn co http://svn.freepascal.org/svn/fpcbuild/tags/$SVNPATH fpcbuild
-svn export fpcbuild fpcbuild-$1
 
-#find -name .svn -type d | xargs tar --remove-files -cvf $OUTPUTDIR/SVNfiles-$1.tar.gz 
+svn export http://svn.freepascal.org/svn/fpcbuild/$SVNPATH fpcbuild-$VERSION
+
+#find -name .svn -type d | xargs tar --remove-files -cvf $OUTPUTDIR/SVNfiles-$VERSION.tar.gz 
 
 rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
-zip -D9r $OUTPUTDIR/$PACKNAME.zip fpcbuild-$1
-tar cfv - fpcbuild-$1/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
+zip -D9r $OUTPUTDIR/$PACKNAME.zip fpcbuild-$VERSION
+tar cfv - fpcbuild-$VERSION/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
 cd ..
 rm -rf buildsrc
