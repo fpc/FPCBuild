@@ -264,7 +264,7 @@ echo
 if [ -f doc-pdf.tar.gz ]; then
   if yesno "Install documentation"; then
     echo Installing documentation in $DOCDIR ...
-    unztar doc-pdf.tar.gz $DOCDIR
+    unztar doc-pdf.tar.gz $DOCDIR "--strip 1"
     echo Done.
   fi
 fi
