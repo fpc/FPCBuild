@@ -1,3 +1,5 @@
+/usr/bin/chmcmd
+/usr/bin/chmls
 /usr/bin/fppkg
 /usr/bin/ppufiles
 /usr/bin/ppudump
@@ -24,6 +26,8 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/lexyacc
 /usr/lib/fpc/lexyacc/yylex.cod
 /usr/lib/fpc/lexyacc/yyparse.cod
+/usr/share/man/man1/chmcmd.1
+/usr/share/man/man1/chmls.1
 /usr/share/man/man1/fppkg.1
 /usr/share/man/man1/bin2obj.1
 /usr/share/man/man1/data2inc.1
