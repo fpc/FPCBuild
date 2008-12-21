@@ -1,8 +1,4 @@
 /usr/share/doc/fp-units-misc
-
-/usr/bin/chmcmd
-/usr/bin/chmls
-
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/chm
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/iconvenc
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/utmp

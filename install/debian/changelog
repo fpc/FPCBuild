@@ -5,11 +5,35 @@ fpc (2.2.3-0) unstable; urgency=low
   * Possible CodeGear Copyright infringements in the source were reworked
     using cleanroom approach.
 
- -- Mazen Neifer <mazen@freepascal.org>  Fri, 02 Nov 2008 17:23:48 +0100
+ -- Mazen Neifer <mazen@freepascal.org>  Sun, 21 Dec 2008 19:21:00 +0100
+
+fpc (2.2.2-8) unstable; urgency=low
+
+  * Removed .pc directory in clean target to avoid a lintian warning.
+  * Moved chmcmd and chmls tools to fp-utils and added man files for them.
+  * Added Debian build version to compiler full version.
+
+ -- Mazen Neifer <mazen@freepascal.org>  Tue, 16 Dec 2008 23:23:00 +0100
+
+fpc (2.2.2-7) unstable; urgency=low
+
+  [ Mazen Neifer ]
+  * Patches were not applyed by patch system, fixed. (Closes: Bug#508415)
+
+ -- Torsten Werner <twerner@debian.org>  Mon, 15 Dec 2008 06:12:58 +0100
+
+fpc (2.2.2-6) unstable; urgency=low
+
+  * Remove auto-generated make files in clean target to avoid lintian warning
+    (Closes: Bug#508013).
+  * Removed gtk file system bindings as these no more exist in new gtk
+    libraries. (Closes: Bug#507520)
+
+ -- Mazen Neifer <mazen@freepascal.org>  Wed, 04 Dec 2008 12:21:00 +0100
 
 fpc (2.2.2-5) unstable; urgency=low
 
-  * Added missing man pages to remove linitian warnings.
+  * Added missing man pages to remove lintian warnings.
   * Fixed bug in clean-patched target causing configuration files to be removed
     before arch independent packages are build.
   * Updated description of fp-docs package. (Closes: Bug#506065)
@@ -26,7 +50,7 @@ fpc (2.2.2-4) unstable; urgency=low
   * Remove empty directories from binary package fpc-source.
 
   [ Mazen Neifer ]
-  * Removed leading path when calling update-alternatives to remove a Linitian
+  * Removed leading path when calling update-alternatives to remove a Lintian
     error.
   * Fixed clean target.
   * Improved description of packages. (Closes: #498882)

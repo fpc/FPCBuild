@@ -68,6 +68,10 @@ SRC_DIR=$(INSTALL_DIR)/usr/share/fpcsrc/${DEB_UPSTREAM_VERSION}
 ifndef MKDIR
 MKDIR=mkdir -p
 endif
+ifndef CP
+CP=cp -Rfpl
+endif
+RM:=rm -rf
 NEWPP=$(CURDIR)/fpcsrc/compiler/$(PPNEW)
 NEWFPDOC=$(CURDIR)/fpcsrc/utils/fpdoc/fpdoc
 NEWFPCMAKE=$(CURDIR)/fpcsrc/utils/fpcm/fpcmake
@@ -79,10 +83,10 @@ ifndef FPCMAKE
 FPCMAKE=fpcmake
 endif
 
-export GDBLIBDIR := /usr/lib
+export GDBLIBDIR=/usr/lib
 
 # Configure patch system
-export QUILT_PATCHES=debian/patches 
+export QUILT_PATCHES=debian/patches
 
 #export DH_VERBOSE=1
 
@@ -91,12 +95,17 @@ export QUILT_PATCHES=debian/patches
 #
 
 clean: patch configure clean-patched unpatch
-	rm -f build-arch-stamp install-arch-stamp arrange-arch-stamp configure-stamp
-	rm -f build-doc-stamp install-doc-stamp
-	rm -f build-indep-stamp install-indep-stamp
-	rm -f debian-files-stamp
-	rm -f debian/files debian/docs debian/dirs debian/*.files debian/*.docs debian/*.examples debian/*.postinst debian/*.postrm
-	rm -f debian/fpc-depends.1
+	${RM} build-arch-stamp install-arch-stamp arrange-arch-stamp configure-stamp
+	${RM} build-doc-stamp install-doc-stamp
+	${RM} build-indep-stamp install-indep-stamp
+	${RM} debian-files-stamp
+	${RM} debian/files debian/docs debian/dirs debian/*.files debian/*.docs debian/*.examples debian/*.postinst debian/*.postrm
+	${RM} .pc
+	${RM} debian/fpc-depends.1
+	# Remove auto-generated version file.
+	${RM} fpcsrc/compiler/version.inc
+	# Remove auto-generated make files.
+	find -name Makefile.fpc -execdir 'sh' '-c' '${RM} $$(basename {} .fpc)' ';'
 	dh_clean
 clean-patched:
 	@echo "--- Cleaning"
@@ -108,17 +117,17 @@ clean-patched:
 	$(MAKE) -C fpcsrc ide_distclean
 	$(MAKE) -C fpcsrc utils_distclean
 	$(MAKE) -C fpcdocs clean
-	find '(' -name '*.a' -or -name '*.o' -or -name '*.so' -or -name '*.ppu' ')' -exec rm -f '{}' ';'
+	find '(' -name '*.a' -or -name '*.o' -or -name '*.so' -or -name '*.ppu' ')' -exec ${RM} '{}' ';'
 	dh_prep
 
 patch: patch-stamp
 
 patch-stamp:
-	quilt push -a || test $$? = 2
+	test ! -s ${QUILT_PATCHES}/sceries || quilt push -a
 	touch patch-stamp
 
 unpatch:
-	quilt pop -a || test $$? = 2
+	test ! -s ${QUILT_PATCHES}/sceries || quilt pop -a
 	rm -rf patch-stamp debian/patched
 
 ###################
@@ -226,7 +235,7 @@ install-source-stamp:
 	dh_testdir
 	dh_testroot
 	${MKDIR} ${SRC_DIR}
-	cp -Rfpl -t ${SRC_DIR} \
+	${CP} -t ${SRC_DIR} \
 	$(CURDIR)/fpcsrc/compiler \
 	$(CURDIR)/fpcsrc/packages \
 	$(CURDIR)/fpcsrc/rtl
