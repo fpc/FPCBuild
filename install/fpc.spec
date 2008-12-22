@@ -111,10 +111,10 @@ rm -rf %{buildroot}
 %files
 %defattr(-, root, root,-)
 %{_bindir}/*
-%{fpcdir}
+%{_libdir}/fpc
+%dir %{docdir}
 %doc %{docdir}/NEWS
 %doc %{docdir}/README
 %doc %{docdir}/readme.ide
 %doc %{docdir}/faq*
-%doc %{exampledir}/*
 %{_mandir}/*/*
