@@ -489,7 +489,11 @@ ifdef NODOCS
 else
 	cd $(DEBSRCDIR) ; dpkg-buildpackage -us -uc
 endif
-	mv -v -t . $(DEBSRCDIR)/../*.{deb,dsc,changes,tar.gz}
+	mv -v -t . \
+	$(DEBSRCDIR)/../*.changes \
+	$(DEBSRCDIR)/../*.deb \
+	$(DEBSRCDIR)/../*.dsc \
+	$(DEBSRCDIR)/../*.tar.gz
 
 debclean:
         rm -rf $(DEBSRCDIR)
