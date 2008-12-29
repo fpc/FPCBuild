@@ -25,6 +25,9 @@ RTL:
 Packages:
   * Fixed linking the gtk2-package with gtk versions above 2.13.4
 
+IDE:
+  * Added support for CHM help files
+
 Documentation
 
 See http://bugs.freepascal.org/changelog_page.php for the list of reported
