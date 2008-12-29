@@ -1,10 +1,11 @@
 Name: fpc
 Version: %FPCVERSION%
-Release: 0
+Release: %RELEASE%
+
 ExclusiveArch: i386 i586 i686 ppc amd64 x86_64
 License: GPL and modified LGPL
 Group: Development/Languages
-Source: %{name}-%{version}-src.tar.gz
+Source: %{name}-%{version}%MINOR_PATCH%-src.tar.gz
 Summary: Free Pascal Compiler
 Packager: Peter Vreman (peter@freepascal.org)
 URL: http://www.freepascal.org/

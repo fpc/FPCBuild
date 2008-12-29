@@ -133,7 +133,7 @@ RELFILES="install.sh"
 
 # install.sh
 echo "Copying install.sh"
-sed s+%version%+$VERSION+ install/install.sh > install.sh
+sed -e s+%version%+$VERSION+ -e s+%fullversion%+$FULLVERSION+ install/install.sh > install.sh
 chmod 755 install.sh
 
 # binary.*.tar
@@ -162,7 +162,7 @@ else
 fi
 
 # Files to be added to the .tar
-TARNAME=${CROSSPREFIX}fpc-$VERSION.$FULLSOURCE.tar
+TARNAME=${CROSSPREFIX}fpc-$FULLVERSION.$FULLSOURCE.tar
 echo "Creating $TARNAME"
 tar cf $TARNAME $RELFILES
 if [ $? != 0 ]; then
