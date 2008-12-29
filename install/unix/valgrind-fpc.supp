@@ -1,0 +1,6 @@
+{
+   Assembler routine always reads 4 bytes alligned by 4 regardles str length
+   Memcheck:Addr4
+   fun:SYSUTILS_STRSCAN$PCHAR$CHAR$$PCHAR
+}
+
