@@ -24,6 +24,7 @@ RTL:
 
 Packages:
   * Added support for TIFF reading/writing in fcl-image
+  * Improvements and fixes in CHM support
   * Fixed linking the gtk2-package with gtk versions above 2.13.4
 
 IDE:
