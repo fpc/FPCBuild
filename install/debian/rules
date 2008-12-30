@@ -55,15 +55,16 @@ FPCTARGET=$(CPU_TARGET)-linux
 FPC=
 FPCDIR=
 # Get version information from changelog file
-DEB_VERSION := $(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
-DEB_UPSTREAM_VERSION := $(shell echo $(DEB_VERSION) | cut -f 1 -d -)
+DEB_VERSION:=$(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
+DEB_UPSTREAM_VERSION:=$(shell echo $(DEB_VERSION) | cut -f 1 -d -)
+DEB_UPSTREAM_MAIN_VERSION:=$(shell echo ${DEB_UPSTREAM_VERSION} | sed -e 's/^\([0-9.]*\).*/\1/')
 # Get directories
 CURDIR:=$(shell pwd)
 BUILD_DIR=$(CURDIR)/debian/build
 INSTALL_DIR=$(CURDIR)/debian/tmp
 DOC_DIR=$(INSTALL_DIR)/usr/share/doc
-EXAMPLE_TEMP=$(DOC_DIR)/fpc-$(DEB_UPSTREAM_VERSION)
-SRC_DIR=$(INSTALL_DIR)/usr/share/fpcsrc/${DEB_UPSTREAM_VERSION}
+EXAMPLE_TEMP=${DOC_DIR}/fpc-${DEB_UPSTREAM_MAIN_VERSION}
+SRC_DIR=$(INSTALL_DIR)/usr/share/fpcsrc/${DEB_UPSTREAM_MAIN_VERSION}
 # Get utils
 ifndef MKDIR
 MKDIR=mkdir -p
