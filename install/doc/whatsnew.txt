@@ -1,7 +1,40 @@
 
                             Free Pascal Compiler
 
-                                Version 2.2.2
+                                Version 2.2.3
+
+******************************************************************************
+                              What's New in 2.2.3
+******************************************************************************
+
+Free Pascal 2.2.3 contains many bug-fixes and some new features. The 
+main purpose of this release is to fix problems reported with FPC 2.2.2.
+
+Please also see http://wiki.freepascal.org/User_Changes_2.2.4 for a list
+of changes which may affect the behaviour of previously working code, and
+how to cope with these changes.
+
+Some highlights are:
+
+Platforms:
+
+Compiler:
+
+RTL:
+
+Packages:
+  * Added support for TIFF reading/writing in fcl-image
+  * Improvements and fixes in CHM support
+  * Fixed linking the gtk2-package with gtk versions above 2.13.4
+
+IDE:
+  * Added support for CHM help files
+
+Documentation
+
+See http://bugs.freepascal.org/changelog_page.php for the list of reported
+bugs which have been fixed in this release.
+
 
 ******************************************************************************
                               What's New in 2.2.2
