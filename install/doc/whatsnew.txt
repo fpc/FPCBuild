@@ -7,7 +7,7 @@
                               What's New in 2.2.3
 ******************************************************************************
 
-Free Pascal 2.2.3 contains many bug-fixes and some new features. The 
+Free Pascal 2.2.3 contains many bug fixes and some new features. The 
 main purpose of this release is to fix problems reported with FPC 2.2.2.
 
 Please also see http://wiki.freepascal.org/User_Changes_2.2.4 for a list
@@ -37,7 +37,7 @@ bugs which have been fixed in this release.
                               What's New in 2.2.2
 ******************************************************************************
 
-Free Pascal 2.2.2 contains many bug-fixes and some new features. The 
+Free Pascal 2.2.2 contains many bug fixes and some new features. The 
 main purpose of this release is to fix problems reported with FPC 2.2.0,
 and to remove all potentially tainted code from our source code base.
 
@@ -94,7 +94,7 @@ bugs which have been fixed in this release.
                               What's New in 2.2.0
 ******************************************************************************
 
-Free Pascal 2.2.0 contains a lot of bug-fixes and new features. The work on
+Free Pascal 2.2.0 contains a lot of bug fixes and new features. The work on
 Free Pascal 2.2.0 started halfway during the year 2005. A lot has been improved
 since then.
 
