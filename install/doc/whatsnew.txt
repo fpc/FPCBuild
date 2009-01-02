@@ -16,11 +16,8 @@ how to cope with these changes.
 
 Some highlights are:
 
-Platforms:
-
-Compiler:
-
-RTL:
+All:
+  * Experimental packages-installation tool
 
 Packages:
   * Added support for TIFF reading/writing in fcl-image
