@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 2.2.2
+                               Version 2.2.4rc1
 
 ****************************************************************************
 * Introduction
@@ -15,7 +15,7 @@ several platforms. The language and the runtime library are almost
 compatible with Turbo Pascal 7.0 and recent Delphi releases. There is also
 partial support for the Macintosh pascal dialect.
 
-Free Pascal 2.2.2 is currently available for the following platforms:
+Free Pascal 2.2.4rc1 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-powerpc
@@ -121,7 +121,7 @@ Mac OS (classic)
 * Quick start - Win32
 ****************************************************************************
 
-Download the distribution package (fpc-2.2.2.i386-win32.exe) and run it
+Download the distribution package (fpc-2.2.4rc1.i386-win32.exe) and run it
 - it is a self-extracting installer, so just follow the instructions
 to install it. Don't forget to set the PATH environment variable if you
 install FPC under Win95/98/ME (the installer should do it automatically
@@ -137,7 +137,7 @@ and type
 * Quick start - DOS
 ****************************************************************************
 
-Download distribution archive (dos222.zip for GO32v2) and unzip it into
+Download distribution archive (dos224.zip for GO32v2) and unzip it into
 a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -160,7 +160,7 @@ and type
 * Quick start - OS/2 / eComStation
 ****************************************************************************
 
-Download distribution archive (os2222.zip for OS/2 or eComStation) and unzip
+Download distribution archive (os2242.zip for OS/2 or eComStation) and unzip
 it into a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -184,7 +184,7 @@ and type
 * Quick start - Linux/FreeBSD
 ****************************************************************************
 
-Download fpc-2.2.2.<cpu>-<os>.tar and untar into a temporary directory.
+Download fpc-2.2.4rc1.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
@@ -200,7 +200,7 @@ and type
 
 There are two methods to install Free Pascal for Mac OS X.
 
-1) Download and install the Mac OS X package (fpc-2.2.2.powerpc-macosx.dmg)
+1) Download and install the Mac OS X package (fpc-2.2.4rc1.powerpc-macosx.dmg)
 
 This gives you the Free Pascal Compiler and the Xcode integration kit.
 
@@ -268,7 +268,7 @@ options.
 
 The documentation is available as HTML pages, PDF, PS, and text although the
 recommended format is pdf. These are all available on
-ftp://ftp.freepascal.org/fpc/dist/docs-2.2.2
+ftp://ftp.freepascal.org/fpc/beta/2.2.4rc1/docs
 
 NB that there is at present no FPC specific documentation for the platform
 specific API (like Win32 system functions, etc.). There is a note in the ftp

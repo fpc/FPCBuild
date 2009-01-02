@@ -1,10 +1,10 @@
 
                             Free Pascal Compiler
 
-                                Version 2.2.3
+                                Version 2.2.4rc1
 
 ******************************************************************************
-                              What's New in 2.2.3
+                              What's New in 2.2.4rc1
 ******************************************************************************
 
 Free Pascal 2.2.3 contains many bug-fixes and some new features. The 
