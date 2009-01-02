@@ -16,7 +16,7 @@ else
   exit 1
 fi
 
-PACKNAME=fpc-$1.source
+PACKNAME=fpc-$VERSION.source
 OUTPUTDIR=..
 
 rm -rf buildsrc
@@ -25,12 +25,12 @@ mkdir buildsrc
 cd buildsrc
 svn co http://svn.freepascal.org/svn/fpc/$SVNPATH fpc
 
-find -name .svn -type d | xargs tar -cvf $OUTPUTDIR/SVNfiles-$1.tar.gz 
+find -name .svn -type d | xargs tar -cvf $OUTPUTDIR/SVNfiles-$VERSION.tar.gz 
 
-svn export fpc fpc-$1
+svn export fpc fpc-$VERSION
 
 rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
-zip -D9r $OUTPUTDIR/$PACKNAME.zip fpc-$1
-tar cfv - fpc-$1/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
+zip -D9r $OUTPUTDIR/$PACKNAME.zip fpc-$VERSION
+tar cfv - fpc-$VERSION/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
 cd ..
 rm -rf buildsrc
