@@ -2,13 +2,19 @@
 
 set -e
 
-if [ $# -ne 1 ]; then
-  echo "Usage: makesource <release>"
+if [ $# -eq 1 ]; then
+  VERSION=$1
+  SVNTAGVER=`echo $VERSION | tr '.' '_'`
+  SVNPATH="tags/release_$SVNTAGVER"
+elif [ $# -eq 3 ] && [ $1 = "-svnpath" ]; then
+  SVNPATH=$2
+  VERSION=$3
+else
+  echo "Usage: makesource [-svnpath <svnpath>] <release>"
+  echo "Examples: makesource -svnpath branches/release_2_2_4_rc1 2.2.4rc1"
+  echo "          makesource 2.2.4"
   exit 1
 fi
-
-SVNTAGVER=`echo $1 | tr '.' '_'`
-SVNPATH="release_$SVNTAGVER"
 
 PACKNAME=fpc-$1.source
 OUTPUTDIR=..
@@ -17,7 +23,7 @@ rm -rf buildsrc
 
 mkdir buildsrc
 cd buildsrc
-svn co http://svn.freepascal.org/svn/fpc/tags/$SVNPATH fpc
+svn co http://svn.freepascal.org/svn/fpc/$SVNPATH fpc
 
 find -name .svn -type d | xargs tar -cvf $OUTPUTDIR/SVNfiles-$1.tar.gz 
 
