@@ -1,3 +1,9 @@
+fpc (2.2.4rc1-0) unstable; urgency=low
+
+  * Updated to version 2.2.4rc1
+
+ -- Joost van der Sluis <joost@freepascal.org>  Fri, 2 Jan 2009 15:15:00 +0100
+
 fpc (2.2.3-0) unstable; urgency=low
 
   * Documentation was updated completely to conform to the actual state of the
