@@ -1,8 +1,9 @@
-CWSDPMI is Copyright (C) 1995-2000  Charles W Sandmann (sandmann@clio.rice.edu)
+CWSDPMI is Copyright (C) 1995-2008  Charles W Sandmann (cwsdpmi@earthlink.net)
                                     1206 Braelinn, Sugar Land, TX 77479
 
-This is release 5.  The files in this binary distribution may be redistributed
-under the GPL (with source) or without the source code provided:
+This is release 5, 2008 refresh.  It contains minor bug fixes and SSE support.
+The files in this binary distribution may be redistributed under the GPL 
+(with source) or without the source code provided:
 
 * CWSDPMI.EXE or CWSDPR0.EXE are not modified in any way except via CWSPARAM.
 
