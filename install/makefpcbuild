@@ -30,6 +30,8 @@ svn export http://svn.freepascal.org/svn/fpcbuild/$SVNPATH fpcbuild-$VERSION
 #find -name .svn -type d | xargs tar --remove-files -cvf $OUTPUTDIR/SVNfiles-$VERSION.tar.gz 
 
 rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
+# Do not add the logs to the source-package
+rm -rf fpcbuild-$VERSION/logs
 zip -D9r $OUTPUTDIR/$PACKNAME.zip fpcbuild-$VERSION
 tar cfv - fpcbuild-$VERSION/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
 cd ..
