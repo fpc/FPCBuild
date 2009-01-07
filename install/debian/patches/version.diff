@@ -1,0 +1,29 @@
+Adds Debian build version to compiler full version.
+
+Index: fpcsrc/compiler/version.pas
+===================================================================
+--- fpc-2.2.2.orig/fpcsrc/compiler/version.pas
++++ fpc-2.2.2/fpcsrc/compiler/version.pas
+@@ -78,6 +78,9 @@
+ 
+ implementation
+ 
++const
++  FullVersionString={$INCLUDE version.inc};
++
+ function version_string:string;
+ begin
+   version_string := version_nr+'.'+release_nr+'.'+patch_nr;
+@@ -86,11 +89,7 @@
+ 
+ function full_version_string:string;
+ begin
+-  full_version_string := version_nr+'.'+release_nr+'.'+patch_nr+minorpatch
+-{$ifdef REVINC}
+-  +'-r'+{$i revision.inc}
+-{$endif REVINC}
+-  ;
++  full_version_string := FullVersionString;
+ end;
+ 
+ end.
