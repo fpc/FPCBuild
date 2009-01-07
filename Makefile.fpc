@@ -457,7 +457,7 @@ debcopy: distclean
 	rm -rf ${BUILDDIR}
 	install -d $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) ${DEBDIR} $(DEBSRCDIR)/debian
-ifeq (${DEBVERSION},0)
+ifdef SNAPSHOT
 	# We are building snapshots, then override build index by build date
 	sed s+${PACKAGEVERSION}+${FPCVERSION}-${BUILDDATE}+ $(DEBSRCDIR)/debian/changelog > $(DEBSRCDIR)/debian/changelog.tmp
 	mv $(DEBSRCDIR)/debian/changelog.tmp $(DEBSRCDIR)/debian/changelog
