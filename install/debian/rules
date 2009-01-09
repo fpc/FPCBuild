@@ -152,6 +152,10 @@ configure-stamp:
 	find -name Makefile.fpc -execdir 'sh' '-c' '${RM} $$(basename {} .fpc)' ';'
 	# Regenrate make files using fpcmake.
 	${FPCMAKE} -r -Tall */Makefile.fpc
+	# Remove auto-generated version file.
+	${RM} fpcsrc/compiler/version.inc
+	# Add version.inc:
+	echo \'$(DEB_VERSION)\' > fpcsrc/compiler/version.inc
 	touch configure-stamp
 
 build-arch: debian-files configure build-arch-stamp
