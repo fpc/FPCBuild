@@ -28,10 +28,10 @@ Free Pascal 2.2.2 is currently available for the following platforms:
 - Mac OS X/Darwin for PowerPC
 - Mac OS X/Darwin for Intel (i386)
 - GO32v2-i386
+- OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 
 The following platforms were not release-ready at the moment of the release
 but they might follow later:
-- OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 - Netware-i386
 - NetwLibc-i386 (LibC is preferred API under newer Netware versions)
 
