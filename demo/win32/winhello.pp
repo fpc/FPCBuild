@@ -12,7 +12,7 @@
 program WinHello;
 
 uses
-  Strings, Windows;
+  Windows;
 
 const
   AppName = 'WinHello';
