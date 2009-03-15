@@ -46,7 +46,7 @@ Program editdemo;
 {$APPTYPE GUI}
 
 Uses
-  Strings,Windows;
+  Strings,Windows,CommDlg,CommCtrl;
 
 Const
   AppName = 'EditDemo';

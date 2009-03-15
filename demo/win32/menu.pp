@@ -57,7 +57,7 @@ Program menudemo;
 {$APPTYPE GUI}
 {$MODE DELPHI}
 
-Uses Strings,Windows;
+Uses Strings,Windows,CommDlg,CommCtrl;
 
 Const AppName = 'MenuDemo';
 
@@ -310,7 +310,7 @@ End;
 
 Function StatusCreate (parent:hwnd): HWnd;
 Begin
-  StatusCreate := CreateStatusWindow (WS_CHILD Or WS_VISIBLE,'Ready...',parent,$7712);
+  StatusCreate := CreateStatusWindow (WS_CHILD Or WS_VISIBLE,LPCSTR('Ready...'),parent,$7712);
 End;
 
 Begin
