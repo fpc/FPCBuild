@@ -163,6 +163,7 @@ FAILURES=""
 for a in $TARGETS; do
 if [ ! -f ${DESTDIR}bin/${a}-as ] ; then
 rm ./config.cache
+find ./ -type f -name config.cache -exec /bin/rm {} \;
 echo Building $a
 { ./configure --disable-nls --disable-shared --target=$a --prefix=${DESTDIR} && ${MAKE} $(EXTRAOPT) && ${MAKE} install && ${MAKE} clean; } > ${LOGDIR}log-${a} 2>&1
 
