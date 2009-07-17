@@ -133,6 +133,7 @@ Source: bin\i386-win32\rstconv.exe; DestDir: {app}\bin\i386-win32; Flags: ignore
 Source: bin\i386-win32\unitdiff.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\chmls.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\chmcmd.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\fpcres.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\yylex.cod; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\yyparse.cod; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: units\i386-win32\lexyacc\*.*; DestDir: {app}\units\i386-win32\lexyacc; Flags: ignoreversion; Components: utils
