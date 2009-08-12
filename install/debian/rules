@@ -62,9 +62,9 @@ DEB_UPSTREAM_MAIN_VERSION:=$(shell echo ${DEB_UPSTREAM_VERSION} | sed -e 's/^\([
 CURDIR:=$(shell pwd)
 BUILD_DIR=$(CURDIR)/debian/build
 INSTALL_DIR=$(CURDIR)/debian/tmp
-DOC_DIR=$(INSTALL_DIR)/usr/share/doc
-EXAMPLE_TEMP=${DOC_DIR}/fpc-${DEB_UPSTREAM_MAIN_VERSION}
+DOC_DIR=${INSTALL_DIR}/usr/share/doc/fp-docs/${DEB_UPSTREAM_MAIN_VERSION}
 SRC_DIR=$(INSTALL_DIR)/usr/share/fpcsrc/${DEB_UPSTREAM_MAIN_VERSION}
+EXAMPLE_TEMP=${INSTALL_DIR}/usr/share/doc/fpc-${DEB_UPSTREAM_MAIN_VERSION}
 # Get utils
 ifndef MKDIR
 MKDIR=mkdir -p
@@ -124,11 +124,11 @@ clean-patched:
 patch: patch-stamp
 
 patch-stamp:
-	test ! -s ${QUILT_PATCHES}/sceries || quilt push -a
+	test ! -s ${QUILT_PATCHES}/series || quilt push -a
 	touch patch-stamp
 
 unpatch:
-	test ! -s ${QUILT_PATCHES}/sceries || quilt pop -a
+	test ! -s ${QUILT_PATCHES}/series || quilt pop -a
 	rm -rf patch-stamp debian/patched
 
 ###################
@@ -219,7 +219,7 @@ build-doc-stamp:
 	@echo "--- Building Documentation"
 	dh_testdir
 	${MKDIR} fpcsrc/compiler/utils/units/${FPCTARGET}
-	$(MAKE) -C fpcdocs $(CONVERTER) LANG=C
+	$(MAKE) -C fpcdocs $(CONVERTER)
 	touch build-doc-stamp
 
 install-doc: build-doc install-doc-stamp
@@ -227,7 +227,7 @@ install-doc-stamp:
 	@echo "--- Installing Documentation"
 	dh_testdir
 	dh_testroot
-	$(MAKE) -C fpcdocs $(DOCTYPE)install INSTALL_PREFIX=$(INSTALL_DIR)/usr INSTALL_DOCDIR=$(INSTALL_DIR)/usr/share/doc/fp-docs
+	${MAKE} -C fpcdocs ${DOCTYPE}install INSTALL_PREFIX=${INSTALL_DIR}/usr INSTALL_DOCDIR=${DOC_DIR}
 	touch install-doc-stamp
 
 ###################
