@@ -98,6 +98,7 @@ Source: doc\ide\readme.ide; DestDir: {app}\doc\ide; Flags: ignoreversion; Compon
 Source: bin\i386-win32\gdate.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\gecho.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\ginstall.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\ginstall.exe.manifest; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\gmkdir.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\grep.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\make.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
