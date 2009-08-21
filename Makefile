@@ -263,7 +263,7 @@ UNITSDIR:=$(wildcard $(FPCDIR)/units/$(OS_TARGET))
 endif
 PACKAGESDIR:=$(wildcard $(FPCDIR) $(FPCDIR)/packages $(FPCDIR)/packages/base $(FPCDIR)/packages/extra)
 override PACKAGE_NAME=fpc
-override PACKAGE_VERSION=2.3.1
+override PACKAGE_VERSION=2.5.1
 ifneq ($(wildcard install),)
 CVSINSTALL=install
 else

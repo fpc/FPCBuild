@@ -6,6 +6,7 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-net
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-passrc
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-registry
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-res
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-web
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-xml
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-async

@@ -1,8 +1,42 @@
-fpc (2.3.1-0) unstable; urgency=low
+fpc (2.5.1-0) unstable; urgency=low
 
   * Buils daily snapshots
 
  -- Mazen Neifer <mazen@freepascal.org>  Sun, 21 Dec 2008 19:21:00 +0100
+
+fpc (2.2.4-3) unstable; urgency=low
+
+  [ Mazen Neifer ]
+  * Fixed compilation error on power PC.
+
+ -- Mazen Neifer <mazen@freepascal.org>  Wed, 03 Jun 2009 12:44:00 +0200
+
+fpc (2.2.4-2) unstable; urgency=low
+
+  [ Stefan Kisdaroczi ]
+  * Fixed FindFirst and FindGetFileInfo functions. (Closes: Bug#528681)
+
+  [ Mazen Neifer ]
+  * Added lintian override rules for embedded-zlib
+  * Fixed wrong passing of function parameters for powerpc architecture.
+    (Closes: Bug#515035, Bug#511626)
+
+ -- Mazen Neifer <mazen@freepascal.org>  Sat, 30 May 2009 17:46:00 +0200
+
+fpc (2.2.4-1) unstable; urgency=low
+
+  [ Mazen Neifer ]
+  * new upstream release
+    - Added support for TIFF reading/writing in fcl-image
+    - Improvements and fixes in CHM support
+    - Fixed linking the gtk2-package with gtk versions above 2.13.4
+    - Added support for CHM help files
+  * Remove patches that are now obsolete.
+  * Removed dependency from GTK1 as it was removed from Squeeze.
+  [ Paul Gevers ]
+  * Fixed typo in sysconst.pp. (Closes: Bug#519013)
+
+ -- Mazen Neifer <mazen@freepascal.org>  Sat, 02 May 2009 16:40:30 +0200
 
 fpc (2.2.2-8) unstable; urgency=low
 

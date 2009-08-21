@@ -3,11 +3,13 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/xforms
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/svgalib
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/ggi
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/imagemagick
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libgd
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libpng
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/graph
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/openal
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/cairo
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/rsvg
 
 /usr/bin/fd2pascal
 /usr/share/man/man1/fd2pascal.1

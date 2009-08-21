@@ -57,12 +57,12 @@ FPCDIR=
 # Get version information from changelog file
 DEB_VERSION:=$(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
 DEB_UPSTREAM_VERSION:=$(shell echo $(DEB_VERSION) | cut -f 1 -d -)
-DEB_UPSTREAM_MAIN_VERSION:=$(shell echo ${DEB_UPSTREAM_VERSION} | sed -e 's/^\([0-9.]*\).*/\1/')
+DEB_UPSTREAM_MAIN_VERSION:=$(shell echo ${DEB_UPSTREAM_VERSION} | sed -e 's/^\([0-9\.]*\).*/\1/')
 # Get directories
 CURDIR:=$(shell pwd)
 BUILD_DIR=$(CURDIR)/debian/build
 INSTALL_DIR=$(CURDIR)/debian/tmp
-DOC_DIR=${INSTALL_DIR}/usr/share/doc/fp-docs/${DEB_UPSTREAM_MAIN_VERSION}
+DOC_DIR=${INSTALL_DIR}/usr/share/doc
 SRC_DIR=$(INSTALL_DIR)/usr/share/fpcsrc/${DEB_UPSTREAM_MAIN_VERSION}
 EXAMPLE_TEMP=${INSTALL_DIR}/usr/share/doc/fpc-${DEB_UPSTREAM_MAIN_VERSION}
 # Get utils
@@ -76,9 +76,9 @@ RM:=rm -rf
 NEWPP=$(CURDIR)/fpcsrc/compiler/$(PPNEW)
 NEWFPDOC=$(CURDIR)/fpcsrc/utils/fpdoc/fpdoc
 NEWFPCMAKE=$(CURDIR)/fpcsrc/utils/fpcm/fpcmake
-# Create default options
+# Set default compilation options
 BUILDOPTS=PP=$(NEWPP)
-INSTALLOPTS=PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE) INSTALL_PREFIX=$(INSTALL_DIR)/usr
+INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE)
 # Get fpcmake from path if none is specified.
 ifndef FPCMAKE
 FPCMAKE=fpcmake
@@ -227,7 +227,7 @@ install-doc-stamp:
 	@echo "--- Installing Documentation"
 	dh_testdir
 	dh_testroot
-	${MAKE} -C fpcdocs ${DOCTYPE}install INSTALL_PREFIX=${INSTALL_DIR}/usr INSTALL_DOCDIR=${DOC_DIR}
+	${MAKE} -C fpcdocs ${DOCTYPE}install INSTALL_PREFIX=${INSTALL_DIR}/usr INSTALL_DOCDIR=${DOC_DIR}/fp-docs/${DEB_UPSTREAM_MAIN_VERSION}
 	touch install-doc-stamp
 
 ###################
