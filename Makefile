@@ -265,7 +265,7 @@ UNITSDIR:=$(wildcard $(FPCDIR)/units/$(OS_TARGET))
 endif
 PACKAGESDIR:=$(wildcard $(FPCDIR) $(FPCDIR)/packages $(FPCDIR)/packages/base $(FPCDIR)/packages/extra)
 override PACKAGE_NAME=fpc
-override PACKAGE_VERSION=2.3.1
+override PACKAGE_VERSION=2.5.1
 ifneq ($(wildcard install),)
 CVSINSTALL=install
 else
@@ -2312,16 +2312,15 @@ endif
 ifneq ($(wildcard ${DEBDIR}/changelog),)
 .PHONY: debcopy deb
 DEBPACKAGEVERSION:=$(shell head -n 1 ${DEBDIR}/changelog | awk '{ print $$2 }' | tr -d '[()]')
-DEBFPCVERSION:=$(shell echo $(DEBPACKAGEVERSION) | awk -F '-' '{ print $$1 }')
-DEBSRCDIR:=$(BUILDDIR)/fpc-$(DEBFPCVERSION)
+DEBVERSION:=$(shell echo $(DEBPACKAGEVERSION) | awk -F '-' '{ print $$1 }')
+DEBSRCDIR:=$(BUILDDIR)/fpc-$(DEBVERSION)
 PACKAGEVERSION=$(shell dpkg-parsechangelog -l${DEBDIR}/changelog | sed -ne's,^Version: \(.*\),\1,p')
 FPCVERSION=$(shell echo ${PACKAGEVERSION} | awk -F '-' '{ print $$1 }')
-DEBVERSION=$(shell echo ${PACKAGEVERSION} | awk -F '-' '{ print $$NF }')
 FPCSVNPATH=$(shell echo ${FPCVERSION} | awk -F '.' '{ print "release_"$$1"_"$$2"_"$$3 }')
 BUILDDATE=$(shell /bin/date --utc +%Y%m%d)
 debcheck:
-ifneq ($(DEBFPCVERSION),$(PACKAGE_VERSION))
-	@$(ECHO) "Debian version ($(DEBFPCVERSION)) is not correct, expect $(PACKAGE_VERSION)"
+ifneq ($(DEBVERSION),$(PACKAGE_VERSION))
+	@$(ECHO) "Debian version ($(DEBVERSION)) is not correct, expect $(PACKAGE_VERSION)"
 	@exit 1
 endif
 debcopy: distclean
@@ -2329,7 +2328,7 @@ debcopy: distclean
 	install -d $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) ${DEBDIR} $(DEBSRCDIR)/debian
 ifdef SNAPSHOT
-	sed s+${PACKAGEVERSION}+${FPCVERSION}-${BUILDDATE}+ $(DEBSRCDIR)/debian/changelog > $(DEBSRCDIR)/debian/changelog.tmp
+	sed s+${DEBPACKAGEVERSION}+${DEBPACKAGEVERSION}-${BUILDDATE}+ $(DEBSRCDIR)/debian/changelog > $(DEBSRCDIR)/debian/changelog.tmp
 	mv $(DEBSRCDIR)/debian/changelog.tmp $(DEBSRCDIR)/debian/changelog
 endif
 	$(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)/fpcsrc
@@ -2365,10 +2364,10 @@ endif
 	$(DEBSRCDIR)/../*.tar.gz
 debclean:
 	rm -rf $(DEBSRCDIR)
-	-rmdir $(BUILDDIR)
+	rmdir $(BUILDDIR)
 deb: checkfpcdir debcheck debcopy debbuild debclean
 debtargz: checkfpcdir
-	$(MAKE) fpc_zipinstall USETAR=y ZIPTARGET=debcopy PACKDIR=$(DEBSRCDIR) FULLZIPNAME=fpc-$(DEBFPCVERSION).orig
+	$(MAKE) fpc_zipinstall USETAR=y ZIPTARGET=debcopy PACKDIR=$(DEBSRCDIR) FULLZIPNAME=fpc-$(DEBVERSION).orig
 endif   # changelog found
 endif
 ifdef inUnix

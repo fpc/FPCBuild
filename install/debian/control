@@ -300,6 +300,23 @@ Description: Free Pascal - networking units
   - openssl : Open SSL
   - pcap
 
+Package: fp-units-math
+Architecture: i386 powerpc sparc amd64 arm
+Pre-Depends: dpkg (>= 1.10.24)
+Depends: fp-units-rtl (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev
+Description: Free Pascal - math units
+ The Free Pascal Compiler is an object pascal compiler supporting both Delphi
+ and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
+ It provides a completely portable RunTime Library (RTL) available on many
+ platforms and compatible with Turbo Pascal, but also a platfrom independent
+ class based Free Component Library (FCL) adding many Delphi extensions and
+ interfacing many popular open source libraries.
+ .
+ This package contains Free Pascal math interfacing units for:
+  - proj4 : Compute projections
+  - numlib : numerical computing
+  - symbolic : symbolic computing
+
 Package: fp-units-misc
 Architecture: i386 powerpc sparc amd64 arm
 Pre-Depends: dpkg (>= 1.10.24)
@@ -313,6 +330,7 @@ Description: Free Pascal - miscellaneous units
  interfacing many popular open source libraries.
  .
  This package contains Free Pascal miscellaneous units for:
+  - fppkg : support of FPC packaging system
   - Utmp
   - PasZLib (Pascal-only zlib implementation)
 
@@ -320,7 +338,7 @@ Package: fp-units-multimedia
 Architecture: i386 powerpc sparc amd64 arm
 Pre-Depends: dpkg (>= 1.10.24)
 Depends: fp-units-rtl (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev
-Description: Free Pascal - miscellaneous units
+Description: Free Pascal - multimedia units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
  It provides a completely portable RunTime Library (RTL) available on many

@@ -57,14 +57,14 @@ FPCDIR=
 # Get version information from changelog file
 DEB_VERSION:=$(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
 DEB_UPSTREAM_VERSION:=$(shell echo $(DEB_VERSION) | cut -f 1 -d -)
-DEB_UPSTREAM_MAIN_VERSION:=$(shell echo ${DEB_UPSTREAM_VERSION} | sed -e 's/^\([0-9.]*\).*/\1/')
+DEB_UPSTREAM_MAIN_VERSION:=$(shell echo ${DEB_UPSTREAM_VERSION} | sed -e 's/^\([0-9\.]*\).*/\1/')
 # Get directories
 CURDIR:=$(shell pwd)
 BUILD_DIR=$(CURDIR)/debian/build
 INSTALL_DIR=$(CURDIR)/debian/tmp
-DOC_DIR=$(INSTALL_DIR)/usr/share/doc
-EXAMPLE_TEMP=${DOC_DIR}/fpc-${DEB_UPSTREAM_MAIN_VERSION}
+DOC_DIR=${INSTALL_DIR}/usr/share/doc
 SRC_DIR=$(INSTALL_DIR)/usr/share/fpcsrc/${DEB_UPSTREAM_MAIN_VERSION}
+EXAMPLE_TEMP=${INSTALL_DIR}/usr/share/doc/fpc-${DEB_UPSTREAM_MAIN_VERSION}
 # Get utils
 ifndef MKDIR
 MKDIR=mkdir -p
@@ -76,9 +76,9 @@ RM:=rm -rf
 NEWPP=$(CURDIR)/fpcsrc/compiler/$(PPNEW)
 NEWFPDOC=$(CURDIR)/fpcsrc/utils/fpdoc/fpdoc
 NEWFPCMAKE=$(CURDIR)/fpcsrc/utils/fpcm/fpcmake
-# Create default options
+# Set default compilation options
 BUILDOPTS=PP=$(NEWPP)
-INSTALLOPTS=PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE) INSTALL_PREFIX=$(INSTALL_DIR)/usr
+INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE)
 # Get fpcmake from path if none is specified.
 ifndef FPCMAKE
 FPCMAKE=fpcmake
@@ -124,11 +124,11 @@ clean-patched:
 patch: patch-stamp
 
 patch-stamp:
-	test ! -s ${QUILT_PATCHES}/sceries || quilt push -a
+	test ! -s ${QUILT_PATCHES}/series || quilt push -a
 	touch patch-stamp
 
 unpatch:
-	test ! -s ${QUILT_PATCHES}/sceries || quilt pop -a
+	test ! -s ${QUILT_PATCHES}/series || quilt pop -a
 	rm -rf patch-stamp debian/patched
 
 ###################
@@ -219,7 +219,7 @@ build-doc-stamp:
 	@echo "--- Building Documentation"
 	dh_testdir
 	${MKDIR} fpcsrc/compiler/utils/units/${FPCTARGET}
-	$(MAKE) -C fpcdocs $(CONVERTER) LANG=C
+	$(MAKE) -C fpcdocs $(CONVERTER)
 	touch build-doc-stamp
 
 install-doc: build-doc install-doc-stamp
@@ -227,7 +227,7 @@ install-doc-stamp:
 	@echo "--- Installing Documentation"
 	dh_testdir
 	dh_testroot
-	$(MAKE) -C fpcdocs $(DOCTYPE)install INSTALL_PREFIX=$(INSTALL_DIR)/usr INSTALL_DOCDIR=$(INSTALL_DIR)/usr/share/doc/fp-docs
+	${MAKE} -C fpcdocs ${DOCTYPE}install INSTALL_PREFIX=${INSTALL_DIR}/usr INSTALL_DOCDIR=${DOC_DIR}/fp-docs/${DEB_UPSTREAM_MAIN_VERSION}
 	touch install-doc-stamp
 
 ###################

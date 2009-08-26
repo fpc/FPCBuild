@@ -1,0 +1,3 @@
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/symbolic
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/numlib
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/proj4

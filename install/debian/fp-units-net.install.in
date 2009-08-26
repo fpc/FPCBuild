@@ -2,6 +2,7 @@
 
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libcurl
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/dbus
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fastcgi
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/httpd13
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/httpd20
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/httpd22
