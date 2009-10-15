@@ -73,16 +73,24 @@ ifndef CP
 CP=cp -Rfpl
 endif
 RM:=rm -rf
-NEWPP=$(CURDIR)/fpcsrc/compiler/$(PPNEW)
-NEWFPDOC=$(CURDIR)/fpcsrc/utils/fpdoc/fpdoc
-NEWFPCMAKE=$(CURDIR)/fpcsrc/utils/fpcm/fpcmake
-# Set default compilation options
-BUILDOPTS=PP=$(NEWPP)
-INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE)
 # Get fpcmake from path if none is specified.
 ifndef FPCMAKE
 FPCMAKE=fpcmake
 endif
+NEWPP=$(CURDIR)/fpcsrc/compiler/$(PPNEW)
+NEWFPDOC=$(CURDIR)/fpcsrc/utils/fpdoc/fpdoc
+#If not cross compiling, then use new generated fpcmake utility.
+ifeq (${PPPRE},)
+NEWFPCMAKE=$(CURDIR)/fpcsrc/utils/fpcm/fpcmake
+else
+NEWFPCMAKE=${FPCMAKE}
+endif
+# Set default compilation options
+BUILDOPTS=PP=$(NEWPP)
+ifdef CROSSOPT
+BUILDOPTS+= CROSSOPT=${CROSSOPT}
+endif
+INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE)
 
 export GDBLIBDIR=/usr/lib
 
