@@ -1,7 +1,55 @@
 
                             Free Pascal Compiler
 
-                                Version 2.2.3
+                                Version 2.3.1
+
+******************************************************************************
+                              What's New in 2.4.0
+******************************************************************************
+
+Free Pascal 2.4.0 contains many fixes and new features. While we did not
+manage to incorporate all planned additions, we believe this release offers a
+nice collection of new functionality and bug fixes.
+
+
+Please also see http://wiki.freepascal.org/User_Changes_2.4.0 for a list
+of changes which may affect the behaviour of previously working code, and
+how to cope with these changes.
+
+Some highlights are:
+
+Platforms:
+  * New platform: Mac OS X/PowerPC64
+  * New platform: Mac OS X/x86_64
+  * New platform: Mac OS X/ARM (iPhone)
+
+Compiler:
+  * Support for Delphi-style resource handling
+  * Whole-program optimization infrastructure, which initially supports
+    program devirtualization and unused virtual method removal
+  * Much faster compilation of units containing many type-sections
+  * The ability to suppress individual hints/warnings/notes
+  * Several improvements to the DWARF debug information generation
+  * Fixes to the generics support
+  * Fixes to the interface delegation (implements) support
+  * Improved cpu register allocation
+  
+RTL:
+  * Linearly scaling multi-threaded memory manager
+  * Support for ANSI ISO Extended Pascal ReadStr/WriteStr
+  * A UnicodeString type that, while not yet equivalent to Delphi 2009's
+    UnicodeString type, offers reference counted UnicodeString support on
+    the Windows, Linux, Mac OS X, FreeBSD and Beos/Haiku platforms.
+
+Packages:
+  * Many improvements to the XML units
+  * Many improvements to the database units
+  * Updated the common Mac OS X Pascal interfaces to r241, including
+    header a translation of the CFNetwork framework
+
+See http://bugs.freepascal.org/changelog_page.php for the list of reported
+bugs which have been fixed in this release.
+
 
 ******************************************************************************
                               What's New in 2.2.3
