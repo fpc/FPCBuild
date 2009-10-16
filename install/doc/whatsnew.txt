@@ -33,9 +33,12 @@ Compiler:
   * Fixes to the generics support
   * Fixes to the interface delegation (implements) support
   * Improved cpu register allocation
+  * Improved ARM/EABI support
   
 RTL:
   * Linearly scaling multi-threaded memory manager
+  * Support for (advisory) file locking on Unix-based platforms
+    when using the SysUtils file creation/opening routines
   * Support for ANSI ISO Extended Pascal ReadStr/WriteStr
   * A UnicodeString type that, while not yet equivalent to Delphi 2009's
     UnicodeString type, offers reference counted UnicodeString support on
@@ -46,6 +49,7 @@ Packages:
   * Many improvements to the database units
   * Updated the common Mac OS X Pascal interfaces to r241, including
     header a translation of the CFNetwork framework
+  * The zipper unit now works correctly on big endian platforms
 
 See http://bugs.freepascal.org/changelog_page.php for the list of reported
 bugs which have been fixed in this release.
