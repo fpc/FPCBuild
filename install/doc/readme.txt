@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 2.2.2
+                               Version 2.4.0rc1
 
 ****************************************************************************
 * Introduction

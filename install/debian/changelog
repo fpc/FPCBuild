@@ -1,3 +1,9 @@
+fpc (2.4.0rc1-0) unstable; urgency=low
+
+  * RC1 for 2.4.0
+
+ -- Mazen Neifer <mazen@freepascal.org>  Sun, 21 Dec 2008 19:21:00 +0100
+
 fpc (2.3.1-0) unstable; urgency=low
 
   * Buils daily snapshots
