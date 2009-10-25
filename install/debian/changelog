@@ -2,30 +2,30 @@ fpc (2.5.1-0) unstable; urgency=low
 
   * Buils daily snapshots
 
- -- Mazen Neifer <mazen@freepascal.org>  Sun, 21 Dec 2008 19:21:00 +0100
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sun, 21 Dec 2008 19:21:00 +0100
 
 fpc (2.2.4-3) unstable; urgency=low
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * Fixed compilation error on power PC.
 
- -- Mazen Neifer <mazen@freepascal.org>  Wed, 03 Jun 2009 12:44:00 +0200
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Wed, 03 Jun 2009 12:44:00 +0200
 
 fpc (2.2.4-2) unstable; urgency=low
 
   [ Stefan Kisdaroczi ]
   * Fixed FindFirst and FindGetFileInfo functions. (Closes: Bug#528681)
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * Added lintian override rules for embedded-zlib
   * Fixed wrong passing of function parameters for powerpc architecture.
     (Closes: Bug#515035, Bug#511626)
 
- -- Mazen Neifer <mazen@freepascal.org>  Sat, 30 May 2009 17:46:00 +0200
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sat, 30 May 2009 17:46:00 +0200
 
 fpc (2.2.4-1) unstable; urgency=low
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * new upstream release
     - Added support for TIFF reading/writing in fcl-image
     - Improvements and fixes in CHM support
@@ -36,7 +36,7 @@ fpc (2.2.4-1) unstable; urgency=low
   [ Paul Gevers ]
   * Fixed typo in sysconst.pp. (Closes: Bug#519013)
 
- -- Mazen Neifer <mazen@freepascal.org>  Sat, 02 May 2009 16:40:30 +0200
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sat, 02 May 2009 16:40:30 +0200
 
 fpc (2.2.2-8) unstable; urgency=low
 
@@ -44,11 +44,11 @@ fpc (2.2.2-8) unstable; urgency=low
   * Moved chmcmd and chmls tools to fp-utils and added man files for them.
   * Added Debian build version to compiler full version.
 
- -- Mazen Neifer <mazen@freepascal.org>  Tue, 16 Dec 2008 23:23:00 +0100
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 16 Dec 2008 23:23:00 +0100
 
 fpc (2.2.2-7) unstable; urgency=low
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * Patches were not applyed by patch system, fixed. (Closes: Bug#508415)
 
  -- Torsten Werner <twerner@debian.org>  Mon, 15 Dec 2008 06:12:58 +0100
@@ -60,7 +60,7 @@ fpc (2.2.2-6) unstable; urgency=low
   * Removed gtk file system bindings as these no more exist in new gtk
     libraries. (Closes: Bug#507520)
 
- -- Mazen Neifer <mazen@freepascal.org>  Wed, 04 Dec 2008 12:21:00 +0100
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Wed, 04 Dec 2008 12:21:00 +0100
 
 fpc (2.2.2-5) unstable; urgency=low
 
@@ -72,7 +72,7 @@ fpc (2.2.2-5) unstable; urgency=low
   * Fixed dependencies in rules file speeding package generation by avoiding
     rebuilding binaries up to four times.
 
- -- Mazen Neifer <mazen@freepascal.org>  Thu, 18 Nov 2008 16:50:00 +0100
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 18 Nov 2008 16:50:00 +0100
 
 fpc (2.2.2-4) unstable; urgency=low
 
@@ -80,13 +80,13 @@ fpc (2.2.2-4) unstable; urgency=low
   * Update ABI version in fpc-depends automatically.
   * Remove empty directories from binary package fpc-source.
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * Removed leading path when calling update-alternatives to remove a Lintian
     error.
   * Fixed clean target.
   * Improved description of packages. (Closes: #498882)
 
- -- Mazen Neifer <mazen@freepascal.org>  Thu, 09 Oct 2008 23:29:00 +0200
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 09 Oct 2008 23:29:00 +0200
 
 fpc (2.2.2-3) unstable; urgency=low
 
@@ -106,7 +106,7 @@ fpc (2.2.2-2) unstable; urgency=low
 
 fpc (2.2.2-1) unstable; urgency=low
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * new upstream release
     - shlobj changes
     - fix for wince library support
@@ -127,9 +127,9 @@ fpc (2.2.2-1) unstable; urgency=low
 fpc (2.2.0-dfsg1-9) unstable; urgency=low
 
   [ Torsten Werner ]
-  * Add Mazen Neifer to Uploaders field.
+  * Add Abou Al Montacir to Uploaders field.
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * Moved FPC sources into a version dependent directory from /usr/share/fpcsrc
     to /usr/share/fpcsrc/${FPCVERSION}. This allow installing more than on FPC
     release.
@@ -139,11 +139,11 @@ fpc (2.2.0-dfsg1-9) unstable; urgency=low
   * Moved fppkg to fp-utils as it is just a helper tool and is not required by
     compiler.
 
- -- Mazen Neifer <mazen@freepascal.org>  Sat, 17 May 2008 17:12:11 +0200
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sat, 17 May 2008 17:12:11 +0200
 
 fpc (2.2.0-dfsg1-8) unstable; urgency=low
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * Fixed build of fpc-source package cased by accidental remove of
   	fpc-source.install file during clean-patched target execution.
   * Fixed Build-Depend clause (needs binutils instead of binutils-dev and no
@@ -151,17 +151,17 @@ fpc (2.2.0-dfsg1-8) unstable; urgency=low
   * Added man pages to the same packages including corresponding binaries.
   * Removed from fpc-source code which isn't required by Lazarus code tool.
 
- -- Mazen Neifer <mazen@freepascal.org>  Thu, 08 May 2008 17:45:19 +0200
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 08 May 2008 17:45:19 +0200
 
 fpc (2.2.0-dfsg1-7) unstable; urgency=low
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * Added make files to source package. This required by fpcmake tool to succeed
     cross platform compilation.
   * Added man pages for fpcmkcfg, fpcsubst, fpcres, mkxmlrpc and rmcvsdir
     binaries.
 
- -- Mazen Neifer <mazen@freepascal.org>  Wed, 30 Apr 2008 16:01:50 +0200
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Wed, 30 Apr 2008 16:01:50 +0200
 
 fpc (2.2.0-dfsg1-6) unstable; urgency=medium
 
@@ -175,7 +175,7 @@ fpc (2.2.0-dfsg1-6) unstable; urgency=medium
 
 fpc (2.2.0-dfsg1-5) unstable; urgency=low
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * Applied fixes from upstream to packages/fcl-xml
 
   [ Torsten Werner ]
@@ -207,7 +207,7 @@ fpc (2.2.0-dfsg1-2) unstable; urgency=low
   * Fix bug in debian/rules: it's $(FPCVERSION) not $(FPC_VERSION).
     (Closes: #457951)
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * New patch from upstream fixes non-deterministic register allocation on
     sparc
   * Modified rules to apply patches before building compiler
@@ -238,7 +238,7 @@ fpc (2.2.0-3) unstable; urgency=low
 
 fpc (2.2.0-2) unstable; urgency=low
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * Added dbase to fcl-db packaged units for arch other than i386.
   * Fixed build issue for sparc and powerpc arch.
 
@@ -296,7 +296,7 @@ fpc (2.0.4-2) unstable; urgency=low
 
 fpc (2.0.4-1) unstable; urgency=low
 
-  [ Mazen Neifer ]
+  [ Abou Al Montacir ]
   * New release (Closes: #383055)
 
   [ Torsten Werner ]
@@ -320,13 +320,13 @@ fpc (2.0.4-rc3) unstable; urgency=low
  
   * New release candidate
 
- -- Mazen Neifer <mazen@freepascal.org>  Sun, 06 Aug 2006 19:00:00 +0200
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sun, 06 Aug 2006 19:00:00 +0200
 
 fpc (2.0.4-rc2) unstable; urgency=low
 
   * New release candidate
 
- -- Mazen Neifer <mazen@freepascal.org>  Tue, 18 Jul 2006 21:23:26 +0200
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 18 Jul 2006 21:23:26 +0200
 
 fpc (2.0.4-rc1) unstable; urgency=low
 

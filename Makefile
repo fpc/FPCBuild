@@ -2311,7 +2311,10 @@ ifneq ($(wildcard ${DEBDIR}/changelog),)
 .PHONY: debcopy deb
 DEBPACKAGEVERSION:=$(shell head -n 1 ${DEBDIR}/changelog | awk '{ print $$2 }' | tr -d '[()]')
 DEBVERSION:=$(shell echo $(DEBPACKAGEVERSION) | awk -F '-' '{ print $$1 }')
-DEBSRCDIR:=$(BUILDDIR)/fpc-$(DEBVERSION)
+DEBSRC=fpc-${DEBVERSION}
+DEBSRCDIR=${BUILDDIR}/${DEBSRC}
+DEBSRC_ORIG=fpc_${DEBVERSION}.orig
+
 PACKAGEVERSION=$(shell dpkg-parsechangelog -l${DEBDIR}/changelog | sed -ne's,^Version: \(.*\),\1,p')
 FPCVERSION=$(shell echo ${PACKAGEVERSION} | awk -F '-' '{ print $$1 }')
 FPCSVNPATH=$(shell echo ${FPCVERSION} | awk -F '.' '{ print "release_"$$1"_"$$2"_"$$3 }')
@@ -2324,11 +2327,6 @@ endif
 debcopy: distclean
 	rm -rf ${BUILDDIR}
 	install -d $(DEBSRCDIR)/fpcsrc
-	$(LINKTREE) ${DEBDIR} $(DEBSRCDIR)/debian
-ifdef SNAPSHOT
-	sed s+${DEBPACKAGEVERSION}+${DEBPACKAGEVERSION}-${BUILDDATE}+ $(DEBSRCDIR)/debian/changelog > $(DEBSRCDIR)/debian/changelog.tmp
-	mv $(DEBSRCDIR)/debian/changelog.tmp $(DEBSRCDIR)/debian/changelog
-endif
 	$(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/compiler $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/rtl $(DEBSRCDIR)/fpcsrc
@@ -2346,26 +2344,36 @@ endif
 	${MKDIR} $(DEBSRCDIR)/install
 	$(LINKTREE) install/man $(DEBSRCDIR)/install
 	$(LINKTREE) install/doc $(DEBSRCDIR)/install
-	find $(DEBSRCDIR) -name 'CVS*' | xargs -n1 rm -rf
-	find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
+debsetup:
+	$(LINKTREE) ${DEBDIR} $(DEBSRCDIR)/debian
+ifdef SNAPSHOT
+	sed s+${DEBPACKAGEVERSION}+${DEBPACKAGEVERSION}-${BUILDDATE}+ $(DEBSRCDIR)/debian/changelog > $(DEBSRCDIR)/debian/changelog.tmp
+	mv $(DEBSRCDIR)/debian/changelog.tmp $(DEBSRCDIR)/debian/changelog
+endif
 	chmod 755 $(DEBSRCDIR)/debian/rules
+	find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
 debbuild:
 ifdef NODOCS
 	cd $(DEBSRCDIR) ; dpkg-buildpackage -us -uc -B
 else
 	cd $(DEBSRCDIR) ; dpkg-buildpackage -us -uc
 endif
+debcheckpolicy:
+ifdef LINTIAN
+	cd ${DEBSRCDIR} ; lintian -i ../*.changes
+endif
+debclean:
 	mv -v -t . \
 	$(DEBSRCDIR)/../*.changes \
 	$(DEBSRCDIR)/../*.deb \
 	$(DEBSRCDIR)/../*.dsc \
-	$(DEBSRCDIR)/../*.tar.gz
-debclean:
+	$(DEBSRCDIR)/../*.gz
 	rm -rf $(DEBSRCDIR)
 	rmdir $(BUILDDIR)
-deb: checkfpcdir debcheck debcopy debbuild debclean
-debtargz: checkfpcdir
-	$(MAKE) fpc_zipinstall USETAR=y ZIPTARGET=debcopy PACKDIR=$(DEBSRCDIR) FULLZIPNAME=fpc-$(DEBVERSION).orig
+deb: debcheck debcopy deborigtargz debsetup debbuild debcheckpolicy debclean
+deborigtargz:
+	#$(MAKE) fpc_zipinstall USETAR=y ZIPTARGET=debcopy PACKDIR=$(DEBSRCDIR) FULLZIPNAME=${DEBSRC_ORIG}
+	tar -C ${BUILDDIR} -zcf ${BUILDDIR}/${DEBSRC_ORIG}.tar.gz --exclude-vcs ${DEBSRC}
 endif   # changelog found
 endif
 ifdef inUnix
