@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                                Version 2.3.1
+                                Version 2.4.0
 
 ******************************************************************************
                               What's New in 2.4.0
@@ -56,10 +56,10 @@ bugs which have been fixed in this release.
 
 
 ******************************************************************************
-                              What's New in 2.2.3
+                              What's New in 2.2.4
 ******************************************************************************
 
-Free Pascal 2.2.3 contains many bug fixes and some new features. The 
+Free Pascal 2.2.4 contains many bug fixes and some new features. The 
 main purpose of this release is to fix problems reported with FPC 2.2.2.
 
 Please also see http://wiki.freepascal.org/User_Changes_2.2.4 for a list
