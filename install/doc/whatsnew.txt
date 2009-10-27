@@ -48,7 +48,7 @@ Packages:
   * Many improvements to the XML units
   * Many improvements to the database units
   * Updated the common Mac OS X Pascal interfaces to r241, including
-    header a translation of the CFNetwork framework
+    an updated translation of the CFNetwork framework
   * The zipper unit now works correctly on big endian platforms
 
 See http://bugs.freepascal.org/changelog_page.php for the list of reported
