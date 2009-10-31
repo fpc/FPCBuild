@@ -2,9 +2,9 @@ Source: fpc
 Section: devel
 Priority: optional
 Maintainer: Carlos Laviola <claviola@debian.org>
-Uploaders: Torsten Werner <twerner@debian.org>, Mazen Neifer <mazen@freepascal.org>
-Standards-Version: 3.8.0
-Build-Depends: debhelper (>= 5), quilt, fp-compiler (>= 2.0.4), fp-units-base,
+Uploaders: Torsten Werner <twerner@debian.org>, Abou Al Montacir <abou.almontacir@sfr.fr>
+Standards-Version: 3.8.3
+Build-Depends: debhelper (>= 7), quilt, fp-compiler (>= 2.0.4), fp-units-base,
  fp-utils, mawk | awk, gs-common, libncurses5-dev, binutils, libreadline5-dev
 Build-Depends-Indep: hevea
 Vcs-Svn: https://bollin.googlecode.com/svn/fpc/trunk/

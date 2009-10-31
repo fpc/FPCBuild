@@ -201,9 +201,9 @@ install-arch-stamp:
 	/bin/bash fpcsrc/compiler/utils/samplecfg \
 		/usr/lib/fpc/${DEB_UPSTREAM_VERSION} ${INSTALL_DIR}/etc
 	install -D debian/fpc-depends debian/tmp/usr/bin/
-	set -x; for PACKAGE in fp-compiler fp-ide fp-units-gfx fp-units-misc fp-units-net fp-utils; do \
-	  install -m644 -D debian/overrides/$$PACKAGE                             \
-	    debian/$$PACKAGE/usr/share/lintian/overrides/$$PACKAGE;               \
+	set -x; cd debian/overrides ; for PACKAGE in * ; do \
+	  install -m644 -D $$PACKAGE                             \
+	    ../$$PACKAGE/usr/share/lintian/overrides/$$PACKAGE ; \
 	done
 	touch install-arch-stamp
 
@@ -271,7 +271,7 @@ binary-indep: clean-patched build-doc install-doc install-source debian-files
 	@echo "--- Building: arch-indep packages"
 	dh_testdir
 	dh_testroot
-	dh_installdocs -i
+	dh_installdocs -i -X.in
 	dh_installchangelogs -i
 	dh_install -i --sourcedir=debian/tmp --list-missing
 	find debian/fpc-source/usr/share/fpcsrc/ -type f \
