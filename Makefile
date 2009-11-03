@@ -2182,6 +2182,8 @@ sourcebase:
 	$(COPY) fpcsrc/Makefile*  $(INSTALL_BASESOURCEDIR)
 	$(COPY) fpcsrc/packages/Makefile* $(INSTALL_BASESOURCEDIR)/packages
 	$(COPY) fpcsrc/packages/fpmake.pp $(INSTALL_BASESOURCEDIR)/packages
+	$(COPY) fpcsrc/packages/fpmake_add.inc $(INSTALL_BASESOURCEDIR)/packages
+	$(COPY) fpcsrc/packages/fpmake_proc.inc $(INSTALL_BASESOURCEDIR)/packages
 sourcezip:
 	$(MAKE) fpc_zipinstall ZIPTARGET=sourcebase ZIPNAME=base ZIPSUFFIX=$(ZIPSOURCESUFFIX)
 	$(MAKE) -C fpcsrc compiler_zipsourceinstall
