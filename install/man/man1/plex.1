@@ -13,22 +13,26 @@ plex \- The Pascal Lex lexical analyzer generator.
 .TP
 .B \-v
 .I Verbose:
-Lex generates a readable description of the generated
+.BR plex
+generates a readable description of the generated
 lexical analyzer, written to lex-file with new extension 
 .I .lst
 .TP
 .B \-o  
 .I Optimize:
-Lex optimizes DFA tables to produce a minimal DFA.
+.BR plex
+optimizes DFA tables to produce a minimal DFA.
 
 .SH DESCRIPTION
 
-TP Lex is a program generator that is used to generate the Turbo Pascal source
+.BR plex
+is a program generator that is used to generate the Turbo Pascal source
 code for a lexical analyzer subroutine from the specification of an input
 language by a regular expression grammar.
 
-TP Lex parses the source grammar contained in lex-file (with default suffix
-.l) and writes the constructed lexical analyzer subroutine to the specified
+.BR plex
+parses the source grammar contained in lex-file (with default suffix .l)
+and writes the constructed lexical analyzer subroutine to the specified
 output-file (with default suffix .pas); if no output file is specified, output
 goes to lex-file with new suffix .pas. If any errors are found during
 compilation, error messages are written to the list file (lex-file with new
@@ -63,7 +67,7 @@ lexlib.pas for further information.
 
 .SH MORE INFORMATION
 
-For more information, see the documentation that comes with TP lex and yacc.
+For more information, see the documentation that comes with plex and yacc.
 
 .SH AUTHOR
 Albert Graeff (<ag@muwiinfa.geschichte.uni-mainz.de>, <Dr.Graef@t-online.de>)
