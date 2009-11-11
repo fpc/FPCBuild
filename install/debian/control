@@ -123,7 +123,7 @@ Description: Free Pascal - Documentation
  class based Free Component Library (FCL) adding many Delphi extensions and
  interfacing many popular open source libraries.
  .
- This package provides documentation for the Free Pascal Compiler in PDF
+ This package provides documentation for the Free Pascal Compiler in HTML
  format.
 
 Package: fp-units-rtl

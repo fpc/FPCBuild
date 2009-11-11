@@ -2278,9 +2278,18 @@ endif
 override LIBGDBFILE:=$(firstword $(wildcard $(addsuffix /libgdb.a,$(GDBLIBDIR))))
 endif
 ifeq ($(LIBGDBFILE),)
+SYSLIBDIR=/lib /usr/lib /usr/local/lib
+override LIBGDBFILE=$(firstword $(wildcard $(addsuffix /libgdb.a,$(SYSLIBDIR))))
+ifneq (${LIBGDBFILE},)
+$(warning Using system default libgdb file located in ${LIBGDBFILE})
+override GDBLIBDIR=$(dir ${LIBGDBFILE})
+override LIBGDBDIR=
+endif
+ifeq ($(LIBGDBFILE),)
 $(error No libgdb.a found, supply NOGDB=1 to disable debugger support)
 endif
-endif  #NOGDB
+endif
+endif
 .PHONY: utilities zip_util copy_utilfiles
 UTILS_OUTDIR=$(INSTALL_PREFIX)/bin/$(TARGETSUFFIX)
 ifeq ($(OS_TARGET),go32v2)
@@ -2316,11 +2325,11 @@ DEBVERSION:=$(shell echo $(DEBPACKAGEVERSION) | awk -F '-' '{ print $$1 }')
 DEBSRC=fpc-${DEBVERSION}
 DEBSRCDIR=${BUILDDIR}/${DEBSRC}
 DEBSRC_ORIG=fpc_${DEBVERSION}.orig
-
-PACKAGEVERSION=$(shell dpkg-parsechangelog -l${DEBDIR}/changelog | sed -ne's,^Version: \(.*\),\1,p')
-FPCVERSION=$(shell echo ${PACKAGEVERSION} | awk -F '-' '{ print $$1 }')
-FPCSVNPATH=$(shell echo ${FPCVERSION} | awk -F '.' '{ print "release_"$$1"_"$$2"_"$$3 }')
 BUILDDATE=$(shell /bin/date --utc +%Y%m%d)
+DEB_BUILDPKG_OPT=-sa
+ifndef SIGN
+DEB_BUILDPKG_OPT+= -us -uc
+endif
 debcheck:
 ifneq ($(DEBVERSION),$(PACKAGE_VERSION))
 	@$(ECHO) "Debian version ($(DEBVERSION)) is not correct, expect $(PACKAGE_VERSION)"
@@ -2339,7 +2348,7 @@ debcopy: distclean
 	$(LINKTREE) fpcsrc/utils $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) demo $(DEBSRCDIR)
 	$(LINKTREE) logs $(DEBSRCDIR)
-ifndef NOGDB
+ifneq (${LIBGDBDIR},)
 	$(LINKTREE) $(LIBGDBDIR) $(DEBSRCDIR)/fpcsrc
 endif
 	$(LINKTREE) fpcdocs $(DEBSRCDIR)
@@ -2356,9 +2365,9 @@ endif
 	find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
 debbuild:
 ifdef NODOCS
-	cd $(DEBSRCDIR) ; dpkg-buildpackage -us -uc -B
+	cd ${DEBSRCDIR} ; dpkg-buildpackage ${DEB_BUILDPKG_OPT} -B
 else
-	cd $(DEBSRCDIR) ; dpkg-buildpackage -us -uc
+	cd ${DEBSRCDIR} ; dpkg-buildpackage ${DEB_BUILDPKG_OPT}
 endif
 debcheckpolicy:
 ifdef LINTIAN
