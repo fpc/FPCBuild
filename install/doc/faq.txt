@@ -149,9 +149,9 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
           ☆ 04/2009: 2.2.4 version
      2. Which versions exist, and which one should I use?
 
-        The latest official version is 2.2.4, bugfix release for 2.2.0. New
-        development is performed in 2.3.x series, which eventually gets
-        released as 2.4.0. Post 2.4.0 development is done in trunk (2.5.1)
+        The latest official version is 2.4.0 a new major version New
+        development is performed in trunk, as the 2.5.x series, which
+        eventually gets released as 2.6.0.
 
         Historic versions
 

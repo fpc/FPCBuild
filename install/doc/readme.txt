@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 2.2.2
+                               Version 2.4.0
 
 ****************************************************************************
 * Introduction
@@ -15,7 +15,7 @@ several platforms. The language and the runtime library are almost
 compatible with Turbo Pascal 7.0 and recent Delphi releases. There is also
 partial support for the Macintosh pascal dialect.
 
-Free Pascal 2.2.2 is currently available for the following platforms:
+Free Pascal 2.4.0 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-powerpc
@@ -27,6 +27,10 @@ Free Pascal 2.2.2 is currently available for the following platforms:
 - FreeBSD-i386
 - Mac OS X/Darwin for PowerPC
 - Mac OS X/Darwin for Intel (i386)
+- Mac OS X/Darwin for PowerPC64
+- Mac OS X/Darwin for Intel (x86_64)
+- Mac OS X/Darwin for PowerPC64
+- Mac OS X/Darwin for Arm (iPhone)
 - GO32v2-i386
 - OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 
