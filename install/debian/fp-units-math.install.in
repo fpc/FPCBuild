@@ -1,4 +1,3 @@
-/usr/share/doc/fp-units-math
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/gmp
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/numlib
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/proj4

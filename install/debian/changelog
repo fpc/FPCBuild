@@ -2,7 +2,26 @@ fpc (2.5.1-0) unstable; urgency=low
 
   * Buils daily snapshots
 
- -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sun, 21 Dec 2008 19:21:00 +0100
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sun, 04 Dec 2009 23:59:00 +0100
+
+fpc (2.2.4-5) unstable; urgency=low
+
+  * Added a new package fp-units-math for math development support.
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sun, 04 Dec 2009 21:11:00 +0100
+
+fpc (2.2.4-4) unstable; urgency=low
+
+  * Added support of armel arch to fpcmake from upstream.
+  * Adde documentation index file. (fixes linitan warning)
+  * Bumped standard version to 3.8.3.
+  * Added README.source. (fixes linitian warning)
+  * Added support for automatic cross-platform deb packaging.
+  * Updated fcl-xml from upstream to allow building next upstream release doc.
+  * Bumped fpc-abi to take in account new fcl-xml interface changes.
+  * Removed build dependency on libreadline5-dev as no more required.
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sun, 30 Nov 2009 19:03:00 +0100
 
 fpc (2.2.4-3) unstable; urgency=low
 

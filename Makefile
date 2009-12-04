@@ -2321,12 +2321,34 @@ endif
 ifneq ($(wildcard ${DEBDIR}/changelog),)
 .PHONY: debcopy deb
 DEBPACKAGEVERSION:=$(shell head -n 1 ${DEBDIR}/changelog | awk '{ print $$2 }' | tr -d '[()]')
-DEBVERSION:=$(shell echo $(DEBPACKAGEVERSION) | awk -F '-' '{ print $$1 }')
+DEBVERSION=$(firstword $(subst -, ,${DEBPACKAGEVERSION}))
+DEBBUILD=$(lastword $(subst -, ,${DEBPACKAGEVERSION}))
 DEBSRC=fpc-${DEBVERSION}
 DEBSRCDIR=${BUILDDIR}/${DEBSRC}
 DEBSRC_ORIG=fpc_${DEBVERSION}.orig
 BUILDDATE=$(shell /bin/date --utc +%Y%m%d)
+ifdef MENTORS
 DEB_BUILDPKG_OPT=-sa
+else
+DEB_BUILDPKG_OPT=
+endif
+ifdef NODOCS
+	DEB_BUILDPKG_OPT+= -B
+endif
+ifeq ($(wildcard ${DEBSRC_ORIG}.tar.gz),)
+ifeq (${DEBBUILD},0)
+DEBUSESVN=1
+endif
+ifeq (${DEBBUILD},1)
+DEBUSESVN=1
+endif
+ifdef SNAPSHOT
+DEBUSESVN=1
+endif
+ifndef DEBUSESVN
+$(error Need "${DEBSRC_ORIG}.tar.gz" to build for DEBBUILD = "${DEBBUILD}" > 1)
+endif
+endif
 ifndef SIGN
 DEB_BUILDPKG_OPT+= -us -uc
 endif
@@ -2336,8 +2358,9 @@ ifneq ($(DEBVERSION),$(PACKAGE_VERSION))
 	@exit 1
 endif
 debcopy: distclean
-	rm -rf ${BUILDDIR}
-	install -d $(DEBSRCDIR)/fpcsrc
+	${DELTREE} ${BUILDDIR}
+	${MKDIRTREE} $(DEBSRCDIR)/fpcsrc
+ifdef DEBUSESVN
 	$(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/compiler $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/rtl $(DEBSRCDIR)/fpcsrc
@@ -2355,36 +2378,42 @@ endif
 	${MKDIR} $(DEBSRCDIR)/install
 	$(LINKTREE) install/man $(DEBSRCDIR)/install
 	$(LINKTREE) install/doc $(DEBSRCDIR)/install
+else
+	tar -C ${BUILDDIR} -zxf ${DEBSRC_ORIG}.tar.gz ${DEBSRC}
+	${DELTREE} $(DEBSRCDIR)/debian
+endif
 debsetup:
 	$(LINKTREE) ${DEBDIR} $(DEBSRCDIR)/debian
 ifdef SNAPSHOT
 	sed s+${DEBPACKAGEVERSION}+${DEBPACKAGEVERSION}-${BUILDDATE}+ $(DEBSRCDIR)/debian/changelog > $(DEBSRCDIR)/debian/changelog.tmp
-	mv $(DEBSRCDIR)/debian/changelog.tmp $(DEBSRCDIR)/debian/changelog
+	${MOVE} $(DEBSRCDIR)/debian/changelog.tmp $(DEBSRCDIR)/debian/changelog
 endif
 	chmod 755 $(DEBSRCDIR)/debian/rules
 	find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
 debbuild:
-ifdef NODOCS
-	cd ${DEBSRCDIR} ; dpkg-buildpackage ${DEB_BUILDPKG_OPT} -B
-else
 	cd ${DEBSRCDIR} ; dpkg-buildpackage ${DEB_BUILDPKG_OPT}
-endif
 debcheckpolicy:
 ifdef LINTIAN
 	cd ${DEBSRCDIR} ; lintian -i ../*.changes
 endif
 debclean:
+ifndef DEBUSESVN
+	${DEL} ${BUILDDIR}/${DEBSRC_ORIG}.tar.gz
+endif
 	mv -v -t . \
 	$(DEBSRCDIR)/../*.changes \
 	$(DEBSRCDIR)/../*.deb \
 	$(DEBSRCDIR)/../*.dsc \
 	$(DEBSRCDIR)/../*.gz
-	rm -rf $(DEBSRCDIR)
+	${DELTREE} $(DEBSRCDIR)
 	rmdir $(BUILDDIR)
 deb: debcheck debcopy deborigtargz debsetup debbuild debcheckpolicy debclean
 deborigtargz:
-	#$(MAKE) fpc_zipinstall USETAR=y ZIPTARGET=debcopy PACKDIR=$(DEBSRCDIR) FULLZIPNAME=${DEBSRC_ORIG}
+ifdef DEBUSESVN
 	tar -C ${BUILDDIR} -zcf ${BUILDDIR}/${DEBSRC_ORIG}.tar.gz --exclude-vcs ${DEBSRC}
+else
+	${LINKTREE} ${DEBSRC_ORIG}.tar.gz ${BUILDDIR}/${DEBSRC_ORIG}.tar.gz
+endif
 endif   # changelog found
 endif
 ifdef inUnix
@@ -2430,7 +2459,7 @@ endif
 	$(LINKTREE) fpcsrc/ide $(RPMSRCDIR)
 	$(LINKTREE) fpcsrc/packages $(RPMSRCDIR)
 	$(LINKTREE) fpcsrc/utils $(RPMSRCDIR)
-ifndef NOGDB
+ifneq (${LIBGDBDIR},)
 	$(LINKTREE) $(LIBGDBDIR) $(RPMSRCDIR)
 endif
 	$(LINKTREE) demo $(RPMSRCDIR)
