@@ -3,9 +3,10 @@ Section: devel
 Priority: optional
 Maintainer: Carlos Laviola <claviola@debian.org>
 Uploaders: Torsten Werner <twerner@debian.org>, Abou Al Montacir <abou.almontacir@sfr.fr>
+DM-Upload-Allowed: yes
 Standards-Version: 3.8.3
 Build-Depends: debhelper (>= 7), quilt, fp-compiler (>= 2.0.4), fp-units-base,
- fp-utils, mawk | awk, gs-common, libncurses5-dev, binutils, libreadline5-dev
+ fp-utils, mawk | awk, gs-common, libncurses5-dev, binutils
 Build-Depends-Indep: hevea
 Vcs-Svn: https://bollin.googlecode.com/svn/fpc/trunk/
 Vcs-Browser: http://bollin.googlecode.com/svn/fpc/trunk/
@@ -313,6 +314,7 @@ Description: Free Pascal - math units
  interfacing many popular open source libraries.
  .
  This package contains Free Pascal math interfacing units for:
+  - gmp : Interface for the GNU Multiple Precision Arithmetic Library
   - proj4 : Compute projections
   - numlib : numerical computing
   - symbolic : symbolic computing
