@@ -195,17 +195,44 @@ echo
 # Here we start the thing.
 HERE=`pwd`
 
-# Install in /usr/local or /usr ?
-if checkpath /usr/local/bin; then
-    PREFIX=/usr/local
-else
-    PREFIX=/usr
-fi
+OSNAME=`uname -s | tr A-Z a-z`
+
+case $OSNAME in
+  haiku)
+     # Install in /boot/common or /boot/home/config ?
+     if checkpath /boot/common/bin; then
+         PREFIX=/boot/common
+     else
+         PREFIX=/boot/home/config
+     fi
+  ;;
+  freebsd)
+     PREFIX=/usr/local
+  ;;
+  *)
+     # Install in /usr/local or /usr ?
+     if checkpath /usr/local/bin; then
+         PREFIX=/usr/local
+     else
+         PREFIX=/usr
+     fi
+  ;;
+esac
+
 # If we can't write on prefix, select subdir of home dir
 if [ ! -w $PREFIX ]; then
   PREFIX=$HOME/fpc-$VERSION
 fi
-ask "Install prefix (/usr or /usr/local) " PREFIX
+
+case $OSNAME in
+  haiku)
+     ask "Install prefix (/boot/common or /boot/home/config) " PREFIX
+  ;;
+  *)
+     ask "Install prefix (/usr or /usr/local) " PREFIX
+  ;;
+esac
+
 # Support ~ expansion
 PREFIX=`eval echo $PREFIX`
 export PREFIX
@@ -215,7 +242,6 @@ makedirhierarch $PREFIX
 LIBDIR=$PREFIX/lib/fpc/$VERSION
 SRCDIR=$PREFIX/src/fpc-$VERSION
 EXECDIR=$PREFIX/bin
-OSNAME=`uname -s | tr A-Z a-z`
 
 BSDHIER=0
 case $OSNAME in
@@ -265,6 +291,7 @@ echo
 if [ -f doc-pdf.tar.gz ]; then
   if yesno "Install documentation"; then
     echo Installing documentation in $DOCDIR ...
+    makedirhierarch $DOCDIR
     unztar doc-pdf.tar.gz $DOCDIR "--strip 1"
     echo Done.
   fi
