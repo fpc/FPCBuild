@@ -2280,18 +2280,9 @@ endif
 override LIBGDBFILE:=$(firstword $(wildcard $(addsuffix /libgdb.a,$(GDBLIBDIR))))
 endif
 ifeq ($(LIBGDBFILE),)
-SYSLIBDIR=/lib /usr/lib /usr/local/lib
-override LIBGDBFILE=$(firstword $(wildcard $(addsuffix /libgdb.a,$(SYSLIBDIR))))
-ifneq (${LIBGDBFILE},)
-$(warning Using system default libgdb file located in ${LIBGDBFILE})
-override GDBLIBDIR=$(dir ${LIBGDBFILE})
-override LIBGDBDIR=
-endif
-ifeq ($(LIBGDBFILE),)
 $(error No libgdb.a found, supply NOGDB=1 to disable debugger support)
 endif
-endif
-endif
+endif  #NOGDB
 .PHONY: utilities zip_util copy_utilfiles
 UTILS_OUTDIR=$(INSTALL_PREFIX)/bin/$(TARGETSUFFIX)
 ifeq ($(OS_TARGET),go32v2)
@@ -2323,46 +2314,22 @@ endif
 ifneq ($(wildcard ${DEBDIR}/changelog),)
 .PHONY: debcopy deb
 DEBPACKAGEVERSION:=$(shell head -n 1 ${DEBDIR}/changelog | awk '{ print $$2 }' | tr -d '[()]')
-DEBVERSION=$(firstword $(subst -, ,${DEBPACKAGEVERSION}))
-DEBBUILD=$(lastword $(subst -, ,${DEBPACKAGEVERSION}))
+DEBVERSION:=$(shell echo $(DEBPACKAGEVERSION) | awk -F '-' '{ print $$1 }')
 DEBSRC=fpc-${DEBVERSION}
 DEBSRCDIR=${BUILDDIR}/${DEBSRC}
 DEBSRC_ORIG=fpc_${DEBVERSION}.orig
+PACKAGEVERSION=$(shell dpkg-parsechangelog -l${DEBDIR}/changelog | sed -ne's,^Version: \(.*\),\1,p')
+FPCVERSION=$(shell echo ${PACKAGEVERSION} | awk -F '-' '{ print $$1 }')
+FPCSVNPATH=$(shell echo ${FPCVERSION} | awk -F '.' '{ print "release_"$$1"_"$$2"_"$$3 }')
 BUILDDATE=$(shell /bin/date --utc +%Y%m%d)
-ifdef MENTORS
-DEB_BUILDPKG_OPT=-sa
-else
-DEB_BUILDPKG_OPT=
-endif
-ifdef NODOCS
-	DEB_BUILDPKG_OPT+= -B
-endif
-ifeq ($(wildcard ${DEBSRC_ORIG}.tar.gz),)
-ifeq (${DEBBUILD},0)
-DEBUSESVN=1
-endif
-ifeq (${DEBBUILD},1)
-DEBUSESVN=1
-endif
-ifdef SNAPSHOT
-DEBUSESVN=1
-endif
-ifndef DEBUSESVN
-$(error Need "${DEBSRC_ORIG}.tar.gz" to build for DEBBUILD = "${DEBBUILD}" > 1)
-endif
-endif
-ifndef SIGN
-DEB_BUILDPKG_OPT+= -us -uc
-endif
 debcheck:
 ifneq ($(DEBVERSION),$(PACKAGE_VERSION))
 	@$(ECHO) "Debian version ($(DEBVERSION)) is not correct, expect $(PACKAGE_VERSION)"
 	@exit 1
 endif
 debcopy: distclean
-	${DELTREE} ${BUILDDIR}
-	${MKDIRTREE} $(DEBSRCDIR)/fpcsrc
-ifdef DEBUSESVN
+	rm -rf ${BUILDDIR}
+	install -d $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/compiler $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/rtl $(DEBSRCDIR)/fpcsrc
@@ -2373,49 +2340,42 @@ ifdef DEBUSESVN
 	$(LINKTREE) fpcsrc/utils $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) demo $(DEBSRCDIR)
 	$(LINKTREE) logs $(DEBSRCDIR)
-ifneq (${LIBGDBDIR},)
+ifndef NOGDB
 	$(LINKTREE) $(LIBGDBDIR) $(DEBSRCDIR)/fpcsrc
 endif
 	$(LINKTREE) fpcdocs $(DEBSRCDIR)
 	${MKDIR} $(DEBSRCDIR)/install
 	$(LINKTREE) install/man $(DEBSRCDIR)/install
 	$(LINKTREE) install/doc $(DEBSRCDIR)/install
-else
-	tar -C ${BUILDDIR} -zxf ${DEBSRC_ORIG}.tar.gz ${DEBSRC}
-	${DELTREE} $(DEBSRCDIR)/debian
-endif
 debsetup:
 	$(LINKTREE) ${DEBDIR} $(DEBSRCDIR)/debian
 ifdef SNAPSHOT
 	sed s+${DEBPACKAGEVERSION}+${DEBPACKAGEVERSION}-${BUILDDATE}+ $(DEBSRCDIR)/debian/changelog > $(DEBSRCDIR)/debian/changelog.tmp
-	${MOVE} $(DEBSRCDIR)/debian/changelog.tmp $(DEBSRCDIR)/debian/changelog
+	mv $(DEBSRCDIR)/debian/changelog.tmp $(DEBSRCDIR)/debian/changelog
 endif
 	chmod 755 $(DEBSRCDIR)/debian/rules
 	find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
 debbuild:
-	cd ${DEBSRCDIR} ; dpkg-buildpackage ${DEB_BUILDPKG_OPT}
+ifdef NODOCS
+	cd $(DEBSRCDIR) ; dpkg-buildpackage -us -uc -B
+else
+	cd $(DEBSRCDIR) ; dpkg-buildpackage -us -uc
+endif
 debcheckpolicy:
 ifdef LINTIAN
 	cd ${DEBSRCDIR} ; lintian -i ../*.changes
 endif
 debclean:
-ifndef DEBUSESVN
-	${DEL} ${BUILDDIR}/${DEBSRC_ORIG}.tar.gz
-endif
 	mv -v -t . \
 	$(DEBSRCDIR)/../*.changes \
 	$(DEBSRCDIR)/../*.deb \
 	$(DEBSRCDIR)/../*.dsc \
 	$(DEBSRCDIR)/../*.gz
-	${DELTREE} $(DEBSRCDIR)
+	rm -rf $(DEBSRCDIR)
 	rmdir $(BUILDDIR)
 deb: debcheck debcopy deborigtargz debsetup debbuild debcheckpolicy debclean
 deborigtargz:
-ifdef DEBUSESVN
 	tar -C ${BUILDDIR} -zcf ${BUILDDIR}/${DEBSRC_ORIG}.tar.gz --exclude-vcs ${DEBSRC}
-else
-	${LINKTREE} ${DEBSRC_ORIG}.tar.gz ${BUILDDIR}/${DEBSRC_ORIG}.tar.gz
-endif
 endif   # changelog found
 endif
 ifdef inUnix
@@ -2461,7 +2421,7 @@ endif
 	$(LINKTREE) fpcsrc/ide $(RPMSRCDIR)
 	$(LINKTREE) fpcsrc/packages $(RPMSRCDIR)
 	$(LINKTREE) fpcsrc/utils $(RPMSRCDIR)
-ifneq (${LIBGDBDIR},)
+ifndef NOGDB
 	$(LINKTREE) $(LIBGDBDIR) $(RPMSRCDIR)
 endif
 	$(LINKTREE) demo $(RPMSRCDIR)
