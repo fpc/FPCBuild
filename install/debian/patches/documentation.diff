@@ -1,0 +1,16 @@
+This patch removes a sanity check on compiler version. Indeed in order to build
+the documentation of 2.4.0 we need some fixes in fcl-xml package. Thoses fixes were ported in 2.2.4-5 is required to build the documentation. Without this
+patch FPC documentation won't build on Debian and will FTBFS.
+
+--- fpcbuild-2.4.0~/fpcdocs/relinkdocs.pp
++++ fpcbuild-2.4.0/fpcdocs/relinkdocs.pp
+@@ -22,9 +22,6 @@
+ {$stringchecks on}
+ {$endif}
+ {$info only works properly with 2.3.1+ of july 2009 or newer }
+-{$ifdef ver2_2}
+-   Die.
+-{$endif}
+ 
+ Uses cthreads,strutils,typinfo,Sax_HTML,sysutils,classes,dom_html,xmlwrite,htmwrite8859,relinkhtml;
+ 
