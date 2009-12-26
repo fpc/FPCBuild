@@ -333,9 +333,9 @@ renametoshort:
         -mv $(PKGPRE)$(PKGUNITSPRE)fcl-web$(ZIPSUFFIX).zip ufclw$(ZIPSUFFIXSHORT).zip
         -mv $(PKGPRE)$(PKGUNITSPRE)fcl-xml$(ZIPSUFFIX).zip ufclx$(ZIPSUFFIXSHORT).zip
         -mv $(PKGPRE)$(PKGUNITSPRE)fcl-json$(ZIPSUFFIX).zip ufclj$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)httpd-1.3$(ZIPSUFFIX).zip uhd13$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)httpd-2.0$(ZIPSUFFIX).zip uhd20$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)httpd-2.2$(ZIPSUFFIX).zip uhd22$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGPRE)$(PKGUNITSPRE)httpd1.3$(ZIPSUFFIX).zip uhd13$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGPRE)$(PKGUNITSPRE)httpd2.0$(ZIPSUFFIX).zip uhd20$(ZIPSUFFIXSHORT).zip
+        -mv $(PKGPRE)$(PKGUNITSPRE)httpd2.2$(ZIPSUFFIX).zip uhd22$(ZIPSUFFIXSHORT).zip
         -mv $(PKGPRE)$(PKGUNITSPRE)oggvorbis$(ZIPSUFFIX).zip uoggv$(ZIPSUFFIXSHORT).zip
         -mv $(PKGPRE)$(PKGUNITSPRE)openal$(ZIPSUFFIX).zip uoal$(ZIPSUFFIXSHORT).zip
         -mv $(PKGPRE)$(PKGUNITSPRE)openssl$(ZIPSUFFIX).zip uossl$(ZIPSUFFIXSHORT).zip
