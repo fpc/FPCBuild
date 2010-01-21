@@ -89,9 +89,9 @@ CONST TheWidth  = 11; {Watch out, also correct RowMask!}
        BaseY     =9;
       {$ENDIF}
 
-TYPE TetrisFieldType = ARRAY [0..25] OF LONGINT;
+TYPE TetrisFieldType = ARRAY [0..25] OF CARDINAL;
      LevelInfoType   = ARRAY [0..NrLevels-1] OF LONGINT;
-     FigureType      = LONGINT;    { actually array[0..4][0..4] of bit rounded up to a longint}
+     FigureType      = CARDINAL;    { actually array[0..4][0..4] of bit rounded up to a longint}
 {     CHARSET         = SET OF CHAR;}
 
 {The figures, are converted to binary bitmaps on startup.}
@@ -105,12 +105,12 @@ CONST GraphFigures : ARRAY[0..4] OF String[80] =(
 
 {Their relative occurance : }
 
-      FigureChance : ARRAY[0..MaxFigures-1] OF LONGINT =(
+      FigureChance : ARRAY[0..MaxFigures-1] OF CARDINAL =(
   8,     8,    8,    8,     8,   8,   10,    1,   1,     1,    1,    1,0,0,0,0 );
 
 {Scores per figure. Not necessarily used. Just for future use}
 
-      FigureScore  : ARRAY[0..MaxFigures-1] OF LONGINT =(
+      FigureScore  : ARRAY[0..MaxFigures-1] OF CARDINAL=(
   2,     2,    4,    4,     1,   2,    2,   10,  10,    10,   20,   10,0,0,0,0 );
 
 {Diverse AND/OR masks to manipulate graphics}
@@ -176,7 +176,7 @@ VAR
     NrFigures   : LONGINT;                      {# Figures currently used}
     RightSizeArray,                             {Nunber of empty columns to the left }
     LeftSizeArray,                              {or right of the figure/piece}
-    Figures     : ARRAY[0..MaxFigures-1,0..3] OF LONGINT; {All bitmap info of figures}
+    Figures     : ARRAY[0..MaxFigures-1,0..3] OF CARDINAL; {All bitmap info of figures}
 
     NrFiguresLoaded : LONGINT;                  {Total figures available in GraphFigures}
     CurrentCol  : LONGINT;                      {Color of current falling piece}
@@ -201,7 +201,7 @@ instead of always a 4x4 (v0.04) or 5x5 (v0.05) rotation.
 
 This avoids weird, jumpy behaviour when rotating small pieces.}
 
-VAR I,J, NewFig:LONGINT;
+VAR I,J, NewFig:CARDINAL;
 
 BEGIN
  NewFig:=0;
@@ -247,7 +247,7 @@ BEGIN
  Leftsize:=I;
 END;
 
-FUNCTION FigSym(Figure:LONGINT;RightSizeFig:LONGINT):LONGINT;
+FUNCTION FigSym(Figure:CARDINAL;RightSizeFig:CARDINAL):CARDINAL;
  {Try to find the "symmetry" of a figure, the smallest square (1x1,2x2,3x3 etc)
  in which the figure fits. This requires all figures designed to be aligned to
  topleft.}
@@ -273,7 +273,7 @@ PROCEDURE CreateFiguresArray;
  rotated representations, and the number of empty columns to the right and
  left per figure. }
 
-VAR I,J,K,L,Symmetry : LONGINT;
+VAR I,J,K,L,Symmetry : CARDINAL;
 
 BEGIN
  NrFigures:=0; K:=1;
@@ -324,7 +324,8 @@ IF it returns FALSE then the piece overlaps something on the background,
 or the lower limit of the playfield
 }
 
-VAR I,J,K  : LONGINT;
+VAR I,J : LONGINT;
+    K : CARDINAL;
     Match: BOOLEAN;
 
 BEGIN
@@ -361,8 +362,8 @@ PROCEDURE FixFigureInField(Fig:FigureType;X,Y:LONGINT;Clear:BOOLEAN);
 {Blends the figure into the background, or erases the figure from the
 background}
 
-VAR I,J,K  : LONGINT;
-
+VAR I,K  : CARDINAL;
+    J    : INTEGER;
 BEGIN
  FOR I:=0 TO 4 DO
   BEGIN
@@ -378,7 +379,7 @@ BEGIN
        K:=K SHR (-J);
      IF Clear THEN
       BEGIN
-       K:=K XOR -1;
+       K:=K XOR CARDINAL(-1);
        MainField[Y+I]:= MainField[Y+I] AND K;
       END
      ELSE
@@ -391,8 +392,8 @@ PROCEDURE FixColField(ThisFig:LONGINT);
 {Puts color info of a figure into the colorgrid, simplified
 FixFigureInField on byte instead of bit manipulation basis.}
 
-VAR I,J,K  : LONGINT;
-
+VAR I,J  : LONGINT;
+    K    : CARDINAL;
 BEGIN
  FOR I:=0 TO 4 DO
   BEGIN
@@ -413,7 +414,7 @@ VAR I : LONGINT;
 
 BEGIN
  FOR I:=0 TO TheHeight-1 DO
-  BackField[I]:=MainField[I] XOR -1;    {backup copy is opposite of MainField}
+  BackField[I]:=MainField[I] XOR CARDINAL(-1);    {backup copy is opposite of MainField}
 END;
 
 FUNCTION GetNextFigure:LONGINT;
