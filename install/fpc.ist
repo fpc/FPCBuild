@@ -104,6 +104,7 @@ Source: bin\i386-win32\grep.exe; DestDir: {app}\bin\i386-win32; Flags: ignorever
 Source: bin\i386-win32\make.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\mv.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\patch.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\patch.exe.manifest; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\pwd.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\rm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\unzip.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
