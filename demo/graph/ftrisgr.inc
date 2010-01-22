@@ -56,8 +56,9 @@ PROCEDURE DisplMainField;
 {Graph mode version. Always caches.}
 
 
-VAR Row,Column,Difference,StartRow,EndRow,
+VAR Row,Column,StartRow,EndRow,
     L : LONGINT;
+    Difference   : CARDINAL;
 {    LastCol : LONGINT; }
 
 BEGIN
@@ -105,8 +106,8 @@ CONST NextFigX=10;
       NextFigY=120;
       NextFigDim=16;
 
-VAR I,J,K  : LONGINT;
-
+VAR I,J : LONGINT;
+    K   : CARDINAL;
 BEGIN
  IF NOT nonupdatemode THEN
   BEGIN
