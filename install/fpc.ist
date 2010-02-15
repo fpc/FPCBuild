@@ -30,7 +30,8 @@ AppCopyright=GPL
 AppendDefaultDirName=false
 AlwaysShowComponentsList=false
 ShowLanguageDialog=yes
-
+; we put version numbers in the appdir, so never use old dirname
+UsePreviousAppDir=no
 
 [Tasks]
 Name: associatepp; Description: "Associate .pp files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide
