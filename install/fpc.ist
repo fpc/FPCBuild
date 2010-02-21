@@ -187,29 +187,68 @@ Name: Full; Description: Full installation
 Name: Minimum; Description: Minimum installation
 Name: Custom; Description: Custom installation; Flags: iscustom
 
+[Code]
+function IsHKLMWriteable(): boolean;
+begin
+  Result := IsAdminLoggedOn or IsPowerUserLoggedOn;
+end;
+
+function IsHKLMNotWriteable: boolean;
+begin
+  Result := not IsHKLMWriteable();
+end;
+
 [Registry]
-; Associate .pp with FP IDE
-Root: HKCR; Subkey: ".pp"; ValueType: string; ValueName: ""; ValueData: "FPCPPFile"; Flags: uninsdeletevalue; Tasks: associatepp
-Root: HKCR; Subkey: "FPCPPFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepp
-Root: HKCR; Subkey: "FPCPPFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepp
-Root: HKCR; Subkey: "FPCPPFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepp
-; Associate .inc with FP IDE
-Root: HKCR; Subkey: ".inc"; ValueType: string; ValueName: ""; ValueData: "FPCINCFile"; Flags: uninsdeletevalue; Tasks: associateinc
-Root: HKCR; Subkey: "FPCINCFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal include File"; Flags: uninsdeletekey; Tasks: associateinc
-Root: HKCR; Subkey: "FPCINCFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associateinc
-Root: HKCR; Subkey: "FPCINCFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associateinc
-; Associate .pas with FP IDE
-Root: HKCR; Subkey: ".pas"; ValueType: string; ValueName: ""; ValueData: "FPCPASFile"; Flags: uninsdeletevalue; Tasks: associatepas
-Root: HKCR; Subkey: "FPPASFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepas
-Root: HKCR; Subkey: "FPPASFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepas
-Root: HKCR; Subkey: "FPPASFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepas
-; Associate .pas with FP IDE
-Root: HKCR; Subkey: ".dpr"; ValueType: string; ValueName: ""; ValueData: "FPCDPRFile"; Flags: uninsdeletevalue; Tasks: associatedpr
-Root: HKCR; Subkey: "FPDPRFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal Project File"; Flags: uninsdeletekey; Tasks: associatedpr
-Root: HKCR; Subkey: "FPDPRFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatedpr
-Root: HKCR; Subkey: "FPDPRFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatedpr
+; Associate .pp with FP IDE (admin mode)
+Root: HKLM; Subkey: "SOFTWARE\Classes\.pp"; ValueType: string; ValueName: ""; ValueData: "FPCPPFile"; Flags: uninsdeletevalue; Tasks: associatepp; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPCPPFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepp; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPCPPFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepp;Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPCPPFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepp; Check: IsHKLMWriteable
+; Associate .pp with FP IDE (restricted user)
+Root: HKCU; Subkey: "SOFTWARE\Classes\.pp"; ValueType: string; ValueName: ""; ValueData: "FPCPPFile"; Flags: uninsdeletevalue; Tasks: associatepp; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPCPPFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepp; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPCPPFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepp; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPCPPFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepp; Check: IsHKLMNotWriteable
+
+; Associate .inc with FP IDE (admin mode)
+Root: HKLM; Subkey: "SOFTWARE\Classes\.inc"; ValueType: string; ValueName: ""; ValueData: "FPCINCFile"; Flags: uninsdeletevalue; Tasks: associateinc; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPCINCFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal include File"; Flags: uninsdeletekey; Tasks: associateinc; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPCINCFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associateinc; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPCINCFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associateinc; Check: IsHKLMWriteable
+; Associate .inc with FP IDE (restricted user)
+Root: HKCU; Subkey: "SOFTWARE\Classes\.inc"; ValueType: string; ValueName: ""; ValueData: "FPCINCFile"; Flags: uninsdeletevalue; Tasks: associateinc;  Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPCINCFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal include File"; Flags: uninsdeletekey; Tasks: associateinc; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPCINCFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associateinc; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPCINCFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associateinc; Check: IsHKLMNotWriteable
+
+; Associate .pas with FP IDE (admin mode)
+Root: HKLM; Subkey: "SOFTWARE\Classes\.pas"; ValueType: string; ValueName: ""; ValueData: "FPCPASFile"; Flags: uninsdeletevalue; Tasks: associatepas; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPPASFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepas; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPPASFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepas; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPPASFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepas; Check: IsHKLMWriteable
+; Associate .pas with FP IDE (restricted user)
+Root: HKCU; Subkey: "SOFTWARE\Classes\.pas"; ValueType: string; ValueName: ""; ValueData: "FPCPASFile"; Flags: uninsdeletevalue; Tasks: associatepas; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPPASFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepas; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPPASFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepas; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPPASFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepas; Check: IsHKLMNotWriteable
+
+; Associate .dpr with FP IDE (admin mode)
+Root: HKLM; Subkey: "SOFTWARE\.dpr"; ValueType: string; ValueName: ""; ValueData: "FPCDPRFile"; Flags: uninsdeletevalue; Tasks: associatedpr; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\FPDPRFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal Project File"; Flags: uninsdeletekey; Tasks: associatedpr; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\FPDPRFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatedpr; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\FPDPRFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatedpr; Check: IsHKLMWriteable
+; Associate .dpr with FP IDE (restricted user)
+Root: HKCU; Subkey: "SOFTWARE\.dpr"; ValueType: string; ValueName: ""; ValueData: "FPCDPRFile"; Flags: uninsdeletevalue; Tasks: associatedpr; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\FPDPRFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal Project File"; Flags: uninsdeletekey; Tasks: associatedpr; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\FPDPRFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatedpr; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\FPDPRFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatedpr; Check: IsHKLMNotWriteable
+
 ; Extend path in NT,2000 or XP. Does not work in 95/98/Me
-Root: HKCU; Subkey: Environment; ValueType: String; ValueName: "PATH"; ValueData: "{reg:HKCU\environment,PATH|};{app}\bin\i386-Win32";MinVersion: 5.0,4.0
+; System-wide
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: String; ValueName: "PATH"; ValueData: "{reg:HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment,PATH|};{app}\bin\i386-Win32";MinVersion: 5.0,4.0; Check: IsHKLMWriteable
+; Current user only
+Root: HKCU; Subkey: "Environment"; ValueType: String; ValueName: "PATH"; ValueData: "{reg:HKCU\environment,PATH|};{app}\bin\i386-Win32";MinVersion: 5.0,4.0; Check: IsHKLMNotWriteable
+
 
 [Run]
 FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for Free Pascal compiler"; Parameters: "-d ""basepath={app}"" -o ""{app}\bin\i386-Win32\fpc.cfg"""; Tasks: createcfg
