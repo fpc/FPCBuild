@@ -136,6 +136,10 @@ echo "Copying install.sh"
 sed -e s+%version%+$VERSION+ -e s+%fullversion%+$FULLVERSION+ install/install.sh > install.sh
 chmod 755 install.sh
 
+# readme.txt
+cp install/doc/readme.txt .
+chmod 644 readme.txt
+
 # binary.*.tar
 BINARYTAR=${CROSSPREFIX}binary.$FULLSOURCE.tar
 echo "Creating $BINARYTAR"
