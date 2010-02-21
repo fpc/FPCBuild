@@ -2114,10 +2114,10 @@ ifeq ($(OS_TARGET),go32v2)
 endif
 ifneq ($(patsubst %/,%,$(subst \,/,$(dir $(CPPROG)))),$(patsubst %/,%,$(subst \,/,$(INSTALL_BINDIR))))
 ifeq ($(OS_TARGET),win32)
-	$(COPY) $(addprefix $(CVSINSTALL)/binw32/,*.ico *.exe *.dll *.h) $(INSTALL_BINDIR)
+	$(COPY) $(addprefix $(CVSINSTALL)/binw32/,*.ico *.exe *.dll *.h *.manifest) $(INSTALL_BINDIR)
 endif
 ifeq ($(OS_TARGET),win64)
-	$(COPY) $(addprefix $(CVSINSTALL)/binw64/,*.ico *.exe *.dll *.h) $(INSTALL_BINDIR)
+	$(COPY) $(addprefix $(CVSINSTALL)/binw64/,*.ico *.exe *.dll *.h *.manifest) $(INSTALL_BINDIR)
 endif
 endif
 ifeq ($(OS_TARGET),os2)

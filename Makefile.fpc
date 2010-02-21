@@ -136,10 +136,10 @@ endif
 # binw32 (*.dll,*.exe,*.ico)
 ifneq ($(patsubst %/,%,$(subst \,/,$(dir $(CPPROG)))),$(patsubst %/,%,$(subst \,/,$(INSTALL_BINDIR))))
 ifeq ($(OS_TARGET),win32)
-        $(COPY) $(addprefix $(CVSINSTALL)/binw32/,*.ico *.exe *.dll *.h) $(INSTALL_BINDIR)
+        $(COPY) $(addprefix $(CVSINSTALL)/binw32/,*.ico *.exe *.dll *.h *.manifest) $(INSTALL_BINDIR)
 endif
 ifeq ($(OS_TARGET),win64)
-        $(COPY) $(addprefix $(CVSINSTALL)/binw64/,*.ico *.exe *.dll *.h) $(INSTALL_BINDIR)
+        $(COPY) $(addprefix $(CVSINSTALL)/binw64/,*.ico *.exe *.dll *.h *.manifest) $(INSTALL_BINDIR)
 endif
 endif
 # binos2 (emx.dll,emxwrap.dll,unzip32.dll,fp2.ico)
