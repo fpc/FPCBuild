@@ -533,7 +533,11 @@ endif
 	find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
 
 debbuild:
+ifdef NODOCS
+	cd ${DEBSRCDIR} ; dpkg-buildpackage ${DEB_BUILDPKG_OPT} -B
+else
 	cd ${DEBSRCDIR} ; dpkg-buildpackage ${DEB_BUILDPKG_OPT}
+endif
 
 debcheckpolicy:
 ifdef LINTIAN
