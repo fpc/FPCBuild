@@ -29,7 +29,7 @@ yesno ()
   while true; do
   printf "$1 (Y/n) ? "
   read ans
-  case X$ans in
+  case X"$ans" in
    X|Xy|XY) return 0;;
    Xn|XN) return 1;;
   esac
@@ -39,24 +39,24 @@ yesno ()
 # Untar files ($3,optional) from  file ($1) to the given directory ($2)
 unztar ()
 {
- tar -xzf $HERE/$1 -C $2 $3
+ tar -xzf "$HERE/$1" -C "$2" $3
 }
 
 # Untar tar.gz file ($2) from file ($1) and untar result to the given directory ($3)
 unztarfromtar ()
 {
- tar -xOf $HERE/$1 $2 | tar -C $3 -xzf -
+ tar -xOf "$HERE/$1" "$2" | tar -C "$3" -xzf -
 }
 
 # Get file list from tar archive ($1) in variable ($2)
 # optionally filter result through sed ($3)
 listtarfiles ()
 {
-  askvar=$2
-  if [ ! -z $3 ]; then
-    list=`tar tvf $1 | awk '{ print $(NF) }' | sed -n /$3/p`
+  askvar="$2"
+  if [ ! -z "$3" ]; then
+    list=`tar tvf "$1" | awk '{ print $(NF) }' | sed -n /"$3"/p`
   else
-     list=`tar tvf $1 | awk '{ print $(NF) }'`
+     list=`tar tvf "$1" | awk '{ print $(NF) }'`
   fi
   eval $askvar='$list'
 }
@@ -64,27 +64,17 @@ listtarfiles ()
 # Make all the necessary directories to get $1
 makedirhierarch ()
 {
-  OLDDIR=`pwd`
-  case $1 in
-    /*) cd /;;
-  esac
-  OLDIFS=$IFS;IFS=/;eval set $1; IFS=$OLDIFS
-  for i
-  do
-    test -d $i || mkdir $i || break
-    cd $i ||break
-  done
-  cd $OLDDIR
+  mkdir -p "$1"
 }
 
 # check to see if something is in the path
 checkpath ()
 {
- ARG=$1
- OLDIFS=$IFS; IFS=":";eval set $PATH;IFS=$OLDIFS
+ ARG="$1"
+ OLDIFS="$IFS"; IFS=":";eval set "$PATH";IFS="$OLDIFS"
  for i
  do
-   if [ $i = $ARG ]; then
+   if [ "$i" = "$ARG" ]; then
      return 0
    fi
  done
@@ -97,14 +87,14 @@ checkpath ()
 installbinary ()
 {
   if [ "$2" = "" ]; then
-    FPCTARGET=$1
+    FPCTARGET="$1"
     CROSSPREFIX=
   else
     FPCTARGET=`echo $2 | sed 's/-$//'`
-    CROSSPREFIX=$2
+    CROSSPREFIX="$2"
   fi
 
-  BINARYTAR=${CROSSPREFIX}binary.$1.tar
+  BINARYTAR="${CROSSPREFIX}binary.$1.tar"
 
   # conversion from long to short archname for ppc<x>
   case $FPCTARGET in
@@ -130,56 +120,56 @@ installbinary ()
 
   # Install compiler/RTL. Mandatory.
   echo "Installing compiler and RTL for $FPCTARGET..."
-  unztarfromtar $BINARYTAR ${CROSSPREFIX}base.$1.tar.gz $PREFIX
+  unztarfromtar "$BINARYTAR" "${CROSSPREFIX}base.$1.tar.gz" "$PREFIX"
 
-  if [ -f binutils-${CROSSPREFIX}$1.tar.gz ]; then
+  if [ -f "binutils-${CROSSPREFIX}$1.tar.gz" ]; then
     if yesno "Install Cross binutils"; then
-      unztar binutils-${CROSSPREFIX}$1.tar.gz $PREFIX
+      unztar "binutils-${CROSSPREFIX}$1.tar.gz" "$PREFIX"
     fi
   fi
 
   # Install symlink
-  rm -f $EXECDIR/ppc${PPCSUFFIX}
-  ln -sf $LIBDIR/ppc${PPCSUFFIX} $EXECDIR/ppc${PPCSUFFIX}
+  rm -f "$EXECDIR/ppc${PPCSUFFIX}"
+  ln -sf "$LIBDIR/ppc${PPCSUFFIX}" "$EXECDIR/ppc${PPCSUFFIX}"
 
   echo "Installing utilities..."
-  unztarfromtar $BINARYTAR ${CROSSPREFIX}utils.$1.tar.gz $PREFIX
+  unztarfromtar "$BINARYTAR" "${CROSSPREFIX}utils.$1.tar.gz" "$PREFIX"
 
   # Should this be here at all without a big Linux test around it?
   if [ "x$UID" = "x0" ]; then
-    chmod u=srx,g=rx,o=rx $PREFIX/bin/grab_vcsa
+    chmod u=srx,g=rx,o=rx "$PREFIX/bin/grab_vcsa"
   fi
 
   ide=`tar -tf $BINARYTAR | grep "${CROSSPREFIX}ide.$1.tar.gz"`
   if [ "$ide" = "${CROSSPREFIX}ide.$1.tar.gz" ]; then
     if yesno "Install Textmode IDE"; then
-      unztarfromtar $BINARYTAR ${CROSSPREFIX}ide.$1.tar.gz $PREFIX
+      unztarfromtar "$BINARYTAR" "${CROSSPREFIX}ide.$1.tar.gz" "$PREFIX"
     fi
   fi
 
   if yesno "Install FCL"; then
-    listtarfiles $BINARYTAR packages units
+    listtarfiles "$BINARYTAR" packages units
     for f in $packages
     do
       if echo "$f" | grep -q fcl > /dev/null ; then
         p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
 	echo "Installing $p"
-        unztarfromtar $BINARYTAR $f $PREFIX
+        unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
       fi
     done
   fi
   if yesno "Install packages"; then
-    listtarfiles $BINARYTAR packages units
+    listtarfiles "$BINARYTAR" packages units
     for f in $packages
     do
       if ! echo "$f" | grep -q fcl > /dev/null ; then
         p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
 	echo "Installing $p"
-        unztarfromtar $BINARYTAR $f $PREFIX
+        unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
       fi
     done
   fi
-  rm -f *.$1.tar.gz
+  rm -f *."$1".tar.gz
 }
 
 
@@ -197,7 +187,7 @@ HERE=`pwd`
 
 OSNAME=`uname -s | tr A-Z a-z`
 
-case $OSNAME in
+case "$OSNAME" in
   haiku)
      # Install in /boot/common or /boot/home/config ?
      if checkpath /boot/common/bin; then
@@ -220,11 +210,11 @@ case $OSNAME in
 esac
 
 # If we can't write on prefix, select subdir of home dir
-if [ ! -w $PREFIX ]; then
-  PREFIX=$HOME/fpc-$VERSION
+if [ ! -w "$PREFIX" ]; then
+  PREFIX="$HOME/fpc-$VERSION"
 fi
 
-case $OSNAME in
+case "$OSNAME" in
   haiku)
      ask "Install prefix (/boot/common or /boot/home/config) " PREFIX
   ;;
@@ -236,30 +226,30 @@ esac
 # Support ~ expansion
 PREFIX=`eval echo $PREFIX`
 export PREFIX
-makedirhierarch $PREFIX
+makedirhierarch "$PREFIX"
 
 # Set some defaults.
-LIBDIR=$PREFIX/lib/fpc/$VERSION
-SRCDIR=$PREFIX/src/fpc-$VERSION
-EXECDIR=$PREFIX/bin
+LIBDIR="$PREFIX/lib/fpc/$VERSION"
+SRCDIR="$PREFIX/src/fpc-$VERSION"
+EXECDIR="$PREFIX/bin"
 
 BSDHIER=0
-case $OSNAME in
+case "$OSNAME" in
 *bsd)
   BSDHIER=1;;
 esac
 
-SHORTARCH=$ARCHNAME
-FULLARCH=$ARCHNAME-$OSNAME
-DOCDIR=$PREFIX/share/doc/fpc-$VERSION
+SHORTARCH="$ARCHNAME"
+FULLARCH="$ARCHNAME-$OSNAME"
+DOCDIR="$PREFIX/share/doc/fpc-$VERSION"
 
-case $OSNAME in
+case "$OSNAME" in
   freebsd)	
      # normal examples are already installed in fpc-version. So added "demo"
-     DEMODIR=$PREFIX/share/examples/fpc-$VERSION/demo
+     DEMODIR="$PREFIX/share/examples/fpc-$VERSION/demo"
      ;;
   *)
-     DEMODIR=$DOCDIR/examples	
+     DEMODIR="$DOCDIR/examples"
      ;;
 esac
    
@@ -276,12 +266,12 @@ do
       echo "For a proper installation of a cross FPC the installation of a native FPC is required."
       exit 1
     else
-      if [ `fpc -iV` != $VERSION ]; then
+      if [ `fpc -iV` != "$VERSION" ]; then
         echo "Warning: Native and cross FPC doesn't match; this could cause problems"
       fi
     fi
   fi
-  installbinary $target $cross
+  installbinary "$target" "$cross"
 done
 
 echo Done.
@@ -290,9 +280,9 @@ echo
 # Install the documentation. Optional.
 if [ -f doc-pdf.tar.gz ]; then
   if yesno "Install documentation"; then
-    echo Installing documentation in $DOCDIR ...
-    makedirhierarch $DOCDIR
-    unztar doc-pdf.tar.gz $DOCDIR "--strip 1"
+    echo Installing documentation in "$DOCDIR" ...
+    makedirhierarch "$DOCDIR"
+    unztar doc-pdf.tar.gz "$DOCDIR" "--strip 1"
     echo Done.
   fi
 fi
@@ -302,9 +292,9 @@ echo
 if [ -f demo.tar.gz ]; then
   if yesno "Install demos"; then
     ask "Install demos in" DEMODIR
-    echo Installing demos in $DEMODIR ...
-    makedirhierarch $DEMODIR
-    unztar demo.tar.gz $DEMODIR
+    echo Installing demos in "$DEMODIR" ...
+    makedirhierarch "$DEMODIR"
+    unztar demo.tar.gz "$DEMODIR"
     echo Done.
   fi
 fi
@@ -312,7 +302,7 @@ echo
 
 # Install /etc/fpc.cfg, this is done using the samplecfg script
 if [ "$cross" = "" ]; then
-  $LIBDIR/samplecfg $LIBDIR
+  "$LIBDIR/samplecfg" "$LIBDIR"
 else
   echo "No fpc.cfg created because a cross installation has been done."
 fi
