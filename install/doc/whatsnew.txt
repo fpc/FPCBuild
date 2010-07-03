@@ -1,7 +1,34 @@
 
                             Free Pascal Compiler
 
-                                Version 2.3.1
+                                Version 2.4.2
+
+******************************************************************************
+                              What's New in 2.4.2
+******************************************************************************
+
+Free Pascal 2.4.2 contains many fixes and a few new features. Most bugfixes
+in the RTL and packages before june 2010 have been merged.
+
+Please also see http://wiki.freepascal.org/User_Changes_2.4.2 for a list
+of changes which may affect the behaviour of previously working code, and
+how to cope with these changes.
+
+Some highlights are:
+
+Compiler:
+  * Support D2006+ FOR..IN, with some FPC specific enhancements. Refer to
+     http://wiki.freepascal.org/for-in_loop for more information
+  * Support for sealed and abstract classes.
+
+Packages:
+  * Many improvements to the XML units
+  * Many improvements to the database units
+  * Many improvemnets to the chm units
+
+See http://bugs.freepascal.org/changelog_page.php for the list of reported
+bugs which have been fixed in this release.
+
 
 ******************************************************************************
                               What's New in 2.4.0
