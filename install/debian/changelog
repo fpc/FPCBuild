@@ -1,3 +1,15 @@
+fpc (2.4.2-0) stable; urgency=low
+
+  * RC1 for 2.4.2
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sat, 03 Jul 2010 07:15:00 +0100
+
+fpc (2.4.0-0) stable; urgency=low
+
+  * RC1 for 2.4.0
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sat, 21 Nov 2009 19:21:00 +0100
+
 fpc (2.3.1-0) unstable; urgency=low
 
   * New upstream release
