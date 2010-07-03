@@ -265,7 +265,7 @@ UNITSDIR:=$(wildcard $(FPCDIR)/units/$(OS_TARGET))
 endif
 PACKAGESDIR:=$(wildcard $(FPCDIR) $(FPCDIR)/packages $(FPCDIR)/packages/base $(FPCDIR)/packages/extra)
 override PACKAGE_NAME=fpc
-override PACKAGE_VERSION=2.3.1
+override PACKAGE_VERSION=2.4.3
 ifneq ($(wildcard install),)
 CVSINSTALL=install
 else
@@ -2263,11 +2263,9 @@ renametoshort:
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-res$(ZIPSUFFIX).zip ufcle$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)chm$(ZIPSUFFIX).zip uchm$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)hash$(ZIPSUFFIX).zip uhash$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)bzip2$(ZIPSUFFIX).zip ubz2$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)rtl$(ZIPSUFFIX).zip rtl$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)ide$(ZIPSUFFIX).zip ide$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGUNITSPRE)chm$(ZIPSUFFIX).zip uchm$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGUNITSPRE)hash$(ZIPSUFFIX).zip uhash$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGUNITSPRE)bzip2$(ZIPSUFFIX).zip ubz2$(ZIPSUFFIXSHORT).zip
 shortsrc:
 	$(MAKE) renametoshort ZIPSUFFIX=$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
 shortbin:
