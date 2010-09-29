@@ -8,6 +8,7 @@
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libpng
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/graph
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/cairo
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/ptc
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/rsvg
 /usr/share/doc/fp-units-gfx
 /usr/share/man/man1/fd2pascal.1
