@@ -77,7 +77,7 @@ idem as \-h, but waiting after every screenfull for the enter key.
 .BI \-i
 This option tells the compiler to print the copyright information.
 
-You can give it an option, as -ixxx where "xxx" can be one of the
+You can give it an option, as \-ixxx where "xxx" can be one of the
 following:
 .RS
 .TP
@@ -100,14 +100,14 @@ Returns the target OS.
 Returns the target Processor.
 .RE
 .TP
-.I -l
+.I \-l
 This option tells the compiler to print the
 .I FPC
 logo on standard output. It also gives you the
 .I FPC
 version number.
 .TP
-.I -n
+.I \-n
 Tells the compiler not to read the configuration file
 .BR fpc.cfg (5)
 
@@ -181,7 +181,7 @@ are understood by RHIDE.
 .PP
 Options concerning files and directories
 .TP
-.BI -e xxx
+.BI \-e xxx
 tells the compiler that 
 .I xxx
 is the directory where it can find the executables as (the assembler) and 
@@ -276,7 +276,7 @@ Tells the compiler to include register allocation/deallocation information.
 .BI \-at
 Tells the compiler to include temparary register allocation/deallocation information.
 .TP
-.BI -A xxx
+.BI \-A xxx
 specifies what kind of assembler should be generated . Here
 .I xxx
 is one of the following :
@@ -383,7 +383,7 @@ This can be used to conditionally compile parts of your code.
 
 .TP
 .BI \-E
-Same as -Cn.
+Same as \-Cn.
 .TP
 .BI \-g
 Generate debugging information for debugging with
@@ -392,7 +392,7 @@ Generate debugging information for debugging with
 .TP
 .BI \-gg
 idem as 
-.B -g.
+.B \-g.
 .TP
 .BI \-gd
 generate debugging info for dbx.
@@ -431,10 +431,10 @@ uncertain optimizations
 Level 1 optimizations (quick optimizations).
 .TP
 .I 2
-Level 2 optimizations (-O1 plus some slower optimizations).
+Level 2 optimizations (\-O1 plus some slower optimizations).
 .TP
 .I 3
-Level 3 optimizations (-O2 plus -Ou).
+Level 3 optimizations (\-O2 plus \-Ou).
 .TP
 .I pn
 Specify processor : n can be one of
@@ -473,7 +473,7 @@ and link on the host system, not on the target system. Use this when
 cross-compiling.
 .TP
 .BI \-sr
-Skip register allocation stage in compiler (use with -ar) 
+Skip register allocation stage in compiler (use with \-ar) 
 .TP
 .BI \-st
 Tells the compiler to generate a script that can be used to assemble 
@@ -526,7 +526,7 @@ WDosX Dos extender
 Windows 32 bit.
 .RE
 .TP
-.BI -u xxx
+.BI \-u xxx
 undefine the symbol 
 .I xxx
 if it is defined. This is the opposite of the 
@@ -564,7 +564,7 @@ Strip the symbols from the executable.
 Link with static libraries (defines the FPC_LINK_STATIC symbol)
 .TP
 .I t
-Link statically (passes -static to the linker)
+Link statically (passes \-static to the linker)
 .TP
 .I X
 Link smart. Using this option sets the FPC_LINK_SMART symbol.
@@ -582,7 +582,7 @@ can be one of the following:
 .TP
 .I delphi
 Delphi-compatibility mode. This loads the objpas unit, and switches on ansistring mode (
-.B -Sh
+.B \-Sh
 ).
 .TP
 .I fpc
@@ -627,7 +627,7 @@ Switch on Delphi 2 extensions.
 Generate code for assertions.
 .TP
 .BI \-Sc
-Support C-style operators, i.e. *=, +=, /= and -=.
+Support C-style operators, i.e. *=, +=, /= and \-=.
 .TP
 .BI \-Sd
 Tries to be Delphi compatible
