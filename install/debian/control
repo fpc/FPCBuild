@@ -4,9 +4,9 @@ Priority: optional
 Maintainer: Carlos Laviola <claviola@debian.org>
 Uploaders: Torsten Werner <twerner@debian.org>, Abou Al Montacir <abou.almontacir@sfr.fr>
 DM-Upload-Allowed: yes
-Standards-Version: 3.8.3
-Build-Depends: debhelper (>= 7), quilt, fp-compiler (>= 2.0.4), fp-units-base,
- fp-utils, mawk | awk, gs-common, libncurses5-dev, binutils
+Standards-Version: 3.8.4
+Build-Depends: debhelper (>= 7), quilt, fp-compiler (>= 2.2.4-5), fp-units-base,
+ fp-units-fcl, fp-utils, mawk | awk, gs-common, libncurses-dev, binutils
 Build-Depends-Indep: hevea
 Vcs-Svn: https://bollin.googlecode.com/svn/fpc/trunk/
 Vcs-Browser: http://bollin.googlecode.com/svn/fpc/trunk/
@@ -14,8 +14,7 @@ Homepage: http://www.freepascal.org/
 
 Package: fpc
 Architecture: all
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl, fp-compiler, fp-units-base, fp-ide, fp-units-fcl, fp-units-fv, fp-units-gtk, fp-units-gtk2, fp-units-gnome1, fp-units-db, fp-units-gfx, fp-units-net, fp-units-misc, fp-units-multimedia
+Depends: ${misc:Depends}, fp-units-rtl, fp-compiler, fp-units-base, fp-ide, fp-units-fcl, fp-units-fv, fp-units-gtk, fp-units-gtk2, fp-units-gnome1, fp-units-db, fp-units-gfx, fp-units-net, fp-units-misc, fp-units-multimedia, fp-units-math
 Recommends: fp-utils
 Suggests: lazarus, fp-docs (>= ${source:Upstream-Version})
 Description: Free Pascal Compiler - Meta Package
@@ -35,9 +34,8 @@ Description: Free Pascal Compiler - Meta Package
  and can skip installing this metapackage.
 
 Package: fpc-source
-Section: devel
 Architecture: all
-Pre-Depends: dpkg (>= 1.10.24)
+Depends: ${misc:Depends}
 Description: Free Pascal Compiler - Source Code
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -50,9 +48,8 @@ Description: Free Pascal Compiler - Source Code
  the Lazarus IDE.
 
 Package: fp-compiler
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version})
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version})
 Suggests: fp-utils, fp-docs (>= ${source:Upstream-Version})
 Description: Free Pascal - Compiler
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
@@ -69,9 +66,8 @@ Description: Free Pascal - Compiler
  This package contains the command line compiler.
 
 Package: fp-ide
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version}), ${shlibs:Depends}
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version}), ${shlibs:Depends}
 Suggests: fp-utils, fp-docs (>= ${source:Upstream-Version})
 Description: Free Pascal - IDE
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
@@ -89,8 +85,8 @@ Description: Free Pascal - IDE
  has an internal compiler.
 
 Package: fp-utils
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}
 Recommends: fp-compiler (= ${binary:Version})
 Description: Free Pascal - Utils
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
@@ -115,7 +111,7 @@ Description: Free Pascal - Utils
 Package: fp-docs
 Section: doc
 Architecture: all
-Pre-Depends: dpkg (>= 1.10.24)
+Depends: ${misc:Depends}
 Description: Free Pascal - Documentation
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -128,8 +124,8 @@ Description: Free Pascal - Documentation
  format.
 
 Package: fp-units-rtl
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}
 Recommends: fp-compiler (= ${binary:Version})
 Provides: fpc-abi-${source:Upstream-Version}
 Description: Free Pascal - Runtime Library
@@ -143,9 +139,8 @@ Description: Free Pascal - Runtime Library
  This package contains the Runtime Libraries for the Free Pascal Compiler.
 
 Package: fp-units-base
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version})
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version})
 Description: Free Pascal - base units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -161,9 +156,8 @@ Description: Free Pascal - base units
   - ZLib
 
 Package: fp-units-fcl
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version}), fp-units-base (= ${binary:Version})
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version}), fp-units-base (= ${binary:Version})
 Description: Free Pascal - Free Component Library
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -175,9 +169,8 @@ Description: Free Pascal - Free Component Library
  This package contains the Free Component Library for the Free Pascal Compiler.
 
 Package: fp-units-fv
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version})
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version})
 Description: Free Pascal - Free Vision units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -189,9 +182,8 @@ Description: Free Pascal - Free Vision units
  This package contains the Free Vision units for the Free Pascal Compiler.
 
 Package: fp-units-gtk
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version}), fp-units-fcl (= ${binary:Version}), libgtk2.0-dev
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version}), fp-units-fcl (= ${binary:Version}), libgtk2.0-dev
 Description: Free Pascal - GTK+ 1.2 units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -204,9 +196,8 @@ Description: Free Pascal - GTK+ 1.2 units
  programs with GTK+ 1.2.
 
 Package: fp-units-gtk2
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version}), fp-units-fcl (= ${binary:Version})
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version}), fp-units-fcl (= ${binary:Version})
 Description: Free Pascal - GTK+ 2.x units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -219,9 +210,8 @@ Description: Free Pascal - GTK+ 2.x units
  programs with GTK+ 2.x.
 
 Package: fp-units-gnome1
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version}), fp-units-gtk (= ${binary:Version})
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version}), fp-units-gtk (= ${binary:Version})
 Description: Free Pascal - GNOME 1 units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -234,9 +224,8 @@ Description: Free Pascal - GNOME 1 units
  programs for GNOME 1.
 
 Package: fp-units-db
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version})
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version})
 Description: Free Pascal - database libraries units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -255,9 +244,8 @@ Description: Free Pascal - database libraries units
   - SQLite
 
 Package: fp-units-gfx
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version}), fp-units-base (= ${binary:Version})
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version}), fp-units-base (= ${binary:Version})
 Description: Free Pascal - graphics libraries units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -278,9 +266,8 @@ Description: Free Pascal - graphics libraries units
   - cairo
 
 Package: fp-units-net
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version})
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version})
 Description: Free Pascal - networking units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -302,9 +289,9 @@ Description: Free Pascal - networking units
   - pcap
 
 Package: fp-units-math
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version})
+Replaces: fp-units-misc (<= 2.2.4-4)
 Description: Free Pascal - math units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -320,9 +307,8 @@ Description: Free Pascal - math units
   - symbolic : symbolic computing
 
 Package: fp-units-misc
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version})
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version})
 Description: Free Pascal - miscellaneous units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -337,9 +323,9 @@ Description: Free Pascal - miscellaneous units
   - PasZLib (Pascal-only zlib implementation)
 
 Package: fp-units-multimedia
-Architecture: i386 powerpc sparc amd64 arm
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev
+Architecture: i386 powerpc sparc amd64 armel
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev
+Replaces: fp-units-gfx (<= 2.2.4-3)
 Description: Free Pascal - multimedia units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -357,9 +343,8 @@ Description: Free Pascal - multimedia units
 
 Package: fp-units-i386
 Architecture: i386
-Pre-Depends: dpkg (>= 1.10.24)
-Depends: fp-units-rtl (= ${binary:Version})
-Description: Free Pascal - miscellaneous units
+Depends: ${misc:Depends}, fp-units-rtl (= ${binary:Version})
+Description: Free Pascal - kylix compatibility units
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
  It provides a completely portable RunTime Library (RTL) available on many

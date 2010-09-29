@@ -16,8 +16,12 @@ CONVERTER=${DOCTYPE}
 endif
 
 # Detect name of new compiler, take care that debian uses amd64 instead of x86_64
-CPU_SOURCE=$(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_BUILD_ARCH))
-CPU_TARGET=$(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_HOST_ARCH))
+CPU_SOURCE := $(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_BUILD_ARCH))
+CPU_TARGET := $(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_HOST_ARCH))
+
+# Fixup armel, too
+CPU_SOURCE := $(subst armel,arm,$(CPU_SOURCE))
+CPU_TARGET := $(subst armel,arm,$(CPU_TARGET))
 
 ifeq ($(CPU_TARGET),m68k)
 PPSUF=68k
@@ -95,7 +99,7 @@ INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE)
 export GDBLIBDIR=/usr/lib
 
 # Configure patch system
-export QUILT_PATCHES=debian/patches
+include /usr/share/quilt/quilt.make
 
 #export DH_VERBOSE=1
 
@@ -128,16 +132,6 @@ clean-patched:
 	$(MAKE) -C fpcdocs clean
 	find '(' -name '*.a' -or -name '*.o' -or -name '*.so' -or -name '*.ppu' ')' -exec ${RM} '{}' ';'
 	dh_prep
-
-patch: patch-stamp
-
-patch-stamp:
-	test ! -s ${QUILT_PATCHES}/series || quilt push -a
-	touch patch-stamp
-
-unpatch:
-	test ! -s ${QUILT_PATCHES}/series || quilt pop -a
-	rm -rf patch-stamp debian/patched
 
 ###################
 # Debian files

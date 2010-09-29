@@ -4,6 +4,69 @@ fpc (2.5.1-0) unstable; urgency=low
 
  -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sun, 04 Dec 2009 23:59:00 +0100
 
+fpc (2.4.0-2) unstable; urgency=low
+
+  [ Abou Al Montacir ]
+  * Fixed build dependencies on fp-compiler (>= 2.2.4-5). (Closes:Bug#570591)
+  * Added dependency on ${misc:Depends} as required for packages using
+    debhelper.
+  * Removed pre-dependency on dpkg (>= 1.10.24).
+  * Fixed spell errors removing lintian warning.
+  * Fixed dependencies of fp-units-math package. (Closes:Bug#567574)
+  * Bumped standard version to 3.8.4.
+  * Updated lintian override files.
+  [ Stefan Kisdaroczi ]
+  * Fixed Pred and Succ functions. (Closes: Bug#569023)
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 03 Feb 2010 22:48:00 +0100
+
+fpc (2.4.0-1) unstable; urgency=low
+
+  * New upstream release with many fixes and new features offering a nice
+  collection of new functionality and bug fixes.
+  * New platforms:
+    - Mac OS X/PowerPC64
+    - Mac OS X/x86_64
+    - Mac OS X/ARM (iPhone)
+  * Compiler changes:
+    - Support for Delphi-style resource handling
+    - Whole-program optimization infrastructure, which initially supports
+  program devirtualization and unused virtual method removal
+    - Much faster compilation of units containing many type-sections
+    - The ability to suppress individual hints/warnings/notes
+    - Several improvements to the DWARF debug information generation
+    - Fixes to the generics support
+    - Fixes to the interface delegation (implements) support
+    - Improved cpu register allocation
+    - Improved ARM/EABI support
+  * RTL changes:
+    - Linearly scaling multi-threaded memory manager
+    - Support for (advisory) file locking on Unix-based platforms
+    - when using the SysUtils file creation/opening routines
+    - Support for ANSI ISO Extended Pascal ReadStr/WriteStr
+    - A UnicodeString type that, while not yet equivalent to Delphi 2009's
+    UnicodeString type, offers reference counted UnicodeString support on
+    the Windows, Linux, Mac OS X, FreeBSD and Beos/Haiku platforms.
+  * Packages changes:
+    - Many improvements to the XML units
+    - Many improvements to the database units
+    - Updated the common Mac OS X Pascal interfaces to r241, including
+    header a translation of the CFNetwork framework
+    - The zipper unit now works correctly on big endian platforms
+  * Added a patch fixing building documentation on Debian systems.
+  * Included quilt.make in rules file. (Closes: Bug#538552)
+  * Packaged news utility program (fpclasschart) poducing a class tree from
+    source files.
+  * Removed duplicate section field.
+  * Fixed fp-units-i386 package short description.
+  * Removed unneeded override rule.
+  * Added doc-base file for fp-compiler package.
+  * Fixed lintian warnings related to spell errors.
+  * Fixed upgrade breakage from 2.2.4-3 caused by moving files from fp-units-gfx
+    to fp-units-multimedia. (Closes: Bug#565167)
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sun, 13 Dec 2009 22:25:00 +0100
+
 fpc (2.2.4-5) unstable; urgency=low
 
   * Added a new package fp-units-math for math development support.

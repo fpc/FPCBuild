@@ -15,6 +15,7 @@
 /usr/bin/h2pas
 /usr/bin/h2paspp
 /usr/bin/postw32
+/usr/bin/fpclasschart
 /usr/bin/fpcmake
 /usr/bin/fpcres
 /usr/bin/fprcp
@@ -51,5 +52,6 @@
 /usr/share/man/man1/pyacc.1
 /usr/share/man/man1/rstconv.1
 /usr/share/man/man1/fpdoc.1
+/usr/share/man/man1/fpclasschart.1
 /usr/share/man/man5/fpcmake.5
 /usr/share/man/man5/ptop.cfg.5

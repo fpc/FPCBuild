@@ -1,0 +1,10 @@
+Document: fpc-compiler
+Title: Free Pascal FAQ
+Author: Michael van Canneyt
+Abstract: Frequnetly Asked Questions about the Free Pascal Compiler.
+ .
+Section: Programming
+
+Format: html
+Files: /usr/share/doc/fp-compiler/*
+Index: /usr/share/doc/fp-compiler/faq.html

@@ -2397,7 +2397,7 @@ debbuild:
 	cd ${DEBSRCDIR} ; dpkg-buildpackage ${DEB_BUILDPKG_OPT}
 debcheckpolicy:
 ifdef LINTIAN
-	cd ${DEBSRCDIR} ; lintian -i ../*.changes
+	cd ${DEBSRCDIR} ; lintian -I -i ../*.changes
 endif
 debclean:
 ifndef DEBUSESVN
