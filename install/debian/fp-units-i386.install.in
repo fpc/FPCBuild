@@ -1,4 +1,3 @@
-/usr/share/doc/fp-units-i386
-
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/libc
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/unixutil
+#/usr/share/doc/fp-units-i386
