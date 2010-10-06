@@ -84,7 +84,7 @@ e-mail addresses are listed below.
 - smartlinking (not yet supported under Mac OS X)
 - support for the GNU debugger
 - integrated development environment (disabled by default on Mac OS X)
-  - powerfull user friendly Wordstar compatible multi file editor
+  - powerful user friendly Wordstar compatible multi file editor
   - context sensitive help supports help files in HTML, Windows HLP and
     Borland TPH format.
   - debugger on most platforms
