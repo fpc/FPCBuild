@@ -22,6 +22,10 @@ Compiler:
   * Support for sealed and abstract classes.
 
 Packages:
+  * The existing Mac OS X Universal Interfaces units have been synchronised
+    with the Mac OS X 10.6 SDK. Several new units have also been added, and
+    where indicated in the Mac OS X 10.6 SDK they have also been enabled for
+    iPhoneOS/iOS.
   * Many improvements to the XML units
   * Many improvements to the database units
   * Many improvemnets to the chm units
