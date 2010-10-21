@@ -1,5 +1,4 @@
 {
-
     Two ways of opening and using libraries
     Free Pascal for MorphOS example
 

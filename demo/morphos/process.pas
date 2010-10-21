@@ -1,5 +1,4 @@
 {
-
     Spawning and messaging another DOS process
     Free Pascal for MorphOS example
     (dirty, but actually does work... sometimes... :)
