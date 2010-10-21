@@ -1,5 +1,4 @@
 {
-
     Using an asl.library requester
     Free Pascal for MorphOS example
 
