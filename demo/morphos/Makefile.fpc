@@ -3,7 +3,7 @@
 #
 
 [target]
-programs_morphos=ahitest asltest window getvolumes openlib process
+programs_morphos=ahitest asltest window getvolumes openlib process muidemo muidemo2
 
 [default]
 fpcdir=../../fpcsrc
