@@ -245,7 +245,7 @@ Root: HKCU; Subkey: "SOFTWARE\FPDPRFile\shell\open\command"; ValueType: string; 
 
 ; Extend path in NT,2000 or XP. Does not work in 95/98/Me
 ; System-wide
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: String; ValueName: "PATH"; ValueData: "{reg:HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment,PATH|};{app}\bin\i386-Win32";MinVersion: 5.0,4.0; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "PATH"; ValueData: "{reg:HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment,PATH|};{app}\bin\i386-Win32";MinVersion: 5.0,4.0; Check: IsHKLMWriteable
 ; Current user only
 Root: HKCU; Subkey: "Environment"; ValueType: String; ValueName: "PATH"; ValueData: "{reg:HKCU\environment,PATH|};{app}\bin\i386-Win32";MinVersion: 5.0,4.0; Check: IsHKLMNotWriteable
 
