@@ -4,3 +4,4 @@ fp-utils binary: statically-linked-binary
 # see BTS #472304. The zlib functionality is provided without a proper 
 # way to turn it off. 
 fp-utils: embedded-zlib
+fp-utils: debian-revision-should-not-be-zero

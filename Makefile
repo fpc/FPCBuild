@@ -2428,7 +2428,7 @@ else
 endif
 debcheckpolicy:
 ifdef LINTIAN
-	cd ${DEBSRCDIR} ; lintian -i ../*.changes
+	cd ${DEBSRCDIR} ; lintian -I -i ../*.changes
 endif
 debclean:
 ifndef DEBUSESVN

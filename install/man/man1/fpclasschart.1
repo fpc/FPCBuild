@@ -1,0 +1,70 @@
+.TH fpclasschart 1 "9 december 2009" "Free Pascal" "Free Pascal class tree generator"
+.SH NAME
+fpclasschart \- The Free Pascal class tree generator.
+
+.SH SYNOPSIS
+
+\fBfpclasschart\fP \-\-input=cmdline \-\-output=filename [\-\-merge=filename] 
+[\-\-kind=objectkind] [\-\-lang=language] [\-\-help]
+
+.SH Description
+
+.B fpclasschart
+Creates class tree from pascal source
+
+.SH Usage
+
+You can invoke 
+.B fpclasschart
+with as one or more options.
+
+.SH Options
+
+.B fpclasschart
+has several options, most of them optional, defaults will be used in most
+cases.
+
+.TP
+.BI \-\-input=cmdline
+This option tells 
+.B fpclasschart
+to generate a tree file. The command line is the same as the compiler's one
+used to compile the source file.
+.TP
+.BI \-\-output=filename
+This option specifies the name of the generated file
+.B descfile
+that contains the actual chart for the object tree. 
+.TP
+.BI \-\-merge=filename
+Gives a path to a file already containing an object tree to merge.
+.TP
+.BI \-\-kind=objectkind
+Specifys object kind. One of \fIobject\fP, \fIclass\fP, \fIinterface\fP.
+.TP
+.BI \-\-lang=language
+Sets the language for the output file. This will mainly set the strings used
+for the headers in various parts of the documentation files (by default
+they're in english). Currently, valid options are
+.RS
+.TP
+.TP
+.TP
+.I de 
+German.
+.TP
+.I fr
+French.
+.TP
+.I nl
+Dutch.
+.RE
+.TP
+.BI \-\-help
+Writes a help message.
+
+.SH SEE ALSO
+.IP 
+.BR  ppc386 (1)
+.BR  latex (1)
+.BR  makeskel (1)

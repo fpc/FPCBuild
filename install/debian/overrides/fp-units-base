@@ -2,3 +2,4 @@
 # see BTS #472304. The zlib functionality is provided without a proper 
 # way to turn it off. 
 fp-units-base: embedded-zlib
+fp-units-base: debian-revision-should-not-be-zero

@@ -117,7 +117,7 @@ encountered, after which normal processing is resumed.
 .IP \fIExample\fP
 #IFNDEF VER0_99_12
 .br
--Fu/usr/lib/fpc/0.99.13/rtl
+\-Fu/usr/lib/fpc/0.99.13/rtl
 .br
 #ENDIF
 .PP
@@ -141,11 +141,11 @@ encountered, after which normal processing is resumed.
 
 #IFDEF VER0_99_12
 .br
--Fu/usr/lib/fpc/0.99.12/rtl
+\-Fu/usr/lib/fpc/0.99.12/rtl
 .br
 #ELSE
 .br
--Fu/usr/lib/fpc/0.99.13/rtl
+\-Fu/usr/lib/fpc/0.99.13/rtl
 .br
 #ENDIF
 .br
@@ -178,7 +178,7 @@ possibly with an #ELSE between it.
 #UNDEF name
 
 #UNDEF un-defines a keyword if it existed.
-This has the same effect as a "-uname" command-line option.
+This has the same effect as a "\-uname" command-line option.
 .RE
 
 .IP \fI#WRITE\fP
@@ -194,7 +194,7 @@ This can be useful to display warnings if certain options are set.
 .br
 #WRITE Setting debugging ON...
 .br
--g
+\-g
 .br
 #ENDIF
 .br
@@ -253,7 +253,7 @@ always exists, i.e. lines following #SECTION COMMON are always read.
 
 A standard block often used in (the Linux version of) fpc.cfg is
 
--vwhin
+\-vwhin
 .br
 #IFDEF VER0_99_12
 .br
