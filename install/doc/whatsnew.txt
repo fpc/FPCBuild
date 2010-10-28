@@ -26,6 +26,11 @@ Packages:
   * Many improvements to the database units
   * Many improvemnets to the chm units
 
+Platforms:
+  * Long term bug in OS/2 implementation of unit Video finally fixed which
+    among others allows inclusion of the text-mode IDE (without debugger)
+    for this platform as part of the distribution again.
+
 See http://bugs.freepascal.org/changelog_page.php for the list of reported
 bugs which have been fixed in this release.
 
@@ -75,7 +80,7 @@ Packages:
   * Many improvements to the XML units
   * Many improvements to the database units
   * Updated the common Mac OS X Pascal interfaces to r241, including
-    header a translation of the CFNetwork framework
+    an updated header translation of the CFNetwork framework
   * The zipper unit now works correctly on big endian platforms
 
 See http://bugs.freepascal.org/changelog_page.php for the list of reported
@@ -83,10 +88,10 @@ bugs which have been fixed in this release.
 
 
 ******************************************************************************
-                              What's New in 2.2.3
+                              What's New in 2.2.4
 ******************************************************************************
 
-Free Pascal 2.2.3 contains many bug fixes and some new features. The 
+Free Pascal 2.2.4 contains many bug fixes and some new features. The 
 main purpose of this release is to fix problems reported with FPC 2.2.2.
 
 Please also see http://wiki.freepascal.org/User_Changes_2.2.4 for a list
