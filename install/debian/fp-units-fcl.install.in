@@ -1,8 +1,10 @@
 /usr/share/doc/fp-units-fcl
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-base
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-db
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-extra
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-fpcunit
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-image
+/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-js
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-net
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-passrc
 /usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/fcl-registry
