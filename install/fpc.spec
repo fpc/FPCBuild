@@ -100,6 +100,10 @@ fi
         # newer rpm versions do not allow garbage
         # delete lexyacc
         rm -rf %{buildroot}/usr/lib/fpc/lexyacc
+if [ -n ${NODOCS} ]; then
+        # Also remove the examples when NODOCS is specified
+	rm -rf %{buildexampledir}
+fi
 
 
 %clean
