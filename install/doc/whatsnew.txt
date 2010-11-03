@@ -8,7 +8,7 @@
 ******************************************************************************
 
 Free Pascal 2.4.2 contains many fixes and a few new features. Most bugfixes
-in the RTL and packages before june 2010 have been merged.
+in the RTL and packages before June 2010 have been merged.
 
 Please also see http://wiki.freepascal.org/User_Changes_2.4.2 for a list
 of changes which may affect the behaviour of previously working code, and
