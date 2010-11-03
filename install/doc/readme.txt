@@ -138,7 +138,7 @@ and type
 * Quick start - DOS
 ****************************************************************************
 
-Download distribution archive (dos222.zip for GO32v2) and unzip it into
+Download distribution archive (dos242.zip for GO32v2) and unzip it into
 a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -161,7 +161,7 @@ and type
 * Quick start - OS/2 / eComStation
 ****************************************************************************
 
-Download distribution archive (os2222.zip for OS/2 or eComStation) and unzip
+Download distribution archive (os2242.zip for OS/2 or eComStation) and unzip
 it into a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
