@@ -1,40 +1,70 @@
-.TH chmls 1 "29 December 2008" "Free Pascal" "Compressed HTML help file content viewer"
+.TH chmls 1 "29 December 2010" "Free Pascal" "Compressed HTML help file utility"
 .SH NAME
-chmls \- The FPC Pascal unit dependency tracking program.
+chmls \- The FPC Pascal CHM utility
 
 .SH SYNOPSIS
 
-\fBchmls\fP <filename.chm> [section number]
+\fBchmls\fP [options] [command] [command specific parameters]
 
 .SH Description
 
-.B chmls
-- lists the complete contents of a chm file
+The \fBchmls\fP utility performs several CHM related functions,
+such as listing CHM file contents, extracting one file or the whole archive
+and extracting special files. Archiving however is the domain of the
+\fBchmcmd\fP utility
 
-The section number can be 0 or 1 and is a filter to show only files contained
-in the uncompressed section of a chm or the compressed section respectively.
-When not specified files from both sections are shown.
-.SH SEE ALSO
-.IP 
-.BR  chmcmd (1)
-.BR  fpc (1)
-.BR  fpdoc (1)
-.TH chmls 1 "29 December 2008" "Free Pascal" "Compressed HTML help file content viewer"
-.SH NAME
-chmls \- The FPC Pascal unit dependency tracking program.
+.SH Command
 
-.SH SYNOPSIS
+.TP
+\fB list\fP <filename> [section number]
+Shows contents of the archive's directory. The section number can be 0 or 1,
+when no section number is specified, content from both sections is
+displayed.
 
-\fBchmls\fP <filename.chm> [section number]
+.TP
+\fB extract\fP <chm filename> <filename to extract> [saveasname]
+Extracts file "filename to get" from archive "filename", and, if 
+specified, saves it to [saveasname]. 
 
-.SH Description
+.TP
+\fB extractall\fP <chm filename> [directory]
+Extracts all files from archive "filename" to directory "directory"
 
-.B chmls
-- lists the complete contents of a chm file
+.TP
+\fBunblockchm\fP <filespec1> [filespec2] ..
+(Windows only) Mass unblocks (XPsp2+) the relevant CHMs. Multiple files
+and wildcards allowed
 
-The section number can be 0 or 1 and is a filter to show only files contained
-in the uncompressed section of a chm or the compressed section respectively.
-When not specified files from both sections are shown.
+.TP
+\fBextractalias\fP <chmfilename> [basefilename] [symbolprefix]
+Extracts context info from file "chmfilename"
+to basefilename.h and basefilename.ali,
+using symbols "symbolprefix" + contextnr
+
+.TP
+\fBextracttoc\fP <chmfilename> [filename]
+Extracts the toc (mainly to check binary TOC)
+
+.TP
+\fBextractindex\fP <chmfilename> [filename]
+Extracts the index (mainly to check binary index)
+
+For backwards compatibility reasons, the list command is default.
+
+.SH Options
+
+.TP
+.BI \-h,\ \-\-help
+Show help text
+
+.TP
+.BI \-p,\ \-\-no\-page
+Do not page list command output
+
+.TP
+.BI \-n,\ \-\-name\-only
+Only show "name" column in list command output
+
 .SH SEE ALSO
 .IP 
 .BR  chmcmd (1)
