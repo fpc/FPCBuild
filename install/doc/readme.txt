@@ -171,9 +171,10 @@ This can be done by opening file named CONFIG.SYS located in the root
 directory of your boot drive (e.g. C:\) with a plain text editor (e.g.
 E.EXE), extending the lines starting with "set PATH=" and "LIBPATH=" (both
 are case insensitive) with path to newly installed binaries (installation
-root as selected in the installation program appended with "\BIN\OS2") and
-save it again as a plain text file. Note that changes to LIBPATH require
-restart of your machine in order to come into effect.
+root as selected in the installation program appended with "\BIN\OS2" for
+PATH and "\BIN\DLL" for LIBPATH) and save it again as a plain text file.
+Note that changes to LIBPATH require restart of your machine in order to come
+into effect.
 
 To test the compiler, change to the demo\texts directory of the FPC tree
 and type
