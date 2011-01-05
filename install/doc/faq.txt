@@ -1291,7 +1291,10 @@ document:
         being able to find DLLs required for the assembler. Make sure that you
         installed FPC completely (these DLLs are part of file asldos2.zip) and
         that you have set LIBPATH according to instructions in README.TXT (and
-        restarted afterwards).
+        restarted afterwards). If in doubts, running the assembler directly
+        from the command line (e.g. "as --version" to show the installed
+        as.exe version) may be helpful to see name of the missing dynamic
+        library or other details about the problem.
  8. BeOS related information
 
     The BeOS port is current no longer maintained
