@@ -1,10 +1,10 @@
 {
-
     Opening a window with optional custom screen, and
     basic event-driven drawing into the window
     Free Pascal for MorphOS example
 
     Copyright (C) 2004 by Karoly Balogh
+    Various enhancements by Ilkka 'Itix' Lehtoranta
 
     See the file COPYING.FPC, included in this distribution,
     for details about the copyright.
@@ -40,6 +40,11 @@ var
 
   X_Pos     : Integer;
   Y_Pos     : Integer;
+
+  X_Old     : Integer;
+  Y_Old     : Integer;
+
+  Pen       : Integer;
 
 const
   ERRMSG_NOINTUI = 'Unable to open intuition.library V50!';
@@ -84,10 +89,13 @@ begin
   { * We open our window here. * }
   myWindow:=OpenWindowTags(NIL,[WA_Left,0,WA_Top,0,
                                 WA_Width,400,WA_Height,300,
+                                WA_MinWidth,100,WA_MinHeight,100,
+                                WA_MaxWidth,32000,WA_MaxHeight,32000,
                                 WA_Title,DWord(PChar('Free Pascal Test')),
                                 WA_IDCMP,(IDCMP_CLOSEWINDOW or IDCMP_MOUSEBUTTONS or
-                                          IDCMP_MOUSEMOVE),
-                                WA_Flags,(WFLG_SIMPLE_REFRESH or WFLG_NOCAREREFRESH or
+                                          IDCMP_MOUSEMOVE or IDCMP_VANILLAKEY or
+                                          IDCMP_REFRESHWINDOW),
+                                WA_Flags,(WFLG_SMART_REFRESH or
                                           WFLG_ACTIVATE or WFLG_REPORTMOUSE or
                                           WFLG_CLOSEGADGET or WFLG_SIZEGADGET or
                                           WFLG_SIZEBBOTTOM or WFLG_GIMMEZEROZERO or
@@ -106,6 +114,9 @@ begin
   Init;
   Quit:=False;
   LeftButton:=False;
+  X_Old:=0;
+  Y_Old:=0;
+  Pen:=1;
 
   repeat
     WaitPort(myWindow^.UserPort);
@@ -123,19 +134,42 @@ begin
 
       { * Handle different kind of messages here. * }
       case msg_Class of
+        IDCMP_REFRESHWINDOW:
+          begin
+            BeginRefresh(myWindow);
+            EndRefresh(myWindow, 1);
+          end;
+        IDCMP_VANILLAKEY:
+          begin
+            if msg_Code >= Integer('1') then begin
+              if msg_Code <= Integer('8') then begin
+                Pen := msg_Code - Integer('1') + 1;
+              end;
+            end;
+          end;
         IDCMP_CLOSEWINDOW:
           quit:=True;
         IDCMP_MOUSEBUTTONS:
           case msg_Code of
             SELECTDOWN:
-              LeftButton:=True;
+              begin
+                LeftButton:=True;
+                X_Old:=X_Pos;
+                Y_Old:=Y_Pos;
+              end;
             SELECTUP:
               LeftButton:=False;
           end;
         IDCMP_MOUSEMOVE:
           begin
             { * Draw when left button is pressed, and mouse is moved. * }
-            if LeftButton then WritePixel(myWindow^.RPort,X_Pos,Y_Pos);
+            if LeftButton then begin
+              SetAPen(myWindow^.RPort,Pen);
+              gfxMove(myWindow^.RPort,X_Old,Y_Old);
+              Draw(myWindow^.RPort,X_Pos,Y_Pos);
+              X_Old := X_Pos;
+              y_Old := Y_Pos;
+            end;
           end;
       end;
     end;

@@ -1,5 +1,4 @@
 {
-
     Getting list of DOS volumes and assigns
     Free Pascal for MorphOS example
 

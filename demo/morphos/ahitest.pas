@@ -1,5 +1,4 @@
 {
-
     Using AHI device interface to produce sound
     Free Pascal for MorphOS example
 
