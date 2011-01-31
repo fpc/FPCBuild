@@ -1,35 +1,39 @@
-.TH chmcmd 1 "29 December 2008" "Free Pascal" "HTML help file compression tool"
+.TH chmcmd 1 "29 December 2010" "Free Pascal" "HTML help file compression tool"
 .SH NAME
-chmcmd \- The FPC Pascal unit dependency tracking program.
+chmcmd \- The FPC Pascal htmlhelp (CHM) compiler
 
 .SH SYNOPSIS
 
-\fBchmcmd\fP <helpfileproject.hfp>
+\fBchmcmd\fP [options] <helpfileproject filename>
 
 .SH Description
+creates a Compressed HTML Help file (chm) using either a Microsoft
+htmlhelp project (.hhp) or a XML file made 
+with the TCHMProject class in the fpc unit chmfilewriter.
 
-.B chmcmd
-- creates a Compressed HTML help file (chm) using a XML file made 
-with the TCHMProject class in the fpc unit chmfilewriter.pas
+When no parameters are passed, the program will show the available options.
 
-.SH SEE ALSO
-.IP 
-.BR  chmls (1)
-.BR  fpc (1)
-.BR  fpdoc (1)
-.TH chmcmd 1 "29 December 2008" "Free Pascal" "HTML help file compression tool"
-.SH NAME
-chmcmd \- The FPC Pascal unit dependency tracking program.
+.SH Options
 
-.SH SYNOPSIS
+.TP
+.BI \-h,\ \-\-help 
+Show help text
 
-\fBchmcmd\fP <helpfileproject.hfp>
+.TP
+.BI \-\-html\-scan
+Scan html for missing files and alink information
 
-.SH Description
+.TP
+.BI \-\-no\-html\-scan
+Don't scan html for missing files and alink information
 
-.B chmcmd
-- creates a Compressed HTML help file (chm) using a XML file made 
-with the TCHMProject class in the fpc unit chmfilewriter.pas
+.TP
+.BI \-\-verbosity\ \<number\>
+set verbosity level 0..5, 0 is least.
+
+.TP
+.BI \-\-generate-xml   
+(if .hhp file), also generate a xml project from .hhp.
 
 .SH SEE ALSO
 .IP 
