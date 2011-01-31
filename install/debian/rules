@@ -177,6 +177,7 @@ install-arch-stamp:
 	@echo "--- Installing"
 	dh_testdir
 	dh_testroot
+	dh_installdirs
 # Specify the compiler to use so installing will use the correct versioned dir
 	$(MAKE) -C fpcsrc compiler_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc rtl_distinstall $(INSTALLOPTS)
@@ -195,10 +196,15 @@ install-arch-stamp:
 	/bin/bash fpcsrc/compiler/utils/samplecfg \
 		/usr/lib/fpc/${DEB_UPSTREAM_VERSION} ${INSTALL_DIR}/etc
 	install -D debian/fpc-depends debian/tmp/usr/bin/
+	# Install lintian override files
 	set -x; cd debian/overrides ; for PACKAGE in * ; do \
-	  install -m644 -D $$PACKAGE                             \
-	    ../$$PACKAGE/usr/share/lintian/overrides/$$PACKAGE ; \
+	  if [ -d ../$${PACKAGE} ] ; \
+	  then \
+	    install -m644 -D $${PACKAGE} \
+	      ../$${PACKAGE}/usr/share/lintian/overrides/$${PACKAGE} ; \
+	  fi ; \
 	done
+	find ${INSTALL_DIR} -empty -delete
 	touch install-arch-stamp
 
 arrange-arch: install-arch arrange-arch-stamp
@@ -272,6 +278,14 @@ binary-indep: clean-patched build-doc install-doc install-source debian-files
 	  -not -regex '.*\.\(fpc\|inc\|pas\|pp\)' -delete
 	find debian/fpc-source/usr/share/fpcsrc/ -type d \
 	  -empty -delete
+	# Install lintian override files
+	set -x; cd debian/overrides ; for PACKAGE in * ; do \
+	  if [ -d ../$${PACKAGE} ] ; \
+	  then \
+	    install -m644 -D $${PACKAGE} \
+	      ../$${PACKAGE}/usr/share/lintian/overrides/$${PACKAGE} ; \
+	  fi ; \
+	done
 	dh_compress -i -X.pdf
 	dh_fixperms -i
 	dh_installdeb -i

@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Carlos Laviola <claviola@debian.org>
 Uploaders: Torsten Werner <twerner@debian.org>, Abou Al Montacir <abou.almontacir@sfr.fr>
 DM-Upload-Allowed: yes
-Standards-Version: 3.8.4
+Standards-Version: 3.9.1
 Build-Depends: debhelper (>= 7), quilt, fp-compiler (>= 2.2.4-5), fp-units-base,
  fp-units-fcl, fp-utils, mawk | awk, gs-common, libncurses-dev, binutils
 Build-Depends-Indep: hevea

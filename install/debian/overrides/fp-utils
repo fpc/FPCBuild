@@ -1,7 +1,7 @@
 # Free pascal binaries are often statically linked.
-fp-utils binary: statically-linked-binary
 # The Free Pascal Compiler does not properly support linking. Please
 # see BTS #472304. The zlib functionality is provided without a proper 
 # way to turn it off. 
-fp-utils: embedded-zlib
+fp-utils binary: statically-linked-binary
+fp-utils: statically-linked-binary
 fp-utils: debian-revision-should-not-be-zero
