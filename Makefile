@@ -2259,6 +2259,8 @@ renametoshort:
 	-mv $(PKGUNITSPRE)chm$(ZIPSUFFIX).zip uchm$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)hash$(ZIPSUFFIX).zip uhash$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGUNITSPRE)bzip2$(ZIPSUFFIX).zip ubz2$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGUNITSPRE)hermes$(ZIPSUFFIX).zip uherm$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGUNITSPRE)fcl-js$(ZIPSUFFIX).zip ufcjs$(ZIPSUFFIXSHORT).zip
 shortsrc:
 	$(MAKE) renametoshort ZIPSUFFIX=$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
 shortbin:
