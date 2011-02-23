@@ -148,7 +148,8 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
           ☆ 08/2008: 2.2.2 version
           ☆ 04/2009: 2.2.4 version
           ☆ 12/2009: 2.4.0 version
-          ☆ 07/2009: 2.4.2 version (expected)
+          ☆ 11/2010: 2.4.2 version 
+          ☆ 04/2011: 2.4.4 version (expected)
      2. Which versions exist, and which one should I use?
 
         The latest official version is 2.4.2, the first bugfix release of the
