@@ -207,7 +207,7 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
             on as many platforms as possible. GNU Pascal tries to implement a
             portable pascal compiler based on POSIX.
         Version:
-            Currently, Free Pascal is at version 2.4.0 (December 2010). GNU
+            Currently, Free Pascal is at version 2.4.2 (November 2010). GNU
             Pascal is at version 2.1 (from 2002, which can be built with
             several different GCC's as backend; their Mac OS X version is an
             exception though, as it follows the GCC version number).
