@@ -11,8 +11,8 @@ elif [ $# -eq 3 ] && [ $1 = "-svnpath" ]; then
   VERSION=$3
 else
   echo "Usage: makefpcbuild [-svnpath <svnpath>] <release>"
-  echo "Examples: makefpcbuild -svnpath branches/fixes_2_2 2.2.3"
-  echo "          makefpcbuild 2.2.4"
+  echo "Examples: makefpcbuild -svnpath branches/fixes_2_4 2.4.3"
+  echo "          makefpcbuild 2.4.4"
   exit 1
 fi
 
