@@ -24,12 +24,12 @@ Packages:
 	* Including a commandline CHM compiler 
   * Many improvements to fppkg and fpmake for another round of testing.
 
+Platforms:
+  * Fixes for multi-threading support in OS/2 RTL.
+
 See http://bugs.freepascal.org/changelog_page.php for the list of reported
 bugs which have been fixed in this release.
 
-                            Free Pascal Compiler
-
-                                Version 2.4.2
 
 ******************************************************************************
                               What's New in 2.4.2
