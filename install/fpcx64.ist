@@ -61,7 +61,7 @@ Source: units\x86_64-win64\*.*; DestDir: {app}\units\x86_64-win64; Flags: ignore
 ; Filename: {app}\Free Pascal.url; Section: InternetShortcut; Key: URL; String: http://www.freepascal.org/
 
 [Components]
-Name: base; Description: Basic system for wince; Flags: fixed; Types: Custom Minimum Full
+Name: base; Description: Basic system for win32 to x86_64-win64 crosscompiler; Flags: fixed; Types: Custom Minimum Full
 Name: binutils; Description: GNU linker and assembler; Flags: fixed; Types: Custom Minimum Full
 %DisableDocs%Name: docs; Description: Documentation in PDF; Types: Custom Full
 ; Name: ide; Description: Integrated Development Environment; Types: Custom Full
