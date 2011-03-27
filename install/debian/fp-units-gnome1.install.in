@@ -1,3 +1,3 @@
-/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/imlib
-/usr/lib/fpc/%{fpcversion}/units/%{fpctarget}/gnome1
+/usr/lib/fpc/${VERSION}/units/${TARGET}/imlib
+/usr/lib/fpc/${VERSION}/units/${TARGET}/gnome1
 #/usr/share/doc/fp-units-gnome1

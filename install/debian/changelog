@@ -2,7 +2,51 @@ fpc (2.5.1-0) unstable; urgency=low
 
   * Buils daily snapshots
 
- -- Abou Al Montacir <abou.almontacir@sfr.fr>  Sun, 04 Dec 2009 23:59:00 +0100
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Wed, 23 Apr 2011 11:52:00 +0100
+
+fpc (2.4.2-1) unstable; urgency=low
+
+  * New upstream release with many fixes and a few new features.
+    (Closes:Bug#606655)
+    - Most bugfixes in the RTL and packages before june 2010 have been merged.
+    - List of changes which may affect the behaviour of previously working
+    code, and how to cope with these changes is available online on
+    http://wiki.freepascal.org/User_Changes_2.4.2
+    - List of reported bugs which have been fixed in this release is
+    available online on http://bugs.freepascal.org/changelog_page.php
+  * New Platforms:
+    - Long term bug in OS/2 implementation of unit Video finally fixed which
+    among others allows inclusion of the text-mode IDE (without debugger)
+    for this platform as part of the distribution again.
+  * Compiler changes:
+    - Support D2006+ FOR..IN, with some FPC specific enhancements. Refer to
+     http://wiki.freepascal.org/for-in_loop for more information
+    - Support for sealed and abstract classes.
+  * Packages changes:
+    - Many improvements to the XML units
+    - Many improvements to the database units
+    - Many improvements to the chm units
+    - Moved fpc-subst tool from fp-compiler package to fp-utils one
+  * Set 2.4.2 as default FPC version.
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 09 Mar 2011 10:02:00 +0100
+
+fpc (2.4.0-4) unstable; urgency=low
+
+  * Unset 2.4.0 as default FPC version.
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 07 Mar 2011 09:21:00 +0100
+
+fpc (2.4.0-3) unstable; urgency=low
+
+  * Added dependncy for fp-units-gfx to libsvga1-dev. (Closes:Bug#608834)
+  * Added support for multiple version coexistence in the same system. This will
+    allow installing multiple versions of FPC in the same system and choose a
+    default using update-alternatives.
+  * Use version in package names and provide old names as virtual packages
+  * Moved fpc-subst tool from fp-compiler package to fp-utils one
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Wed, 17 Feb 2011 08:41:00 +0100
 
 fpc (2.4.0-2) unstable; urgency=low
 
@@ -227,9 +271,9 @@ fpc (2.2.0-dfsg1-8) unstable; urgency=low
 
   [ Abou Al Montacir ]
   * Fixed build of fpc-source package cased by accidental remove of
-  	fpc-source.install file during clean-patched target execution.
+    fpc-source.install file during clean-patched target execution.
   * Fixed Build-Depend clause (needs binutils instead of binutils-dev and no
-  	need for libgpmg1-dev).
+    need for libgpmg1-dev).
   * Added man pages to the same packages including corresponding binaries.
   * Removed from fpc-source code which isn't required by Lazarus code tool.
 

@@ -62,6 +62,9 @@ FPCDIR=
 DEB_VERSION:=$(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
 DEB_UPSTREAM_VERSION:=$(shell echo $(DEB_VERSION) | cut -f 1 -d -)
 DEB_UPSTREAM_MAIN_VERSION:=$(shell echo ${DEB_UPSTREAM_VERSION} | sed -e 's/^\([0-9\.]*\).*/\1/')
+ifndef PACKAGESUFFIX
+export PACKAGESUFFIX=-${DEB_UPSTREAM_MAIN_VERSION}
+endif
 # Get directories
 CURDIR:=$(shell pwd)
 BUILD_DIR=$(CURDIR)/debian/build
@@ -75,6 +78,9 @@ MKDIR=mkdir -p
 endif
 ifndef CP
 CP=cp -Rfpl
+endif
+ifndef MV
+MV=mv
 endif
 RM:=rm -rf
 # Get fpcmake from path if none is specified.
@@ -114,7 +120,7 @@ clean: patch configure clean-patched unpatch
 	${RM} debian-files-stamp
 	${RM} debian/files debian/docs debian/dirs debian/*.files debian/*.docs debian/*.examples debian/*.postinst debian/*.postrm
 	${RM} .pc
-	${RM} debian/fpc-depends.1
+	${RM} debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
 	# Remove auto-generated version file.
 	${RM} fpcsrc/compiler/version.inc
 	# Remove auto-generated make files.
@@ -130,7 +136,7 @@ clean-patched:
 	$(MAKE) -C fpcsrc ide_distclean
 	$(MAKE) -C fpcsrc utils_distclean
 	$(MAKE) -C fpcdocs clean
-	find '(' -name '*.a' -or -name '*.o' -or -name '*.so' -or -name '*.ppu' ')' -exec ${RM} '{}' ';'
+	find -regex '.*\.\(a\|or?\|so\.*\|ppu\)' -delete
 	dh_prep
 
 ###################
@@ -178,30 +184,36 @@ install-arch-stamp:
 	dh_testdir
 	dh_testroot
 	dh_installdirs
-# Specify the compiler to use so installing will use the correct versioned dir
+	# Specify the compiler to use so installing will use the correct versioned dir
 	$(MAKE) -C fpcsrc compiler_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc rtl_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc packages_distinstall $(INSTALLOPTS)
-	$(MAKE) -C fpcsrc ide_distinstall $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-ide
+	$(MAKE) -C fpcsrc ide_distinstall $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-ide/${DEB_UPSTREAM_MAIN_VERSION}
 	$(MAKE) -C fpcsrc utils_distinstall $(INSTALLOPTS)
-# Copy examples to the correct doc dir
-	/bin/bash debian/moveexamples $(EXAMPLE_TEMP) $(DOC_DIR)
-# Install man pages
+	${MV} ${INSTALL_DIR}/usr/lib/fpc/lexyacc ${INSTALL_DIR}/usr/lib/fpc/${DEB_UPSTREAM_MAIN_VERSION}
+	install -D debian/fpc-depends ${INSTALL_DIR}/usr/bin
+	# Copy examples to the correct doc dir
+	/bin/bash debian/moveexamples ${EXAMPLE_TEMP} ${DOC_DIR} ${DEB_UPSTREAM_MAIN_VERSION}
+	# Rename executables
+	for f in  ${INSTALL_DIR}/usr/bin/* ; do ${MV} $$f $${f}-${DEB_UPSTREAM_MAIN_VERSION} ; done
+	# Install man pages
 	$(MAKE) -C install/man installman $(INSTALLOPTS) INSTALL_PREFIX=$(INSTALL_DIR)/usr/share
-# Install RTL demos
-	$(MAKE) -C demo sourceinstall $(INSTALLOPTS) INSTALL_SOURCEDIR=$(DOC_DIR)/fp-compiler
-# Install whatsnew and readme
-	$(MAKE) -C install/doc installdoc $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-compiler
-# Create fpc.cfg which is included as conffile
+	for s in 1 2 3 4 5 6 7 8 9 ; do test -d ${INSTALL_DIR}/usr/share/man/man$${s} && for f in ${INSTALL_DIR}/usr/share/man/man$${s}/*.? ; do n=`basename $${f}` ; ${MV} $${f} `dirname $${f}`/$${n%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${n#*.}" ; done ; done || true
+	pod2man -c 'Free pascal for Debian GNU/Linux' debian/fpc-depends > debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
+	# Install configuration files
 	/bin/bash fpcsrc/compiler/utils/samplecfg \
 		/usr/lib/fpc/${DEB_UPSTREAM_VERSION} ${INSTALL_DIR}/etc
-	install -D debian/fpc-depends debian/tmp/usr/bin/
+	${MV} ${INSTALL_DIR}/etc/fpc.cfg ${INSTALL_DIR}/etc/fpc-${DEB_UPSTREAM_MAIN_VERSION}.cfg
+	# Install RTL demos
+	$(MAKE) -C demo sourceinstall $(INSTALLOPTS) INSTALL_SOURCEDIR=$(DOC_DIR)/fp-compiler/${DEB_UPSTREAM_MAIN_VERSION}
+	# Install whatsnew and readme
+	$(MAKE) -C install/doc installdoc $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-compiler/${DEB_UPSTREAM_MAIN_VERSION}
 	# Install lintian override files
-	set -x; cd debian/overrides ; for PACKAGE in * ; do \
-	  if [ -d ../$${PACKAGE} ] ; \
+	set -x -e ; cd debian/overrides ; for PACKAGE in * ; do \
+	  if [ -d ../$${PACKAGE}${PACKAGESUFFIX} ] ; \
 	  then \
-	    install -m644 -D $${PACKAGE} \
-	      ../$${PACKAGE}/usr/share/lintian/overrides/$${PACKAGE} ; \
+	  	${MKDIR} ../$${PACKAGE}${PACKAGESUFFIX}/usr/share/lintian/overrides ; \
+	    sed -e "s/$${PACKAGE}/&${PACKAGESUFFIX}/g" $${PACKAGE} > ../$${PACKAGE}${PACKAGESUFFIX}/usr/share/lintian/overrides/$${PACKAGE}${PACKAGESUFFIX} ; \
 	  fi ; \
 	done
 	find ${INSTALL_DIR} -empty -delete
@@ -274,20 +286,21 @@ binary-indep: clean-patched build-doc install-doc install-source debian-files
 	dh_installdocs -i -X.in
 	dh_installchangelogs -i
 	dh_install -i --sourcedir=debian/tmp --list-missing
-	find debian/fpc-source/usr/share/fpcsrc/ -type f \
+	find debian/fpc-source${PACKAGESUFFIX}/usr/share/fpcsrc/ -type f \
 	  -not -regex '.*\.\(fpc\|inc\|pas\|pp\)' -delete
-	find debian/fpc-source/usr/share/fpcsrc/ -type d \
+	find debian/fpc-source${PACKAGESUFFIX}/usr/share/fpcsrc/ -type d \
 	  -empty -delete
 	# Install lintian override files
-	set -x; cd debian/overrides ; for PACKAGE in * ; do \
-	  if [ -d ../$${PACKAGE} ] ; \
+	set -x -e ; cd debian/overrides ; for PACKAGE in * ; do \
+	  if [ -d ../$${PACKAGE}${PACKAGESUFFIX} ] ; \
 	  then \
-	    install -m644 -D $${PACKAGE} \
-	      ../$${PACKAGE}/usr/share/lintian/overrides/$${PACKAGE} ; \
+	  	${MKDIR} ../$${PACKAGE}${PACKAGESUFFIX}/usr/share/lintian/overrides ; \
+	    sed -e "s/$${PACKAGE}/&${PACKAGESUFFIX}/g" $${PACKAGE} > ../$${PACKAGE}${PACKAGESUFFIX}/usr/share/lintian/overrides/$${PACKAGE}${PACKAGESUFFIX} ; \
 	  fi ; \
 	done
 	dh_compress -i -X.pdf
 	dh_fixperms -i
+	dh_installdebconf -i
 	dh_installdeb -i
 	dh_gencontrol -i
 	dh_md5sums -i
@@ -298,16 +311,15 @@ binary-arch: arrange-arch
 	dh_testdir
 	dh_testroot
 	dh_link
-	dh_installdocs -a
+	dh_installdocs -a -X.in
 	dh_installchangelogs -a
 	dh_installexamples -a
-	pod2man -c 'Free pascal for Debian GNU/Linux' \
-	  debian/fpc-depends > debian/fpc-depends.1
 	dh_installman -s
 	dh_strip -s
 	dh_compress -a
 	dh_fixperms -a
-	dh_installdeb -s
+	dh_installdebconf -a
+	dh_installdeb -a
 	dh_shlibdeps -s
 	dh_gencontrol -s
 	dh_md5sums -s

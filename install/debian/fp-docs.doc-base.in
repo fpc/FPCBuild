@@ -1,4 +1,4 @@
-Document: fpc-docs
+Document: fpc-docs${PACKAGESUFFIX}
 Title: Free Pascal Documentation
 Author: Michael van Canneyt
 Abstract: Documentation for the Free Pascal Compiler.
@@ -6,5 +6,5 @@ Abstract: Documentation for the Free Pascal Compiler.
 Section: Programming
 
 Format: html
-Files: /usr/share/doc/fp-docs/*
-Index: /usr/share/doc/fp-docs/%{fpcversion}/fpctoc.html
+Files: /usr/share/doc/fp-docs/${VERSION}/*
+Index: /usr/share/doc/fp-docs/${VERSION}/fpctoc.html

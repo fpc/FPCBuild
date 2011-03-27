@@ -4,8 +4,5 @@ set -e
 
 FPCDIR=/usr/lib/fpc/%{fpcversion}
 
-# remove link
-rm -f /usr/bin/%{ppcbin}
-
 # Debhelper code
 #DEBHELPER#

@@ -11,11 +11,11 @@ Vcs-Svn: https://bollin.googlecode.com/svn/fpc/trunk/
 Vcs-Browser: http://bollin.googlecode.com/svn/fpc/trunk/
 Homepage: http://www.freepascal.org/
 
-Package: fpc-2.4.4
+Package: fpc${PACKAGESUFFIX}
 Architecture: all
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (>= ${binary:Version}), fp-compiler-2.4.4 (>= ${binary:Version}), fp-units-base-2.4.4 (>= ${binary:Version}), fp-ide-2.4.4 (>= ${binary:Version}), fp-units-fcl-2.4.4 (>= ${binary:Version}), fp-units-fv-2.4.4 (>= ${binary:Version}), fp-units-gtk-2.4.4 (>= ${binary:Version}), fp-units-gtk2-2.4.4 (>= ${binary:Version}), fp-units-gnome1-2.4.4 (>= ${binary:Version}), fp-units-db-2.4.4 (>= ${binary:Version}), fp-units-gfx-2.4.4 (>= ${binary:Version}), fp-units-net-2.4.4 (>= ${binary:Version}), fp-units-misc-2.4.4 (>= ${binary:Version}), fp-units-multimedia-2.4.4 (>= ${binary:Version}), fp-units-math-2.4.4 (>= ${binary:Version})
-Recommends: fp-utils-2.4.4
-Suggests: lazarus, fp-docs-2.4.4 (>= ${source:Upstream-Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (>= ${binary:Version}), fp-compiler${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-base${PACKAGESUFFIX} (>= ${binary:Version}), fp-ide${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-fcl${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-fv${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-gtk${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-gtk2${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-gnome1${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-db${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-gfx${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-net${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-misc${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-multimedia${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-math${PACKAGESUFFIX} (>= ${binary:Version})
+Recommends: fp-utils${PACKAGESUFFIX}
+Suggests: lazarus, fp-docs${PACKAGESUFFIX} (>= ${source:Upstream-Version})
 Provides: fpc
 Breaks: fpc (<= 2.4.0-3)
 Replaces: fpc (<= 2.4.0-3)
@@ -35,7 +35,7 @@ Description: Free Pascal Compiler - Meta Package
  architecture. Experienced users may want to install only packages they need,
  and can skip installing this metapackage.
 
-Package: fpc-source-2.4.4
+Package: fpc-source${PACKAGESUFFIX}
 Architecture: all
 Depends: ${misc:Depends}
 Provides: fpc-source
@@ -52,11 +52,11 @@ Description: Free Pascal Compiler - Source Code
  This package contains Free Pascal's own source code. It is meant to be used by
  the Lazarus IDE.
 
-Package: fp-compiler-2.4.4
+Package: fp-compiler${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version})
-Recommends: fp-utils-2.4.4 (>= ${binary:Version})
-Suggests: fp-docs-2.4.4 (>= ${source:Upstream-Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
+Recommends: fp-utils${PACKAGESUFFIX} (>= ${binary:Version})
+Suggests: fp-docs${PACKAGESUFFIX} (>= ${source:Upstream-Version})
 Provides: fp-compiler
 Breaks: fp-compiler (<= 2.4.0-3)
 Replaces: fp-compiler (<= 2.4.0-3)
@@ -74,11 +74,11 @@ Description: Free Pascal - Compiler
  .
  This package contains the command line compiler.
 
-Package: fp-ide-2.4.4
+Package: fp-ide${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version}), ${shlibs:Depends}
-Recommends: fp-utils-2.4.4 (>= ${binary:Version})
-Suggests: fp-docs-2.4.4 (>= ${source:Upstream-Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), ${shlibs:Depends}
+Recommends: fp-utils${PACKAGESUFFIX} (>= ${binary:Version})
+Suggests: fp-docs${PACKAGESUFFIX} (>= ${source:Upstream-Version})
 Provides: fp-ide
 Breaks: fp-ide (<= 2.4.0-3)
 Replaces: fp-ide (<= 2.4.0-3)
@@ -97,10 +97,10 @@ Description: Free Pascal - IDE
  This package contains the Integrated Development Environment (IDE). The IDE
  has an internal compiler.
 
-Package: fp-utils-2.4.4
+Package: fp-utils${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
 Depends: ${misc:Depends}
-Recommends: fp-compiler-2.4.4 (= ${binary:Version})
+Recommends: fp-compiler${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-utils
 Breaks: fp-utils (<= 2.4.0-3), fp-compiler (<= 2.4.0-3)
 Replaces: fp-utils (<= 2.4.0-3), fp-compiler (<= 2.4.0-3)
@@ -124,7 +124,7 @@ Description: Free Pascal - Utils
    - data2inc    Convert binary/text data to include files
    - plex/pyacc  Pascal Lex/Yacc implementation
 
-Package: fp-docs-2.4.4
+Package: fp-docs${PACKAGESUFFIX}
 Section: doc
 Architecture: all
 Depends: ${misc:Depends}
@@ -142,10 +142,10 @@ Description: Free Pascal - Documentation
  This package provides documentation for the Free Pascal Compiler in HTML
  format.
 
-Package: fp-units-rtl-2.4.4
+Package: fp-units-rtl${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
 Depends: ${misc:Depends}
-Recommends: fp-compiler-2.4.4 (= ${binary:Version})
+Recommends: fp-compiler${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-rtl, fpc-abi-${source:Upstream-Version}
 Breaks: fp-units-rtl (<= 2.4.0-3)
 Replaces: fp-units-rtl (<= 2.4.0-3)
@@ -159,9 +159,9 @@ Description: Free Pascal - Runtime Library
  .
  This package contains the Runtime Libraries for the Free Pascal Compiler.
 
-Package: fp-units-base-2.4.4
+Package: fp-units-base${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-base
 Breaks: fp-units-base (<= 2.4.0-3)
 Replaces: fp-units-base (<= 2.4.0-3)
@@ -179,9 +179,9 @@ Description: Free Pascal - base units
   - NCurses
   - ZLib
 
-Package: fp-units-fcl-2.4.4
+Package: fp-units-fcl${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version}), fp-units-base-2.4.4 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), fp-units-base${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-fcl
 Breaks: fp-units-fcl (<= 2.4.0-3)
 Replaces: fp-units-fcl (<= 2.4.0-3)
@@ -195,9 +195,9 @@ Description: Free Pascal - Free Component Library
  .
  This package contains the Free Component Library for the Free Pascal Compiler.
 
-Package: fp-units-fv-2.4.4
+Package: fp-units-fv${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-fv
 Breaks: fp-units-fv (<= 2.4.0-3)
 Replaces: fp-units-fv (<= 2.4.0-3)
@@ -211,9 +211,9 @@ Description: Free Pascal - Free Vision units
  .
  This package contains the Free Vision units for the Free Pascal Compiler.
 
-Package: fp-units-gtk-2.4.4
+Package: fp-units-gtk${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version}), fp-units-fcl-2.4.4 (= ${binary:Version}), libgtk2.0-dev
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), fp-units-fcl${PACKAGESUFFIX} (= ${binary:Version}), libgtk2.0-dev
 Provides: fp-units-gtk
 Breaks: fp-units-gtk (<= 2.4.0-3)
 Replaces: fp-units-gtk (<= 2.4.0-3)
@@ -228,9 +228,9 @@ Description: Free Pascal - GTK+ 1.2 units
  This package contains Free Pascal units and examples to create
  programs with GTK+ 1.2.
 
-Package: fp-units-gtk2-2.4.4
+Package: fp-units-gtk2${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version}), fp-units-fcl-2.4.4 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), fp-units-fcl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-gtk2
 Breaks: fp-units-gtk2 (<= 2.4.0-3)
 Replaces: fp-units-gtk2 (<= 2.4.0-3)
@@ -245,9 +245,9 @@ Description: Free Pascal - GTK+ 2.x units
  This package contains Free Pascal units and examples to create
  programs with GTK+ 2.x.
 
-Package: fp-units-gnome1-2.4.4
+Package: fp-units-gnome1${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version}), fp-units-gtk-2.4.4 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), fp-units-gtk${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-gnome1
 Breaks: fp-units-gnome1 (<= 2.4.0-3)
 Replaces: fp-units-gnome1 (<= 2.4.0-3)
@@ -262,9 +262,9 @@ Description: Free Pascal - GNOME 1 units
  This package contains Free Pascal units and examples to create
  programs for GNOME 1.
 
-Package: fp-units-db-2.4.4
+Package: fp-units-db${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-db
 Breaks: fp-units-db (<= 2.4.0-3)
 Replaces: fp-units-db (<= 2.4.0-3)
@@ -285,9 +285,9 @@ Description: Free Pascal - database libraries units
   - GDBM
   - SQLite
 
-Package: fp-units-gfx-2.4.4
+Package: fp-units-gfx${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version}), fp-units-base-2.4.4 (= ${binary:Version}), libsvga1-dev
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), fp-units-base${PACKAGESUFFIX} (= ${binary:Version}), libsvga1-dev
 Provides: fp-units-gfx
 Breaks: fp-units-gfx (<= 2.4.0-3)
 Replaces: fp-units-gfx (<= 2.4.0-3)
@@ -310,9 +310,9 @@ Description: Free Pascal - graphics libraries units
   - openal
   - cairo
 
-Package: fp-units-net-2.4.4
+Package: fp-units-net${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-net
 Breaks: fp-units-net (<= 2.4.0-3)
 Replaces: fp-units-net (<= 2.4.0-3)
@@ -336,9 +336,9 @@ Description: Free Pascal - networking units
   - openssl : Open SSL
   - pcap
 
-Package: fp-units-math-2.4.4
+Package: fp-units-math${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-math
 Breaks: fp-units-math (<= 2.4.0-3)
 Replaces: fp-units-math (<= 2.4.0-3), fp-units-misc (<= 2.2.4-4)
@@ -356,9 +356,9 @@ Description: Free Pascal - math units
   - numlib : numerical computing
   - symbolic : symbolic computing
 
-Package: fp-units-misc-2.4.4
+Package: fp-units-misc${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-misc
 Breaks: fp-units-misc (<= 2.4.0-3)
 Replaces: fp-units-misc (<= 2.4.0-3)
@@ -375,9 +375,9 @@ Description: Free Pascal - miscellaneous units
   - Utmp
   - PasZLib (Pascal-only zlib implementation)
 
-Package: fp-units-multimedia-2.4.4
+Package: fp-units-multimedia${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev
 Provides: fp-units-multimedia
 Breaks: fp-units-multimedia (<= 2.4.0-3)
 Replaces: fp-units-multimedia (<= 2.4.0-3), fp-units-gfx (<= 2.2.4-3)
@@ -396,9 +396,9 @@ Description: Free Pascal - multimedia units
   - mad
   - modplug
 
-Package: fp-units-i386-2.4.4
+Package: fp-units-i386${PACKAGESUFFIX}
 Architecture: i386
-Depends: ${misc:Depends}, fp-units-rtl-2.4.4 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-i386
 Breaks: fp-units-i386 (<= 2.4.0-3)
 Replaces: fp-units-i386 (<= 2.4.0-3)
