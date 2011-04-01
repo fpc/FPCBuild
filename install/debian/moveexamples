@@ -4,18 +4,19 @@ set -e
 
 EXAMPLE_TEMP=$1
 DOC_DIR=$2
+VERSION=$3
 
 function move_examples()
 {
     # Make examples dir
-    install -d -m 755 $DOC_DIR/fp-units-$1/examples/
+    install -d -m 755 $DOC_DIR/$1/${VERSION}/examples
 
     for package in $2
     do
         if [ -d $EXAMPLE_TEMP/$package/examples ]; then
             echo "Moving examples of $package"
             EXAMPLE_TEMP_DIR="$EXAMPLE_TEMP/$package/examples"
-            EXAMPLE_INSTALL_DIR="$DOC_DIR/fp-units-$1/examples/$package"
+            EXAMPLE_INSTALL_DIR="$DOC_DIR/$1/${VERSION}/examples/$package"
             # Move dir renaming it
             if [ -e "${EXAMPLE_INSTALL_DIR}" ]
             then
@@ -31,7 +32,7 @@ function move_examples()
     done
 
     # Remove empty directories:
-    rmdir --ignore-fail-on-non-empty $DOC_DIR/fp-units-$1/examples
+    rmdir --ignore-fail-on-non-empty $DOC_DIR/$1/${VERSION}/examples
 }
 
 echo '**** Copying examples ****'
@@ -39,7 +40,7 @@ PACKAGE_LIST='debian/fp-units-'*'.install.in'
 
 for PACKAGE_FILE in ${PACKAGE_LIST}
 do
-    PACKAGE_NAME=`basename "${PACKAGE_FILE}" '.install.in' | sed -e 's/fp-units-//'`
+    PACKAGE_NAME=`basename "${PACKAGE_FILE}" '.install.in'`
     PACKAGE_CONTENT=`grep '/usr/lib/fpc' "${PACKAGE_FILE}" | sed -e 's@.*/\([^/]\)/\?@\1@'`
 	echo '    **** PACKAGE_NAME = "'${PACKAGE_NAME}'"'
 	echo '    **** PACKAGE_CONTENT = "'${PACKAGE_CONTENT}'"'

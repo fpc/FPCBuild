@@ -1,3 +1,3 @@
-/usr/share/fpcsrc/%{fpcversion}/compiler
-/usr/share/fpcsrc/%{fpcversion}/packages
-/usr/share/fpcsrc/%{fpcversion}/rtl
+/usr/share/fpcsrc/${VERSION}/compiler
+/usr/share/fpcsrc/${VERSION}/packages
+/usr/share/fpcsrc/${VERSION}/rtl

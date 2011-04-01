@@ -36,8 +36,8 @@ fpc-depends is a debhelper-like program that is responsible for
 generating the ${fpc-abi:Depends} substitutions and adding them to
 substvars files.
 
-If you use this program, your package must build-depend on fp-compiler
-(>= 2.2.0-3).
+If you use this program, your package must build-depend on fp-utils
+(>= 2.4.2-1).
 
 
 =cut
@@ -46,7 +46,7 @@ init ();
 
 foreach my $package (@{$dh{DOPACKAGES}}) {
   delsubstvar($package, "fpc-abi:Depends");
-  addsubstvar($package, "fpc-abi:Depends", "fpc-abi-%{fpcversion}");
+  addsubstvar($package, "fpc-abi:Depends", "fpc-abi-${VERSION}");
 }
 
 =head1 SEE ALSO

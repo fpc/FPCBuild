@@ -1,3 +1,5 @@
 # Free pascal binaries are often statically linked.
+# The Free Pascal Compiler does not properly support linking. Please
+# see BTS #472304.
 fp-units-gfx binary: statically-linked-binary
 fp-units-gfx: debian-revision-should-not-be-zero

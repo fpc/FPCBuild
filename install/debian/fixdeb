@@ -6,27 +6,24 @@
 # $2 = fpc target (i386-linux)
 # $3 = ppcXXX binary name (ppc386)
 #
+#set -x
 if [ $# != 3 ]; then
-  echo 'Usage : fixdeb path fpctarget ppcbin'
+  echo 'Usage : fixdeb <path> <target> <ppcbin>'
   exit 1
 fi
 
-PACKAGEVERSION=`dpkg-parsechangelog | sed -ne's,^Version: \(.*\),\1,p'`
-FPCVERSION=`echo $PACKAGEVERSION | sed -ne's,^\([0-9.]*\).*,\1,p'`
-DEBVERSION=`echo $PACKAGEVERSION | awk -F '-' '{ print $NF }'`
-FPCSVNPATH=`echo $FPCVERSION | awk -F '.' '{ print "release_"$1"_"$2"_"$3 }'`
-FPCTARGET="$2"
-PPCBIN="$3"
+DEB_SUBST_PACKAGEVERSION=`dpkg-parsechangelog | sed -ne's,^Version: \(.*\),\1,p'`
+DEB_SUBST_VERSION=`echo $DEB_SUBST_PACKAGEVERSION | sed -ne's,^\([0-9.]*\).*,\1,p'`
+DEB_SUBST_DEBVERSION=`echo $DEB_SUBST_PACKAGEVERSION | awk -F '-' '{ print $NF }'`
+DEB_SUBST_SVNPATH=`echo $DEB_SUBST_VERSION | awk -F '.' '{ print "release_"$1"_"$2"_"$3 }'`
+DEB_SUBST_TARGET="$2"
+DEB_SUBST_PPCBIN="$3"
+DEB_SUBST_PACKAGESUFFIX=${PACKAGESUFFIX}
 
-echo 'PackageVersion: ' $PACKAGEVERSION
-echo 'FPCVersion    : ' $FPCVERSION
-echo 'FPCTarget     : ' $FPCTARGET
-echo 'DebVersion    : ' $DEBVERSION
-echo 'PPCBin        : ' $PPCBIN
-echo 'SVNPath       : ' $FPCSVNPATH
+SUBST_CMD=`set | sed -n -e 's/^DEB_SUBST_\([A-Z_]\+\)=\(.*\)/-e s@\${\1}@\2@g/p'`
 
 for i in $1/*.in
 do
-  j=$1/$(basename $i .in)
-  sed -e 's/%{fpcversion}/'$FPCVERSION'/g;s/%{packageversion}/'$PACKAGEVERSION'/g;s/%{ppcbin}/'$PPCBIN'/g;s/%{fpctarget}/'$FPCTARGET'/g;s/%{fpcsvnpath}/'$FPCSVNPATH'/g' $i > $j
+  j=`basename ${i} .in`
+  sed ${SUBST_CMD} ${i} > $1/${j/./${PACKAGESUFFIX}.}
 done
