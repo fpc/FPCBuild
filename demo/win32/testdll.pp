@@ -15,11 +15,14 @@ var
 
 procedure P1(var s:string);export;
 var
+  i : longint;
   p:array[0..255] of char;
 begin
-  length(s);
+  i:=length(s);
   getmodulefilename(Hinstance,@p,255);
   writeln('DLL: Hello, I''m DLL ',pchar(@p));
+  writeln('S before is "',s,'"');
+  s:='New value';
 end;
 
 procedure P2(x:longint);export;
