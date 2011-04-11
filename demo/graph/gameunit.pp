@@ -28,7 +28,7 @@ INTERFACE
 {$ifdef Unix}
   {$define MouseAPI}
 {$endif}
-{$ifdef win32}
+{$ifdef mswindows}
   {$define MouseAPI}
   {$define UseGraphics} {Mandatory}
 {$endif}
@@ -45,7 +45,7 @@ INTERFACE
   {$G+}
 {$endif}
 {$ifdef UseGraphics}
- {$ifdef Win32}
+ {$ifdef mswindows}
    {$define Win32Graph}
  {$endif}
 {$endif}
