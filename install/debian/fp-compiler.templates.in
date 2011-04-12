@@ -1,7 +1,7 @@
 Template: fp-compiler${PACKAGESUFFIX}/rename_cfg
 Type: boolean
 Default: true
-Description: Should I rename "/etc/fpc.cfg" to "/etc/fpc.cfg.bak"?
+Description: Do you want to rename "/etc/fpc.cfg" to "/etc/fpc.cfg.bak"?
  FPC supports now multiple version installations. This allows co-existence of
  multiple versions on the same system. The default version can be selected using
  the update-alternatives command for the following groups:
@@ -13,4 +13,6 @@ Description: Should I rename "/etc/fpc.cfg" to "/etc/fpc.cfg.bak"?
  always backward compatible and it may be very safe to use the latest version
  for it.
  .
- In order to use alternatives system I need to rename the fpc.cfg configuration file.
+ In order to use alternatives system for system wide FPC configuration file you
+ need to accept renaming "/etc/fpc.cfg", otherwise you will need to manage this
+ manually by yourself.

@@ -10,7 +10,7 @@ CFG_PRIORITY=$(echo ${VERSION} | sed -e 's/\.//g')
 
 if test -f "${CFG_FILE}" && ! test -L "${CFG_FILE}"
 then
-	db_input high fp-compiler${PACKAGESUFFIX}/rename_cfg
+	db_input high fp-compiler${PACKAGESUFFIX}/rename_cfg || test $? -eq 30
 	db_go
 fi
 

@@ -4,6 +4,49 @@ fpc (2.5.1-0) unstable; urgency=low
 
  -- Abou Al Montacir <abou.almontacir@sfr.fr>  Wed, 23 Apr 2011 11:52:00 +0100
 
+fpc (2.4.4-0) unstable; urgency=low
+
+  * New upstream release with many fixes and a few new features.
+    - Most library fixes from early June 2010 till March 2011.
+      + New lib in fp-untis-misc: libsee
+      + New libs in fp-untis-gfx: hermes, ptc
+      + New lib in fp-units-fcl: fcl-js
+    - Some compiler fixes, most relating to 64-bit.
+    - List of changes which may affect the behaviour of previously working
+      code, and how to cope with these changes is available online on
+      http://wiki.freepascal.org/User_Changes_2.4.4
+    - List of reported bugs which have been fixed in this release is
+      available online on http://bugs.freepascal.org/changelog_page.php
+  * Packages:
+    - Many improvements to the XML units
+    - Many improvements to the database units.
+      + Specially sqlite got quite some fixes.
+    - Many improvements to the chm units.
+      + Including a command line CHM compiler
+    - Many improvements to fppkg and fpmake for another round of testing.
+  * Platforms:
+    - Fixes for multi-threading support in OS/2 RTL.
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 07 Apr 2011 19:30:00 +0200
+
+fpc (2.4.2-3) unstable; urgency=low
+
+  * Added depency on binutils package and declared conflict with binutils-gold
+    as FPC does not work new binutils chain.(Closes:Bug#620815)
+  * Fixed various lintian warnings and notes.
+  * Removed dependency of fp-units-gfx on libsvga1-dev on architectures where
+    it does not exist.
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 06 Apr 2011 23:30:00 +0200
+
+fpc (2.4.2-2) unstable; urgency=low
+
+  * Test for dh_input exit status 30 as this is a normal exit status which just
+    informs that the question was not displayed because of its priority.
+    (Closes:Bug#620803)
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 05 Apr 2011 17:14:00 +0200
+
 fpc (2.4.2-1) unstable; urgency=low
 
   * New upstream release with many fixes and a few new features.
