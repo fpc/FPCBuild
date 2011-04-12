@@ -1,5 +1,6 @@
 /usr/bin/fd2pascal-${VERSION}
 /usr/lib/fpc/${VERSION}/units/${TARGET}/hermes
+/usr/lib/fpc/${VERSION}/units/${TARGET}/opencl
 /usr/lib/fpc/${VERSION}/units/${TARGET}/opengl
 /usr/lib/fpc/${VERSION}/units/${TARGET}/xforms
 /usr/lib/fpc/${VERSION}/units/${TARGET}/svgalib

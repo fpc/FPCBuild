@@ -5,6 +5,7 @@
 /usr/lib/fpc/${VERSION}/units/${TARGET}/iconvenc
 /usr/lib/fpc/${VERSION}/units/${TARGET}/libxml2
 /usr/lib/fpc/${VERSION}/units/${TARGET}/libsee
+/usr/lib/fpc/${VERSION}/units/${TARGET}/lua
 /usr/lib/fpc/${VERSION}/units/${TARGET}/utmp
 /usr/lib/fpc/${VERSION}/units/${TARGET}/pthreads
 /usr/lib/fpc/${VERSION}/units/${TARGET}/zlib

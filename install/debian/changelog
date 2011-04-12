@@ -23,11 +23,14 @@ fpc (2.4.4-0) unstable; urgency=low
       + Specially sqlite got quite some fixes.
     - Many improvements to the chm units.
       + Including a command line CHM compiler
+    - New interface units:
+      + opencl
+      + lua
     - Many improvements to fppkg and fpmake for another round of testing.
   * Platforms:
     - Fixes for multi-threading support in OS/2 RTL.
 
- -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 07 Apr 2011 19:30:00 +0200
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 12 Apr 2011 20:05:00 +0200
 
 fpc (2.4.2-3) unstable; urgency=low
 
@@ -53,17 +56,17 @@ fpc (2.4.2-1) unstable; urgency=low
     (Closes:Bug#606655)
     - Most bugfixes in the RTL and packages before june 2010 have been merged.
     - List of changes which may affect the behaviour of previously working
-    code, and how to cope with these changes is available online on
-    http://wiki.freepascal.org/User_Changes_2.4.2
+      code, and how to cope with these changes is available online on
+      http://wiki.freepascal.org/User_Changes_2.4.2
     - List of reported bugs which have been fixed in this release is
-    available online on http://bugs.freepascal.org/changelog_page.php
+      available online on http://bugs.freepascal.org/changelog_page.php
   * New Platforms:
     - Long term bug in OS/2 implementation of unit Video finally fixed which
-    among others allows inclusion of the text-mode IDE (without debugger)
-    for this platform as part of the distribution again.
+      among others allows inclusion of the text-mode IDE (without debugger)
+      for this platform as part of the distribution again.
   * Compiler changes:
     - Support D2006+ FOR..IN, with some FPC specific enhancements. Refer to
-     http://wiki.freepascal.org/for-in_loop for more information
+      http://wiki.freepascal.org/for-in_loop for more information
     - Support for sealed and abstract classes.
   * Packages changes:
     - Many improvements to the XML units
