@@ -22,9 +22,13 @@
  **********************************************************************}
 PROGRAM SameGame;
 
+{$ifdef mswindows}
+ {$define UseGraphics} { as in gameunit }
+{$endif mswindows}
+
 
 {$ifdef UseGraphics}
- {$ifdef Win32}
+ {$ifdef mswindows}
    {$define Win32Graph}
     {$apptype GUI}
  {$endif}
@@ -32,7 +36,7 @@ PROGRAM SameGame;
 
 
 Uses
-{$ifdef Win32}
+{$ifdef mswindows}
   Windows,
 {$endif}
 {$ifdef Win32Graph}
@@ -542,7 +546,7 @@ VAR I : LONGINT;
 
 BEGIN
  {$IFDEF UseGraphics}
-  {$ifdef Win32}
+  {$ifdef mswindows}
    ShowWindow(GetActiveWindow,0);
   {$endif}
   gm:=vgahi;
@@ -556,11 +560,8 @@ BEGIN
   SetFillStyle(SolidFill,1);
   GetDefaultPalette(Pal);
   SetAllPalette(Pal);
-  {$ifdef win32}
-   {$ifdef win32}
+  {$ifdef mswindows}
     Windows.SetWindowText(GraphWindow,'Samegame, a demonstration of Free Pascal');
-   {$endif}
-
   {$endif}
  {$ENDIF}
   IF NOT MousePresent THEN

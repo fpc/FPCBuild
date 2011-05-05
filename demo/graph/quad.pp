@@ -25,14 +25,14 @@ support are built in the Graph, others are ignored).}
 {$Define UseGraphics}
 
 {$ifdef UseGraphics}
- {$ifdef Win32}
+ {$ifdef mswindows}
    {$define Win32Graph}         // Needed for GameUnit.
    {$APPTYPE GUI}
  {$endif}
 {$endif}
 
 Uses
- {$ifdef Win32}
+ {$ifdef mswindows}
   WinCrt,Windows,
  {$else}
   Crt,
@@ -119,7 +119,7 @@ Procedure ginit640x480x16(direc:String);
 
 Var grd,grmode: integer;
 Begin
-  {$ifdef Win32}
+  {$ifdef mswindows}
    {$ifndef Debug}
      ShowWindow(GetActiveWindow,0);
    {$endif}
@@ -132,7 +132,7 @@ Begin
   grmode := 2;{ m800x600x16;}
   {$endif}
   initgraph(grd,grmode,direc);
-  {$ifndef Win32}
+  {$ifndef mswindows}
   setgraphmode(2);
   {$endif}
 End;
@@ -396,7 +396,7 @@ Begin
   Until c>nof;
 
   delay(75);
-  {$ifndef Win32}
+  {$ifndef mswindows}
    gotoxy(1,1);
   {$endif}
 
@@ -472,13 +472,13 @@ Begin
   // fire_works;
   cleardevice;
 
-  {$ifndef Win32}
+  {$ifndef mswindows}
   closegraph;
   textmode(co80+font8x8);
   clrscr;
   {$endif}
   I:=SlipInScore(Turns);
-  {$ifndef Win32}
+  {$ifndef mswindows}
   GotoXY(1,23);
   Writeln(GameOver,Turns);
   FOR J:=9 TO 22 DO
@@ -517,7 +517,7 @@ Begin
    HighScore[I-1].Name:=S;
   END;
   ShowHighScore;
-  {$ifdef Win32}
+  {$ifdef mswindows}
    Bar(5,40+23*LineDisty,5+8*26,40+23*LineDisty+8);
    OutTextXY(5,40+23*LineDistY,'Press mouse to continue');
    WaitForMouse;
@@ -571,7 +571,7 @@ Begin
     inc(c);
   Until c>9;
   turns := 0;
-  {$ifndef Win32}
+  {$ifndef mswindows}
   gotoxy(1,1);
   {$endif}
   readln;
@@ -675,7 +675,7 @@ Begin
   {$I+}
   If ioresult<>0 Then
    BEGIN
-    {$ifdef Win32}
+    {$ifdef mswindows}
      MessageBox(GetActiveWindow,'Error','Fatal error, couldn''t find graphics data file quaddata.dat',WM_QUIT);
     {$else}
      TextMode(CO80);
@@ -717,7 +717,7 @@ VAR I : LONGINT;
 Begin
   Randomize;                                    {Initialize random generator}
   Negative:=TRUE;                               {Higher highscore is worse}
-  {$ifdef Win32}
+  {$ifdef mswindows}
    HighX     :=300;   {Coordinates of highscores}
    HighY     :=130+20+8*LineDistY;  {y coordinate relative to other options}
   {$else}
@@ -769,13 +769,13 @@ Begin
   Repeat
     interpret;
   Until (exit1=true) {$ifdef Debug} or (turns=1) {$endif};
-  {$ifndef Win32}
+  {$ifndef mswindows}
   closegraph;
   {$endif}
 
   Freemem(PicData,PicBufferSize);
   SaveHighScore;
-  {$ifndef Win32}
+  {$ifndef mswindows}
    Textmode(co80);
    clrscr;
    HideMouse;
@@ -805,7 +805,7 @@ Begin
    OutTextXY(5,40+9*LineDistY,'Press mouse to continue');
    WaitForMouse;
   {$endif}
-  {$ifdef Win32}
+  {$ifdef mswindows}
    CloseGraph;
   {$endif}
    DoneMouse;

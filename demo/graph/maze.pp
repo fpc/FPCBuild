@@ -30,7 +30,7 @@ program makemaze;
 {apptype GUI, disabled, there are too many writes PM }
 
 uses
- {$ifdef Win32}
+ {$ifdef mswindows}
   WinCrt,Windows,
  {$else}
   crt,
@@ -432,7 +432,7 @@ procedure getsize;
 var
   j, k : real;
 begin
- {$ifndef win32}
+ {$ifndef mswindows}
   clrscr;
  {$endif}
   writeln('       Mind');
@@ -470,20 +470,20 @@ begin
 end;
 
 begin
- {$ifdef Win32}
+ {$ifdef mswindows}
   ShowWindow(GetActiveWindow,0);
   Initbgi;
  {$endif}
   repeat
     getsize;
-    {$ifndef Win32}
+    {$ifndef mswindows}
      initbgi;
     {$endif}
     new(cell);    { allocate this large array on heap }
     drawmaze;
     solvemaze;
     dispose(cell);
-    {$ifndef Win32}
+    {$ifndef mswindows}
      closegraph;
     {$endif}
     while keypressed do
@@ -491,7 +491,7 @@ begin
     write ('another one? ');
     ch := upcase (readkey);
   until (ch = 'N') or (ch = #27);
-  {$ifdef Win32}
+  {$ifdef mswindows}
    CloseGraph;
   {$endif}
 end.

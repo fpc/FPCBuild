@@ -21,12 +21,12 @@ ORIGINAL Header:
      Turbo Pascal 4.0 source code.  Requires VGA 640x480x16 display.
      Note: pix=pixels in the comments}
 
-{$ifdef Win32}
+{$ifdef mswindows}
  {$apptype GUI}
 {$endif}
 
 Uses
- {$ifdef Win32}
+ {$ifdef mswindows}
   Windows,
   WinCrt,
  {$else}
@@ -69,7 +69,7 @@ begin
   //SetGraphBufSize(10);
   GraphDriver:=VGA;
   GraphMode:=VGAHi;
-  {$ifdef Win32}
+  {$ifdef mswindows}
    ShowWindow(GetActiveWindow,0);
   {$endif}
 

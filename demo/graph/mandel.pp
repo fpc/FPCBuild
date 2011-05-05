@@ -20,12 +20,12 @@ program mandel;
   Note: For linux you need to run this program as root !!
 }
 
-{$ifdef Win32}
+{$ifdef mswindows}
  {$apptype GUI}
 {$endif}
 
 uses
-{$ifdef Win32}
+{$ifdef mswindows}
   WinCrt,
   Windows,
 {$endif}
@@ -295,7 +295,7 @@ begin
     GetModeRange(gd,dummy,gm);
   GetTime(hour, minute, second, sec100);
   starttime:=((hour*60+minute)*60+second)*100+sec100;
-  {$ifdef Win32}
+  {$ifdef mswindows}
    ShowWindow(GetActiveWindow,0);
   {$endif}
   InitGraph(gd,gm,'');
@@ -338,15 +338,15 @@ begin
   GetTime(hour, minute, second, sec100);
   neededtime:=((hour*60+minute)*60+second)*100+sec100-starttime;
 {$ifndef fpc_profile}
-  {$ifndef Win32}
+  {$ifndef mswindows}
   readln;
-  {$else: Win32}
+  {$else: mswindows}
   repeat
   until keypressed;
   {$endif}
 {$endif fpc_profile}
   CloseGraph;
-  {$ifndef Win32}
+  {$ifndef mswindows}
    Writeln('Mandel took ',Real(neededtime)/100/count:0:3,' secs to generate mandel graph');
    Writeln('With graph driver ',gd,' and graph mode ',gm);
   {$endif}

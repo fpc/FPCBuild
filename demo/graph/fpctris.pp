@@ -44,7 +44,7 @@ TheHeight-1
 }
 
 {$ifdef UseGraphics}
- {$ifdef Win32}
+ {$ifdef mswindows}
    {$define Win32Graph}
    {$APPTYPE GUI}
  {$endif}
@@ -590,7 +590,7 @@ VAR
 
 BEGIN
 {$IFDEF UseGraphics}
-  {$ifdef Win32}
+  {$ifdef mswindows}
    ShowWindow(GetActiveWindow,0);
   {$endif}
   gm:=vgahi;
@@ -604,7 +604,7 @@ BEGIN
   SetFillStyle(SolidFill,1);
   GetDefaultPalette(Pal);
   SetAllPalette(Pal);
-  {$ifdef win32}
+  {$ifdef mswindows}
     Windows.SetWindowText(GraphWindow,'FPCTris, a demonstration of Free Pascal');
   {$endif}
 {$ENDIF}
@@ -836,7 +836,7 @@ ORD('p') : BEGIN                             {"p" : Pause}
  GotoXY(1,25);
  {$endif}
  {$IFDEF UseGraphics}
-  {$ifndef Win32}
+  {$ifndef mswindows}
   TextMode(CO80);
   {$endif}
  {$ENDIF}
