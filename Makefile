@@ -2390,8 +2390,7 @@ endif
 debsetup:
 	$(LINKTREE) ${DEBDIR} $(DEBSRCDIR)/debian
 ifdef SNAPSHOT
-	sed s+${DEBPACKAGEVERSION}+${DEBPACKAGEVERSION}-${BUILDDATE}+ $(DEBSRCDIR)/debian/changelog > $(DEBSRCDIR)/debian/changelog.tmp
-	${MOVE} $(DEBSRCDIR)/debian/changelog.tmp $(DEBSRCDIR)/debian/changelog
+	sed -e 's/${DEBPACKAGEVERSION}/${DEBPACKAGEVERSION}~${BUILDDATE}/' -i $(DEBSRCDIR)/debian/changelog
 endif
 	chmod 755 $(DEBSRCDIR)/debian/rules
 	find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
