@@ -115,6 +115,7 @@ include /usr/share/quilt/quilt.make
 
 clean: patch configure clean-patched unpatch
 	${RM} build-arch-stamp install-arch-stamp arrange-arch-stamp configure-stamp
+	${RM} install-man-stamp
 	${RM} build-doc-stamp install-doc-stamp
 	${RM} build-indep-stamp install-indep-stamp
 	${RM} debian-files-stamp
@@ -196,10 +197,6 @@ install-arch-stamp:
 	/bin/bash debian/moveexamples ${EXAMPLE_TEMP} ${DOC_DIR} ${DEB_UPSTREAM_MAIN_VERSION}
 	# Rename executables
 	for f in  ${INSTALL_DIR}/usr/bin/* ; do ${MV} $$f $${f}-${DEB_UPSTREAM_MAIN_VERSION} ; done
-	# Install man pages
-	$(MAKE) -C install/man installman $(INSTALLOPTS) INSTALL_PREFIX=$(INSTALL_DIR)/usr/share
-	for s in 1 2 3 4 5 6 7 8 9 ; do test -d ${INSTALL_DIR}/usr/share/man/man$${s} && for f in ${INSTALL_DIR}/usr/share/man/man$${s}/*.? ; do n=`basename $${f}` ; ${MV} $${f} `dirname $${f}`/$${n%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${n#*.}" ; done ; done || true
-	pod2man -c 'Free pascal for Debian GNU/Linux' debian/fpc-depends > debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
 	# Install configuration files
 	/bin/bash fpcsrc/compiler/utils/samplecfg \
 		/usr/lib/fpc/${DEB_UPSTREAM_VERSION} ${INSTALL_DIR}/etc
@@ -219,7 +216,7 @@ install-arch-stamp:
 	find ${INSTALL_DIR} -empty -delete
 	touch install-arch-stamp
 
-arrange-arch: install-arch arrange-arch-stamp
+arrange-arch: install-arch arrange-arch-stamp install-man
 arrange-arch-stamp:
 	dh_testdir
 	dh_testroot
@@ -229,6 +226,16 @@ arrange-arch-stamp:
 build-indep: patch
 install-indep:
 	touch install-indep-stamp
+
+install-man: install-man-stamp
+install-man-stamp:
+	# Install man pages
+	$(MAKE) -C install/man installman $(INSTALLOPTS)
+	for s in ${INSTALL_DIR}/usr/man/man[1-9] ; do cd $${s} && for f in *.[1-9] ; do ${MV} $${f} $${f%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${f#*.}" ; done ; done || true
+	pod2man -c 'Free pascal for Debian GNU/Linux' debian/fpc-depends > debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
+	dh_installman -s
+	${RM} ${INSTALL_DIR}/usr/man
+	touch install-man-stamp
 
 ###################
 # Documentation
@@ -314,7 +321,6 @@ binary-arch: arrange-arch
 	dh_installdocs -a -X.in
 	dh_installchangelogs -a
 	dh_installexamples -a
-	dh_installman -s
 	dh_strip -s
 	dh_compress -a
 	dh_fixperms -a

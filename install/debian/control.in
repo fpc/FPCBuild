@@ -103,7 +103,7 @@ Architecture: i386 powerpc sparc amd64 armel
 Depends: ${misc:Depends}
 Recommends: fp-compiler${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-utils
-Breaks: fp-utils (<= 2.4.0-3), fp-compiler (<= 2.4.0-3)
+Breaks: fp-utils (<= 2.4.0-3), fp-compiler (<= 2.4.0-3), fp-units-gfx (<= 2.4.2-2), fp-units-gfx-2.4.2 (<= 2.4.2-2)
 Replaces: fp-utils (<= 2.4.0-3), fp-compiler (<= 2.4.0-3)
 Description: Free Pascal - Utils
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi

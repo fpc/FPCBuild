@@ -1,4 +1,3 @@
-/usr/bin/fd2pascal-${VERSION}
 /usr/lib/fpc/${VERSION}/units/${TARGET}/hermes
 /usr/lib/fpc/${VERSION}/units/${TARGET}/opencl
 /usr/lib/fpc/${VERSION}/units/${TARGET}/opengl
@@ -13,4 +12,3 @@
 /usr/lib/fpc/${VERSION}/units/${TARGET}/ptc
 /usr/lib/fpc/${VERSION}/units/${TARGET}/rsvg
 /usr/share/doc/fp-units-gfx
-/usr/share/man/man1/fd2pascal-${VERSION}.1

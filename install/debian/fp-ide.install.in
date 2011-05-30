@@ -1,4 +1,3 @@
 /usr/bin/fp-${VERSION}
 /usr/lib/fpc/${VERSION}/ide
 /usr/share/doc/fp-ide
-/usr/share/man/man1/fp-${VERSION}.1

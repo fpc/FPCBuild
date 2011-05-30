@@ -39,6 +39,7 @@ fpc (2.4.2-3) unstable; urgency=low
   * Fixed various lintian warnings and notes.
   * Removed dependency of fp-units-gfx on libsvga1-dev on architectures where
     it does not exist.
+  * Moved fd2pascal from fp-units-gfx to fp-utils.
 
  -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 06 Apr 2011 23:30:00 +0200
 
