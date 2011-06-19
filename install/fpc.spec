@@ -112,11 +112,6 @@ rm -rf %{buildroot}
 %post
 # Create a version independent config
 %{fpcdir}/samplecfg %{_libdir}/fpc/\$fpcversion
-fpcmkcfg -d basepath=%{_libdir}/fpc/\$fpcversion > /etc/fpc.cfg
-fpcmkcfg -1 -d basepath=%{_libdir}/fpc/\$fpcversion > %{_libdir}/fpc/%{version}/ide/text/fp.cfg
-fpcmkcfg -2 -d basepath=%{_libdir}/fpc/\$fpcversion > %{_libdir}/fpc/%{version}/ide/text/fp.ini
-
-fpcmkcfg -3 -d basepath=%{_libdir}/fpc/\$fpcversion > /etc/fppkg.cfg
 
 %files
 %defattr(-, root, root,-)
