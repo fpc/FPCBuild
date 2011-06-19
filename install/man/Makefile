@@ -31,3 +31,5 @@ installman:
 	$(GINSTALL) -d -m 755 $(INSTALL_MANDIR)/man5
 	$(GINSTALL) -c -m 644 man1/*.1 $(INSTALL_MANDIR)/man1
 	$(GINSTALL) -c -m 644 man5/*.5 $(INSTALL_MANDIR)/man5
+	find man1/*.1 -exec gzip -9f $(INSTALL_MANDIR)/'{}' \;
+	find man5/*.5 -exec gzip -9f $(INSTALL_MANDIR)/'{}' \;

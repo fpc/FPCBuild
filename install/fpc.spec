@@ -100,7 +100,7 @@ fi
         # newer rpm versions do not allow garbage
         # delete lexyacc
         rm -rf %{buildroot}/usr/lib/fpc/lexyacc
-if [ -n ${NODOCS} ]; then
+if [ -n "${NODOCS}" ]; then
         # Also remove the examples when NODOCS is specified
 	rm -rf %{buildexampledir}
 fi
@@ -112,6 +112,11 @@ rm -rf %{buildroot}
 %post
 # Create a version independent config
 %{fpcdir}/samplecfg %{_libdir}/fpc/\$fpcversion
+fpcmkcfg -d basepath=%{_libdir}/fpc/\$fpcversion > /etc/fpc.cfg
+fpcmkcfg -1 -d basepath=%{_libdir}/fpc/\$fpcversion > %{_libdir}/fpc/%{version}/ide/text/fp.cfg
+fpcmkcfg -2 -d basepath=%{_libdir}/fpc/\$fpcversion > %{_libdir}/fpc/%{version}/ide/text/fp.ini
+
+fpcmkcfg -3 -d basepath=%{_libdir}/fpc/\$fpcversion > /etc/fppkg.cfg
 
 %files
 %defattr(-, root, root,-)
