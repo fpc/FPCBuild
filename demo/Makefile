@@ -289,7 +289,7 @@ FPCFPMAKE=$(FPC)
 endif
 endif
 override PACKAGE_NAME=demo
-override PACKAGE_VERSION=2.0.0
+override PACKAGE_VERSION=2.7.1
 ifeq ($(FULL_TARGET),i386-linux)
 override TARGET_DIRS+=text  linux unix graph lister
 endif
