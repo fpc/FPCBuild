@@ -171,6 +171,8 @@ Name: {group}\Documentation\Free Pascal code documenter Reference manual; Filena
 [UninstallDelete]
 Type: files; Name: {app}\Free Pascal.url
 Type: files; Name: {app}\bin\i386-win32\fpc.cfg; Tasks: createcfg;
+Type: files; Name: {app}\bin\i386-Win32\fp.cfg; Tasks: createidecfg;
+Type: files; Name: {app}\bin\i386-Win32\fp.ini; Tasks: createidecfg;
 Type: files; Name: {localappdata}\FreePascal\fppkg\config\default; Tasks: createfppkgcfg;
 Type: files; Name: {localappdata}\FreePascal\fppkg\fppkg.cfg; Tasks: createfppkgcfg;
 
