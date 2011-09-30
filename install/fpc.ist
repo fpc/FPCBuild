@@ -41,6 +41,7 @@ Name: associatedpr; Description: "Associate .dpr files with Free Pascal IDE"; Gr
 Name: createdesktopicon; Description: "Create a desktop icon for the Free Pascal IDE"; Components: ide
 Name: createidecfg; Description: "Create a default configuration for the Free Pascal IDE"; Components: ide
 Name: createcfg; Description: "Create a standard configuration file for the compiler"
+Name: createfppkgcfg; Description: "Create a standard configuration file for the package manager (fppkg)"
 
 [Files]
 ; Base package
@@ -170,6 +171,10 @@ Name: {group}\Documentation\Free Pascal code documenter Reference manual; Filena
 [UninstallDelete]
 Type: files; Name: {app}\Free Pascal.url
 Type: files; Name: {app}\bin\i386-win32\fpc.cfg; Tasks: createcfg;
+Type: files; Name: {app}\bin\i386-Win32\fp.cfg; Tasks: createidecfg;
+Type: files; Name: {app}\bin\i386-Win32\fp.ini; Tasks: createidecfg;
+Type: files; Name: {localappdata}\FreePascal\fppkg\config\default; Tasks: createfppkgcfg;
+Type: files; Name: {localappdata}\FreePascal\fppkg\fppkg.cfg; Tasks: createfppkgcfg;
 
 [Components]
 Name: base; Description: Basic system for  win32; Flags: fixed; Types: Custom Minimum Full
@@ -255,3 +260,5 @@ Root: HKCU; Subkey: "Environment"; ValueType: String; ValueName: "PATH"; ValueDa
 FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for Free Pascal compiler"; Parameters: "-d ""basepath={app}"" -o ""{app}\bin\i386-Win32\fpc.cfg"""; Tasks: createcfg
 FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for the Free Pascal IDE"; Parameters: "-1 -d ""basepath={app}"" -o ""{app}\bin\i386-Win32\fp.cfg"""; Tasks: createidecfg
 FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for the Free Pascal IDE"; Parameters: "-2 -d ""basepath={app}"" -o ""{app}\bin\i386-Win32\fp.ini"""; Tasks: createidecfg
+FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file the Free Pascal Packager (fppkg)"; Parameters: "-3 -p -o ""{localappdata}\FreePascal\fppkg\fppkg.cfg"""; Tasks: createfppkgcfg
+FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default compiler configuration file for Free Pascal Packager (fppkg)"; Parameters: "-4 -p -d ""GlobalPrefix={app}"" -o ""{localappdata}\FreePascal\fppkg\config\default"""; Tasks: createfppkgcfg
