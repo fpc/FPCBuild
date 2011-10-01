@@ -361,6 +361,14 @@ fall under the GPL, for more information read the file COPYING.
 Some specific utilities and programs come under the license described in
 COPYING.DJ, COPYING.EMX, COPYING.RSX, license.upx and licensez.ip.
 
+Some of the licenses of the third party tools require to make the source available. 
+If you cannot find the sources or information where to
+find them for a certain tool under such a license 
+included into the FPC distribution, please contact us through the contact 
+details given at http://www.freepascal.org/moreinfo.var 
+and we will provide you the sources or information where to
+find them.
+
 The documentation, unless otherwise noted, is distributed as free
 text, and is distributed under the GNU Library General Public
 License.
@@ -373,6 +381,9 @@ information about the library license is found in COPYING.FPC.
 License conditions for DPMI provider for GO32v2 version (CWSDPMI.EXE)
 can be found in cwsdpmi.doc, sources and/or binary updates may be
 downloaded from http://clio.rice.edu/cwsdpmi/.
+
+The DOS version (go32v2) contains some binaries of DJGPP. You can obtain
+the full DJGPP package at: http://www.delorie.com/djgpp/
 
 NOTE: OS/2 version of the installer uses the library UNZIP32.DLL from
       Info-ZIP. Info-ZIP's software (Zip, UnZip and related utilities)
