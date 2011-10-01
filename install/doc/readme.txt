@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 2.4.2
+                               Version 2.6.0rc1
 
 ****************************************************************************
 * Introduction
@@ -15,7 +15,7 @@ several platforms. The language and the runtime library are almost
 compatible with Turbo Pascal 7.0 and recent Delphi releases. There is also
 partial support for the Macintosh pascal dialect.
 
-Free Pascal 2.4.2 is currently available for the following platforms:
+Free Pascal 2.6.0rc1 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-powerpc
@@ -25,16 +25,14 @@ Free Pascal 2.4.2 is currently available for the following platforms:
 - Win64-x86_64 (XP/Vista/2003)
 - Wince-arm (cross compiled from win32-i386)
 - FreeBSD-i386
+- FreeBSD-x86_64
 - Mac OS X/Darwin for PowerPC
 - Mac OS X/Darwin for Intel (i386)
 - GO32v2-i386
-- OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 
 The following platforms were not release-ready at the moment of the release
 but they might follow later:
-- Netware-i386
-- NetwLibc-i386 (LibC is preferred API under newer Netware versions)
-- FreeBSD-x86_64
+- OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 
 There are other platforms (like other BSD variants) which are more or less
 working, but there is currently no maintainer for them and thus we cannot
@@ -361,6 +359,14 @@ fall under the GPL, for more information read the file COPYING.
 Some specific utilities and programs come under the license described in
 COPYING.DJ, COPYING.EMX, COPYING.RSX, license.upx and licensez.ip.
 
+Some of the licenses of the third party tools require to make the source available. 
+If you cannot find the sources or information where to
+find them for a certain tool under such a license 
+included into the FPC distribution, please contact us through the contact 
+details given at http://www.freepascal.org/moreinfo.var 
+and we will provide you the sources or information where to
+find them.
+
 The documentation, unless otherwise noted, is distributed as free
 text, and is distributed under the GNU Library General Public
 License.
@@ -373,6 +379,9 @@ information about the library license is found in COPYING.FPC.
 License conditions for DPMI provider for GO32v2 version (CWSDPMI.EXE)
 can be found in cwsdpmi.doc, sources and/or binary updates may be
 downloaded from http://clio.rice.edu/cwsdpmi/.
+
+The DOS version (go32v2) contains some binaries of DJGPP. You can obtain
+the full DJGPP package at: http://www.delorie.com/djgpp/
 
 NOTE: OS/2 version of the installer uses the library UNZIP32.DLL from
       Info-ZIP. Info-ZIP's software (Zip, UnZip and related utilities)
