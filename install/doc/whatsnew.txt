@@ -10,50 +10,52 @@
 Free Pascal 2.6.0 is a new major version of the Free Pascal compiler.
 
 Please also see http://wiki.freepascal.org/User_Changes_2.6.0 for a list
-of changes which may affect the behaviour of previously working code, and
+of changes that may affect the behaviour of previously working code, and
 how to cope with these changes.
 
 Some highlights are:
 
 Platforms:
-  * iOS support 
-  * IPhoneSim target.
+  * iPhoneSimulator target
 
 Compiler:
-  * Many new language features
-     * Objective Pascal support
-     * constref modifier for CONST that is guaranteed by ref.
-     * Pascal boolean types with determined size (boolean16/32/64)
-     * A ISO 7185 language mode. Features amongst others:
+  * Many new language features:
+     * Objective-Pascal dialect, supported on all Mac OS X and iOS targets
+     * constref parameter modifier for "const by reference"
+     * ISO 7185 language mode (except for I/O). Features amongst others:
         * nested procedure variables
         * non-local goto's
-     * Apple Pascal
+     * Mac Pascal mode improvements
+        * nested procedure variables
         * univ modifier
      * Intrinisics
-	* sar  (shift arithmetic right)
-	* bitscan.
-     * Delphi compatibility modes
+        * sar (shift arithmetic right)
+        * bsf/bsr (bitscan forward/reverse)
+     * Delphi compatibility mode improvements
         * Nested types, class variables and class local constants
         * Advanced records syntax
-	* (for..in) Enumerators in records
+        * (for..in) Enumerators in records
         * Class and record helpers
-	* Generic records, arrays and procedural types.
-        * Delphi compatibility of generics improved
-	* Scoped enumerations
-        * Custom messages for "deprecated" directive.
-	* Usage of & to escape keywords
-	* dotted unit names (namespace units)
-	* constructor syntax for Dynamic array creation
-  * Codegenerator ARM features
-     * ARM floating point support VFP2 and 3.
+        * Generic records, arrays and procedural types
+        * Delphi-compatibility of generics improved
+        * Scoped enumerations
+        * Custom messages for "deprecated" directive
+        * Ability to use "&" for escaping keywords
+  * New ARM code generator features
+     * ARM floating point support VFPv2 and VFPv3
      * Thumb-2 support
 
 Packages:
   * Many improvements to the rtl
   * Many improvements to the database units (fcl-db)
+  * Objective-Pascal interfaces to Foundation, AppKit, CoreData and WebCore
+  * OpenGL headers updated to OpenGL 4.0
+  
+Details about these new features can be found at
+http://wiki.freepascal.org/FPC_New_Features_2.6.0
 
 See http://bugs.freepascal.org/changelog_page.php for the list of reported
-bugs which have been fixed in this release.
+bugs that have been fixed in this release.
 
 ******************************************************************************
                               What's New in 2.4.4
@@ -71,9 +73,9 @@ Some highlights are:
 Packages:
   * Many improvements to the XML units
   * Many improvements to the database units. 
-	* Specially sqlite got quite some fixes.
+        * Specially sqlite got quite some fixes.
   * Many improvements to the chm units. 
-	* Including a commandline CHM compiler 
+        * Including a commandline CHM compiler 
   * Many improvements to fppkg and fpmake for another round of testing.
 
 Platforms:
