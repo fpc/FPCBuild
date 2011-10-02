@@ -22,6 +22,7 @@ Compiler:
   * Many new language features:
      * Objective-Pascal dialect, supported on all Mac OS X and iOS targets
      * constref parameter modifier for "const by reference"
+     * Pascal boolean types with multiple sizes (boolean16/32/64)
      * ISO 7185 language mode (except for I/O). Features amongst others:
         * nested procedure variables
         * non-local goto's
@@ -42,7 +43,7 @@ Compiler:
         * Custom messages for "deprecated" directive
         * Ability to use "&" for escaping keywords
   * New ARM code generator features
-     * ARM floating point support VFPv2 and VFPv3
+     * ARM VFPv2 and VFPv3 floating point unit support
      * Thumb-2 support
 
 Packages:
