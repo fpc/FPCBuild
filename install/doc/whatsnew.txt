@@ -17,16 +17,40 @@ Some highlights are:
 
 Platforms:
   * iOS support 
+  * IPhoneSim target.
 
 Compiler:
-  * Many improvements to the compiler
-  * Objective Pascal support
+  * Many new language features
+     * Objective Pascal support
+     * constref modifier for CONST that is guaranteed by ref.
+     * Pascal boolean types with determined size (boolean16/32/64)
+     * A ISO 7185 language mode. Features amongst others:
+        * nested procedure variables
+        * non-local goto's
+     * Apple Pascal
+        * univ modifier
+     * Intrinisics
+	* sar  (shift arithmetic right)
+	* bitscan.
+     * Delphi compatibility modes
+        * Nested types, class variables and class local constants
+        * Advanced records syntax
+	* (for..in) Enumerators in records
+        * Class and record helpers
+	* Generic records, arrays and procedural types.
+        * Delphi compatibility of generics improved
+	* Scoped enumerations
+        * Custom messages for "deprecated" directive.
+	* Usage of & to escape keywords
+	* dotted unit names (namespace units)
+	* constructor syntax for Dynamic array creation
+  * Codegenerator ARM features
+     * ARM floating point support VFP2 and 3.
+     * Thumb-2 support
 
 Packages:
   * Many improvements to the rtl
-
-See http://bugs.freepascal.org/changelog_page.php for the list of reported
-bugs which have been fixed in this release.
+  * Many improvements to the database units (fcl-db)
 
 See http://bugs.freepascal.org/changelog_page.php for the list of reported
 bugs which have been fixed in this release.
