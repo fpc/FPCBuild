@@ -1,7 +1,63 @@
 
                             Free Pascal Compiler
 
-                                Version 2.4.2
+                                Version 2.6.0rc1
+
+******************************************************************************
+                              What's New in 2.6.0rc1
+******************************************************************************
+
+Free Pascal 2.6.0 is a new major version of the Free Pascal compiler.
+
+Please also see http://wiki.freepascal.org/User_Changes_2.6.0 for a list
+of changes which may affect the behaviour of previously working code, and
+how to cope with these changes.
+
+Some highlights are:
+
+Platforms:
+  * iOS support 
+
+Compiler:
+  * Many improvements to the compiler
+  * Objective Pascal support
+
+Packages:
+  * Many improvements to the rtl
+
+See http://bugs.freepascal.org/changelog_page.php for the list of reported
+bugs which have been fixed in this release.
+
+See http://bugs.freepascal.org/changelog_page.php for the list of reported
+bugs which have been fixed in this release.
+
+******************************************************************************
+                              What's New in 2.4.4
+******************************************************************************
+
+Free Pascal 2.4.4 contains most library fixes from early June 2010 till March
+2011. There are also some compiler fixes, mostly relating to 64-bit.
+
+Please also see http://wiki.freepascal.org/User_Changes_2.4.4 for a list
+of changes which may affect the behaviour of previously working code, and
+how to cope with these changes.
+
+Some highlights are:
+
+Packages:
+  * Many improvements to the XML units
+  * Many improvements to the database units. 
+	* Specially sqlite got quite some fixes.
+  * Many improvements to the chm units. 
+	* Including a commandline CHM compiler 
+  * Many improvements to fppkg and fpmake for another round of testing.
+
+Platforms:
+  * Fixes for multi-threading support in OS/2 RTL.
+
+See http://bugs.freepascal.org/changelog_page.php for the list of reported
+bugs which have been fixed in this release.
+
 
 ******************************************************************************
                               What's New in 2.4.2
