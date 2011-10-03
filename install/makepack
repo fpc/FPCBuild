@@ -166,9 +166,12 @@ else
 fi
 
 # Files to be added to the .tar
-TARNAME=${CROSSPREFIX}fpc-$FULLVERSION.$FULLSOURCE.tar
+DIRNAME=${CROSSPREFIX}fpc-$FULLVERSION.$FULLSOURCE
+TARNAME=${DIRNAME}.tar
 echo "Creating $TARNAME"
-tar cf $TARNAME $RELFILES
+mkdir $DIRNAME
+mv $RELFILES $DIRNAME
+tar cf $TARNAME $DIRNAME
 if [ $? != 0 ]; then
   echo "Failed to create $TARNAME"
   exit 1
