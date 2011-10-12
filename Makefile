@@ -2345,6 +2345,7 @@ renametoshort:
 	-mv $(PKGPRE)$(PKGUNITSPRE)bzip2$(ZIPSUFFIX).zip ubz2$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)hermes$(ZIPSUFFIX).zip uherm$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-js$(ZIPSUFFIX).zip ufcjs$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fppkg$(ZIPSUFFIX).zip ufppk$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)rtl$(ZIPSUFFIX).zip rtl$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)ide$(ZIPSUFFIX).zip ide$(ZIPSUFFIXSHORT).zip
 shortsrc:
