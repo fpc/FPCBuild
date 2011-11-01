@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 2.4.2
+                               Version 2.6.0rc1
 
 ****************************************************************************
 * Introduction
@@ -15,7 +15,7 @@ several platforms. The language and the runtime library are almost
 compatible with Turbo Pascal 7.0 and recent Delphi releases. There is also
 partial support for the Macintosh pascal dialect.
 
-Free Pascal 2.4.2 is currently available for the following platforms:
+Free Pascal 2.6.0rc1 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-powerpc
@@ -25,16 +25,14 @@ Free Pascal 2.4.2 is currently available for the following platforms:
 - Win64-x86_64 (XP/Vista/2003)
 - Wince-arm (cross compiled from win32-i386)
 - FreeBSD-i386
+- FreeBSD-x86_64
 - Mac OS X/Darwin for PowerPC
 - Mac OS X/Darwin for Intel (i386)
 - GO32v2-i386
-- OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 
 The following platforms were not release-ready at the moment of the release
 but they might follow later:
-- Netware-i386
-- NetwLibc-i386 (LibC is preferred API under newer Netware versions)
-- FreeBSD-x86_64
+- OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 
 There are other platforms (like other BSD variants) which are more or less
 working, but there is currently no maintainer for them and thus we cannot
