@@ -29,7 +29,7 @@ Compiler:
      * Mac Pascal mode improvements
         * nested procedure variables
         * univ modifier
-     * Intrinisics
+     * Intrinsics
         * sar (shift arithmetic right)
         * bsf/bsr (bitscan forward/reverse)
      * Delphi compatibility mode improvements
