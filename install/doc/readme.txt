@@ -28,11 +28,8 @@ Free Pascal 2.6.0rc1 is currently available for the following platforms:
 - FreeBSD-x86_64
 - Mac OS X/Darwin for PowerPC
 - Mac OS X/Darwin for Intel (i386)
-- GO32v2-i386
-
-The following platforms were not release-ready at the moment of the release
-but they might follow later:
 - OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
+- GO32v2-i386
 
 There are other platforms (like other BSD variants) which are more or less
 working, but there is currently no maintainer for them and thus we cannot
@@ -120,7 +117,7 @@ Mac OS (classic)
 * Quick start - Win32
 ****************************************************************************
 
-Download the distribution package (fpc-2.4.2.i386-win32.exe) and run it
+Download the distribution package (fpc-2.6.0.i386-win32.exe) and run it
 - it is a self-extracting installer, so just follow the instructions
 to install it. Don't forget to set the PATH environment variable if you
 install FPC under Win95/98/ME (the installer should do it automatically
@@ -136,7 +133,7 @@ and type
 * Quick start - DOS
 ****************************************************************************
 
-Download distribution archive (dos242.zip for GO32v2) and unzip it into
+Download distribution archive (dos260.zip for GO32v2) and unzip it into
 a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -159,7 +156,7 @@ and type
 * Quick start - OS/2 / eComStation
 ****************************************************************************
 
-Download distribution archive (os2242.zip for OS/2 or eComStation) and unzip
+Download distribution archive (os2260.zip for OS/2 or eComStation) and unzip
 it into a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
