@@ -2,6 +2,10 @@ Name: fpc
 Version: %FPCVERSION%
 Release: %RELEASE%
 
+# Because this rpm is used on different systems, with different names
+# of packages/dependencies. Do not add dependencies automatically.
+AutoReqProv: no
+
 ExclusiveArch: i386 i586 i686 ppc amd64 x86_64
 License: GPL and modified LGPL
 Group: Development/Languages
