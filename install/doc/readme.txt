@@ -181,7 +181,7 @@ and type
 * Quick start - Linux/FreeBSD
 ****************************************************************************
 
-Download fpc-2.4.2.<cpu>-<os>.tar and untar into a temporary directory.
+Download fpc-2.6.0.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
@@ -197,7 +197,7 @@ and type
 
 There are two methods to install Free Pascal for Mac OS X.
 
-1) Download and install the Mac OS X package (fpc-2.4.2.powerpc-macosx.dmg)
+1) Download and install the Mac OS X package (fpc-2.6.0.powerpc-macosx.dmg)
 
 This gives you the Free Pascal Compiler and the Xcode integration kit.
 
@@ -265,7 +265,7 @@ options.
 
 The documentation is available as HTML pages, PDF, PS, and text although the
 recommended format is pdf. These are all available on
-ftp://ftp.freepascal.org/fpc/dist/docs-2.4.2
+ftp://ftp.freepascal.org/fpc/dist/docs-2.6.0
 
 NB that there is at present no FPC specific documentation for the platform
 specific API (like Win32 system functions, etc.). There is a note in the ftp
