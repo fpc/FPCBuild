@@ -104,7 +104,9 @@ installbinary ()
       PPCSUFFIX=sparc;;
     i386*)
       PPCSUFFIX=386;;
-    powerpc*)
+    powerpc64)
+      PPCSUFFIX=ppc64;;
+    powerpc)
       PPCSUFFIX=ppc;;
     arm*)
       PPCSUFFIX=arm;;
@@ -115,7 +117,7 @@ installbinary ()
     ia64*)
       PPCSUFFIX=ia64;;
     alpha*)
-      PPCSUFFIX=alpha;;
+      PPCSUFFIX=axp;;
   esac
 
   # Install compiler/RTL. Mandatory.
@@ -252,7 +254,7 @@ case "$OSNAME" in
      DEMODIR="$DOCDIR/examples"
      ;;
 esac
-   
+
 # Install all binary releases
 for f in *binary*.tar
 do
