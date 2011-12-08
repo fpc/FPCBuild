@@ -104,9 +104,9 @@ installbinary ()
       PPCSUFFIX=sparc;;
     i386*)
       PPCSUFFIX=386;;
-    powerpc64)
+    powerpc64*)
       PPCSUFFIX=ppc64;;
-    powerpc)
+    powerpc*)
       PPCSUFFIX=ppc;;
     arm*)
       PPCSUFFIX=arm;;
