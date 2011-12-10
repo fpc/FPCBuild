@@ -1,3 +1,10 @@
+
+fpc (2.6.0-0) unstable; urgency=low
+
+  * new major release
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 30 May 2011 10:52:00 +0100
+
 fpc (2.5.1-0) unstable; urgency=low
 
   * Buils daily snapshots
