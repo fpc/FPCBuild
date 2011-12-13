@@ -2,6 +2,7 @@
 /usr/bin/fpc-${VERSION}
 /usr/bin/fpc-depends-${VERSION}
 /usr/bin/fpcmkcfg-${VERSION}
+/usr/bin/fpcres-${VERSION}
 /usr/bin/grab_vcsa-${VERSION}
 /usr/lib/fpc/${VERSION}/${PPCBIN}
 /usr/lib/fpc/${VERSION}/samplecfg

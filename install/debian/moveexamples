@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -6,17 +6,18 @@ EXAMPLE_TEMP=$1
 DOC_DIR=$2
 VERSION=$3
 
-function move_examples()
+move_examples()
 {
+	local pkgName=$1
+	local pkgContent=$2
     # Make examples dir
-    install -d -m 755 $DOC_DIR/$1/${VERSION}/examples
-
-    for package in $2
+    install -d -m 755 ${DOC_DIR}/${pkgName}/${VERSION}/examples
+    for package in ${pkgContent}
     do
-        if [ -d $EXAMPLE_TEMP/$package/examples ]; then
-            echo "Moving examples of $package"
-            EXAMPLE_TEMP_DIR="$EXAMPLE_TEMP/$package/examples"
-            EXAMPLE_INSTALL_DIR="$DOC_DIR/$1/${VERSION}/examples/$package"
+        if [ -d $EXAMPLE_TEMP/${package}/examples ]; then
+            echo "Moving examples of ${package}"
+            EXAMPLE_TEMP_DIR="$EXAMPLE_TEMP/${package}/examples"
+            EXAMPLE_INSTALL_DIR="${DOC_DIR}/${pkgName}/${VERSION}/examples/${package}"
             # Move dir renaming it
             if [ -e "${EXAMPLE_INSTALL_DIR}" ]
             then
@@ -24,7 +25,7 @@ function move_examples()
                 exit 255
             else
                 mv -v -f "${EXAMPLE_TEMP_DIR}" "${EXAMPLE_INSTALL_DIR}"
-                rmdir $EXAMPLE_TEMP/$package
+                rmdir $EXAMPLE_TEMP/${package}
                 # Remove empty directories:
                 rmdir --ignore-fail-on-non-empty "${EXAMPLE_INSTALL_DIR}"
             fi
@@ -32,7 +33,7 @@ function move_examples()
     done
 
     # Remove empty directories:
-    rmdir --ignore-fail-on-non-empty $DOC_DIR/$1/${VERSION}/examples
+    rmdir --ignore-fail-on-non-empty ${DOC_DIR}/${pkgName}/${VERSION}/examples
 }
 
 echo '**** Copying examples ****'

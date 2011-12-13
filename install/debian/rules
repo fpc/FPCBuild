@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 # debian/rules for Free Pascal
 
+DEB_PACKAGE_NAME = fpc
 DEB_DH_BUILDDEB_ARGS := -- -Z bzip2
 export DH_ALWAYS_EXCLUDE := COPYING:LICENSE
 export LANG:=C
@@ -14,6 +15,8 @@ else
 DOCTYPE=${DEBDOCTYPE}
 CONVERTER=${DOCTYPE}
 endif
+# Undefine FPC if it was set
+unexport FPC
 
 # Detect name of new compiler, take care that debian uses amd64 instead of x86_64
 CPU_SOURCE := $(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_BUILD_ARCH))
@@ -54,24 +57,24 @@ endif
 PPNEW=$(PPPRE)$(PPSUF)
 
 FPCTARGET=$(CPU_TARGET)-linux
-
-# Reset FPC and FPCDIR if it was set
-FPC=
-FPCDIR=
 # Get version information from changelog file
 DEB_VERSION:=$(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
 DEB_UPSTREAM_VERSION:=$(shell echo $(DEB_VERSION) | cut -f 1 -d -)
 DEB_UPSTREAM_MAIN_VERSION:=$(shell echo ${DEB_UPSTREAM_VERSION} | sed -e 's/^\([0-9\.]*\).*/\1/')
+DEB_BUILD=$(lastword $(subst -, ,${DEB_VERSION}))
+DEB_BUILD_MULTIARCH:=$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH)
 ifndef PACKAGESUFFIX
 export PACKAGESUFFIX=-${DEB_UPSTREAM_MAIN_VERSION}
 endif
 # Get directories
-CURDIR:=$(shell pwd)
-BUILD_DIR=$(CURDIR)/debian/build
-INSTALL_DIR=$(CURDIR)/debian/tmp
+BUILD_DIR:=$(shell pwd)
+INSTALL_DIR=${BUILD_DIR}/debian/tmp
+BIN_DIR=${INSTALL_DIR}/usr/bin
+LIB_DIR=${INSTALL_DIR}/usr/lib/${DEB_PACKAGE_NAME}/${DEB_UPSTREAM_MAIN_VERSION}
 DOC_DIR=${INSTALL_DIR}/usr/share/doc
-SRC_DIR=$(INSTALL_DIR)/usr/share/fpcsrc/${DEB_UPSTREAM_MAIN_VERSION}
+SRC_DIR=${INSTALL_DIR}/usr/share/fpcsrc/${DEB_UPSTREAM_MAIN_VERSION}
 EXAMPLE_TEMP=${INSTALL_DIR}/usr/share/doc/fpc-${DEB_UPSTREAM_MAIN_VERSION}
+STY_DIR=${INSTALL_DIR}/usr/share/texmf/tex/latex/fpc-${DEB_UPSTREAM_VERSION}
 # Get utils
 ifndef MKDIR
 MKDIR=mkdir -p
@@ -87,11 +90,13 @@ RM:=rm -rf
 ifndef FPCMAKE
 FPCMAKE=fpcmake
 endif
-NEWPP=$(CURDIR)/fpcsrc/compiler/$(PPNEW)
-NEWFPDOC=$(CURDIR)/fpcsrc/utils/fpdoc/fpdoc
+# Undefine FPCDIR if it was set
+unexport FPCDIR
+NEWPP=$(BUILD_DIR)/fpcsrc/compiler/$(PPNEW)
+NEWFPDOC=$(BUILD_DIR)/fpcsrc/utils/fpdoc/fpdoc
 #If not cross compiling, then use new generated fpcmake utility.
 ifeq (${PPPRE},)
-NEWFPCMAKE=$(CURDIR)/fpcsrc/utils/fpcm/fpcmake
+NEWFPCMAKE=$(BUILD_DIR)/fpcsrc/utils/fpcm/fpcmake
 else
 NEWFPCMAKE=${FPCMAKE}
 endif
@@ -104,16 +109,13 @@ INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE)
 
 export GDBLIBDIR=/usr/lib
 
-# Configure patch system
-include /usr/share/quilt/quilt.make
-
 #export DH_VERBOSE=1
 
 ###################
 # Clean
 #
 
-clean: patch configure clean-patched unpatch
+clean: configure clean-patched
 	${RM} build-arch-stamp install-arch-stamp arrange-arch-stamp configure-stamp
 	${RM} install-man-stamp
 	${RM} build-doc-stamp install-doc-stamp
@@ -144,7 +146,7 @@ clean-patched:
 # Debian files
 #
 
-debian-files: patch debian-files-stamp
+debian-files: debian-files-stamp
 debian-files-stamp:
 	@echo "--- Creating/fixing *.install files"
 	/bin/bash debian/fixdeb debian $(FPCTARGET) $(PPNEW)
@@ -185,26 +187,36 @@ install-arch-stamp:
 	dh_testdir
 	dh_testroot
 	dh_installdirs
+	# create all necessary directories
+	${MKDIR} ${BIN_DIR}
+	${MKDIR} ${LIB_DIR}
+	${MKDIR} ${STY_DIR}
 	# Specify the compiler to use so installing will use the correct versioned dir
 	$(MAKE) -C fpcsrc compiler_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc rtl_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc packages_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc ide_distinstall $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-ide/${DEB_UPSTREAM_MAIN_VERSION}
 	$(MAKE) -C fpcsrc utils_distinstall $(INSTALLOPTS)
-	${MV} ${INSTALL_DIR}/usr/lib/fpc/lexyacc ${INSTALL_DIR}/usr/lib/fpc/${DEB_UPSTREAM_MAIN_VERSION}
-	install -D debian/fpc-depends ${INSTALL_DIR}/usr/bin
+	${MV} -t ${LIB_DIR} ${INSTALL_DIR}/usr/lib/fpc/lexyacc
+	${CP} -t  ${BIN_DIR} debian/fpc-depends
 	# Copy examples to the correct doc dir
 	/bin/bash debian/moveexamples ${EXAMPLE_TEMP} ${DOC_DIR} ${DEB_UPSTREAM_MAIN_VERSION}
 	# Rename executables
-	for f in  ${INSTALL_DIR}/usr/bin/* ; do ${MV} $$f $${f}-${DEB_UPSTREAM_MAIN_VERSION} ; done
+	for f in  ${BIN_DIR}/* ; do ${MV} $$f $${f}-${DEB_UPSTREAM_MAIN_VERSION} ; done
 	# Install configuration files
 	/bin/bash fpcsrc/compiler/utils/samplecfg \
 		/usr/lib/fpc/${DEB_UPSTREAM_VERSION} ${INSTALL_DIR}/etc
+	# Add multiarch path to /etc/fpc.cfg so executables linked against libc can be corectly linked
+	echo # multiarch library search path >> ${INSTALL_DIR}/etc/fpc.cfg
+	echo -Fl/usr/lib/$(DEB_BUILD_MULTIARCH) >> ${INSTALL_DIR}/etc/fpc.cfg
 	${MV} ${INSTALL_DIR}/etc/fpc.cfg ${INSTALL_DIR}/etc/fpc-${DEB_UPSTREAM_MAIN_VERSION}.cfg
 	# Install RTL demos
 	$(MAKE) -C demo sourceinstall $(INSTALLOPTS) INSTALL_SOURCEDIR=$(DOC_DIR)/fp-compiler/${DEB_UPSTREAM_MAIN_VERSION}
 	# Install whatsnew and readme
 	$(MAKE) -C install/doc installdoc $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-compiler/${DEB_UPSTREAM_MAIN_VERSION}
+	# Install fpdoc latex styles
+	${CP} -t ${STY_DIR} \
+		${BUILD_DIR}/fpcdocs/*.sty
 	# Install lintian override files
 	set -x -e ; cd debian/overrides ; for PACKAGE in * ; do \
 	  if [ -d ../$${PACKAGE}${PACKAGESUFFIX} ] ; \
@@ -213,6 +225,16 @@ install-arch-stamp:
 	    sed -e "s/$${PACKAGE}/&${PACKAGESUFFIX}/g" $${PACKAGE} > ../$${PACKAGE}${PACKAGESUFFIX}/usr/share/lintian/overrides/$${PACKAGE}${PACKAGESUFFIX} ; \
 	  fi ; \
 	done
+ifeq (${DEB_BUILD},0)
+	# We are building upstream debs, install override files for build = 0
+	set -x -e ; cd debian ; for PACKAGE in `sed -n -e 's/Package: \(.*\)/\1/p' control` ; do \
+	  if [ -d $${PACKAGE} ] ; \
+	  then \
+	    ${MKDIR} $${PACKAGE}/usr/share/lintian/overrides ; \
+	    echo "$${PACKAGE}: debian-revision-should-not-be-zero" >> $${PACKAGE}/usr/share/lintian/overrides/$${PACKAGE} ; \
+	  fi ; \
+	done
+endif
 	find ${INSTALL_DIR} -empty -delete
 	touch install-arch-stamp
 
@@ -223,7 +245,7 @@ arrange-arch-stamp:
 	dh_install -s --sourcedir=debian/tmp --list-missing
 	touch arrange-arch-stamp
 
-build-indep: patch
+build-indep:
 install-indep:
 	touch install-indep-stamp
 
@@ -241,7 +263,7 @@ install-man-stamp:
 # Documentation
 #
 
-build-doc: patch debian-files build-doc-stamp
+build-doc: debian-files build-doc-stamp
 build-doc-stamp:
 	@echo "--- Building Documentation"
 	dh_testdir
@@ -268,9 +290,9 @@ install-source-stamp:
 	dh_testroot
 	${MKDIR} ${SRC_DIR}
 	${CP} -t ${SRC_DIR} \
-	$(CURDIR)/fpcsrc/compiler \
-	$(CURDIR)/fpcsrc/packages \
-	$(CURDIR)/fpcsrc/rtl
+	$(BUILD_DIR)/fpcsrc/compiler \
+	$(BUILD_DIR)/fpcsrc/packages \
+	$(BUILD_DIR)/fpcsrc/rtl
 	touch install-source-stamp
 
 ###################
@@ -305,6 +327,16 @@ binary-indep: clean-patched build-doc install-doc install-source debian-files
 	    sed -e "s/$${PACKAGE}/&${PACKAGESUFFIX}/g" $${PACKAGE} > ../$${PACKAGE}${PACKAGESUFFIX}/usr/share/lintian/overrides/$${PACKAGE}${PACKAGESUFFIX} ; \
 	  fi ; \
 	done
+ifeq (${DEB_BUILD},0)
+	# We are building upstream debs, install override files for build = 0
+	set -x -e ; cd debian ; for PACKAGE in `sed -n -e 's/Package: \(.*\)/\1/p' control` ; do \
+	  if [ -d $${PACKAGE} ] ; \
+	  then \
+	    ${MKDIR} $${PACKAGE}/usr/share/lintian/overrides ; \
+	    echo "$${PACKAGE}: debian-revision-should-not-be-zero" >> $${PACKAGE}/usr/share/lintian/overrides/$${PACKAGE} ; \
+	  fi ; \
+	done
+endif
 	dh_compress -i -X.pdf
 	dh_fixperms -i
 	dh_installdebconf -i

@@ -4,8 +4,8 @@ Priority: optional
 Maintainer: Carlos Laviola <claviola@debian.org>
 Uploaders: Torsten Werner <twerner@debian.org>, Abou Al Montacir <abou.almontacir@sfr.fr>
 DM-Upload-Allowed: yes
-Standards-Version: 3.9.1
-Build-Depends: debhelper (>= 7), quilt, fp-compiler, fp-units-base, fp-units-fcl, fp-utils, mawk | awk, gs-common, libncurses-dev, binutils
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 7), fp-compiler, fp-units-base, fp-units-fcl, fp-utils, mawk | awk, gs-common, libncurses-dev, binutils
 Build-Depends-Indep: hevea
 Vcs-Svn: https://bollin.googlecode.com/svn/fpc/trunk/
 Vcs-Browser: http://bollin.googlecode.com/svn/fpc/trunk/
@@ -58,9 +58,9 @@ Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), bi
 Recommends: fp-utils${PACKAGESUFFIX} (>= ${binary:Version})
 Suggests: fp-docs${PACKAGESUFFIX} (>= ${source:Upstream-Version})
 Provides: fp-compiler
-Breaks: fp-compiler (<= 2.4.0-3)
+Breaks: fp-compiler (<= 2.4.0-3), fp-utils-2.4.4 (<= 2.4.4-2), fp-utils-2.4.2 (<= 2.4.2-3)
 Conflicts: binutils-gold
-Replaces: fp-compiler (<= 2.4.0-3)
+Replaces: fp-compiler (<= 2.4.0-3), fp-utils-2.4.4 (<= 2.4.4-1)
 Description: Free Pascal - Compiler
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -378,7 +378,7 @@ Description: Free Pascal - miscellaneous units
 
 Package: fp-units-multimedia${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev, libsdl-mixer1.2-dev
 Provides: fp-units-multimedia
 Breaks: fp-units-multimedia (<= 2.4.0-3)
 Replaces: fp-units-multimedia (<= 2.4.0-3), fp-units-gfx (<= 2.2.4-3)
