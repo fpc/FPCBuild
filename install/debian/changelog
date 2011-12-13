@@ -1,10 +1,31 @@
-fpc (2.5.1-0) unstable; urgency=low
+fpc (2.6.0-0) unstable; urgency=low
 
-  * Buils daily snapshots
+  * new major release
 
- -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 30 May 2011 10:52:00 +0100
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 13 Dec 2011 09:49:00 +0100
 
-fpc (2.4.4-0) unstable; urgency=low
+fpc (2.4.4-3) unstable; urgency=low
+
+  * Added libsdl-mixer1.2-dev to dependency list of fp-units-multimedia.
+  * Fixed link issue related to multi-arch by adding arch path to /etc/fpc.cfg.
+    (Closes: Bug#636802)
+  * Moved resource compiler fpcres alternative rule to be slave of fpc instead
+    of being slave of fp-utils. (Closes: Bug#624361)
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 18 Oct 2011 19:12:00 +0200
+
+fpc (2.4.4-2) unstable; urgency=low
+
+  * Moved resource compiler fpcres binary to fp-compiler as this part of the
+    compiler itself. (Closes: Bug#624361)
+  * Use plain sh for moveexample script.
+  * Applied patches from upstream to fix armel buildd crash.
+  * Packages fpc.sty and fakehtml.sty to the default latex directory as these
+    are required to compile fpdoc latex output. (Closes: Bug#628100)
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 04 Jul 2011 18:10:00 +0200
+
+fpc (2.4.4-1) unstable; urgency=low
 
   * New upstream release with many fixes and a few new features.
     - Most library fixes from early June 2010 till March 2011.
@@ -29,8 +50,11 @@ fpc (2.4.4-0) unstable; urgency=low
     - Many improvements to fppkg and fpmake for another round of testing.
   * Platforms:
     - Fixes for multi-threading support in OS/2 RTL.
+  * Alternative system priority is now set on build time, if given, or
+    automatically depending on upstream version.
+  * Removed build dependency on quilt and bumped standard version to 3.9.2.
 
- -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 12 Apr 2011 20:05:00 +0200
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 23 May 2011 09:50:00 +0200
 
 fpc (2.4.2-3) unstable; urgency=low
 

@@ -2256,9 +2256,9 @@ ifneq ($(wildcard ${DEBDIR}/changelog),)
 DEBPACKAGEVERSION:=$(shell head -n 1 ${DEBDIR}/changelog | awk '{ print $$2 }' | tr -d '[()]')
 DEBVERSION=$(firstword $(subst -, ,${DEBPACKAGEVERSION}))
 DEBBUILD=$(lastword $(subst -, ,${DEBPACKAGEVERSION}))
-DEBSRC=fpc-${DEBVERSION}
+DEBSRC=${PACKAGE_NAME}-${DEBVERSION}
 DEBSRCDIR=${BUILDDIR}/${DEBSRC}
-DEBSRC_ORIG=fpc_${DEBVERSION}.orig
+DEBSRC_ORIG=${PACKAGE_NAME}_${DEBVERSION}.orig
 BUILDDATE=$(shell /bin/date --utc +%Y%m%d)
 ifdef MENTORS
 DEB_BUILDPKG_OPT=-sa
@@ -2268,7 +2268,6 @@ endif
 ifdef NODOCS
 	DEB_BUILDPKG_OPT+= -B
 endif
-ifeq ($(wildcard ${DEBSRC_ORIG}.tar.gz),)
 ifeq (${DEBBUILD},0)
 DEBUSESVN=1
 endif
@@ -2278,17 +2277,17 @@ endif
 ifdef SNAPSHOT
 DEBUSESVN=1
 endif
-ifndef DEBUSESVN
-$(error Need "${DEBSRC_ORIG}.tar.gz" to build for DEBBUILD = "${DEBBUILD}" > 1)
-endif
-endif
 ifndef SIGN
 DEB_BUILDPKG_OPT+= -us -uc
 endif
 debcheck:
 ifneq ($(DEBVERSION),$(PACKAGE_VERSION))
-	@$(ECHO) "Debian version ($(DEBVERSION)) is not correct, expect $(PACKAGE_VERSION)"
-	@exit 1
+	! ${ECHO} "Debian version ($(DEBVERSION)) is not correct, expect $(PACKAGE_VERSION)"
+endif
+ifeq ($(wildcard ${DEBSRC_ORIG}.tar.gz),)
+ifndef DEBUSESVN
+	! ${ECHO} 'Need "${DEBSRC_ORIG}.tar.gz" to build for DEBBUILD = "${DEBBUILD}" > 1'
+endif
 endif
 debcopy: distclean
 	${DELTREE} ${BUILDDIR}
@@ -2316,12 +2315,12 @@ else
 	${DELTREE} $(DEBSRCDIR)/debian
 endif
 debsetup:
-	$(LINKTREE) ${DEBDIR} $(DEBSRCDIR)/debian
+	$(COPYTREE) ${DEBDIR} $(DEBSRCDIR)/debian
 ifdef SNAPSHOT
 	sed -e 's/${DEBPACKAGEVERSION}/${DEBPACKAGEVERSION}~${BUILDDATE}/' -i $(DEBSRCDIR)/debian/changelog
 endif
 	chmod 755 $(DEBSRCDIR)/debian/rules
-	find $(DEBSRCDIR) -name '.svn' | xargs -n1 rm -rf
+	find $(DEBSRCDIR) -name '.svn' | xargs ${DELTREE}
 debbuild:
 	cd ${DEBSRCDIR} ; dpkg-buildpackage ${DEB_BUILDPKG_OPT}
 debcheckpolicy:

@@ -18,7 +18,6 @@
 /usr/bin/postw32-${VERSION}
 /usr/bin/fpclasschart-${VERSION}
 /usr/bin/fpcmake-${VERSION}
-/usr/bin/fpcres-${VERSION}
 /usr/bin/fpcsubst-${VERSION}
 /usr/bin/fprcp-${VERSION}
 /usr/bin/fpdoc-${VERSION}
@@ -29,3 +28,4 @@
 /usr/lib/fpc/${VERSION}/lexyacc/yylex.cod
 /usr/lib/fpc/${VERSION}/lexyacc/yyparse.cod
 /usr/lib/fpc/${VERSION}/units/${TARGET}/lexyacc
+/usr/share/texmf/tex/latex/fpc-${VERSION}
