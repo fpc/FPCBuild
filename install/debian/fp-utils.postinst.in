@@ -6,7 +6,7 @@ FPCDIR=/usr/lib/fpc
 
 # add alternatives
 update-alternatives \
-    --install ${FPCDIR}/default fp-utils ${FPCDIR}/${VERSION} 20 \
+    --install ${FPCDIR}/default fp-utils ${FPCDIR}/${VERSION} ${PRIORITY} \
     --slave ${FPCDIR}/lexyacc fplexyacc ${FPCDIR}/${VERSION}/lexyacc \
 	--slave /usr/bin/chmcmd chmcmd /usr/bin/chmcmd-${VERSION} \
 	--slave /usr/bin/chmls chmls /usr/bin/chmls-${VERSION} \
@@ -27,7 +27,6 @@ update-alternatives \
 	--slave /usr/bin/postw32 postw32 /usr/bin/postw32-${VERSION} \
 	--slave /usr/bin/fpclasschart fpclasschart /usr/bin/fpclasschart-${VERSION} \
 	--slave /usr/bin/fpcmake fpcmake /usr/bin/fpcmake-${VERSION} \
-	--slave /usr/bin/fpcres fpcres /usr/bin/fpcres-${VERSION} \
 	--slave /usr/bin/fpcsubst fpcsubst /usr/bin/fpcsubst-${VERSION} \
 	--slave /usr/bin/fprcp fprcp /usr/bin/fprcp-${VERSION} \
 	--slave /usr/bin/fpdoc fpdoc /usr/bin/fpdoc-${VERSION} \
@@ -49,7 +48,6 @@ update-alternatives \
 	--slave /usr/share/man/man1/unitdiff.1.gz unitdiff.1.gz /usr/share/man/man1/unitdiff-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/delp.1.gz delp.1.gz /usr/share/man/man1/delp-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/fpcmake.1.gz fpcmake.1.gz /usr/share/man/man1/fpcmake-${VERSION}.1.gz \
-	--slave /usr/share/man/man1/fpcres.1.gz fpcres.1.gz /usr/share/man/man1/fpcres-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/fpcsubst.1.gz fpcsubst.1.gz /usr/share/man/man1/fpcsubst-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/h2pas.1.gz h2pas.1.gz /usr/share/man/man1/h2pas-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/plex.1.gz plex.1.gz /usr/share/man/man1/plex-${VERSION}.1.gz \

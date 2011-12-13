@@ -13,7 +13,6 @@ debian/tmp/usr/man/man1/rmcvsdir-${VERSION}.1
 debian/tmp/usr/man/man1/unitdiff-${VERSION}.1
 debian/tmp/usr/man/man1/delp-${VERSION}.1
 debian/tmp/usr/man/man1/fpcmake-${VERSION}.1
-debian/tmp/usr/man/man1/fpcres-${VERSION}.1
 debian/tmp/usr/man/man1/fpcsubst-${VERSION}.1
 debian/tmp/usr/man/man1/h2pas-${VERSION}.1
 debian/tmp/usr/man/man1/plex-${VERSION}.1

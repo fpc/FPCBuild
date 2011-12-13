@@ -4,22 +4,22 @@ Priority: optional
 Maintainer: Carlos Laviola <claviola@debian.org>
 Uploaders: Torsten Werner <twerner@debian.org>, Abou Al Montacir <abou.almontacir@sfr.fr>
 DM-Upload-Allowed: yes
-Standards-Version: 3.9.1
-Build-Depends: debhelper (>= 7), quilt, fp-compiler, fp-units-base, fp-units-fcl, fp-utils, mawk | awk, gs-common, libncurses-dev, binutils
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 7), fp-compiler, fp-units-base, fp-units-fcl, fp-utils, mawk | awk, gs-common, libncurses-dev, binutils
 Build-Depends-Indep: hevea
 Vcs-Svn: https://bollin.googlecode.com/svn/fpc/trunk/
 Vcs-Browser: http://bollin.googlecode.com/svn/fpc/trunk/
 Homepage: http://www.freepascal.org/
 
-Package: fpc-2.5.1
+Package: fpc-2.6.0
 Architecture: all
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (>= ${binary:Version}), fp-compiler-2.5.1 (>= ${binary:Version}), fp-units-base-2.5.1 (>= ${binary:Version}), fp-ide-2.5.1 (>= ${binary:Version}), fp-units-fcl-2.5.1 (>= ${binary:Version}), fp-units-fv-2.5.1 (>= ${binary:Version}), fp-units-gtk-2.5.1 (>= ${binary:Version}), fp-units-gtk2-2.5.1 (>= ${binary:Version}), fp-units-gnome1-2.5.1 (>= ${binary:Version}), fp-units-db-2.5.1 (>= ${binary:Version}), fp-units-gfx-2.5.1 (>= ${binary:Version}), fp-units-net-2.5.1 (>= ${binary:Version}), fp-units-misc-2.5.1 (>= ${binary:Version}), fp-units-multimedia-2.5.1 (>= ${binary:Version}), fp-units-math-2.5.1 (>= ${binary:Version})
-Recommends: fp-utils-2.5.1
-Suggests: lazarus, fp-docs-2.5.1 (>= ${source:Upstream-Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (>= ${binary:Version}), fp-compiler-2.6.0 (>= ${binary:Version}), fp-units-base-2.6.0 (>= ${binary:Version}), fp-ide-2.6.0 (>= ${binary:Version}), fp-units-fcl-2.6.0 (>= ${binary:Version}), fp-units-fv-2.6.0 (>= ${binary:Version}), fp-units-gtk-2.6.0 (>= ${binary:Version}), fp-units-gtk2-2.6.0 (>= ${binary:Version}), fp-units-gnome1-2.6.0 (>= ${binary:Version}), fp-units-db-2.6.0 (>= ${binary:Version}), fp-units-gfx-2.6.0 (>= ${binary:Version}), fp-units-net-2.6.0 (>= ${binary:Version}), fp-units-misc-2.6.0 (>= ${binary:Version}), fp-units-multimedia-2.6.0 (>= ${binary:Version}), fp-units-math-2.6.0 (>= ${binary:Version})
+Recommends: fp-utils-2.6.0
+Suggests: lazarus, fp-docs-2.6.0 (>= ${source:Upstream-Version})
 Provides: fpc
 Breaks: fpc (<= 2.4.0-3)
 Replaces: fpc (<= 2.4.0-3)
-Description: Free Pascal - SDK-2.5.1 metapackage
+Description: Free Pascal - SDK-2.6.0 metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
  It provides a completely portable RunTime Library (RTL) available on many
@@ -35,7 +35,7 @@ Description: Free Pascal - SDK-2.5.1 metapackage
  architecture. Experienced users may want to install only packages they need,
  and can skip installing this metapackage.
 
-Package: fpc-source-2.5.1
+Package: fpc-source-2.6.0
 Architecture: all
 Depends: ${misc:Depends}
 Provides: fpc-source
@@ -52,15 +52,15 @@ Description: Free Pascal - SDK Source Code
  This package contains Free Pascal's own source code. It is meant to be used by
  the Lazarus IDE.
 
-Package: fp-compiler-2.5.1
+Package: fp-compiler-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version}), binutils
-Recommends: fp-utils-2.5.1 (>= ${binary:Version})
-Suggests: fp-docs-2.5.1 (>= ${source:Upstream-Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), binutils
+Recommends: fp-utils-2.6.0 (>= ${binary:Version})
+Suggests: fp-docs-2.6.0 (>= ${source:Upstream-Version})
 Provides: fp-compiler
-Breaks: fp-compiler (<= 2.4.0-3)
+Breaks: fp-compiler (<= 2.4.0-3), fp-utils-2.4.4 (<= 2.4.4-2), fp-utils-2.4.2 (<= 2.4.2-3)
 Conflicts: binutils-gold
-Replaces: fp-compiler (<= 2.4.0-3)
+Replaces: fp-compiler (<= 2.4.0-3), fp-utils-2.4.4 (<= 2.4.4-1)
 Description: Free Pascal - Compiler
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -75,11 +75,11 @@ Description: Free Pascal - Compiler
  .
  This package contains the command line compiler.
 
-Package: fp-ide-2.5.1
+Package: fp-ide-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version}), ${shlibs:Depends}
-Recommends: fp-utils-2.5.1 (>= ${binary:Version})
-Suggests: fp-docs-2.5.1 (>= ${source:Upstream-Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), ${shlibs:Depends}
+Recommends: fp-utils-2.6.0 (>= ${binary:Version})
+Suggests: fp-docs-2.6.0 (>= ${source:Upstream-Version})
 Provides: fp-ide
 Breaks: fp-ide (<= 2.4.0-3)
 Replaces: fp-ide (<= 2.4.0-3)
@@ -98,10 +98,10 @@ Description: Free Pascal - IDE
  This package contains the Integrated Development Environment (IDE). The IDE
  has an internal compiler.
 
-Package: fp-utils-2.5.1
+Package: fp-utils-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
 Depends: ${misc:Depends}
-Recommends: fp-compiler-2.5.1 (= ${binary:Version})
+Recommends: fp-compiler-2.6.0 (= ${binary:Version})
 Provides: fp-utils
 Breaks: fp-utils (<= 2.4.0-3), fp-compiler (<= 2.4.0-3), fp-units-gfx (<= 2.4.2-2), fp-units-gfx-2.4.2 (<= 2.4.2-2)
 Replaces: fp-utils (<= 2.4.0-3), fp-compiler (<= 2.4.0-3)
@@ -125,7 +125,7 @@ Description: Free Pascal - Utils
    - data2inc    Convert binary/text data to include files
    - plex/pyacc  Pascal Lex/Yacc implementation
 
-Package: fp-docs-2.5.1
+Package: fp-docs-2.6.0
 Section: doc
 Architecture: all
 Depends: ${misc:Depends}
@@ -143,10 +143,10 @@ Description: Free Pascal - Documentation
  This package provides documentation for the Free Pascal Compiler in HTML
  format.
 
-Package: fp-units-rtl-2.5.1
+Package: fp-units-rtl-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
 Depends: ${misc:Depends}
-Recommends: fp-compiler-2.5.1 (= ${binary:Version})
+Recommends: fp-compiler-2.6.0 (= ${binary:Version})
 Provides: fp-units-rtl, fpc-abi-${source:Upstream-Version}
 Breaks: fp-units-rtl (<= 2.4.0-3)
 Replaces: fp-units-rtl (<= 2.4.0-3)
@@ -160,9 +160,9 @@ Description: Free Pascal - Runtime Library
  .
  This package contains the Runtime Libraries for the Free Pascal Compiler.
 
-Package: fp-units-base-2.5.1
+Package: fp-units-base-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-base
 Breaks: fp-units-base (<= 2.4.0-3)
 Replaces: fp-units-base (<= 2.4.0-3)
@@ -180,9 +180,9 @@ Description: Free Pascal - base units
   - NCurses
   - ZLib
 
-Package: fp-units-fcl-2.5.1
+Package: fp-units-fcl-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version}), fp-units-base-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), fp-units-base-2.6.0 (= ${binary:Version})
 Provides: fp-units-fcl
 Breaks: fp-units-fcl (<= 2.4.0-3)
 Replaces: fp-units-fcl (<= 2.4.0-3)
@@ -196,9 +196,9 @@ Description: Free Pascal - Free Component Library
  .
  This package contains the Free Component Library for the Free Pascal Compiler.
 
-Package: fp-units-fv-2.5.1
+Package: fp-units-fv-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-fv
 Breaks: fp-units-fv (<= 2.4.0-3)
 Replaces: fp-units-fv (<= 2.4.0-3)
@@ -212,9 +212,9 @@ Description: Free Pascal - Free Vision units
  .
  This package contains the Free Vision units for the Free Pascal Compiler.
 
-Package: fp-units-gtk-2.5.1
+Package: fp-units-gtk-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version}), fp-units-fcl-2.5.1 (= ${binary:Version}), libgtk2.0-dev
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), fp-units-fcl-2.6.0 (= ${binary:Version}), libgtk2.0-dev
 Provides: fp-units-gtk
 Breaks: fp-units-gtk (<= 2.4.0-3)
 Replaces: fp-units-gtk (<= 2.4.0-3)
@@ -229,9 +229,9 @@ Description: Free Pascal - GTK+ 1.2 units
  This package contains Free Pascal units and examples to create
  programs with GTK+ 1.2.
 
-Package: fp-units-gtk2-2.5.1
+Package: fp-units-gtk2-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version}), fp-units-fcl-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), fp-units-fcl-2.6.0 (= ${binary:Version})
 Provides: fp-units-gtk2
 Breaks: fp-units-gtk2 (<= 2.4.0-3)
 Replaces: fp-units-gtk2 (<= 2.4.0-3)
@@ -246,9 +246,9 @@ Description: Free Pascal - GTK+ 2.x units
  This package contains Free Pascal units and examples to create
  programs with GTK+ 2.x.
 
-Package: fp-units-gnome1-2.5.1
+Package: fp-units-gnome1-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version}), fp-units-gtk-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), fp-units-gtk-2.6.0 (= ${binary:Version})
 Provides: fp-units-gnome1
 Breaks: fp-units-gnome1 (<= 2.4.0-3)
 Replaces: fp-units-gnome1 (<= 2.4.0-3)
@@ -263,9 +263,9 @@ Description: Free Pascal - GNOME 1 units
  This package contains Free Pascal units and examples to create
  programs for GNOME 1.
 
-Package: fp-units-db-2.5.1
+Package: fp-units-db-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-db
 Breaks: fp-units-db (<= 2.4.0-3)
 Replaces: fp-units-db (<= 2.4.0-3)
@@ -286,9 +286,9 @@ Description: Free Pascal - database libraries units
   - GDBM
   - SQLite
 
-Package: fp-units-gfx-2.5.1
+Package: fp-units-gfx-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version}), fp-units-base-2.5.1 (= ${binary:Version}), libsvga1-dev [i386 amd64 armel]
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), fp-units-base-2.6.0 (= ${binary:Version}), libsvga1-dev [i386 amd64 armel]
 Provides: fp-units-gfx
 Breaks: fp-units-gfx (<= 2.4.0-3)
 Replaces: fp-units-gfx (<= 2.4.0-3)
@@ -311,9 +311,9 @@ Description: Free Pascal - graphics libraries units
   - openal
   - cairo
 
-Package: fp-units-net-2.5.1
+Package: fp-units-net-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-net
 Breaks: fp-units-net (<= 2.4.0-3)
 Replaces: fp-units-net (<= 2.4.0-3)
@@ -337,9 +337,9 @@ Description: Free Pascal - networking units
   - openssl : Open SSL
   - pcap
 
-Package: fp-units-math-2.5.1
+Package: fp-units-math-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-math
 Breaks: fp-units-math (<= 2.4.0-3)
 Replaces: fp-units-math (<= 2.4.0-3), fp-units-misc (<= 2.2.4-4)
@@ -357,9 +357,9 @@ Description: Free Pascal - math units
   - numlib : numerical computing
   - symbolic : symbolic computing
 
-Package: fp-units-misc-2.5.1
+Package: fp-units-misc-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-misc
 Breaks: fp-units-misc (<= 2.4.0-3)
 Replaces: fp-units-misc (<= 2.4.0-3)
@@ -376,9 +376,9 @@ Description: Free Pascal - miscellaneous units
   - Utmp
   - PasZLib (Pascal-only zlib implementation)
 
-Package: fp-units-multimedia-2.5.1
+Package: fp-units-multimedia-2.6.0
 Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev, libsdl-mixer1.2-dev
 Provides: fp-units-multimedia
 Breaks: fp-units-multimedia (<= 2.4.0-3)
 Replaces: fp-units-multimedia (<= 2.4.0-3), fp-units-gfx (<= 2.2.4-3)
@@ -397,9 +397,9 @@ Description: Free Pascal - multimedia units
   - mad
   - modplug
 
-Package: fp-units-i386-2.5.1
+Package: fp-units-i386-2.6.0
 Architecture: i386
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-i386
 Breaks: fp-units-i386 (<= 2.4.0-3)
 Replaces: fp-units-i386 (<= 2.4.0-3)
@@ -418,8 +418,8 @@ Description: Free Pascal - kylix compatibility units
 
 Package: fpc
 Architecture: all
-Depends: ${misc:Depends}, fpc-2.5.1 (= ${binary:Version})
-Recommends: fp-utils-2.5.1
+Depends: ${misc:Depends}, fpc-2.6.0 (= ${binary:Version})
+Recommends: fp-utils-2.6.0
 Description: Free Pascal - SDK metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -439,7 +439,7 @@ Description: Free Pascal - SDK metapackage
 
 Package: fpc-source
 Architecture: all
-Depends: ${misc:Depends}, fpc-source-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fpc-source-2.6.0 (= ${binary:Version})
 Description: Free Pascal - SDK Source Code metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -454,7 +454,7 @@ Description: Free Pascal - SDK Source Code metapackage
 
 Package: fp-compiler
 Architecture: any
-Depends: ${misc:Depends}, fp-compiler-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-compiler-2.6.0 (= ${binary:Version})
 Description: Free Pascal - Compiler metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -472,7 +472,7 @@ Description: Free Pascal - Compiler metapackage
 
 Package: fp-ide
 Architecture: any
-Depends: ${misc:Depends}, fp-ide-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-ide-2.6.0 (= ${binary:Version})
 Description: Free Pascal - IDE metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -491,7 +491,7 @@ Description: Free Pascal - IDE metapackage
 
 Package: fp-utils
 Architecture: any
-Depends: ${misc:Depends}, fp-utils-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-utils-2.6.0 (= ${binary:Version})
 Description: Free Pascal - Utils metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -516,7 +516,7 @@ Description: Free Pascal - Utils metapackage
 Package: fp-docs
 Section: doc
 Architecture: all
-Depends: ${misc:Depends}, fp-docs-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-docs-2.6.0 (= ${binary:Version})
 Description: Free Pascal - Documentation metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -531,7 +531,7 @@ Description: Free Pascal - Documentation metapackage
 
 Package: fp-units-rtl
 Architecture: any
-Depends: ${misc:Depends}, fp-units-rtl-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Description: Free Pascal - Runtime Library metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -545,7 +545,7 @@ Description: Free Pascal - Runtime Library metapackage
 
 Package: fp-units-base
 Architecture: any
-Depends: ${misc:Depends}, fp-units-base-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-base-2.6.0 (= ${binary:Version})
 Description: Free Pascal - base units metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -563,7 +563,7 @@ Description: Free Pascal - base units metapackage
 
 Package: fp-units-fcl
 Architecture: any
-Depends: ${misc:Depends}, fp-units-fcl-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-fcl-2.6.0 (= ${binary:Version})
 Description: Free Pascal - Free Component Library metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -577,7 +577,7 @@ Description: Free Pascal - Free Component Library metapackage
 
 Package: fp-units-fv
 Architecture: any
-Depends: ${misc:Depends}, fp-units-fv-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-fv-2.6.0 (= ${binary:Version})
 Description: Free Pascal - Free Vision units metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -591,7 +591,7 @@ Description: Free Pascal - Free Vision units metapackage
 
 Package: fp-units-gtk
 Architecture: any
-Depends: ${misc:Depends}, fp-units-gtk-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-gtk-2.6.0 (= ${binary:Version})
 Description: Free Pascal - GTK+ 1.2 units metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -606,7 +606,7 @@ Description: Free Pascal - GTK+ 1.2 units metapackage
 
 Package: fp-units-gtk2
 Architecture: any
-Depends: ${misc:Depends}, fp-units-gtk2-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-gtk2-2.6.0 (= ${binary:Version})
 Description: Free Pascal - GTK+ 2.x units metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -621,7 +621,7 @@ Description: Free Pascal - GTK+ 2.x units metapackage
 
 Package: fp-units-gnome1
 Architecture: any
-Depends: ${misc:Depends}, fp-units-gnome1-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-gnome1-2.6.0 (= ${binary:Version})
 Description: Free Pascal - GNOME 1 units metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -636,7 +636,7 @@ Description: Free Pascal - GNOME 1 units metapackage
 
 Package: fp-units-db
 Architecture: any
-Depends: ${misc:Depends}, fp-units-db-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-db-2.6.0 (= ${binary:Version})
 Description: Free Pascal - database libraries units metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -657,7 +657,7 @@ Description: Free Pascal - database libraries units metapackage
 
 Package: fp-units-gfx
 Architecture: any
-Depends: ${misc:Depends}, fp-units-gfx-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-gfx-2.6.0 (= ${binary:Version})
 Description: Free Pascal - graphics libraries units metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -680,7 +680,7 @@ Description: Free Pascal - graphics libraries units metapackage
 
 Package: fp-units-net
 Architecture: any
-Depends: ${misc:Depends}, fp-units-net-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-net-2.6.0 (= ${binary:Version})
 Description: Free Pascal - networking units metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -704,7 +704,7 @@ Description: Free Pascal - networking units metapackage
 
 Package: fp-units-math
 Architecture: any
-Depends: ${misc:Depends}, fp-units-math-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-math-2.6.0 (= ${binary:Version})
 Description: Free Pascal - math units metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -722,7 +722,7 @@ Description: Free Pascal - math units metapackage
 
 Package: fp-units-misc
 Architecture: any
-Depends: ${misc:Depends}, fp-units-misc-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-misc-2.6.0 (= ${binary:Version})
 Description: Free Pascal - miscellaneous units metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -739,7 +739,7 @@ Description: Free Pascal - miscellaneous units metapackage
 
 Package: fp-units-multimedia
 Architecture: any
-Depends: ${misc:Depends}, fp-units-multimedia-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-multimedia-2.6.0 (= ${binary:Version})
 Description: Free Pascal - multimedia units metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
@@ -758,7 +758,7 @@ Description: Free Pascal - multimedia units metapackage
 
 Package: fp-units-i386
 Architecture: i386
-Depends: ${misc:Depends}, fp-units-i386-2.5.1 (= ${binary:Version})
+Depends: ${misc:Depends}, fp-units-i386-2.6.0 (= ${binary:Version})
 Description: Free Pascal - kylix compatibility units metapackage
  The Free Pascal Compiler is an object pascal compiler supporting both Delphi
  and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
