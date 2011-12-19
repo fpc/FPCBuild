@@ -94,18 +94,12 @@ endif
 unexport FPCDIR
 NEWPP=$(BUILD_DIR)/fpcsrc/compiler/$(PPNEW)
 NEWFPDOC=$(BUILD_DIR)/fpcsrc/utils/fpdoc/fpdoc
-#If not cross compiling, then use new generated fpcmake utility.
-ifeq (${PPPRE},)
-NEWFPCMAKE=$(BUILD_DIR)/fpcsrc/utils/fpcm/fpcmake
-else
-NEWFPCMAKE=${FPCMAKE}
-endif
 # Set default compilation options
 BUILDOPTS=PP=$(NEWPP)
 ifdef CROSSOPT
 BUILDOPTS+= CROSSOPT=${CROSSOPT}
 endif
-INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE)
+INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP)
 
 export GDBLIBDIR=/usr/lib
 
@@ -126,8 +120,6 @@ clean: configure clean-patched
 	${RM} debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
 	# Remove auto-generated version file.
 	${RM} fpcsrc/compiler/version.inc
-	# Remove auto-generated make files.
-	find -name Makefile.fpc -execdir 'sh' '-c' '${RM} $$(basename {} .fpc)' ';'
 	dh_clean
 clean-patched:
 	@echo "--- Cleaning"
@@ -159,10 +151,6 @@ debian-files-stamp:
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	# Remove auto-generated make files.
-	find -name Makefile.fpc -execdir 'sh' '-c' '${RM} $$(basename {} .fpc)' ';'
-	# Regenrate make files using fpcmake.
-	${FPCMAKE} -r -Tall */Makefile.fpc
 	# Remove auto-generated version file.
 	${RM} fpcsrc/compiler/version.inc
 	# Add version.inc:
