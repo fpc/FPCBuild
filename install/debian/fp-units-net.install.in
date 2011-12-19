@@ -3,8 +3,8 @@
 /usr/lib/fpc/${VERSION}/units/${TARGET}/libcurl
 /usr/lib/fpc/${VERSION}/units/${TARGET}/dbus
 /usr/lib/fpc/${VERSION}/units/${TARGET}/fastcgi
-/usr/lib/fpc/${VERSION}/units/${TARGET}/httpd13
-/usr/lib/fpc/${VERSION}/units/${TARGET}/httpd20
+#/usr/lib/fpc/${VERSION}/units/${TARGET}/httpd13
+#/usr/lib/fpc/${VERSION}/units/${TARGET}/httpd20
 /usr/lib/fpc/${VERSION}/units/${TARGET}/httpd22
 /usr/lib/fpc/${VERSION}/units/${TARGET}/ldap
 /usr/lib/fpc/${VERSION}/units/${TARGET}/openssl
