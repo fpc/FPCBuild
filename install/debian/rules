@@ -173,9 +173,11 @@ build-arch: debian-files configure build-arch-stamp
 build-arch-stamp:
 	@echo "--- Building"
 	dh_testdir
-# First make a new Compiler and RTL using a make cycle
+	# First make a new Compiler using a make cycle
 	$(MAKE) -C fpcsrc compiler_cycle
+	# Then build RTL using new compiler
 	$(MAKE) -C fpcsrc rtl_clean rtl_smart $(BUILDOPTS)
+	# Finally build packages and tools using new compiler and new RTL
 	$(MAKE) -C fpcsrc packages_smart $(BUILDOPTS)
 	$(MAKE) -C fpcsrc ide_all $(BUILDOPTS)
 	$(MAKE) -C fpcsrc utils_all $(BUILDOPTS)
@@ -253,7 +255,7 @@ install-man: install-man-stamp
 install-man-stamp:
 	# Install man pages
 	$(MAKE) -C install/man installman $(INSTALLOPTS)
-	for s in ${INSTALL_DIR}/usr/man/man[1-9] ; do cd $${s} && for f in *.[1-9] ; do ${MV} $${f} $${f%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${f#*.}" ; done ; done || true
+	for s in ${INSTALL_DIR}/usr/man/man[1-9] ; do cd $${s} && ( gzip -d *.gz || true ) && for f in *.[1-9] ; do ${MV} $${f} $${f%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${f#*.}" ; done ; done || true
 	pod2man -c 'Free pascal for Debian GNU/Linux' debian/fpc-depends > debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
 	dh_installman -s
 	${RM} ${INSTALL_DIR}/usr/man
