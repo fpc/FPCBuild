@@ -23,7 +23,6 @@
 /usr/bin/fpdoc-${VERSION}
 /usr/bin/makeskel-${VERSION}
 /usr/bin/unitdiff-${VERSION}
-/usr/bin/mkxmlrpc-${VERSION}
 /usr/bin/rmcvsdir-${VERSION}
 /usr/lib/fpc/${VERSION}/lexyacc/yylex.cod
 /usr/lib/fpc/${VERSION}/lexyacc/yyparse.cod
