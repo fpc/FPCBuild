@@ -1,5 +1,7 @@
 fpc (2.6.0-0) unstable; urgency=low
 
+  * Changed build dependencies on gs-common to ghostscript as the first no more 
+    exists. (Closes: Bug#649703)
   * New upstream major release with many features and new targets
     - List of changes which may affect the behaviour of previously working
       code, and how to cope with these changes is available online on
