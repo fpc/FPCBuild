@@ -32,7 +32,6 @@ update-alternatives \
 	--slave /usr/bin/fpdoc fpdoc /usr/bin/fpdoc-${VERSION} \
 	--slave /usr/bin/makeskel makeskel /usr/bin/makeskel-${VERSION} \
 	--slave /usr/bin/unitdiff unitdiff /usr/bin/unitdiff-${VERSION} \
-	--slave /usr/bin/mkxmlrpc mkxmlrpc /usr/bin/mkxmlrpc-${VERSION} \
 	--slave /usr/bin/rmcvsdir rmcvsdir /usr/bin/rmcvsdir-${VERSION} \
 	--slave /usr/share/man/man1/chmcmd.1.gz chmcmd.1.gz /usr/share/man/man1/chmcmd-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/chmls.1.gz chmls.1.gz /usr/share/man/man1/chmls-${VERSION}.1.gz \
@@ -42,7 +41,6 @@ update-alternatives \
 	--slave /usr/share/man/man1/fprcp.1.gz fprcp.1.gz /usr/share/man/man1/fprcp-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/h2paspp.1.gz h2paspp.1.gz /usr/share/man/man1/h2paspp-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/makeskel.1.gz makeskel.1.gz /usr/share/man/man1/makeskel-${VERSION}.1.gz \
-	--slave /usr/share/man/man1/mkxmlrpc.1.gz mkxmlrpc.1.gz /usr/share/man/man1/mkxmlrpc-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/postw32.1.gz postw32.1.gz /usr/share/man/man1/postw32-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/rmcvsdir.1.gz rmcvsdir.1.gz /usr/share/man/man1/rmcvsdir-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/unitdiff.1.gz unitdiff.1.gz /usr/share/man/man1/unitdiff-${VERSION}.1.gz \
