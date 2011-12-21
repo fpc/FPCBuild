@@ -44,6 +44,7 @@ fpc (2.6.0-0) unstable; urgency=low
     - Many improvements to the database units (fcl-db)
     - Objective-Pascal interfaces to Foundation, AppKit, CoreData and WebCore
     - OpenGL headers updated to OpenGL 4.0
+    - Added bindings for libzorba
 
  -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 13 Dec 2011 11:37:00 +0100
 
