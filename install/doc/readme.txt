@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 2.6.0rc1
+                               Version 2.6.0
 
 ****************************************************************************
 * Introduction
@@ -15,7 +15,7 @@ several platforms. The language and the runtime library are almost
 compatible with Turbo Pascal 7.0 and recent Delphi releases. There is also
 partial support for the Macintosh pascal dialect.
 
-Free Pascal 2.6.0rc1 is currently available for the following platforms:
+Free Pascal 2.6.0 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-powerpc

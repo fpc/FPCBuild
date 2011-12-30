@@ -1,10 +1,10 @@
 
                             Free Pascal Compiler
 
-                                Version 2.6.0rc1
+                                Version 2.6.0
 
 ******************************************************************************
-                              What's New in 2.6.0rc1
+                              What's New in 2.6.0
 ******************************************************************************
 
 Free Pascal 2.6.0 is a new major version of the Free Pascal compiler.
