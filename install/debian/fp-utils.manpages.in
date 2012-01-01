@@ -7,7 +7,6 @@ debian/tmp/usr/man/man1/data2inc-${VERSION}.1
 debian/tmp/usr/man/man1/fprcp-${VERSION}.1
 debian/tmp/usr/man/man1/h2paspp-${VERSION}.1
 debian/tmp/usr/man/man1/makeskel-${VERSION}.1
-debian/tmp/usr/man/man1/mkxmlrpc-${VERSION}.1
 debian/tmp/usr/man/man1/postw32-${VERSION}.1
 debian/tmp/usr/man/man1/rmcvsdir-${VERSION}.1
 debian/tmp/usr/man/man1/unitdiff-${VERSION}.1

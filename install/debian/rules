@@ -94,18 +94,12 @@ endif
 unexport FPCDIR
 NEWPP=$(BUILD_DIR)/fpcsrc/compiler/$(PPNEW)
 NEWFPDOC=$(BUILD_DIR)/fpcsrc/utils/fpdoc/fpdoc
-#If not cross compiling, then use new generated fpcmake utility.
-ifeq (${PPPRE},)
-NEWFPCMAKE=$(BUILD_DIR)/fpcsrc/utils/fpcm/fpcmake
-else
-NEWFPCMAKE=${FPCMAKE}
-endif
 # Set default compilation options
 BUILDOPTS=PP=$(NEWPP)
 ifdef CROSSOPT
 BUILDOPTS+= CROSSOPT=${CROSSOPT}
 endif
-INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP) FPCMAKE=$(NEWFPCMAKE)
+INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP)
 
 export GDBLIBDIR=/usr/lib
 
@@ -126,8 +120,6 @@ clean: configure clean-patched
 	${RM} debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
 	# Remove auto-generated version file.
 	${RM} fpcsrc/compiler/version.inc
-	# Remove auto-generated make files.
-	find -name Makefile.fpc -execdir 'sh' '-c' '${RM} $$(basename {} .fpc)' ';'
 	dh_clean
 clean-patched:
 	@echo "--- Cleaning"
@@ -159,10 +151,6 @@ debian-files-stamp:
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	# Remove auto-generated make files.
-	find -name Makefile.fpc -execdir 'sh' '-c' '${RM} $$(basename {} .fpc)' ';'
-	# Regenrate make files using fpcmake.
-	${FPCMAKE} -r -Tall */Makefile.fpc
 	# Remove auto-generated version file.
 	${RM} fpcsrc/compiler/version.inc
 	# Add version.inc:
@@ -173,9 +161,11 @@ build-arch: debian-files configure build-arch-stamp
 build-arch-stamp:
 	@echo "--- Building"
 	dh_testdir
-# First make a new Compiler and RTL using a make cycle
+	# First make a new Compiler using a make cycle
 	$(MAKE) -C fpcsrc compiler_cycle
+	# Then build RTL using new compiler
 	$(MAKE) -C fpcsrc rtl_clean rtl_smart $(BUILDOPTS)
+	# Finally build packages and tools using new compiler and new RTL
 	$(MAKE) -C fpcsrc packages_smart $(BUILDOPTS)
 	$(MAKE) -C fpcsrc ide_all $(BUILDOPTS)
 	$(MAKE) -C fpcsrc utils_all $(BUILDOPTS)
@@ -253,7 +243,7 @@ install-man: install-man-stamp
 install-man-stamp:
 	# Install man pages
 	$(MAKE) -C install/man installman $(INSTALLOPTS)
-	for s in ${INSTALL_DIR}/usr/man/man[1-9] ; do cd $${s} && for f in *.[1-9] ; do ${MV} $${f} $${f%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${f#*.}" ; done ; done || true
+	for s in ${INSTALL_DIR}/usr/man/man[1-9] ; do cd $${s} && ( gzip -d *.gz || true ) && for f in *.[1-9] ; do ${MV} $${f} $${f%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${f#*.}" ; done ; done || true
 	pod2man -c 'Free pascal for Debian GNU/Linux' debian/fpc-depends > debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
 	dh_installman -s
 	${RM} ${INSTALL_DIR}/usr/man
