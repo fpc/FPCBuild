@@ -38,7 +38,7 @@
 3  [ ] Check tools
 -      (2)
  a [ ] Check version of the above mentioned tools (GNU
-       tools, helper DLLs, UPX, etc.), and decide whether
+       tools, helper DLLs, etc.), and decide whether
        it isn't time to update some of these tools
  b [ ] Repackage and upload additional tools where needed
 4  [ ] Update version number in the appropriate CVS branch
