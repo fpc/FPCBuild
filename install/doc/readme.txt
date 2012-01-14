@@ -15,6 +15,8 @@ several platforms. The language and the runtime library are almost
 compatible with Turbo Pascal 7.0 and recent Delphi releases. There is also
 partial support for the Macintosh pascal dialect.
 
+News and changes related to this release are described in whatsnew.txt.
+
 Free Pascal 2.6.0 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
@@ -167,7 +169,7 @@ directory of your boot drive (e.g. C:\) with a plain text editor (e.g.
 E.EXE), extending the lines starting with "set PATH=" and "LIBPATH=" (both
 are case insensitive) with path to newly installed binaries (installation
 root as selected in the installation program appended with "\BIN\OS2" for
-PATH and "\BIN\DLL" for LIBPATH) and save it again as a plain text file.
+PATH and "\DLL" for LIBPATH) and save it again as a plain text file.
 Note that changes to LIBPATH require restart of your machine in order to come
 into effect.
 
@@ -356,13 +358,12 @@ fall under the GPL, for more information read the file COPYING.
 Some specific utilities and programs come under the license described in
 COPYING.DJ, COPYING.EMX, COPYING.RSX, license.upx and licensez.ip.
 
-Some of the licenses of the third party tools require to make the source available. 
-If you cannot find the sources or information where to
-find them for a certain tool under such a license 
-included into the FPC distribution, please contact us through the contact 
-details given at http://www.freepascal.org/moreinfo.var 
-and we will provide you the sources or information where to
-find them.
+Some of the licenses of the third party tools require to make the source
+available. If you cannot find the sources or information where to find
+them for a certain tool under such a license included into the FPC
+distribution, please contact us through the contact details given
+at http://www.freepascal.org/moreinfo.var and we will provide you
+the sources or information where to find them.
 
 The documentation, unless otherwise noted, is distributed as free
 text, and is distributed under the GNU Library General Public
