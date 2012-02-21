@@ -317,7 +317,7 @@ fi
 rm -rf "packages/fcl-db/units" "compiler/ppcarm" "compiler/ppcrossarm"
 
 cd rtl/darwin
-make FPC="$FPCROSSARMBINARY" OPT="-ap" CPU_TARGET=arm CROSSOPT="-FD${IPHONEPLATFORMBASEDIR}/usr/bin  -XR${IPHONESDKDIR}/ -ap -Cparmv7 -Cfvfpv3" all -j "$PARALLELMAKE"
+make FPC="$FPCROSSARMBINARY" OPT="-ap" CPU_TARGET=arm CROSSOPT="-FD${IPHONEPLATFORMBASEDIR}/usr/bin  -XR${IPHONESDKDIR}/ -ap -Cparmv7 -Cfvfpv3" RELEASE=1 all -j "$PARALLELMAKE"
 
 if [ $? != 0 ]; then
   doerror "building RTL for ARMv7"
@@ -326,7 +326,7 @@ fi
 cd ../..
 
 cd packages
-make FPC="$FPCROSSARMBINARY" OPT="-ap" CPU_TARGET=arm CROSSOPT="-FD${IPHONEPLATFORMBASEDIR}/usr/bin  -XR${IPHONESDKDIR}/ -ap -Cparmv7 -Cfvfpv3" all -j "$PARALLELMAKE"
+make FPC="$FPCROSSARMBINARY" OPT="-ap" CPU_TARGET=arm CROSSOPT="-FD${IPHONEPLATFORMBASEDIR}/usr/bin  -XR${IPHONESDKDIR}/ -ap -Cparmv7 -Cfvfpv3" RELEASE=1 all -j "$PARALLELMAKE"
 
 if [ $? != 0 ]; then
   doerror "building packages for ARMv7"
@@ -344,7 +344,7 @@ echo
 # into the previously generated ARMv6 object files
 
 cd rtl/darwin
-make FPC="$FPCROSSARMBINARY" OPT="-ap" CPU_TARGET=arm CROSSOPT="-FD${IPHONEPLATFORMBASEDIR}/usr/bin -XR${IPHONESDKDIR}/ -ap -Cparmv7 -Cfvfpv3" INSTALL_PREFIX="$FPCARMV7UNITSINSTALLDIR" install CROSSINSTALL=1
+make FPC="$FPCROSSARMBINARY" OPT="-ap" CPU_TARGET=arm CROSSOPT="-FD${IPHONEPLATFORMBASEDIR}/usr/bin -XR${IPHONESDKDIR}/ -ap -Cparmv7 -Cfvfpv3" INSTALL_PREFIX="$FPCARMV7UNITSINSTALLDIR" RELEASE=1 install CROSSINSTALL=1
 if [ $? != 0 ]; then
   doerror "installing the ARMv7 RTL"
   failure
@@ -352,7 +352,7 @@ fi
 cd ../..
 
 cd packages
-make FPC="$FPCROSSARMBINARY" OPT="-ap" CPU_TARGET=arm CROSSOPT="-FD${IPHONEPLATFORMBASEDIR}/usr/bin -XR${IPHONESDKDIR}/ -ap -Cparmv7 -Cfvfpv3" INSTALL_PREFIX="$FPCARMV7UNITSINSTALLDIR" install CROSSINSTALL=1
+make FPC="$FPCROSSARMBINARY" OPT="-ap" CPU_TARGET=arm CROSSOPT="-FD${IPHONEPLATFORMBASEDIR}/usr/bin -XR${IPHONESDKDIR}/ -ap -Cparmv7 -Cfvfpv3" INSTALL_PREFIX="$FPCARMV7UNITSINSTALLDIR" RELEASE=1 install CROSSINSTALL=1
 if [ $? != 0 ]; then
   doerror "installing the ARMv7 packages"
   failure
