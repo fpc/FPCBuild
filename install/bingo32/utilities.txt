@@ -11,6 +11,7 @@ Files from GNU binutils 2.17 (djgpp 2.03). Original file: bnu217b.zip
  * ar.exe
  * as.exe
  * ld.exe
+ * nm.exe
  * objdump.exe
  * strip.exe
 
