@@ -353,10 +353,10 @@ problem, otherwise they may not be willing/able to fix it.
 ****************************************************************************
 
 The compiler and most utilities and executables distributed in this package
-fall under the GPL, for more information read the file COPYING.
+fall under the GPL, for more information read the file COPYING.v2.
 
 Some specific utilities and programs come under the license described in
-COPYING.DJ, COPYING.EMX, COPYING.RSX, license.upx and licensez.ip.
+COPYING.v3, COPYING.DJ, COPYING.EMX, COPYING.RSX, license.upx and licensez.ip.
 
 Some of the licenses of the third party tools require to make the source
 available. If you cannot find the sources or information where to find
@@ -367,7 +367,7 @@ the sources or information where to find them.
 
 The documentation, unless otherwise noted, is distributed as free
 text, and is distributed under the GNU Library General Public
-License.
+License as found in file COPYING.
 
 The runtime library, package libraries, free component library, and
 other libraries which are used to create executables by the compiler
@@ -375,7 +375,7 @@ come under a modified GNU Library General Public license. Additional
 information about the library license is found in COPYING.FPC.
 
 License conditions for DPMI provider for GO32v2 version (CWSDPMI.EXE)
-can be found in cwsdpmi.doc, sources and/or binary updates may be
+can be found in cwsdpmi.txt, sources and/or binary updates may be
 downloaded from http://clio.rice.edu/cwsdpmi/.
 
 The DOS version (go32v2) contains some binaries of DJGPP. You can obtain

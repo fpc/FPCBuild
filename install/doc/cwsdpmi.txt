@@ -1,9 +1,8 @@
-CWSDPMI is Copyright (C) 1995-2008  Charles W Sandmann (cwsdpmi@earthlink.net)
+CWSDPMI is Copyright (C) 1995-2010  Charles W Sandmann (cwsdpmi@earthlink.net)
                                     1206 Braelinn, Sugar Land, TX 77479
 
-This is release 5, 2008 refresh.  It contains minor bug fixes and SSE support.
-The files in this binary distribution may be redistributed under the GPL 
-(with source) or without the source code provided:
+This is release 7.  The files in this binary distribution may be redistributed
+under the GPL (with source) or without the source code provided:
 
 * CWSDPMI.EXE or CWSDPR0.EXE are not modified in any way except via CWSPARAM.
 
@@ -16,7 +15,22 @@ The files in this binary distribution may be redistributed under the GPL
 
 -------------------------------------------------------------------------------
 
-CWSDPMI was written to provide DPMI services for V2 of DJGPP.  It currently
+The purpose of this release is to allow high performance access to large
+amounts of physical memory (up to 4GB).  Memory above 32-bit address space
+(common on machines over 3GB physical memory) will be mapped to fill the
+address hole to provide a full 4GB memory.  4MB pages will be automatically
+used for large memory requests.  Release 5 works well for systems using 256MB
+or less of memory; release 7 is useful for quick access to over 500MB.
+
+Known limitations with 4MB pages:
+ 1) 4Mb regions are treated as locked (non-pageable).  Virtual memory may be
+    less effective.
+ 2) DPMI 1.0 extensions to manage page attributes will not work on 4MB pages.
+ 3) DPMI function 0x503 to resize memory is not supported if it requires the
+    memory zone to be moved in physical memory and it contains a 4Mb page.
+Note: CWSPARAM bit 3, (bitmask 8) can be used to suppress using 4Mb pages.
+
+CWSDPMI was written to provide DPMI services for V2 of DJGPP.  It
 does not support 16-bit DPMI applications, or DPMI applications requiring a
 built in extender.  It does support virtual memory and hardware interrupt
 reflection from real mode to protected mode.  DJGPP V1.1x and RSX applications
@@ -33,7 +47,7 @@ or stack fault error (to be fixed someday).
 CWSDSTUB.EXE is a stub loader image for DJGPP which includes CWSDPMI.  This
 allows single executable image distributions.  You can use the EXE2COFF
 program and COPY /B CWSDSTUB.EXE+yourimage yourimage.exe to create a
-standalone executable image.
+standalone executable image.  CWSDSTR0.EXE is the ring 0 stub.
 
 Some of the internal tuning and configuration parameters may be modified
 in the image using CWSPARAM.EXE (see CWSPARAM.DOC).
@@ -55,7 +69,8 @@ Directions for use (server can be used in either of two different ways):
 3) The file used for virtual memory swapping, if desired, is controlled
    by the "-sc:\cwsdpmi.swp" syntax on the command line.  You must specify
    either a file with full disk/directory syntax, or "-s-" which disables
-   virtual memory.
+   virtual memory.  If -s is used, it must be the last option on the command
+   line, since all characters after -s will be treated as the swap file name.
 
 4) The default swap file name is c:\cwsdpmi.swp, but this can be changed
    with the CWSPARAM image, as can some other parameters.
@@ -64,6 +79,11 @@ Directions for use (server can be used in either of two different ways):
    "cwsdpmi -x" syntax.  This feature allows you to run programs developed
    under other DPMI providers which do not behave properly with these
    extensions enabled (typically use of NULL pointers).
+
+If you are using an EMM provider for UMBs, CWSDPMI will need to use VCPI.
+VCPI memory prevents usage of 4MB pages, so for best performance with an EMM
+provider I recommend suppressing VCPI memory.  For example, with JEMM386
+this can be done with:  JEMM386 LOAD MAX=0
 
 I would like to give special thanks to DJ Delorie who wrote the original
 GO32 code on which CWSDPMI is based.  Morten Welinder also provided and
@@ -97,7 +117,7 @@ A few interrupts are used which need DOS 3.0 or higher.  I don't expect to
 ever see this message, since 80386 machines were introduced after DOS 3.0
 and that check is made first.
 
-"CWSDPMI V0.90+ (r5) Copyright (C) 2000 CW Sandmann  ABSOLUTELY NO WARRANTY"
+"CWSDPMI V0.90+ (r7) Copyright (C) 2010 CW Sandmann  ABSOLUTELY NO WARRANTY"
 
 An informational message displayed if the program is not run in one-pass mode.
 
@@ -116,15 +136,17 @@ specified in the image (change the name with cwsparam).
 
 "No swap space!"
 
-This message means you tried to use more paging file than CWSDPMI was
+This message means you tried to use more swap file than CWSDPMI was
 configured to handle.  Since this is protected against in the memory
-allocation code, you should never see this message.
+allocation code you should never see this message, except when swapping
+is disabled and you run out of DOS memory for page tables (greater than
+400MB of memory without 4MB pages).
 
 "Swap disk full!"
 
-This means the paging file could not be expanded when trying to page
+This means the swap file could not be expanded when trying to swap
 memory out to disk.  This would normally not be seen, unless you are
-writing output to the same disk which holds the paging file.  Decrease
+writing output to the same disk which holds the swap file.  Decrease
 the amount of memory your DPMI application is using or free up disk space.
 
 "Interrupt 0x??"
