@@ -1,0 +1,64 @@
+# Translation of fpc debconf template to German.
+# Copyright (C) 1999 Peter Vreman.
+# This file is distributed under the same license as the citadel package.
+# Copyright of this translation Chris Leick <c.leick@vollbio.de>.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fpc 2.6.0-6\n"
+"Report-Msgid-Bugs-To: fpc@packages.debian.org\n"
+"POT-Creation-Date: 2012-09-08 10:07-0400\n"
+"PO-Revision-Date: 2012-09-09 22:09+0200\n"
+"Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
+"Language-Team: de <debian-l10n-german@lists.debian.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid "Rename \"/etc/fpc.cfg\" to \"/etc/fpc.cfg.bak\"?"
+msgstr "»/etc/fpc.cfg« in »/etc/fpc.cfg.bak« umbenennen?"
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"FPC now supports having multiple versions installed on the same system. The "
+"update-alternatives command can be used to set a default version for\n"
+" * fpc (the compiler);\n"
+" * fpc.cfg (the configuration file);\n"
+" * fp-utils (the helper tools)."
+msgstr ""
+"FPC unterstützt nun mehrere auf dem selben System installierte Versionen. Der "
+"Befehl »update-alternatives« kann zum Setzen einer Standardversion für\n"
+" * fpc (den Compiler),\n"
+" * fpc.cfg (die Konfigurationsdatei) und\n"
+" * fp-utils (die Helper-Werkzeuge)\n"
+"benutzt werden."
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"Whatever version you may choose as default, the configuration files are "
+"always backward compatible, so it should always be safe to use the latest "
+"version."
+msgstr ""
+"Egal welche Version als Vorgabe gewählt wird, die Konfigurationsdateien sind "
+"immer abwärtskompatibel, so dass die Verwendung der neusten Version stets "
+"sicher möglich sein sollte."
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"In order to use the alternatives system on the system wide FPC configuration "
+"file you must accept renaming \"/etc/fpc.cfg\"; otherwise you will need to "
+"manage this manually by yourself."
+msgstr ""
+"Um das Alternatives-System auf die systemweite Konfigurationsdatei "
+"anzuwenden, müssen Sie dem Umbenennen von »/etc/fpc.cfg« zustimmen, "
+"andernfalls müssen Sie dies selbst verwalten."

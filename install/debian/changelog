@@ -1,7 +1,100 @@
-fpc (2.6.0-0) unstable; urgency=low
+fpc (2.6.1-0) unstable; urgency=low
 
-  * Changed build dependencies on gs-common to ghostscript as the first no more 
+  * Daily snapshots build.
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 11 Oct 2012 16:08:00 +0000
+
+fpc (2.6.0-7) unstable; urgency=low
+
+  * Proofread templates by debian-l10n-english list. (Closes: Bug#686038)
+  * Added Danish translation. (Closes: Bug#687069)
+  * Added Slovak translation. (Closes: Bug#687087)
+  * Added Portuguese translation. (Closes: Bug#687116)
+  * Added Russian translation. (Closes: Bug#687192)
+  * Added German translation. (Closes: Bug#687444)
+  * Added Polish translation. (Closes: Bug#687550)
+  * Added Czech translation. (Closes: Bug#687713)
+  * Added French translation. (Closes: Bug#687724)
+  * Added Italian translation. (Closes: Bug#687771)
+  * Added Japanese translation. (Closes: Bug#688143)
+  * Added Swedish translation. (Closes: Bug#688424)
+  * Added Spanish translation. (Closes: Bug#689468)
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 04 Oct 2012 09:12:00 +0000
+
+fpc (2.6.0-6) unstable; urgency=low
+
+  * Removed error thrown when trying to build help index if the documentation
+    is installed on a read only file system and tries to store the index file
+    in current directory. (Closes: Bug#528863)
+  * Fixed postrm script to guarantee removal of backup configuration files
+    during purge operation. (Closes: Bug#668742)
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 30 Jul 2012 19:22:00 +0000
+
+fpc (2.6.0-5) unstable; urgency=low
+
+  * Add patch to fix inverted exception masking on arm vfp (armhf).
+    This patch is needed for the armhf compiler to work on hardware that
+    supports vfp exception trapping.
+
+ -- Peter Michael Green <plugwash@debian.org>  Sun, 29 Jul 2012 00:52:27 +0000
+
+fpc (2.6.0-4) unstable; urgency=low
+
+  [ Peter Michael Green ]
+  * Add myself to uploaders in control.in as well as control so that the build
+    process doesn't blow my changes away
+  [ Abou Al Montacir ]
+  * Moved mention to openal from fp-units-gfx description to fp-untis-multimedia
+    description. (Closes: Bug#679138)
+
+ -- Peter Michael Green <plugwash@debian.org>  Fri, 06 Jul 2012 20:25:10 +0000
+
+fpc (2.6.0-3) unstable; urgency=low
+  * Add myself to uploaders
+  * Add support for armhf (Closes: Bug#666264)
+    - debian/rules:
+      + Specify arm variant explicitly when cycling the compiler so that it is
+        possible to bootstrap with a starting compiler from another arm variant.
+      + Use DEB_*_ARCH_CPU to reduce the ammount of special casing we
+        require when setting CPU_SOURCE and CPU_TARGET.
+    - debian/control: add armhf to architecture list.
+    - debian/patches/armhf.diff: main changes for port, based on patch
+      submitted upstream with adjustments to backport to 2.6.0
+    - debian/patches/regenerate_messages.diff: regenerate messages file
+      to add new message introduced by armhf.diff
+    - armhf-linker-path.diff: change dynamic linker path to reflect new
+      cross-distro agreement.
+  * fixups to clean target in debian/rules:
+    - Don't remove .pc since we aren't removing the patches anymore
+      (fixes issues where quilt doesn't think the patches are applied even
+      though in fact they are)
+    - Cleanup some files which seem to get left behind by
+      the upstream build/cleanup process.
+    - Cleanup install-source-stamp
+    - Cleanup various generated files in debian directory
+  * set CFG_FILE in postrm so that the rm command in purge actually
+    removes the configuration file.
+ -- Peter Michael Green <plugwash@debian.org>  Sat, 21 Apr 2012 13:13:00 +0100
+
+
+fpc (2.6.0-2) unstable; urgency=low
+
+  * Added alternatives to handle fp (IDE) binary. (Closes: Bug#655626)
+  * Set priority according to version in fpc and fp-utils so that newer version
+    is automatically selected.
+  * Fix default FPCDIR value in fpcmake utility reading links recursively.
+    (Closes: Bug#662814)
+  * Checked conformance to policy 3.9.3 and updated standard version.
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Wed, 28 Mar 2012 11:51:00 +0100
+
+fpc (2.6.0-1) unstable; urgency=low
+
+  * Changed build dependencies on gs-common to ghostscript as the first no more
     exists. (Closes: Bug#649703)
+  * Configuration file is now built on the fly by the post installation script.
   * New upstream major release with many features and new targets
     - List of changes which may affect the behaviour of previously working
       code, and how to cope with these changes is available online on
@@ -46,7 +139,7 @@ fpc (2.6.0-0) unstable; urgency=low
     - OpenGL headers updated to OpenGL 4.0
     - Added bindings for libzorba
 
- -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 13 Dec 2011 11:37:00 +0100
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 27 Dec 2011 11:30:00 +0100
 
 fpc (2.4.4-3) unstable; urgency=low
 

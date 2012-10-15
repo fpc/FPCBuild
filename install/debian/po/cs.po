@@ -1,0 +1,63 @@
+# Czech PO debconf template translation of fpc.
+# Copyright (C) 2012 Michal Simunek <michal.simunek@gmail.com>
+# This file is distributed under the same license as the fpc package.
+# Michal Simunek <michal.simunek@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fpc 2.6.0-6\n"
+"Report-Msgid-Bugs-To: fpc@packages.debian.org\n"
+"POT-Creation-Date: 2012-09-08 10:07-0400\n"
+"PO-Revision-Date: 2012-09-15 12:02+0200\n"
+"Last-Translator: Michal Simunek <michal.simunek@gmail.com>\n"
+"Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid "Rename \"/etc/fpc.cfg\" to \"/etc/fpc.cfg.bak\"?"
+msgstr "Přejmenovat \"/etc/fpc.cfg\" na \"/etc/fpc.cfg.bak\"?"
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"FPC now supports having multiple versions installed on the same system. The "
+"update-alternatives command can be used to set a default version for\n"
+" * fpc (the compiler);\n"
+" * fpc.cfg (the configuration file);\n"
+" * fp-utils (the helper tools)."
+msgstr ""
+"FPC nyní podporuje možnost mít na stejném systému nainstalováno vícero verzí. "
+"Příkazem update-alternatives lze nastavit výchozí verze pro\n"
+" * fpc (kompilátor);\n"
+" * fpc.cfg (konfigurační soubor);\n"
+" * fp-utils (pomocné nástroje)."
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"Whatever version you may choose as default, the configuration files are "
+"always backward compatible, so it should always be safe to use the latest "
+"version."
+msgstr ""
+"Bez ohledu na to, že si můžete vybrat výchozí verzi, jsou konfigurační "
+"soubory vždy zpětně kompatibilní, takže by mělo být vždy bezpečné použít "
+"nejnovější verzi."
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"In order to use the alternatives system on the system wide FPC configuration "
+"file you must accept renaming \"/etc/fpc.cfg\"; otherwise you will need to "
+"manage this manually by yourself."
+msgstr ""
+"Pokud chcete, aby se v systému pro konfigurační soubor FPC používal systém "
+"alternativ, musíte přijmout přejmenování souboru \"/etc/fpc.cfg\"; jinak "
+"bude nutné, aby jste si jej spravovali sami."

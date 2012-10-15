@@ -5,35 +5,44 @@ set -e
 # Load debconf
 . /usr/share/debconf/confmodule
 
-CFG_FILE='/etc/fpc.cfg'
+CFG_FILE="/etc/fpc-${VERSION}.cfg"
+DEFAULT_CFG_FILE='/etc/fpc.cfg'
+LIB_DIR="/usr/lib/fpc"
+MAN_DIR="/usr/share/man/man1"
 
-if test -f "${CFG_FILE}" && ! test -L "${CFG_FILE}"
+# Debhelper code
+#DEBHELPER#
+
+if test -f "${DEFAULT_CFG_FILE}" && ! test -L "${DEFAULT_CFG_FILE}"
 then
 	db_get fp-compiler${PACKAGESUFFIX}/rename_cfg
 	if test "${RET}" = "true"
 	then
-		mv "${CFG_FILE}" "${CFG_FILE}.bak"
+		mv "${DEFAULT_CFG_FILE}" "${DEFAULT_CFG_FILE}.bak"
 	fi
 fi
+
+# Create new compiler configuration file
+fpcmkcfg-${VERSION} -0 -d "basepath=${LIB_DIR}/\$fpcversion" -o "${CFG_FILE}"
+# Add multiarch path to /etc/fpc.cfg so executables linked against libc can be corectly linked
+echo '# multiarch library search path' >> ${CFG_FILE}
+echo '-Fl/usr/lib/$fpctarget-*' >> ${CFG_FILE}
 
 # add alternatives
 update-alternatives \
     --install /usr/bin/fpc fpc /usr/bin/fpc-${VERSION} ${PRIORITY} \
-    --slave /usr/bin/${PPCBIN} ${PPCBIN} /usr/lib/fpc/${VERSION}/${PPCBIN} \
+    --slave /usr/bin/${PPCBIN} ${PPCBIN} ${LIB_DIR}/${VERSION}/${PPCBIN} \
     --slave /usr/bin/fpc-depends fpc-depends /usr/bin/fpc-depends-${VERSION} \
 	--slave /usr/bin/fpcres fpcres /usr/bin/fpcres-${VERSION} \
-    --slave /usr/share/man/man1/${PPCBIN}.1.gz ${PPCBIN}.1.gz /usr/share/man/man1/${PPCBIN}-${VERSION}.1.gz \
-    --slave /usr/share/man/man1/fpc.1.gz fpc.1.gz /usr/share/man/man1/fpc-${VERSION}.1.gz \
-    --slave /usr/share/man/man1/fpc-depends.1.gz fpc-depends.1.gz /usr/share/man/man1/fpc-depends-${VERSION}.1.gz \
-	--slave /usr/share/man/man1/fpcres.1.gz fpcres.1.gz /usr/share/man/man1/fpcres-${VERSION}.1.gz
+    --slave ${MAN_DIR}/${PPCBIN}.1.gz ${PPCBIN}.1.gz ${MAN_DIR}/${PPCBIN}-${VERSION}.1.gz \
+    --slave ${MAN_DIR}/fpc.1.gz fpc.1.gz ${MAN_DIR}/fpc-${VERSION}.1.gz \
+    --slave ${MAN_DIR}/fpc-depends.1.gz fpc-depends.1.gz ${MAN_DIR}/fpc-depends-${VERSION}.1.gz \
+	--slave ${MAN_DIR}/fpcres.1.gz fpcres.1.gz ${MAN_DIR}/fpcres-${VERSION}.1.gz
 update-alternatives \
     --install /usr/bin/pc pc /usr/bin/fpc-${VERSION} 20 \
-    --slave /usr/share/man/man1/pc.1.gz pc.1.gz /usr/share/man/man1/fpc-${VERSION}.1.gz
+    --slave ${MAN_DIR}/pc.1.gz pc.1.gz ${MAN_DIR}/fpc-${VERSION}.1.gz
 
 # Configuration file is a special case as it is backward compatible and is
 # likely to be handled as a special alternative pointing to the latest release
 update-alternatives \
-	--install ${CFG_FILE} fpc.cfg /etc/fpc-${VERSION}.cfg ${PRIORITY}\
-
-# Debhelper code
-#DEBHELPER#
+	--install ${DEFAULT_CFG_FILE} fpc.cfg ${CFG_FILE} ${PRIORITY}

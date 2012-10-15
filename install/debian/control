@@ -2,10 +2,10 @@ Source: fpc
 Section: devel
 Priority: optional
 Maintainer: Carlos Laviola <claviola@debian.org>
-Uploaders: Torsten Werner <twerner@debian.org>, Abou Al Montacir <abou.almontacir@sfr.fr>
+Uploaders: Torsten Werner <twerner@debian.org>, Abou Al Montacir <abou.almontacir@sfr.fr>, Peter Michael Green <plugwash@debian.org>
 DM-Upload-Allowed: yes
-Standards-Version: 3.9.2
-Build-Depends: debhelper (>= 7), fp-compiler, fp-units-base, fp-units-fcl, fp-utils, mawk | awk, libncurses-dev, binutils, ghostscript
+Standards-Version: 3.9.3
+Build-Depends: debhelper (>= 7), fp-compiler, fp-units-base, fp-units-fcl, fp-utils, mawk | awk, libncurses-dev, binutils, ghostscript, po-debconf
 Build-Depends-Indep: hevea
 Vcs-Svn: https://bollin.googlecode.com/svn/fpc/trunk/
 Vcs-Browser: http://bollin.googlecode.com/svn/fpc/trunk/
@@ -53,7 +53,7 @@ Description: Free Pascal - SDK Source Code
  the Lazarus IDE.
 
 Package: fp-compiler-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), binutils
 Recommends: fp-utils-2.6.0 (>= ${binary:Version})
 Suggests: fp-docs-2.6.0 (>= ${source:Upstream-Version})
@@ -76,7 +76,7 @@ Description: Free Pascal - Compiler
  This package contains the command line compiler.
 
 Package: fp-ide-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), ${shlibs:Depends}
 Recommends: fp-utils-2.6.0 (>= ${binary:Version})
 Suggests: fp-docs-2.6.0 (>= ${source:Upstream-Version})
@@ -99,7 +99,7 @@ Description: Free Pascal - IDE
  has an internal compiler.
 
 Package: fp-utils-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}
 Recommends: fp-compiler-2.6.0 (= ${binary:Version})
 Provides: fp-utils
@@ -144,7 +144,7 @@ Description: Free Pascal - Documentation
  format.
 
 Package: fp-units-rtl-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}
 Recommends: fp-compiler-2.6.0 (= ${binary:Version})
 Provides: fp-units-rtl, fpc-abi-${source:Upstream-Version}
@@ -161,7 +161,7 @@ Description: Free Pascal - Runtime Library
  This package contains the Runtime Libraries for the Free Pascal Compiler.
 
 Package: fp-units-base-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-base
 Breaks: fp-units-base (<= 2.4.0-3)
@@ -181,7 +181,7 @@ Description: Free Pascal - base units
   - ZLib
 
 Package: fp-units-fcl-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), fp-units-base-2.6.0 (= ${binary:Version})
 Provides: fp-units-fcl
 Breaks: fp-units-fcl (<= 2.4.0-3)
@@ -197,7 +197,7 @@ Description: Free Pascal - Free Component Library
  This package contains the Free Component Library for the Free Pascal Compiler.
 
 Package: fp-units-fv-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-fv
 Breaks: fp-units-fv (<= 2.4.0-3)
@@ -213,7 +213,7 @@ Description: Free Pascal - Free Vision units
  This package contains the Free Vision units for the Free Pascal Compiler.
 
 Package: fp-units-gtk-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), fp-units-fcl-2.6.0 (= ${binary:Version}), libgtk2.0-dev
 Provides: fp-units-gtk
 Breaks: fp-units-gtk (<= 2.4.0-3)
@@ -230,7 +230,7 @@ Description: Free Pascal - GTK+ 1.2 units
  programs with GTK+ 1.2.
 
 Package: fp-units-gtk2-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), fp-units-fcl-2.6.0 (= ${binary:Version})
 Provides: fp-units-gtk2
 Breaks: fp-units-gtk2 (<= 2.4.0-3)
@@ -247,7 +247,7 @@ Description: Free Pascal - GTK+ 2.x units
  programs with GTK+ 2.x.
 
 Package: fp-units-gnome1-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), fp-units-gtk-2.6.0 (= ${binary:Version})
 Provides: fp-units-gnome1
 Breaks: fp-units-gnome1 (<= 2.4.0-3)
@@ -264,7 +264,7 @@ Description: Free Pascal - GNOME 1 units
  programs for GNOME 1.
 
 Package: fp-units-db-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-db
 Breaks: fp-units-db (<= 2.4.0-3)
@@ -287,8 +287,8 @@ Description: Free Pascal - database libraries units
   - SQLite
 
 Package: fp-units-gfx-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
-Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), fp-units-base-2.6.0 (= ${binary:Version}), libsvga1-dev [i386 amd64 armel]
+Architecture: i386 powerpc sparc amd64 armel armhf
+Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), fp-units-base-2.6.0 (= ${binary:Version}), libsvga1-dev [i386 amd64 armel armhf]
 Provides: fp-units-gfx
 Breaks: fp-units-gfx (<= 2.4.0-3)
 Replaces: fp-units-gfx (<= 2.4.0-3)
@@ -308,11 +308,10 @@ Description: Free Pascal - graphics libraries units
   - libgd
   - libpng
   - graph
-  - openal
   - cairo
 
 Package: fp-units-net-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-net
 Breaks: fp-units-net (<= 2.4.0-3)
@@ -338,7 +337,7 @@ Description: Free Pascal - networking units
   - pcap
 
 Package: fp-units-math-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-math
 Breaks: fp-units-math (<= 2.4.0-3)
@@ -358,7 +357,7 @@ Description: Free Pascal - math units
   - symbolic : symbolic computing
 
 Package: fp-units-misc-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version})
 Provides: fp-units-misc
 Breaks: fp-units-misc (<= 2.4.0-3)
@@ -377,7 +376,7 @@ Description: Free Pascal - miscellaneous units
   - PasZLib (Pascal-only zlib implementation)
 
 Package: fp-units-multimedia-2.6.0
-Architecture: i386 powerpc sparc amd64 armel
+Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl-2.6.0 (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev, libsdl-mixer1.2-dev
 Provides: fp-units-multimedia
 Breaks: fp-units-multimedia (<= 2.4.0-3)
@@ -396,6 +395,7 @@ Description: Free Pascal - multimedia units
   - dts
   - mad
   - modplug
+  - openal
 
 Package: fp-units-i386-2.6.0
 Architecture: i386
@@ -675,7 +675,6 @@ Description: Free Pascal - graphics libraries units metapackage
   - libgd
   - libpng
   - graph
-  - openal
   - cairo
 
 Package: fp-units-net
@@ -755,6 +754,7 @@ Description: Free Pascal - multimedia units metapackage
   - dts
   - mad
   - modplug
+  - openal
 
 Package: fp-units-i386
 Architecture: i386

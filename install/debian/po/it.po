@@ -1,0 +1,65 @@
+# Italian translation of fpc debconf messages.
+# Copyright (C) 2012, Beatrice Torracca
+# This file is distributed under the same license as the fpc package.
+# Beatrice Torracca <beatricet@libero.it>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: fpc\n"
+"Report-Msgid-Bugs-To: fpc@packages.debian.org\n"
+"POT-Creation-Date: 2012-09-08 10:07-0400\n"
+"PO-Revision-Date: 2012-09-15 18:51+0200\n"
+"Last-Translator: Beatrice Torracca <beatricet@libero.it>\n"
+"Language-Team: Italian <debian-l10n-italian@lists.debian.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid "Rename \"/etc/fpc.cfg\" to \"/etc/fpc.cfg.bak\"?"
+msgstr "Rinominare «/etc/fpc.cfg» in «/etc/fpc.cfg.bak»?"
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"FPC now supports having multiple versions installed on the same system. The "
+"update-alternatives command can be used to set a default version for\n"
+" * fpc (the compiler);\n"
+" * fpc.cfg (the configuration file);\n"
+" * fp-utils (the helper tools)."
+msgstr ""
+"FPC permette adesso di avere più versioni installate sullo stesso sistema. "
+"Il comando update-alternatives può essere usato per impostare una versione "
+"predefinita per\n"
+" * fpc (il compilatore);\n"
+" * fpc.cfg (il file di configurazione);\n"
+" * fp-utils (gli strumenti ausiliari)."
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"Whatever version you may choose as default, the configuration files are "
+"always backward compatible, so it should always be safe to use the latest "
+"version."
+msgstr ""
+"Indipendentemente da quale versione si scelga come predefinita, i file di "
+"configurazione sono sempre compatibili all'indietro, perciò dovrebbe in ogni "
+"caso essere sicuro scegliere di usare la versione più recente."
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"In order to use the alternatives system on the system wide FPC configuration "
+"file you must accept renaming \"/etc/fpc.cfg\"; otherwise you will need to "
+"manage this manually by yourself."
+msgstr ""
+"Per usare il sistema di alternative per il file di configurazione FPC a "
+"livello di sistema, si deve accettare di rinominare «/etc/fpc.cfg»; in caso "
+"contrario si dovrà gestire la cosa da soli manualmente."

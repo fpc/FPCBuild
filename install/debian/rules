@@ -19,12 +19,8 @@ endif
 unexport FPC
 
 # Detect name of new compiler, take care that debian uses amd64 instead of x86_64
-CPU_SOURCE := $(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_BUILD_ARCH))
-CPU_TARGET := $(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_HOST_ARCH))
-
-# Fixup armel, too
-CPU_SOURCE := $(subst armel,arm,$(CPU_SOURCE))
-CPU_TARGET := $(subst armel,arm,$(CPU_TARGET))
+CPU_SOURCE := $(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_BUILD_ARCH_CPU))
+CPU_TARGET := $(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_HOST_ARCH_CPU))
 
 ifeq ($(CPU_TARGET),m68k)
 PPSUF=68k
@@ -58,11 +54,10 @@ PPNEW=$(PPPRE)$(PPSUF)
 
 FPCTARGET=$(CPU_TARGET)-linux
 # Get version information from changelog file
-DEB_VERSION:=$(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
+DEB_VERSION:=$(shell dpkg-parsechangelog | grep '^Version:' | cut -f 2 -d ' ')
 DEB_UPSTREAM_VERSION:=$(shell echo $(DEB_VERSION) | cut -f 1 -d -)
 DEB_UPSTREAM_MAIN_VERSION:=$(shell echo ${DEB_UPSTREAM_VERSION} | sed -e 's/^\([0-9\.]*\).*/\1/')
 DEB_BUILD=$(lastword $(subst -, ,${DEB_VERSION}))
-DEB_BUILD_MULTIARCH:=$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH)
 ifndef PACKAGESUFFIX
 export PACKAGESUFFIX=-${DEB_UPSTREAM_MAIN_VERSION}
 endif
@@ -103,6 +98,19 @@ INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP)
 
 export GDBLIBDIR=/usr/lib
 
+#specify arm variant explicitly so we can use a starting
+#compiler from a different arm variant (for bootstrapping)
+ifeq ($(CPU_TARGET),arm)
+  DEBIANARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
+  ifeq ($(DEBIANARCH),arm)
+    CYCLEOPTS := OPT='-dFPC_OARM'
+  else
+    CYCLEOPTS := OPT='-dFPC_$(DEBIANARCH)'
+  endif
+else
+  CYCLEOPTS=
+endif
+
 #export DH_VERBOSE=1
 
 ###################
@@ -114,13 +122,32 @@ clean: configure clean-patched
 	${RM} install-man-stamp
 	${RM} build-doc-stamp install-doc-stamp
 	${RM} build-indep-stamp install-indep-stamp
+	${RM} install-source-stamp
+	${RM} debian/*.install
+	${RM} debian/*.config
+	${RM} debian/*.doc-base
+	${RM} debian/*.links
+	${RM} debian/*.manpages
+	${RM} debian/*.preinst
+	${RM} debian/*.prerm
+	${RM} debian/*.templates
+	${RM} debian/README*.Debian
+	${RM} debian/copyright
+	${RM} debian/fpc-depends
 	${RM} debian-files-stamp
 	${RM} debian/files debian/docs debian/dirs debian/*.files debian/*.docs debian/*.examples debian/*.postinst debian/*.postrm
-	${RM} .pc
 	${RM} debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
 	# Remove auto-generated version file.
 	${RM} fpcsrc/compiler/version.inc
+	#remove some stuff that seems to get left behind by the upstream build
+	${RM} fpcsrc/compiler/utils/msg2inc
+	${RM} fpcdocs/fpdoc.haux
+	${RM} fpcdocs/prog.haux
+	${RM} fpcdocs/ref.haux
+	${RM} fpcdocs/ref.hind
+	${RM} fpcdocs/user.haux
 	dh_clean
+
 clean-patched:
 	@echo "--- Cleaning"
 	dh_testdir
@@ -162,7 +189,7 @@ build-arch-stamp:
 	@echo "--- Building"
 	dh_testdir
 	# First make a new Compiler using a make cycle
-	$(MAKE) -C fpcsrc compiler_cycle
+	$(MAKE) -C fpcsrc compiler_cycle $(CYCLEOPTS)
 	# Then build RTL using new compiler
 	$(MAKE) -C fpcsrc rtl_clean rtl_smart $(BUILDOPTS)
 	# Finally build packages and tools using new compiler and new RTL
@@ -193,13 +220,6 @@ install-arch-stamp:
 	/bin/bash debian/moveexamples ${EXAMPLE_TEMP} ${DOC_DIR} ${DEB_UPSTREAM_MAIN_VERSION}
 	# Rename executables
 	for f in  ${BIN_DIR}/* ; do ${MV} $$f $${f}-${DEB_UPSTREAM_MAIN_VERSION} ; done
-	# Install configuration files
-	/bin/bash fpcsrc/compiler/utils/samplecfg \
-		/usr/lib/fpc/${DEB_UPSTREAM_VERSION} ${INSTALL_DIR}/etc
-	# Add multiarch path to /etc/fpc.cfg so executables linked against libc can be corectly linked
-	echo # multiarch library search path >> ${INSTALL_DIR}/etc/fpc.cfg
-	echo -Fl/usr/lib/$(DEB_BUILD_MULTIARCH) >> ${INSTALL_DIR}/etc/fpc.cfg
-	${MV} ${INSTALL_DIR}/etc/fpc.cfg ${INSTALL_DIR}/etc/fpc-${DEB_UPSTREAM_MAIN_VERSION}.cfg
 	# Install RTL demos
 	$(MAKE) -C demo sourceinstall $(INSTALLOPTS) INSTALL_SOURCEDIR=$(DOC_DIR)/fp-compiler/${DEB_UPSTREAM_MAIN_VERSION}
 	# Install whatsnew and readme

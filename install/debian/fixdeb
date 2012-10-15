@@ -5,11 +5,11 @@
 
 #set -x
 if [ $# -lt 3 ]; then
-  echo 'Usage : fixdeb <path> <target> <ppcbin> [package priority]'
-  echo '        $1 = path to debian files'
-  echo '        $2 = fpc target (i386-linux)'
-  echo '        $3 = ppcXXX binary name (ppc386)'
-  echo '        $4 = package priority in alternative system'
+  echo 'Usage : fixdeb <path> <target> <ppcbin> [priority]'
+  echo '        <path>     = path to debian files'
+  echo '        <target>   = fpc target (i386-linux)'
+  echo '        <ppcbin>   = ppcXXX binary name (ppc386)'
+  echo '        [priority] = package priority in alternative system'
   exit 1
 fi
 
@@ -20,7 +20,7 @@ DEB_SUBST_SVNPATH=`echo $DEB_SUBST_VERSION | awk -F '.' '{ print "release_"$1"_"
 DEB_SUBST_TARGET="$2"
 DEB_SUBST_PPCBIN="$3"
 DEB_SUBST_PACKAGESUFFIX=${PACKAGESUFFIX}
-DEB_SUBST_PRIORITY=${4:-$(echo ${DEB_SUBST_VERSION} | sed -e 's/\.//g')}
+DEB_SUBST_PRIORITY=${4:-$(($(echo ${DEB_SUBST_VERSION}.0.0.0.0 | sed -e 's@\([0-9]\)\+\.\([0-9]\)\+\.\([0-9]\+\)\.\([0-9]\+\).*@((\1*100+\2)*100+\3)*100+\4@')))}
 
 SUBST_CMD=`set | sed -n -e 's/^DEB_SUBST_\([A-Z_]\+\)=\(.*\)/-e s@\${\1}@\2@g/p'`
 

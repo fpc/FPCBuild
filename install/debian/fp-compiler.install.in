@@ -1,4 +1,3 @@
-/etc/fpc-${VERSION}.cfg
 /usr/bin/fpc-${VERSION}
 /usr/bin/fpc-depends-${VERSION}
 /usr/bin/fpcmkcfg-${VERSION}

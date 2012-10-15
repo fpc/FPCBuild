@@ -1,0 +1,66 @@
+# Slovak translations for fpc package
+# Slovenské preklady pre balík fpc.
+# Copyright (C) 2012 THE fpc'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the fpc package.
+# Slavko <linux@slavino.sk>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fpc 2.6.0-6\n"
+"Report-Msgid-Bugs-To: fpc@packages.debian.org\n"
+"POT-Creation-Date: 2012-09-08 10:07-0400\n"
+"PO-Revision-Date: 2012-09-09 16:30+0200\n"
+"Last-Translator: Slavko <linux@slavino.sk>\n"
+"Language-Team: slovenčina <debian-l10n-slovak@lists.debian.org>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-POFile-SpellExtra: fp-utils fpc FPC cfg etc update-alternatives bak\n"
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid "Rename \"/etc/fpc.cfg\" to \"/etc/fpc.cfg.bak\"?"
+msgstr "Premenovať „/etc/fpc.cfg” na „/etc/fpc.cfg.bak”?"
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"FPC now supports having multiple versions installed on the same system. The "
+"update-alternatives command can be used to set a default version for\n"
+" * fpc (the compiler);\n"
+" * fpc.cfg (the configuration file);\n"
+" * fp-utils (the helper tools)."
+msgstr ""
+"FPC teraz podporuje viacero nainštalovaných verzií na jednom stroji. Na "
+"nastavenie predvolenej verzie možno použiť príkaz update-alternatives pre\n"
+" * fpc (kompilátor);\n"
+" * fpc.cfg (konfiguračný súbor);\n"
+" * fp-utils (pomocné nástroje)."
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"Whatever version you may choose as default, the configuration files are "
+"always backward compatible, so it should always be safe to use the latest "
+"version."
+msgstr ""
+"Ako predvolenú môžete zvoliť ktorúkoľvek verziu, konfiguračné súbory sú vždy "
+"spätne kompatibilné, takže by malo byť vždy bezpečné používať najnovšiu "
+"verziu."
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"In order to use the alternatives system on the system wide FPC configuration "
+"file you must accept renaming \"/etc/fpc.cfg\"; otherwise you will need to "
+"manage this manually by yourself."
+msgstr ""
+"Aby ste mohli používať systém alternatív na systémový konfiguračný súbor "
+"FPC, musíte potvrdiť premenovanie „/etc/fpc.cfg”; inak to budete musieť "
+"spravovať manuálne."
