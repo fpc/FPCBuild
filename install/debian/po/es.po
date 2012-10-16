@@ -1,0 +1,91 @@
+# fpc translation to Spanish
+# Copyright (C) 2012 Software in the Public Interest, SPI Inc.
+# This file is distributed under the same license as the fpc package.
+#
+# Changes:
+# - Initial translation
+#      Matías Bellone <matiasbellone+debian@gmail.com> , 2012
+#
+#  Traductores, si no conoce el formato PO, merece la pena leer la 
+#  documentación de gettext, especialmente las secciones dedicadas a este
+#  formato, por ejemplo ejecutando:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+# Equipo de traducción al español, por favor lean antes de traducir
+# los siguientes documentos:
+#
+# - El proyecto de traducción de Debian al español
+#   http://www.debian.org/intl/spanish/
+#   especialmente las notas y normas de traducción en
+#   http://www.debian.org/intl/spanish/notas
+#
+# - La guía de traducción de po's de debconf:
+#   /usr/share/doc/po-debconf/README-trans
+#   o http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+# Si tiene dudas o consultas sobre esta traducción consulte con el último
+# traductor (campo Last-Translator) y ponga en copia a la lista de
+# traducción de Debian al español (<debian-l10n-spanish@lists.debian.org>)
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fpc\n"
+"Report-Msgid-Bugs-To: fpc@packages.debian.org\n"
+"POT-Creation-Date: 2012-09-25 19:56+0200\n"
+"PO-Revision-Date: 2012-10-02 21:30-0300\n"
+"Last-Translator: Matías Bellone <matiasbellone+debian@gmail.com>\n"
+"Language-Team: Debian L10N Spanish <debian-l10n-spanish@lists.debian.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid "Rename \"/etc/fpc.cfg\" to \"/etc/fpc.cfg.bak\"?"
+msgstr "¿Renombrar «/etc/fpc.cfg» a «/etc/fpc.cfg.bak»?"
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"FPC now supports having multiple versions installed on the same system. The "
+"update-alternatives command can be used to set a default version for\n"
+" * fpc (the compiler);\n"
+" * fpc.cfg (the configuration file);\n"
+" * fp-utils (the helper tools)."
+msgstr ""
+"FPC ahora puede tener múltiples versiones instaladas en el mismo sistema. "
+"Puede utilizar la órden «update-alternatives» para definir la versión "
+"predeterminada de: "
+" * fpc (el compilador);\n"
+" * fpc.cfg (el archivo de configuración);\n"
+" * fp-utils (las herammientas de ayuda)."
+
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"Whatever version you may choose as default, the configuration files are "
+"always backward compatible, so it should always be safe to use the latest "
+"version."
+msgstr ""
+"Los archivos de configuración son siempre compatibles hacia atrás sin "
+"importar la versión que elija como predeterminada, por lo que siempre "
+"debería ser seguro utilizar la última versión."
+
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"In order to use the alternatives system on the system wide FPC configuration "
+"file you must accept renaming \"/etc/fpc.cfg\"; otherwise you will need to "
+"manage this manually by yourself."
+msgstr ""
+"Debe aceptar el cambiar el nombre de «/etc/fpc.cfg» para utilizar el "
+"sistema de alternativas en la configuración de FPC para todo el equipo; "
+"de lo contrario deberá administrarlo a mano por su cuenta."

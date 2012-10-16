@@ -1,18 +1,26 @@
+# These templates have been reviewed by the debian-l10n-english
+# team
+#
+# If modifications/additions/rewording are needed, please ask
+# debian-l10n-english@lists.debian.org for advice.
+#
+# Even minor modifications require translation updates and such
+# changes should be coordinated with translators and reviewers.
+
 Template: fp-compiler${PACKAGESUFFIX}/rename_cfg
 Type: boolean
 Default: true
-Description: Do you want to rename "/etc/fpc.cfg" to "/etc/fpc.cfg.bak"?
- FPC supports now multiple version installations. This allows co-existence of
- multiple versions on the same system. The default version can be selected using
- the update-alternatives command for the following groups:
-     1)fpc      : compiler default version
-     2)fpc.cfg  : configuration file default version
-     3)fp-utils : helper tools default version
+_Description: Rename "/etc/fpc.cfg" to "/etc/fpc.cfg.bak"?
+ FPC now supports having multiple versions installed on the same system.
+ The update-alternatives command can be used to set a default version for
+  * fpc (the compiler);
+  * fpc.cfg (the configuration file);
+  * fp-utils (the helper tools).
  .
- What ever version you may choose as default, the configuration files (2) are
- always backward compatible and it may be very safe to use the latest version
- for it.
+ Whatever version you may choose as default, the configuration files are
+ always backward compatible, so it should always be safe to use the latest
+ version.
  .
- In order to use alternatives system for system wide FPC configuration file you
- need to accept renaming "/etc/fpc.cfg", otherwise you will need to manage this
- manually by yourself.
+ In order to use the alternatives system on the system wide FPC configuration
+ file you must accept renaming "/etc/fpc.cfg"; otherwise you will need to
+ manage this manually by yourself.

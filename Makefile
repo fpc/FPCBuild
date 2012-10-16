@@ -2276,7 +2276,6 @@ ifdef DEBUSESVN
 	$(LINKTREE) fpcsrc/tests $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/utils $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) demo $(DEBSRCDIR)
-	$(LINKTREE) logs $(DEBSRCDIR)
 ifneq (${LIBGDBDIR},)
 	$(LINKTREE) $(LIBGDBDIR) $(DEBSRCDIR)/fpcsrc
 endif

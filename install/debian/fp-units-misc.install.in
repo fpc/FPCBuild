@@ -1,6 +1,7 @@
 /usr/share/doc/fp-units-misc
 /usr/lib/fpc/${VERSION}/units/${TARGET}/bzip2
 /usr/lib/fpc/${VERSION}/units/${TARGET}/chm
+/usr/lib/fpc/${VERSION}/units/${TARGET}/fpindexer
 /usr/lib/fpc/${VERSION}/units/${TARGET}/fppkg
 /usr/lib/fpc/${VERSION}/units/${TARGET}/iconvenc
 /usr/lib/fpc/${VERSION}/units/${TARGET}/libxml2

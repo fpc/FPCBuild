@@ -2,7 +2,16 @@
 
 set -e
 
-FPCDIR=/usr/lib/fpc/%{fpcversion}
+ACTION=$1
+
+CFG_FILE="/etc/fpc-${VERSION}"
 
 # Debhelper code
 #DEBHELPER#
+
+if test "${ACTION}" = "purge"
+then
+	rm -f  "${CFG_FILE}".cfg
+	rm -f  "${CFG_FILE}".bak
+	rm -f  "${CFG_FILE}".*dpkg*
+fi

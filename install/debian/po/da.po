@@ -1,0 +1,65 @@
+# Danish translation fpc.
+# Copyright (c) 2012 fpc & nedenstående oversættere.
+# This file is distributed under the same license as the fpc package.
+# Joe Hansen <joedalton2@yahoo.dk>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fpc\n"
+"Report-Msgid-Bugs-To: fpc@packages.debian.org\n"
+"POT-Creation-Date: 2012-09-08 10:07-0400\n"
+"PO-Revision-Date: 2012-09-09 17:30+01:00\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
+"Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid "Rename \"/etc/fpc.cfg\" to \"/etc/fpc.cfg.bak\"?"
+msgstr "Omdøb »/etc/fpc.cfg« til »/etc/fpc.cfg.bak«?"
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"FPC now supports having multiple versions installed on the same system. The "
+"update-alternatives command can be used to set a default version for\n"
+" * fpc (the compiler);\n"
+" * fpc.cfg (the configuration file);\n"
+" * fp-utils (the helper tools)."
+msgstr ""
+"FPC understøtter nu at der er installeret flere versioner på det samme "
+"system. Kommandoen update-alternatives kan bruges til at angive en "
+"standardversion for\n"
+" * fpc (kompileren);\n"
+" * fpc.cfg (konfigurationsfilen);\n"
+" * fp-utils (hjælpeværktøjerne)."
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"Whatever version you may choose as default, the configuration files are "
+"always backward compatible, so it should always be safe to use the latest "
+"version."
+msgstr ""
+"Uanset versionen du vælger som standard, så er konfigurationsfilerne "
+"altid bagud kompatible, så det bør være sikkert at bruge den seneste "
+"version."
+
+#. Type: boolean
+#. Description
+#: ../fp-compiler.templates.in:2001
+msgid ""
+"In order to use the alternatives system on the system wide FPC configuration "
+"file you must accept renaming \"/etc/fpc.cfg\"; otherwise you will need to "
+"manage this manually by yourself."
+msgstr ""
+"For at bruge systemet for alternativerne på den for hele systemet brugte "
+"FPC-konfigurationsfil, så skal du acceptere omdøbelse af »/etc/fpc.cfg«; ellers "
+"skal du selv håndtere dette manuelt."
+
