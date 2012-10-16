@@ -108,7 +108,6 @@ Source: bin\i386-win32\patch.exe.manifest; DestDir: {app}\bin\i386-win32; Flags:
 Source: bin\i386-win32\pwd.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\rm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\unzip.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
-Source: bin\i386-win32\upx.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\zip.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\cmp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\cp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make

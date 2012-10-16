@@ -2,7 +2,6 @@ Extra Required tools
 ********************
 
 ppufiles.exe    from utils/
-upx.exe         latest version, currently 1.02 (available in makego32.zip)
 zip.exe         the Info-Zip release
 
 Getting the sources

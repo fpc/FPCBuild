@@ -95,7 +95,6 @@ DIFF            GNU Diff
 DATE            GNU Date (automaticly searched)
 SED             GNU Sed (automaticly searched)
 PWD             GNU PWD (automaticly searched)
-UPXPROG         UPX ExeFile compressor (automaticly searched)
 ZIPPROG         ZIP compressor (automaticly searched)
 
 

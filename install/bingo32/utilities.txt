@@ -6,8 +6,6 @@ directory current/v2gnu.
 
 zip.exe comes from Info-ZIP's Zip (http://www.info-zip.org).
 
-upx.exe comes from UPX (http://upx.sourceforge.net/).
-
 aslddos:
 Files from GNU binutils 2.17 (djgpp 2.03). Original file: bnu217b.zip
  * ar.exe
@@ -38,8 +36,6 @@ Files from GNU make 3.79.1 (djgpp 2.03). Original file: mak3791b.zip
  * make.exe
 Files from Info-ZIP's Zip 2.32. Original file: zip232x.zip
  * zip.exe
-Files from UPX 3.03. Original file: upx303d.zip
- * upx.exe
 
 gdbdos:
 Files from GNU gdb 6.1.1 (djgpp 2.03). Original file: gdb611b.zip

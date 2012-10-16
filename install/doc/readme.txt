@@ -356,7 +356,7 @@ The compiler and most utilities and executables distributed in this package
 fall under the GPL, for more information read the file COPYING.v2.
 
 Some specific utilities and programs come under the license described in
-COPYING.v3, COPYING.DJ, COPYING.EMX, COPYING.RSX, license.upx and licensez.ip.
+COPYING.v3, COPYING.DJ, COPYING.EMX, COPYING.RSX and licensez.ip.
 
 Some of the licenses of the third party tools require to make the source
 available. If you cannot find the sources or information where to find
