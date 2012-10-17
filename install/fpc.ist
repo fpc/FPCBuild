@@ -74,7 +74,9 @@ Source: bin\i386-win32\cpp.exe; DestDir: {app}\bin\i386-win32; Flags: ignorevers
 Source: bin\i386-win32\dlltool.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\gcc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\ld.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+Source: bin\i386-win32\nm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\objdump.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+Source: bin\i386-win32\objcopy.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\windres.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\windres.h; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\strip.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils

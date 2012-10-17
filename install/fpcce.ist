@@ -57,7 +57,9 @@ Source: bin\i386-win32\arm-wince-dlltool.exe; DestDir: {app}\bin\i386-win32; Fla
 Source: bin\i386-win32\arm-wince-ld.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\arm-wince-strip.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\arm-wince-windres.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+Source: bin\i386-win32\arm-wince-nm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\arm-wince-objdump.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+Source: bin\i386-win32\arm-wince-objcopy.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\arm-wince-gdb.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: gdb
 Source: bin\i386-win32\arm-wince-pe-stub.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: gdb
 Source: units\arm-wince\rtl\*.*; DestDir: {app}\units\arm-wince\rtl; Components: base

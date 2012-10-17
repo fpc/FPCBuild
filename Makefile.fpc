@@ -123,6 +123,9 @@ installbase:
 ifeq ($(OS_TARGET),wince)
         $(COPY) $(addprefix $(CVSINSTALL)/crossbinwce/, *.exe) $(INSTALL_BINDIR)
 endif
+ifeq ($(OS_TARGET),win64)
+        $(COPY) $(addprefix $(CVSINSTALL)/crossbinw64/, *.exe) $(INSTALL_BINDIR)
+endif
 ifndef SNAPSHOT
 ifndef CROSSINSTALL
 # readme & whatsnew and docs
