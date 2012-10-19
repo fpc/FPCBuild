@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 2.6.0
+                               Version 2.6.2rc1
 
 ****************************************************************************
 * Introduction
@@ -17,7 +17,7 @@ partial support for the Macintosh pascal dialect.
 
 News and changes related to this release are described in whatsnew.txt.
 
-Free Pascal 2.6.0 is currently available for the following platforms:
+Free Pascal 2.6.2rc1 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-powerpc
@@ -119,7 +119,7 @@ Mac OS (classic)
 * Quick start - Win32
 ****************************************************************************
 
-Download the distribution package (fpc-2.6.0.i386-win32.exe) and run it
+Download the distribution package (fpc-2.6.2_rc1.i386-win32.exe) and run it
 - it is a self-extracting installer, so just follow the instructions
 to install it. Don't forget to set the PATH environment variable if you
 install FPC under Win95/98/ME (the installer should do it automatically
@@ -183,7 +183,7 @@ and type
 * Quick start - Linux/FreeBSD
 ****************************************************************************
 
-Download fpc-2.6.0.<cpu>-<os>.tar and untar into a temporary directory.
+Download fpc-2.6.2.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
@@ -199,7 +199,7 @@ and type
 
 There are two methods to install Free Pascal for Mac OS X.
 
-1) Download and install the Mac OS X package (fpc-2.6.0.powerpc-macosx.dmg)
+1) Download and install the Mac OS X package (fpc-2.6.2.powerpc-macosx.dmg)
 
 This gives you the Free Pascal Compiler and the Xcode integration kit.
 
@@ -267,7 +267,7 @@ options.
 
 The documentation is available as HTML pages, PDF, PS, and text although the
 recommended format is pdf. These are all available on
-ftp://ftp.freepascal.org/fpc/dist/docs-2.6.0
+ftp://ftp.freepascal.org/fpc/dist/docs-2.6.2
 
 NB that there is at present no FPC specific documentation for the platform
 specific API (like Win32 system functions, etc.). There is a note in the ftp

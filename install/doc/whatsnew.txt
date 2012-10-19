@@ -1,6 +1,24 @@
 
                             Free Pascal Compiler
 
+                                Version 2.6.2rc1
+
+******************************************************************************
+                              What's New in 2.6.2rc1
+******************************************************************************
+
+Free Pascal 2.6.2 is a point release from the 2.6.0 fixes branch
+
+Please also see http://wiki.freepascal.org/User_Changes_2.6.2 for a list
+of changes that may affect the behaviour of previously working code, and
+how to cope with these changes.
+
+
+
+
+
+                            Free Pascal Compiler
+
                                 Version 2.6.0
 
 ******************************************************************************

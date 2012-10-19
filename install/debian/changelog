@@ -1,3 +1,11 @@
+
+fpc (2.6.2-rc1-0) unstable; urgency=low
+
+  * rc1 for 2.6.2
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 18 Oct 2012 16:08:00 +0000
+
+
 fpc (2.6.1-0) unstable; urgency=low
 
   * Daily snapshots build.
