@@ -1,7 +1,37 @@
 
                             Free Pascal Compiler
 
-                                Version 2.6.0
+                                Version 2.6.2rc1
+
+******************************************************************************
+                              What's New in 2.6.2rc1
+******************************************************************************
+
+Free Pascal 2.6.2 is a point release from the 2.6.0 fixes branch.
+
+Some highlights are:
+
+Compiler:
+  * Improvements and fixes for the ARM architecture
+
+Packages:
+  * New package fpindexer (indexing engine)
+  * Support for observer pattern added to fcl-base (and base classes in RTL)
+  * Lots and lots fixes and improvements for fcl-db
+        * Support for JSON dataset added among others
+  * Updates for PTCPas and gtk2
+  * fpmkunit improvements (better support for future switch to fpmake)
+  * Several fixes for x11
+  * Several fixes for winunits (and winceunits)
+  * Fixes and improvements for fcl-passrc (and fpdoc)
+
+Platforms:
+  * Many fixes for OpenBSD and NetBSD
+  * Internal ELF writer supported for more BSD targets
+  * Fixes and improvements for gba and nds
+
+See http://bugs.freepascal.org/changelog_page.php for the list of reported
+bugs which have been fixed in this release.
 
 ******************************************************************************
                               What's New in 2.6.0
