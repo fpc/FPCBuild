@@ -167,9 +167,10 @@
             the main ones).
 	
             <p>The Free Pascal compiler is available for several
-            architectures, x86, Sparc (v8,v9), ARM, x86_64 (AMD64/Opteron)
-            and Powerpc. An older version (the 1.0 series) also supports
-            m68k.
+            architectures: x86, Sparc (v8,v9), ARM, x86_64 (AMD64/Opteron),
+            PowerPC and PowerPC64. An older version (the 1.0 series) and
+            current development version also support m68k, the current development version also
+            supports MIPS (in both big endian and little endian modes).
   	  	
             <p>The compiler is written in Pascal and is able to compile its
             own sources. The source files are under GPL and included.
@@ -193,15 +194,16 @@
 	      <li>12/2009: 2.4.0 version
 	      <li>11/2010: 2.4.2 version
 	      <li>05/2011: 2.4.4 version
-	      <li>01/2012: 2.6.0 version (tentative date)
+	      <li>01/2012: 2.6.0 version
+              <li>12/2012: 2.6.2 version
             </ul>
             
 
         <li><a name='versions'></a>
           <h3>Which versions exist, and which one should I use?</h3>
           
-            <p>The latest official version is 2.6.0, the first release in the 2.6.x series.
-            New development is performed in 2.6.x series, which eventually
+            <p>The latest official version is 2.6.2, the first fixes release in the 2.6.x series.
+            New development is performed in 2.7.x series, which eventually
             gets released as 2.8.0 or 3.0.0, depending on milestones achieved.
 
             <h4>Historic versions</h4>
@@ -249,14 +251,14 @@
             users. Ask in the maillists if it is worth the trouble in your case if
             you're not sure.
 
-            <p>Snapshots of the stable branch (fixes_2_4) are meant to test release engineering. They are
+            <p>Snapshots of the stable branch (fixes_2_6) are meant to test release engineering. They are
 		mainly interesting in the months before a release to extensively
 		test the branch from which the release is created.
 
             <p>We advise all users to upgrade to the newest version for their
-            target (Preferably the new stable 2.4.x series).
+            target (preferably the new stable 2.6.x series).
 
-            <p> A graphical timeline of the FPC project plus its near future would
+            <p>A graphical timeline of the FPC project plus its near future would
             be:
             <img src="pic/timeline.png">
           
@@ -270,7 +272,7 @@
             compiler on as many platforms as possible. GNU Pascal tries to
             implement a portable pascal compiler based on POSIX.
             <DT><b>Version:</b>
-            <DD>Currently, Free Pascal is at version 2.6.0 (December 2011). GNU Pascal is at
+            <DD>Currently, Free Pascal is at version 2.6.2 (December 2012). GNU Pascal is at
             version 2.1 (from 2002, which can be built with several different GCC's as backend; 
             their Mac OS X version is an exception though, as it follows the GCC version number).
             <DT><b>Tracking:</b>
@@ -282,7 +284,9 @@
             e.g. DOS, Win32 (no Unix porting layer needed), Linux, FreeBSD,
             NetBSD, OS/2, BeOS, Classic Mac OS, Mac OS X, and AmigaOS, on,  at
             the moment the following architectures: x86,
-            x86_64 (AMD64), Sparc, PowerPC, ARM and Motorola (Motorola only in version 1.0.x).
+            x86_64 (AMD64), Sparc, PowerPC, PowerPC64, ARM, Motorola m68k (m68k only in version 1.0.x
+            and the latest development versions) and MIPS (both big endian and little endian mode available
+            in the latest development versions).
 
             GNU Pascal runs basically on any system that can run GNU C, and for which the buildprocess was verified.
             <DT><b>Bootstrapping:</b>
@@ -297,7 +301,7 @@
             implements the Delphi Object Pascal language and has some Mac Pascal extensions.
             GNU Pascal supports ISO 7185, ISO 10206, (most of) Borland Pascal 7.0
             <DT><b>Extensions:</b>
-            <DD>Free Pascal implements method, function and operator overloading. (later Delphi versions add these, so strictly not an extension anymore)
+            <DD>Free Pascal implements method, function and operator overloading (later Delphi versions add these, so strictly not an extension anymore)
             GNU Pascal implements operator overloading.
             <DT><b>License:</b>
             <DD>Both compilers come under the GNU GPL.
@@ -345,10 +349,10 @@
               <li>Distribute the LGPL license with your product.
             </ul>
 
-            <p> The compiler source code, on the other hand, comes under
+            <p>The compiler source code, on the other hand, comes under
             the GNU Public license, which means that any usage of the compiler
             source can only be used in software projects which have the same
-            license. 
+            license.
           
 
         <li><a name='WhereToGetFP'></a>
@@ -391,7 +395,6 @@
         <li><a name='snapshot'></a>
           <h3>I want a new version NOW</h3>
 
-          I want a new version NOW
             <p>In the time between the release of new official versions, you can
             have a look at and test developer versions (so-called "snapshots"). Be
             warned though: this is work under progress, so in addition to old bugs
@@ -404,7 +407,7 @@
 
             <p>The latest snapshot can always be downloaded from the <A
             href="http://www.freepascal.org/develop.var#snapshot">development</a>
-            web page. 
+            web page.
           
         
 

@@ -125,9 +125,11 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
         other platforms (the number of supported targets grows all the time,
         although not all of them are on the same level as the main ones).
 
-        The Free Pascal compiler is available for several architectures, x86,
-        Sparc (v8,v9), ARM, x86_64 (AMD64/Opteron) and Powerpc. An older
-        version (the 1.0 series) also supports m68k.
+        The Free Pascal compiler is available for several
+        architectures: x86, Sparc (v8,v9), ARM, x86_64 (AMD64/Opteron),
+        PowerPC and PowerPC64. An older version (the 1.0 series) and
+        current development version also support m68k, the current development version also
+        supports MIPS (in both big endian and little endian modes).
 
         The compiler is written in Pascal and is able to compile its own
         sources. The source files are under GPL and included.
@@ -150,11 +152,12 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
           ☆ 12/2009: 2.4.0 version
           ☆ 11/2010: 2.4.2 version
           ☆ 05/2011: 2.4.4 version
-          ☆ 01/2012: 2.6.0 version (tentative date)
+          ☆ 01/2012: 2.6.0 version
+          ☆ 12/2012: 2.6.2 version
      2. Which versions exist, and which one should I use?
 
-        The latest official version is 2.6.0, the first release in the 2.6.x
-        series. New development is performed in 2.6.x series, which eventually
+        The latest official version is 2.6.2, the first fixes release in the 2.6.x
+        series. New development is performed in 2.7.x series, which eventually
         gets released as 2.8.0 or 3.0.0, depending on milestones achieved.
 
         Historic versions
@@ -203,12 +206,12 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
         users. Ask in the maillists if it is worth the trouble in your case if
         you're not sure.
 
-        Snapshots of the stable branch (fixes_2_4) are meant to test release
+        Snapshots of the stable branch (fixes_2_6) are meant to test release
         engineering. They are mainly interesting in the months before a release
         to extensively test the branch from which the release is created.
 
         We advise all users to upgrade to the newest version for their target
-        (Preferably the new stable 2.4.x series).
+        (preferably the new stable 2.6.x series).
 
         A graphical timeline of the FPC project plus its near future would be:
         [timeline]
@@ -219,7 +222,7 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
             on as many platforms as possible. GNU Pascal tries to implement a
             portable pascal compiler based on POSIX.
         Version:
-            Currently, Free Pascal is at version 2.6.0 (December 2011). GNU
+            Currently, Free Pascal is at version 2.6.2 (December 2012). GNU
             Pascal is at version 2.1 (from 2002, which can be built with
             several different GCC's as backend; their Mac OS X version is an
             exception though, as it follows the GCC version number).
@@ -232,10 +235,12 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
             Free Pascal runs on a large amount of platforms of OSes, e.g. DOS,
             Win32 (no Unix porting layer needed), Linux, FreeBSD, NetBSD, OS/2,
             BeOS, Classic Mac OS, Mac OS X, and AmigaOS, on, at the moment the
-            following architectures: x86, x86_64 (AMD64), Sparc, PowerPC, ARM
-            and Motorola (Motorola only in version 1.0.x). GNU Pascal runs
-            basically on any system that can run GNU C, and for which the
-            buildprocess was verified.
+            following architectures: x86, x86_64 (AMD64), Sparc, PowerPC,
+            PowerPC64, ARM, Motorola m68k (m68k only in version 1.0.x and
+            the latest development versions) and MIPS (both big endian and
+            little endian mode available in the latest development versions).
+            GNU Pascal runs basically on any system that can run GNU C, and
+            for which the buildprocess was verified.
         Bootstrapping:
             FPC requires a suitable set of binutils (AS,AR,LD) on some
             platforms, gmake and a commandline compiler. New architectures/OSes
@@ -252,9 +257,9 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
             GNU Pascal supports ISO 7185, ISO 10206, (most of) Borland Pascal
             7.0
         Extensions:
-            Free Pascal implements method, function and operator overloading.
+            Free Pascal implements method, function and operator overloading
             (later Delphi versions add these, so strictly not an extension
-            anymore) GNU Pascal implements operator overloading.
+            anymore). GNU Pascal implements operator overloading.
         License:
             Both compilers come under the GNU GPL.
         Author:
@@ -316,8 +321,6 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
         limit has been reached. The solution is either to wait and retry later,
         or better still use one of the Free Pascal mirror sites.
      9. I want a new version NOW
-
-        I want a new version NOW
 
         In the time between the release of new official versions, you can have
         a look at and test developer versions (so-called "snapshots"). Be
