@@ -9,7 +9,6 @@
 
 Please also read the platform specific README file, if it exists.
 
-
 This package contains an advanced freeware 32-bit/64-bit pascal compiler for
 several platforms. The language and the runtime library are almost
 compatible with Turbo Pascal 7.0 and recent Delphi releases. There is also
@@ -22,14 +21,15 @@ Free Pascal 2.6.0 is currently available for the following platforms:
 - Linux-x86_64 (amd64)
 - Linux-powerpc
 - Linux-sparc
-- Linux-arm
-- Win32-i386 (Win95/98/Me/XP/2000/2003/Vista and WinNT)
+- Linux-ARM
+- Win32-i386 (Win95/98/Me/XP/2000/2003/Vista/7 and WinNT)
 - Win64-x86_64 (XP/Vista/2003)
-- Wince-arm (cross compiled from win32-i386)
+- Wince-ARM (cross compiled from win32-i386)
 - FreeBSD-i386
 - FreeBSD-x86_64
-- Mac OS X/Darwin for PowerPC
-- Mac OS X/Darwin for Intel (i386)
+- Mac OS X/Darwin for PowerPC (32 and 64 bit)
+- Mac OS X/Darwin for Intel (32 and 64 bit)
+- iOS, iPhoneSimulator
 - OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 - GO32v2-i386
 
@@ -46,8 +46,8 @@ e-mail addresses are listed below.
 
 - high speed compiler
 - fully 32 or 64-bit code
-  - 32 bit compiler can be on x86_64 Linux distributions to compile 32 bit
-    applications
+  - 32 bit compiler can be used on x86_64 Linux distributions to compile
+    32 bit applications
 - language features:
   - almost fully compatible with Borland Pascal and Borland Delphi
   - ansi strings
@@ -79,7 +79,7 @@ e-mail addresses are listed below.
 - internal assembler for ultra fast object file generation
 - can call external C code
   - h2pas utility to convert .h files to Pascal units
-- smartlinking (not yet supported under Mac OS X)
+- smart linking (also known as dead code stripping)
 - support for the GNU debugger
 - integrated development environment (disabled by default on Mac OS X)
   - powerful user friendly Wordstar compatible multi file editor
@@ -110,7 +110,7 @@ FreeBSD:
 - There are separate releases for FreeBSD 7.x system or 8.x system. The code
     works on 6.x too. Older versions might need specific adaptations.
 Mac OS X:
- - Mac OS X 10.2 and higher
+ - Mac OS X 10.4 and higher
 Mac OS (classic)
  - Mac OS 9.2 has been tested, should probably also work from 7.5.3 and up.
 
@@ -197,6 +197,10 @@ and type
 * Quick start - Mac OS X/Darwin
 ****************************************************************************
 
+Xcode must be installed before FPC is installed. In case of Xcode 4.3
+and later, additionally install the "Command Line Tools" by going to
+"Preferences" and then "Downloads".
+
 There are two methods to install Free Pascal for Mac OS X.
 
 1) Download and install the Mac OS X package (fpc-2.6.0.powerpc-macosx.dmg)
@@ -216,10 +220,9 @@ at:
 http://www.freepascal.org/xcode.html
 
 Method 2 is mainly meant for using the compiler through the command
-line. Fink takes care of setting the PATH variable. You can (under
-Mac OS X 10.2.x or earlier you actually have to) also use the command line
-with Free Pascal installed using method 1. The main point is to change your
-PATH as described below:
+line. Fink takes care of setting the PATH variable. You can also use the
+command line with Free Pascal installed using method 1. The main point
+is to change your PATH as described below:
 
 The compiler is called "fpc" and will be installed in /usr/local/bin. This
 directory may not be in your PATH yet (if you type "fpc" in a Terminal
@@ -339,13 +342,14 @@ If you find a bug in the released version, you may want to try a snapshot
 the fpc-devel mailing list.
 
 If you find a fault or 'feature' in a release, please report it either
-using the bug reporting interface available on our WWW pages (see above),
-or to the fpc-devel mailing list. PLEASE INCLUDE ALSO A COMPILABLE CODE
-FRAGMENT which can be used to reproduce the problem (or a link to larger
-archive if it cannot reproduced with small example), and state the version
-eg Win32, GO32v2, and the date of the compiler etc on which you noticed the
-problem & any other useful info so the developers can reproduce the
-problem, otherwise they may not be willing/able to fix it.
+using the bug reporting interface at http://bugs.freepascal.org, or to
+the fpc-devel mailing list. PLEASE ALWAYS INCLUDE A COMPILABLE CODE
+FRAGMENT that can be used to reproduce the problem (or a link to larger
+archive if it cannot be reproduced with small example). Also state the
+FPC version, target platform (Win32, Linux, ...), operating system
+version (XP, Ubuntu 12.04, ...), the used compiler options and any other
+useful info so the developers can reproduce the problem. Otherwise they
+may not be able to fix it.
 
 
 ****************************************************************************
