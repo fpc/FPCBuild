@@ -148,7 +148,7 @@ Package: fp-units-rtl${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}
 Recommends: fp-compiler${PACKAGESUFFIX} (= ${binary:Version})
-Provides: fp-units-rtl, fpc-abi-${source:Upstream-Version}
+Provides: fp-units-rtl, fpc-abi${PACKAGESUFFIX}
 Breaks: fp-units-rtl (<= 2.4.0-3)
 Replaces: fp-units-rtl (<= 2.4.0-3)
 Description: Free Pascal - runtime libraries
