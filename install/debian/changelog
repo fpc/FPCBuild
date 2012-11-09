@@ -4,8 +4,9 @@ fpc (2.6.1-0) unstable; urgency=low
   * Added debconf screens to let user select a default .rc MS Windows resourse
     files compiler either from mingw32-binutils package or any others custom
     installed the system. (Closes: UpstreamBug#23092)
+  * Fix shared libraries dependency for fp-utils package.
 
- -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 24 Oct 2012 08:06:00 +0000
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 05 Nov 2012 19:52:00 +0000
 
 fpc (2.6.0-7) unstable; urgency=low
 
