@@ -69,7 +69,7 @@ LIB_DIR=${INSTALL_DIR}/usr/lib/${DEB_PACKAGE_NAME}/${DEB_UPSTREAM_MAIN_VERSION}
 DOC_DIR=${INSTALL_DIR}/usr/share/doc
 SRC_DIR=${INSTALL_DIR}/usr/share/fpcsrc/${DEB_UPSTREAM_MAIN_VERSION}
 EXAMPLE_TEMP=${INSTALL_DIR}/usr/share/doc/fpc-${DEB_UPSTREAM_MAIN_VERSION}
-STY_DIR=${INSTALL_DIR}/usr/share/texmf/tex/latex/fpc-${DEB_UPSTREAM_VERSION}
+STY_DIR=${INSTALL_DIR}/usr/share/texmf/tex/latex/fpc-${DEB_UPSTREAM_MAIN_VERSION}
 # Get utils
 ifndef MKDIR
 MKDIR=mkdir -p
