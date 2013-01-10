@@ -7,12 +7,24 @@ set -e
 
 CFG_FILE='/etc/fpc.cfg'
 CFG_PRIORITY=$(echo ${VERSION} | sed -e 's/\.//g')
-
 if test -f "${CFG_FILE}" && ! test -L "${CFG_FILE}"
 then
-	db_input high fp-compiler${PACKAGESUFFIX}/rename_cfg || test $? -eq 30
-	db_go
+	db_input high fp-compiler/rename_cfg || test $? -eq 30
 fi
+MANUAL_SELECT_MESSAGE="Enter RC compiler name manually"
+WINDRES_BINS=$(find '/usr/bin' -maxdepth 1 -mindepth 1 -executable -name "*windres*" -printf "%p, ")
+db_subst fp-compiler/windres-select choices ${WINDRES_BINS} "${MANUAL_SELECT_MESSAGE}"
+db_input low fp-compiler/windres-select || test $? -eq 30
+db_go
+db_get fp-compiler/windres-select
+if test "${RET}" = "${MANUAL_SELECT_MESSAGE}"
+then
+	db_input low fp-compiler/windres || test $? -eq 30
+else
+	WINDRES_BIN=${RET}
+	db_set fp-compiler/windres "${WINDRES_BIN}"
+fi
+db_go
 
 # Debhelper code
 #DEBHELPER#

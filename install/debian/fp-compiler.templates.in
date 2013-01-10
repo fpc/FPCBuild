@@ -7,7 +7,7 @@
 # Even minor modifications require translation updates and such
 # changes should be coordinated with translators and reviewers.
 
-Template: fp-compiler${PACKAGESUFFIX}/rename_cfg
+Template: fp-compiler/rename_cfg
 Type: boolean
 Default: true
 _Description: Rename "/etc/fpc.cfg" to "/etc/fpc.cfg.bak"?
@@ -24,3 +24,36 @@ _Description: Rename "/etc/fpc.cfg" to "/etc/fpc.cfg.bak"?
  In order to use the alternatives system on the system wide FPC configuration
  file you must accept renaming "/etc/fpc.cfg"; otherwise you will need to
  manage this manually by yourself.
+
+Template: fp-compiler/windres-select
+Type: select
+Choices: ${choices}
+Default: Select manually
+Description: Choose a default MS Windows .rc resource compiler?
+ FPC supports compiling programs with enmbedded resource in .rc MS Windows
+ format on all plateforms where mingw windres tool is available.
+ .
+ In order to be able to compile projects using .rc files, you need first to
+ install mingw32-binutils package. This package is suggested by fp-compiler
+ package, will not be pulled automatiocally. You will need to install iti
+ manually.
+ .
+ If you want to enter a custom .rc files compiler that does not appear in this
+ list or if you simply want to disable this feature, please select
+ "Enter RC compiler name manually" and let the compiler name empty in the next
+ dialog box be empty.
+
+Template: fp-compiler/windres
+Type: string
+Default:
+Description: Choose a default MS Windows .rc resource compiler?
+ FPC supports compiling programs with enmbedded resource in .rc MS Windows
+ format on all plateforms where mingw windres tool is available.
+ .
+ In order to be able to compile projects using .rc files, you need first to
+ install mingw32-binutils package. This package is suggested by fp-compiler
+ package, will not be pulled automatiocally. You will need to install it
+ manually.
+ .
+ If you dont want to use a default .rc files compiler, please let this entry be
+ empty.

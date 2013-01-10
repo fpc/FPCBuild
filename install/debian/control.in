@@ -57,7 +57,7 @@ Package: fp-compiler${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel armhf
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), binutils
 Recommends: fp-utils${PACKAGESUFFIX} (>= ${binary:Version})
-Suggests: fp-docs${PACKAGESUFFIX} (>= ${source:Upstream-Version})
+Suggests: fp-docs${PACKAGESUFFIX} (>= ${source:Upstream-Version}), mingw32-binutils
 Provides: fp-compiler
 Breaks: fp-compiler (<= 2.4.0-3), fp-utils-2.4.4 (<= 2.4.4-2), fp-utils-2.4.2 (<= 2.4.2-3)
 Conflicts: binutils-gold

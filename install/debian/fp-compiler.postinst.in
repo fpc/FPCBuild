@@ -28,6 +28,21 @@ fpcmkcfg-${VERSION} -0 -d "basepath=${LIB_DIR}/\$fpcversion" -o "${CFG_FILE}"
 echo '# multiarch library search path' >> ${CFG_FILE}
 echo '-Fl/usr/lib/$fpctarget-*' >> ${CFG_FILE}
 
+if test -n ${WINDRES_BIN}
+then
+	db_get fp-compiler${PACKAGESUFFIX}/windres
+	if test -n "${RET}"
+	then
+		WINDRES_BIN=${RET}
+	fi
+fi
+sed -e '\@# MS Windows .rc resource compiler@d' -e '\@-FC@d' -i  ${CFG_FILE}
+if test -n "${WINDRES_BIN}"
+then
+	echo '# MS Windows .rc resource compiler' >> ${CFG_FILE}
+	echo "-FC${WINDRES_BIN}" >> ${CFG_FILE}
+fi
+
 # add alternatives
 update-alternatives \
     --install /usr/bin/fpc fpc /usr/bin/fpc-${VERSION} ${PRIORITY} \
