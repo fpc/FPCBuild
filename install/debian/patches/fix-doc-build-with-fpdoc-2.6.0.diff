@@ -1,0 +1,40 @@
+This patch fixes doc generation when using fpdoc-2.6.0. It should not be
+applied if starting with a newer fpdoc. It is not required to build the
+compiler, but causes fpdoc-2.6.0 to crach due to newly added syntax extension
+which it does not support.
+We are adding a patch to be applied just before using fpdoc and get reverted
+just after and patching the docs make file to apply it at the right time.
+
+diff --git a/fpcdocs/rtl/linux/oldlinux.pp b/fpcdocs/rtl/linux/oldlinux.pp
+index d006856..dc92266 100644
+--- a/fpcdocs/fix-doc-build-with-fpdoc-2.6.0.diff
++++ b/fpcdocs/fix-doc-build-with-fpdoc-2.6.0.diff
+@@ -0,0 +1,13 @@
++diff --git a/fpcsrc/rtl/linux/oldlinux.pp b/fpcsrc/rtl/linux/oldlinux.pp
++index d006856..dc92266 100644
++--- ../fpcsrc/rtl/linux/oldlinux.pp
+++++ ../fpcsrc/rtl/linux/oldlinux.pp
++@@ -12,7 +12,7 @@
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
++ 
++ **********************************************************************}
++-unit oldlinux deprecated 'Use Baseunix/Unix';
+++unit oldlinux deprecated;
++ 
++ Interface
++ 
+diff --git a/fpcdocs/Makefile.hev b/fpcdocs/Makefile.hev
+index a357d14..e2c8d20 100644
+--- a/fpcdocs/Makefile
++++ b/fpcdocs/Makefile
+@@ -2427,7 +2427,9 @@ ipf:
+ 	$(MAKE) html HTMLFMT=ipf
+ endif  # INSTALLDEBUG
+ hevea:
++	patch -p0 -i fix-doc-build-with-fpdoc-2.6.0.diff
+ 	$(MAKE) html USEHEVEA=1
++	patch -p0 -R -i fix-doc-build-with-fpdoc-2.6.0.diff
+ l2h:
+ 	$(MAKE) html USEL2H=1
+ 4ht:
+
