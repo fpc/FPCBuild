@@ -1,2 +1,6 @@
 version.diff
 fix-doc-build-with-fpdoc-2.6.0.diff
+armhf.diff
+regenerate_messages.diff
+fix-FPCDIR-in-fpcmake.diff
+armhf-linker-path.diff
