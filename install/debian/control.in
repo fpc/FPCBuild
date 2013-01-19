@@ -101,7 +101,7 @@ Description: Free Pascal - IDE
 
 Package: fp-utils${PACKAGESUFFIX}
 Architecture: i386 powerpc sparc amd64 armel armhf
-Depends: ${misc:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Recommends: fp-compiler${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-utils
 Breaks: fp-utils (<= 2.4.0-3), fp-compiler (<= 2.4.0-3), fp-units-gfx (<= 2.4.2-2), fp-units-gfx-2.4.2 (<= 2.4.2-2)
