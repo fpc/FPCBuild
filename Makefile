@@ -2049,7 +2049,7 @@ endif
 ifeq ($(OS_TARGET),emx)
 	$(COPY) $(addprefix $(CVSINSTALL)/binos2/,*.ico *.dll) $(INSTALL_BINDIR)
 endif
-ifneq ($(findstring $(OS_TARGET),linux freebsd sunos qnx),)
+ifneq ($(findstring $(OS_TARGET),linux freebsd netbsd openbsd sunos qnx),)
 	$(MAKE) -C $(CVSINSTALL)/man installman
 endif
 endif
