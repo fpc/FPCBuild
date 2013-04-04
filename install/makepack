@@ -23,8 +23,8 @@ unset FPCDIR
 [ -d install ] || cd ..
 
 # Retrieve version from fpcsrc/Makefile.fpc
-FULLVERSION=`grep '^version' fpcsrc/Makefile.fpc | sed 's+[^=]*= *\(.*\)+\1+'`
-VERSION=`grep '^version' fpcsrc/Makefile.fpc | sed 's+[^=]*= *\([0-9\.]*\).*+\1+'`
+FULLVERSION=`grep '^version *=' fpcsrc/Makefile.fpc | sed 's+[^=]*= *\(.*\)+\1+'`
+VERSION=`grep '^version *=' fpcsrc/Makefile.fpc | sed 's+[^=]*= *\([0-9\.]*\).*+\1+'`
 
 # Retrieve current system info by calling FPC. We need
 # to use the | head -n1 to fix a bug in fpc 1.9.4 and earlier
@@ -41,6 +41,12 @@ MAKE=make
 case "$HOSTOS" in
  *freebsd*) MAKE=gmake
 	EXTRAOPT="-Fl/usr/local/lib -Fl/usr/X11R6/lib  -dFREEBSD5"
+  ;;
+ *netbsd*) MAKE=gmake
+	EXTRAOPT="-Fl/usr/pkg/lib"
+  ;;
+ *openbsd*) MAKE=gmake
+	EXTRAOPT="-Fl/usr/local/lib"
   ;;
 esac
 
@@ -72,7 +78,7 @@ if [ "$FULLTARGET" != "$FULLSOURCE" ]; then
 else
    CROSS=
    CROSSPREFIX=
-   IDE=ide
+   export IDE=ide
 fi
 
 
@@ -87,7 +93,7 @@ if [ "$CROSS" = "" ]; then
       exit 1
     fi
   else
-    NOGDB=1
+    export NOGDB=1
   fi
 fi
 
@@ -98,6 +104,7 @@ if [ "$CROSS" = "" ]; then
       echo "No documentation available. Please copy the file doc-pdf.tar.gz to this directory."
       exit 1
     else
+      echo "Starting ${MAKE} makepackdocs"
       ${MAKE} makepackdocs
       if [ $? != 0 ]; then
         echo "Failed to make documentation archive."
@@ -105,6 +112,7 @@ if [ "$CROSS" = "" ]; then
       fi
     fi
   fi
+  echo "Starting ${MAKE}  demozip CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS FPC_VERSION=$VERSION MAKEPACK=1"
   ${MAKE}  demozip CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS FPC_VERSION=$VERSION MAKEPACK=1
   if [ $? != 0 ]; then
     echo "Failed to make demo source archive."
@@ -121,7 +129,9 @@ if [ ! "$CROSS" = "" ]; then
 fi
 
 # Build everything using the makefiles
+echo "Starting ${MAKE} distclean CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS"
 ${MAKE} distclean CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS
+echo "Starting ${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" FPC_VERSION=$VERSION"
 ${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" FPC_VERSION=$VERSION
 if [ $? != 0 ]; then
   echo "Failed to make distribution archive."
