@@ -1,6 +1,37 @@
 
                             Free Pascal Compiler
 
+                                Version 2.6.4rc1
+
+******************************************************************************
+                              What's New in 2.6.4rc1
+******************************************************************************
+
+Free Pascal 2.6.4 is a point release from the 2.6.0 fixes branch.
+
+Please also see http://wiki.freepascal.org/User_Changes_2.6.4 for a list
+of changes that may affect the behaviour of previously working code, and
+how to cope with these changes.
+
+Some highlights are:
+
+Compiler:
+
+Packages:
+  * Lots and lots fixes and improvements for fcl-db
+  * web and json packages synchronized.
+  * improvements to the chmcmd compiler.
+  * Several fixes for winunits (and winceunits)
+
+Platforms:
+
+
+See http://bugs.freepascal.org/changelog_page.php for the list of reported
+bugs which have been fixed in this release.
+
+
+                            Free Pascal Compiler
+
                                 Version 2.6.2
 
 ******************************************************************************
