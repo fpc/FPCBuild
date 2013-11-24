@@ -197,6 +197,12 @@ case "$OSNAME" in
      else
          PREFIX=/boot/home/config
      fi
+     # If we can't write on prefix, we are probably 
+     # on Haiku with package management system.
+     # In this case, we have to install fpc in the non-packaged subdir
+     if [ ! -w "$PREFIX" ]; then
+     	PREFIX="$PREFIX/non-packaged"
+     fi
   ;;
   freebsd)
      PREFIX=/usr/local
