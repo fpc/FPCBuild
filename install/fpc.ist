@@ -68,6 +68,7 @@ Source: doc\fpc\faq.txt; DestDir: {app}\doc\fpc; Components: base
 Source: doc\fpc\faq.htm; DestDir: {app}\doc\fpc; Components: base
 Source: msg\*.*; DestDir: {app}\msg; Components: base
 Source: units\i386-win32\rtl\*.*; DestDir: {app}\units\i386-win32\rtl; Components: base
+Source: unicode\*.*; DestDir: {app}\unicode; Flags: recursesubdirs; Components: base
 ; Binutils (asld)
 Source: bin\i386-win32\ar.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\as.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils

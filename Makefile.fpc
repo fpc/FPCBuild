@@ -717,6 +717,7 @@ innobuild: innocheck build
         $(DELTREE) $(INNODIR)
         $(MKDIR) $(INNODIR)
         $(COPYTREE) demo $(INNODIR)
+        $(COPYTREE) install/unicode $(INNODIR)
 ifndef NODOCS
         unzip -d $(INNODIR) doc-pdf.zip
 endif
