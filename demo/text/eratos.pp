@@ -15,7 +15,13 @@
 program eratosthenes;
 
   const
-{$ifndef MACOS}
+{$ifdef MACOS}
+  {$define USESMALL}
+{$endif}
+{$ifdef MSDOS}
+  {$define USESMALL}
+{$endif}
+{$ifndef USESMALL}
      max = 1000000;
 {$else}
      max = 10000; {Actually it works with 100000 also, but not 1000000,}
