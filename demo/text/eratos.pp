@@ -14,13 +14,14 @@
  **********************************************************************}
 program eratosthenes;
 
-  const
 {$ifdef MACOS}
   {$define USESMALL}
 {$endif}
 {$ifdef MSDOS}
   {$define USESMALL}
 {$endif}
+
+  const
 {$ifndef USESMALL}
      max = 1000000;
 {$else}

@@ -14,8 +14,15 @@
  **********************************************************************}
 program quicksort;
 
+{$ifdef MACOS}
+  {$define USESMALL}
+{$endif}
+{$ifdef MSDOS}
+  {$define USESMALL}
+{$endif}
+
   const
-{$ifndef MACOS}
+{$ifndef USESMALL}
      max = 100000;
 {$else}
      max = 1000; {Actually it works with 100000 also, but that might }

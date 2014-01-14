@@ -37,13 +37,23 @@ uses
  {$endif}
   graph;
 
+{$ifdef MSDOS}
+  {$define USESMALL}
+{$endif}
+
+  const
+{$ifndef USESMALL}
+     arraymax = 200;
+{$else }
+     arraymax = 50;
+{$endif }
 const
   screenwidth   = 640;
   screenheight  = 480;
   minblockwidth = 2;
-  maxx = 200;   { BP: [3 * maxx * maxy] must be less than 65520 (memory segment) }
-                { FPC: Normally no problem. ( even if you'd use 1600x1200x3< 6MB)}
-  maxy = 200;   { here maxx/maxy about equil to screenwidth/screenheight }
+  maxx = arraymax;   { BP: [3 * maxx * maxy] must be less than 65520 (memory segment) }
+                     { FPC: Normally no problem. ( even if you'd use 1600x1200x3< 6MB)}
+  maxy = arraymax;   { here maxx/maxy about equil to screenwidth/screenheight }
   flistsize = maxx*maxy DIV 2; { flist size (fnum max, about 1/3 of maxx * maxy) }
 
   background = black;
