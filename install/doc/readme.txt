@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 2.6.2
+                               Version 2.6.4
 
 ****************************************************************************
 * Introduction
@@ -17,7 +17,7 @@ partial support for the Macintosh pascal dialect.
 
 News and changes related to this release are described in whatsnew.txt.
 
-Free Pascal 2.6.2 is currently available for the following platforms:
+Free Pascal 2.6.4 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-powerpc
