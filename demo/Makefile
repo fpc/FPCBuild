@@ -331,7 +331,7 @@ ifeq ($(FULL_TARGET),i386-win32)
 override TARGET_DIRS+=text  win32 graph lister
 endif
 ifeq ($(FULL_TARGET),i386-os2)
-override TARGET_DIRS+=text  os2 graph
+override TARGET_DIRS+=text  os2 lister graph
 endif
 ifeq ($(FULL_TARGET),i386-freebsd)
 override TARGET_DIRS+=text  freebsd unix graph lister
@@ -1686,6 +1686,7 @@ endif
 ifeq ($(FULL_TARGET),i386-os2)
 TARGET_DIRS_TEXT=1
 TARGET_DIRS_OS2=1
+TARGET_DIRS_LISTER=1
 TARGET_DIRS_GRAPH=1
 endif
 ifeq ($(FULL_TARGET),i386-freebsd)

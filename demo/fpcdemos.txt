@@ -8,7 +8,7 @@ This packages contains the following subdirectories:
 - modex    demos which make extensive use of modeX (runs with go32v2 only)
 - win32    demos which are win32 specific
 - linux    demos which are linux specific
-- lister   KVM api demo. Runs on Unix and win32 currently.
+- lister   KVM api demo. Runs on Unix, win32 and OS/2 currently.
 - os2      demos which are OS/2 specific
 - palmos   demos which are palmos specific (dragonball)
 - netware  demos which are netware(clib) specific
