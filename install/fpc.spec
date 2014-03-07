@@ -104,6 +104,12 @@ fi
         # newer rpm versions do not allow garbage
         # delete lexyacc
         rm -rf %{buildroot}/usr/lib/fpc/lexyacc
+        # Temp hack for fpmake bug: move /usr/lib/ to /usr/lib64
+%ifarch x86_64
+        mv %{buildroot}/usr/lib/fpc/2.6.4/units/x86_64-linux/fcl-web %{buildroot}/usr/lib64/fpc/2.6.4/units/x86_64-linux/
+        mv %{buildroot}/usr/lib/fpc/2.6.4/units/x86_64-linux/fastcgi %{buildroot}/usr/lib64/fpc/2.6.4/units/x86_64-linux/
+        rm -r %{buildroot}/usr/lib/fpc/
+%endif
 if [ -n "${NODOCS}" ]; then
         # Also remove the examples when NODOCS is specified
 	rm -rf %{buildexampledir}
@@ -120,7 +126,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-, root, root,-)
 %{_bindir}/*
-%{_libdir}/fpc
+%{fpcdir}
 %dir %{docdir}
 %doc %{docdir}/NEWS
 %doc %{docdir}/README
