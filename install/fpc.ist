@@ -56,7 +56,6 @@ Source: bin\i386-win32\fpcmkcfg.exe; DestDir: {app}\bin\i386-win32; Flags: ignor
 Source: bin\i386-win32\fppkg.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\rmcvsdir.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\fpcsubst.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
-; Source: bin\i386-win32\GoRC.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: doc\fpc\copying; DestDir: {app}\doc\fpc; Components: base
 Source: doc\fpc\copying.dj; DestDir: {app}\doc\fpc; Components: base
 Source: doc\fpc\copying.emx; DestDir: {app}\doc\fpc; Components: base
