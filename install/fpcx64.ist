@@ -58,6 +58,7 @@ Source: bin\i386-win32\x86_64-win64-strip.exe; DestDir: {app}\bin\i386-win32; Fl
 Source: bin\i386-win32\x86_64-win64-nm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\x86_64-win64-objdump.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\x86_64-win64-objcopy.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+Source: bin\i386-win32\x86_64-win64-windres.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: units\x86_64-win64\rtl\*.*; DestDir: {app}\units\x86_64-win64\rtl; Components: base
 
 ; Units
