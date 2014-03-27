@@ -2291,7 +2291,7 @@ renametoshort:
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-passrc$(ZIPSUFFIX).zip ufcls$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-process$(ZIPSUFFIX).zip ufclp$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-registry$(ZIPSUFFIX).zip ufclr$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-sound$(ZIPSUFFIX).zip ufclo$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-sound$(ZIPSUFFIX).zip ufsnd$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-web$(ZIPSUFFIX).zip ufclw$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-xml$(ZIPSUFFIX).zip ufclx$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-json$(ZIPSUFFIX).zip ufclj$(ZIPSUFFIXSHORT).zip
