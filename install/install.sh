@@ -8,8 +8,8 @@
 #
 
 # Release Version will be replaced by makepack
-VERSION=%version%
-FULLVERSION=%fullversion%
+VERSION=2.6.4
+FULLVERSION=2.6.4
 
 # some useful functions
 # ask displays 1st parameter, and ask new value for variable, whose name is
@@ -35,17 +35,21 @@ yesno ()
   esac
   done
 }
-
+#
+#
+#
+CMDTAR="tar"
+TAR="$CMDTAR --no-same-owner"
 # Untar files ($3,optional) from  file ($1) to the given directory ($2)
 unztar ()
 {
- tar -xzf "$HERE/$1" -C "$2" $3
+ $TAR -xzf "$HERE/$1" -C "$2" $3
 }
 
 # Untar tar.gz file ($2) from file ($1) and untar result to the given directory ($3)
 unztarfromtar ()
 {
- tar -xOf "$HERE/$1" "$2" | tar -C "$3" -xzf -
+ $CMDTAR -xOf "$HERE/$1" "$2" | $TAR -C "$3" -xzf -
 }
 
 # Get file list from tar archive ($1) in variable ($2)
@@ -54,9 +58,9 @@ listtarfiles ()
 {
   askvar="$2"
   if [ ! -z "$3" ]; then
-    list=`tar tvf "$1" | awk '{ print $(NF) }' | sed -n /"$3"/p`
+    list=`$CMDTAR tvf "$1" | awk '{ print $(NF) }' | sed -n /"$3"/p`
   else
-     list=`tar tvf "$1" | awk '{ print $(NF) }'`
+     list=`$CMDTAR tvf "$1" | awk '{ print $(NF) }'`
   fi
   eval $askvar='$list'
 }
@@ -142,7 +146,7 @@ installbinary ()
     chmod u=srx,g=rx,o=rx "$PREFIX/bin/grab_vcsa"
   fi
 
-  ide=`tar -tf $BINARYTAR | grep "${CROSSPREFIX}ide.$1.tar.gz"`
+  ide=`$TAR -tf $BINARYTAR | grep "${CROSSPREFIX}ide.$1.tar.gz"`
   if [ "$ide" = "${CROSSPREFIX}ide.$1.tar.gz" ]; then
     if yesno "Install Textmode IDE"; then
       unztarfromtar "$BINARYTAR" "${CROSSPREFIX}ide.$1.tar.gz" "$PREFIX"
