@@ -1,0 +1,63 @@
+Description: Align fp IDE template file paths with Debian standards
+  The fp IDE looks for template files in /usr/bin where itself is installed.
+  However this is not conform with Debian stadard for file locations.
+  This patch fixes this by making the IDE looking for templates in the base
+  installation directory.
+Author: Abou Al Montacir <abou.almontacir@sfr.fr>
+--- a/fpcsrc/ide/fpmake.pp
++++ b/fpcsrc/ide/fpmake.pp
+@@ -201,16 +201,16 @@ begin
+     T.Directory:='compiler';
+     T.Install:=false;
+ 
+-    P.InstallFiles.Add('fp.ans','$(BININSTALLDIR)');
+-    P.InstallFiles.Add('gplprog.pt','$(BININSTALLDIR)');
+-    P.InstallFiles.Add('gplunit.pt','$(BININSTALLDIR)');
+-    P.InstallFiles.Add('program.pt','$(BININSTALLDIR)');
+-    P.InstallFiles.Add('unit.pt','$(BININSTALLDIR)');
+-    P.InstallFiles.Add('cvsco.tdf','$(BININSTALLDIR)');
+-    P.InstallFiles.Add('cvsdiff.tdf','$(BININSTALLDIR)');
+-    P.InstallFiles.Add('cvsup.tdf','$(BININSTALLDIR)');
+-    P.InstallFiles.Add('grep.tdf','$(BININSTALLDIR)');
+-    P.InstallFiles.Add('tpgrep.tdf','$(BININSTALLDIR)');
++    P.InstallFiles.Add('fp.ans','$(BASEINSTALLDIR)/ide');
++    P.InstallFiles.Add('gplprog.pt','$(BASEINSTALLDIR)/ide');
++    P.InstallFiles.Add('gplunit.pt','$(BASEINSTALLDIR)/ide');
++    P.InstallFiles.Add('program.pt','$(BASEINSTALLDIR)/ide');
++    P.InstallFiles.Add('unit.pt','$(BASEINSTALLDIR)/ide');
++    P.InstallFiles.Add('cvsco.tdf','$(BASEINSTALLDIR)/ide');
++    P.InstallFiles.Add('cvsdiff.tdf','$(BASEINSTALLDIR)/ide');
++    P.InstallFiles.Add('cvsup.tdf','$(BASEINSTALLDIR)/ide');
++    P.InstallFiles.Add('grep.tdf','$(BASEINSTALLDIR)/ide');
++    P.InstallFiles.Add('tpgrep.tdf','$(BASEINSTALLDIR)/ide');
+     P.InstallFiles.Add('fp32.ico', [win32, win64], '$(BININSTALLDIR)');
+ 
+     P.Sources.AddDoc('readme.ide');
+--- a/fpcsrc/ide/fpini.pas
++++ b/fpcsrc/ide/fpini.pas
+@@ -170,12 +170,12 @@ begin
+    end;
+ {$endif WINDOWS}
+ {$else}
+-  SystemIDEDir:=FExpand(DirOf(system.paramstr(0))+'../lib/fpc/'+version_string+'/ide/text');
++  SystemIDEDir:=FExpand(DirOf(system.paramstr(0))+'../lib/fpc/'+version_string+'/ide');
+   If Not ExistsDir(SystemIDEdir) Then
+     begin
+-    SystemIDEDir:=FExpand(DirOf(system.paramstr(0))+'../lib64/fpc/'+version_string+'/ide/text');
++    SystemIDEDir:=FExpand(DirOf(system.paramstr(0))+'../lib64/fpc/'+version_string+'/ide');
+     If Not ExistsDir(SystemIDEdir) Then
+-      SystemIDEDir:='/usr/lib/fpc/'+version_string+'/ide/text';
++      SystemIDEDir:='/usr/lib/fpc/'+version_string+'/ide';
+     end;
+   IDEdir:=CompleteDir(FExpand('~/.fp'));
+   If Not ExistsDir(IDEdir) Then
+--- a/fpcsrc/ide/fptemplt.pas
++++ b/fpcsrc/ide/fptemplt.pas
+@@ -276,6 +276,7 @@ begin
+   New(Templates, Init(10,10));
+   ScanDir('.');
+   ScanDir(IDEDir);
++  ScanDir(SystemIDEDir);
+ end;
+ 
+ 

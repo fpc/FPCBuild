@@ -1,9 +1,5 @@
 The Free Pascal Compiler for Debian
------------------------------------
-
-The source tree was checked out from the subversion repository at
-svn.freepascal.org with
- 'svn co http://svn.freepascal.org/svn/fpcbuild/tags/%{fpcsvnpath}'
+- -----------------------------------
 
 Only PDF docs are built as shipped. You may want to make the HTML files with
 tex4ht by yourself and eventually adapt the doc-base file.
@@ -15,33 +11,16 @@ declared as a conffile since version 1.0.2.
 
 And, yes - this is a i386/amd64/powerpc/sparc/arm only package currently.
 
-
-Web site and download information:
-----------------------------------
-
-The Original site is
-  http://www.freepascal.org/
-  ftp://ftp.freepascal.org/
-
-HTTP Mirrored at
-  http://www.nl.freepascal.org/
-  http://www.de.freepascal.org/
-  http://www.freepascal.sk/
-  http://gd.tuwien.ac.at/languages/pascal/fpc/www/
-  http://www.atlasz.com/freepascal/
-
-FTP Mirrored at
-  http://fpc.planetmirror.com/pub/fpc/
-  ftp://gd.tuwien.ac.at/languages/pascal/fpc/
-  ftp://ftp.hu.freepascal.org/pub/fpc/
-  ftp://ftp.uni-erlangen.de/pub/mirrors/freepascal/
-  http://mirror.mirimar.net/freepascal/
-  http://cdn.mirror.garr.it/mirrors/freepascal/
-  ftp://ftpsv1.u-aizu.ac.jp/pub/lang/pascal/freepascal/
-  ftp://ftp.nl.freepascal.org/pub/fpc/
-  ftp://freepascal.stack.nl/pub/fpc/
-  ftp://ftp.no.freepascal.org/pub/fpc/
-  ftp://ftp.chg.ru/pub/lang/pascal/fpc/
-  ftp://ftp.us.freepascal.org/pub/fpc/
-
  -- Varun Hiremath <varunhiremath@gmail.com>, Sat, 20 Jan 2007 01:28:28 +0530
+
+
+Debugging support
+-------------------------------------
+
+As discussed in bug 528855 [1], fp-ide currently does not have debugging
+support. We are still trying to define a proper solution, but for now it
+just doesn't work.
+
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=528855
+
+ -- Paul Gevers <elbrus@debian.org>  Mon, 23 Sep 2013 21:20:16 +0200

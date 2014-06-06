@@ -6,6 +6,7 @@
 #/usr/lib/fpc/${VERSION}/units/${TARGET}/httpd13
 #/usr/lib/fpc/${VERSION}/units/${TARGET}/httpd20
 /usr/lib/fpc/${VERSION}/units/${TARGET}/httpd22
+/usr/lib/fpc/${VERSION}/units/${TARGET}/httpd24
 /usr/lib/fpc/${VERSION}/units/${TARGET}/ldap
 /usr/lib/fpc/${VERSION}/units/${TARGET}/openssl
 /usr/lib/fpc/${VERSION}/units/${TARGET}/pcap

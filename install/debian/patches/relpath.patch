@@ -1,0 +1,73 @@
+This patch adds an utility for computing relative path according to a given
+base directory. This is useful for libraries that are to install .lpk in
+order to be used with lazarus. As these libraries may be compiled without
+need to build depend on Lazarus, we add it in fp-utils package which is likely
+to be used by any big project which build depends on fp-compiler.
+
+--- /dev/null	2013-04-25 22:57:42.765358414 +0200
++++ fpc-2.6.2/fpcsrc/utils/relpath.pas	2013-05-07 16:21:46.000000000 +0200
+@@ -0,0 +1,16 @@
++program relpath;
++uses
++  SysUtils;
++
++var
++	BaseDir: string;
++	TargetDir: string;
++begin
++	TargetDir := ParamStr(1);
++	BaseDir := ParamStr(2);
++	if BaseDir = ''
++	then begin
++		BaseDir := GetCurrentDir;
++	end;
++	WriteLn(ExtractRelativePath(IncludeTrailingPathDelimiter(BaseDir), TargetDir));
++end.
+
+--- /dev/null	2013-04-25 22:57:42.765358414 +0200
++++ fpc-2.6.2/install/man/man1/relpath.1	2013-05-07 16:21:46.000000000 +0200
+@@ -0,0 +1,32 @@
++.TH relpath 1 "7 May 2013" "Free Pascal" "Relative path computing tool"
++.SH NAME
++relpath \- The Free Pascal file deletion tool.
++
++.SH SYNOPSIS
++
++.B relpath
++[\fIfile or directory\fR] [\fIbase directory\fR]
++
++.SH DESCRIPTION
++
++.B relpath
++This is an utility for computing relative path according to a given base
++directory. This is useful for libraries that are to install .lpk in order to be
++used with lazarus. As these libraries may be compiled without need to build
++depend on Lazarus, we add it in fp-utils package which is likely to be used by
++any big project which build depends on fp-compiler.
++
++.SH USAGE
++
++.B relpath 
++takes the following arguments:
++.TP
++.B file or directory
++The target file or directory for which relative path should be computed.
++.TP
++.B base directory
++The base directory according to which the relative patch should be computed.
++
++.SH SEE ALSO
++.IP 
++.BR  readlink (1)
+
+--- a/fpcsrc/utils/fpmake.pp
++++ b/fpcsrc/utils/fpmake.pp
+@@ -86,6 +86,8 @@ begin
+     T.Dependencies.AddUnit('usubst');
+     P.Targets.AddUnit('usubst.pp').install:=false;
+     P.Targets.AddUnit('ptopu.pp').install:=false;
++
++    T:=P.Targets.AddProgram('relpath.pas');
+     end;
+ end;
+ 

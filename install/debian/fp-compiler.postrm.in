@@ -13,5 +13,4 @@ if test "${ACTION}" = "purge"
 then
 	rm -f  "${CFG_FILE}".cfg
 	rm -f  "${CFG_FILE}".bak
-	rm -f  "${CFG_FILE}".*dpkg*
 fi

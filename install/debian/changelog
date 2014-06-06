@@ -1,12 +1,270 @@
-fpc (2.6.1-0) unstable; urgency=low
+fpc (2.7.1-0) unstable; urgency=low
 
   * Daily snapshots build.
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 22 May 2014 22:40:18 +0200
+
+fpc (2.6.4+dfsg-2) unstable; urgency=medium
+
+  * Revert manpage change in previous upload
+  * Next time, in case of repack, also remove Windows dll files
+  * Fix fpc-abi version provided by fp-units-rtl-## (Closes: #746794)
+
+ -- Paul Gevers <elbrus@debian.org>  Sat, 03 May 2014 18:25:46 +0200
+
+fpc (2.6.4+dfsg-1) unstable; urgency=low
+
+  [ Abou Al Montacir ]
+  * New upstream point release with many fixes to the 2.6.2 fixes branch.
+    - List of changes that may affect the behaviour of previously working
+      code, and how to cope with these changes is available online on
+      http://wiki.freepascal.org/User_Changes_2.6.4
+    - List of reported bugs which have been fixed in this release is available
+      online on http://bugs.freepascal.org/changelog_page.php?version_id=315
+  * Packages changes:
+    + Lots and lots fixes and improvements for fcl-db
+    + web and json packages synchronized.
+    + improvements to the chmcmd compiler.
+    + Several fixes for winunits (and winceunits)
+  * Docs changes:
+    + Many additions.
+    + fpjson documented.
+  * Fixed bug making fp-utils not installable in multiple versions.
+  * Moved removing alternatives from postrm script to prerm as is recommended.
+  * Bumped standard version to 3.9.5.
+
+  [ Paul Gevers ]
+  * Update bug number in previous changelog entry
+  * Remove nearly obsolete bzip compression for binary packages
+    (See https://lists.debian.org/debian-devel/2014/01/msg00542.html)
+  * Fixed versioning of ptop.cfg and fpc.cfg manpage
+  * Add lintian override for two text documents it considers Flash files
+  * Repack source to strip fpcsrc/rtl/netwlibc/pre/libcpre.gcc.o
+
+ -- Paul Gevers <elbrus@debian.org>  Sat, 19 Apr 2014 18:05:27 +0200
+
+fpc (2.6.2-8) unstable; urgency=low
+
+  [ Gianfranco Costamagna ]
+  * Backport upstream revision 22477 to fix a FTBFS. (Closes: Bug#733618)
+
+  [ Abou Al Montacir ]
+  * Change path of localization files to fit Debian standard.
+    (Closes: Bug#733688)
+  * Fix encoding of German localization files to be UTF-8.
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 20 Jan 2014 20:39:35 +0100
+
+fpc (2.6.2-7) unstable; urgency=low
+
+  [ Christian Perrier ]
+  * Update debian/control and debconf templates file from Debian translation
+    team. (Closes: Bug#725851)
+  * Update Russian translation (Yuri Kozlov). (Closes: Bug#729391)
+  * Update Danish translation (Joe Hansen). (Closes: Bug#729428)
+  * Update German translation (Chris Leick). (Closes: Bug#729841)
+  * Update Polish translation (Michał Kułach). (Closes: Bug#730064)
+  * Update Swedish translation (Martin Bagge / brother). (Closes: Bug#730186)
+  * Update Slovak translation (Slavko). (Closes: Bug#730303)
+  * Update French translation (David Prévot). (Closes: Bug#730514)
+  * Update Italian translation (Beatrice Torracca). (Closes: Bug#730579)
+  * Update Japanese translation (victory). (Closes: Bug#730607)
+  * Update Portuguese translation (Américo Monteiro). (Closes: Bug#730706)
+  * Update Spanish translation (Matias Bellone). (Closes: Bug#731767)
+
+  [ Paul Gevers ]
+  * fp-docs, prevent loads of duplicate files, replace with symlinks
+    - Add Build-Depends-Indep on rdfind and symlinks
+  * Removed some dependencies in d/rules target to ease manual building
+  * lintian override for extra-license-file (it is a Pascal header)
+  * Allow $EXAMPLE_TEMP to be non-existent in d/moveexamples
+  * Remove fix-doc-build-with-fpdoc-2.6.0.diff (obsolete)
+  * Allow builds on all arches (will automatically fail on unsatified
+    build-depends when never bootstrapped on that arch before)
+  * Initial work for kfreebsd (not finished yet)
+    - Don't hardcode linux in d/rules
+    - Add find_iconv_in_libc_on_debian.patch to force use of libc for iconv
+    - Add kfreebsd-amd64_bootstrap.patch for freebsd target to set linker to
+      /lib/ld-kfreebsd-x86-64.so.1 and errno to __errno_location
+    - Add dont_build_fastcgi_fcl-web_and_fppkg_on_kfreebsd.patch to do exactly
+      that.
+
+ -- Paul Gevers <elbrus@debian.org>  Sun, 15 Dec 2013 21:08:59 +0100
+
+fpc (2.6.2-6) unstable; urgency=low
+
+  [ Peter Michael Green ]
+  * Actually apply add-ppc64-support.diff (Closes: Bug#716813)
+
+  [ Abou Al Montacir ]
+  * Removed dependency on svgalib which was removed from Debian. Users may
+    install it manually to link against it. (Closes: Bug#714025)
+
+  [ Paul Gevers ]
+  * Fix clean target to run as any user and to not require configure target to
+    run.
+  * Update README.Debian to describe debugging situation (see bug 528855) and
+    remove useless information.
+  * d/control(.in)
+    - Remove deprecated DM-Upload-Allowed field
+    - Update Standards-Version (no changes needed)
+    - Add myself to uploaders
+    - Add recommends for *-dev packages for fp-units-gfx-<version>
+      (Closes: #702689, LP: 1153007)
+
+ -- Paul Gevers <elbrus@debian.org>  Mon, 07 Oct 2013 20:24:12 +0200
+
+fpc (2.6.2-5) unstable; urgency=high
+
+  * Add -f to rm statements introduced in last upload so they don't fail if
+    the files are not present.
+
+ -- Peter Michael Green <plugwash@debian.org>  Wed, 24 Jul 2013 17:28:54 +0000
+
+fpc (2.6.2-4) unstable; urgency=high
+
+  * Remove the config files used to pass options to the compiler during the
+    build in clean target to produce clean source packages and to ensure that
+    they are generated correctly for each architecture.
+
+ -- Peter Michael Green <plugwash@debian.org>  Wed, 24 Jul 2013 11:28:06 +0000
+
+fpc (2.6.2-3) unstable; urgency=high
+
+  [Abou Al Montacir]
+  * Added a new directive, CFGDIR, to configuration file allowing one to add a
+    directory to a list where included configuration files are searched.
+  * Define a default location, multi-arch compatible, for third party units,
+    which should be installed in /usr/lib/$fpctarget-gnu/fp-units-2.6.2/$pkg/.
+    Each fp-units package should install a configuration file called $pkg.cfg
+    in configuration directory /etc/fp-units-$fpcversion.cfg.d/$fpctarget/.
+  * Use compiler configuration file to pass debian custom compilaer flags.
+  * Pass "-z relro" to linker to remove lintian error.
+  * Restored ppc64 compiler man page. (Closes: Bug#716813)
+
+  [Peter Michael Green]
+  * Use "FPMAKE_SKIP_CONFIG" rather than "FPCFPMAKE" to pass linker option
+    needed for building fpmake. This method unlike the previous one shouldn't
+    break crossbuilding.  (though I don't know if crossbuilding works in
+    general)
+  * Change way patching is done for doc build to fix build with newer
+    versions of patch.
+  * Remove conflicts with binutils-gold (Closes: Bug#717651)
+  * Use ld.bfd explicitly (Helps with: Bug#624525)
+  * Use urgency high so that above binutils related changes hopefully get into
+    Testing before new binutils does.
+
+ -- Peter Michael Green <plugwash@debian.org>  Tue, 23 Jul 2013 21:48:50 +0000
+
+fpc (2.6.2-2) unstable; urgency=low
+
+  [Abou Al Montacir]
+  * debian/rules
+    - Allow generating each autogenrated file separately on demand.
+    - Avoid changing content of hidden directory .pc as this is used by quilt and changing its content may cause some tricky issues.
+
+  [Peter Michael Green]
+  * debian/patches/armhf-build-with-2.6.0
+    - fixup some conditionals in arm assembler to avoid using instrutions that
+      fpc 2.6.0 doesn't support when building the rtl with 2.6.0 (first stage)
+  * debian/rules
+    - Pass 'PPCFPMAKE=$PPCNEW -Fl/usr/lib/$(DEB_BUILD_MULTIARCH)' during
+      packages build so that fpmake links successfully.
+    - Pass 'OPT=-Fl/usr/lib/$(DEB_HOST_MULTIARCH)' during utils build so
+      fpdoc links successfully.
+
+ -- Peter Michael Green <plugwash@debian.org>  Thu, 30 May 2013 11:16:27 +0000
+
+fpc (2.6.2-1) unstable; urgency=low
+
+  * New upstream point release with many fixes to the 2.6.0 fixes branch.
+    - List of changes that may affect the behaviour of previously working
+      code, and how to cope with these changes is available online on
+      http://wiki.freepascal.org/User_Changes_2.6.2
+    - List of reported bugs which have been fixed in this release is available
+      online on http://bugs.freepascal.org/changelog_page.php?version_id=223
+    - List of new features which have been added to this release is available
+      online on http://wiki.freepascal.org/FPC_New_Features_2.6.2
+  * Compiler changes:
+    - Improvements and fixes for the ARM architecture
+  * Packages changes:
+    - New package fpindexer (indexing engine)
+    - Support for observer pattern added to fcl-base (and base classes in RTL)
+    - Lots and lots fixes and improvements for fcl-db
+      + Support for JSON dataset added among others
+    - Fixes and improvements for fcl-passrc (and fpdoc)
+    - Updates for PTCPas and gtk2
+    - fpmkunit improvements (better support for future switch to fpmake)
+    - Several fixes for x11
+    - Several fixes for winunits (and winceunits)
+  * Platforms specific changes:
+    - Improvements to the NativeNT target (newly introduced as alpha in 2.6.0)
+    - Many fixes for OpenBSD and NetBSD (considered in beta state now)
+    - Internal ELF writer supported for more BSD targets
+    - Fixes and improvements for gba and nds
+  * Added new tool relpath to compute relative path according to a given base
+    directory.
+  * Added new tool ifpc (Instant Free Pascal Compiler) for compiling and
+    running pascal scripts.
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Wed, 7 May 2013 19:41:59 +0100
+
+fpc (2.6.0-12) unstable; urgency=low
+
+  [ Abou Al Montacir ]
+  * Fix lookup keys in debconf database. (Closes: Bug#706459)
+  * Fixed typo in variable name in post installation script for fp-compiler
+    package.
+  * Apply sed changes directly on new configuration file and update
+    alternatives later. Using sed -i on symbolic link seems to change it on
+    plain file introducing a regression.
+  * Fix lintian wraning about questions in debconf prompts.
+  [ Peter Michael Green ]
+  * Upload to unstable
+
+ -- Peter Michael Green <plugwash@debian.org>  Sun, 5 May 2013 22:02:00 +0000
+
+fpc (2.6.0-11) experimental; urgency=low
+
+  * more powerpc64 fixes (Really closes: Bug#692893)
+    + set PPUSF to ppc64 in debian/rules.
+    + add manpage patch to series file.
+
+ -- Peter Michael Green <plugwash@debian.org>  Tue, 30 Apr 2013 09:05:24 +0000
+
+fpc (2.6.0-10) experimental; urgency=low
+
+  [ Abou Al Montacir ]
+  * Fixed typo in French translation. (Closes: Bug#696536)
+  * Removed auto-generation of debian/control during build process as required
+    by policy. (Closes: Bug#704252)
+  * Detect when user refused to migrate to update-alternatives managed and
+    do not handle configuration files. (Closes: Bug#704251)
   * Added debconf screens to let user select a default .rc MS Windows resourse
     files compiler either from mingw32-binutils package or any others custom
     installed the system. (Closes: UpstreamBug#23092)
-  * Fix shared libraries dependency for fp-utils package.
+  [Hiroyuki Yamamoto]
+  * Added support for ppc64 architecture. (Closes: Bug#692893)
+  [ Peter Michael Green ]
+  * Don't remove fpc.*dpkg* the release team don't like it and
+    as far as I can tell it isn't needed.
 
- -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 05 Nov 2012 19:52:00 +0000
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Fri, 26 Apr 2013 18:59:00 +0100
+
+fpc (2.6.0-9) unstable; urgency=low
+
+  * Revert previous broken and unnessacerally intrustive fix for debian/control
+    issue. Replace it with a more targetted fix inspired by abou's and paul's
+    proposed patches.
+
+ -- Peter Michael Green <plugwash@debian.org>  Sat, 13 Apr 2013 07:52:42 +0000
+
+fpc (2.6.0-8) unstable; urgency=low
+
+  * Removed auto-generation of debian/control during build process as required
+    by policy. (Closes: Bug#704252)
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Tue, 26 Mar 2013 09:54:00 +0100
 
 fpc (2.6.0-7) unstable; urgency=low
 
