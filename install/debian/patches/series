@@ -1,4 +1,5 @@
 version.diff
+no_man_compress.diff
 fix-doc-build-with-fpdoc-2.6.0.diff
 armhf.diff
 regenerate_messages.diff

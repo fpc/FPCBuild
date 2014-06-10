@@ -1,0 +1,12 @@
+diff --git a/install/man/Makefile b/install/man/Makefile
+index 765d887..cbeebbf 100644
+--- a/install/man/Makefile
++++ b/install/man/Makefile
+@@ -31,5 +31,7 @@ installman:
+ 	$(GINSTALL) -d -m 755 $(INSTALL_MANDIR)/man5
+ 	$(GINSTALL) -c -m 644 man1/*.1 $(INSTALL_MANDIR)/man1
+ 	$(GINSTALL) -c -m 644 man5/*.5 $(INSTALL_MANDIR)/man5
++ifneq (${NO_MAN_COMPRESS},1)
+ 	find man1/*.1 -exec gzip -9f $(INSTALL_MANDIR)/'{}' \;
+ 	find man5/*.5 -exec gzip -9f $(INSTALL_MANDIR)/'{}' \;
++endif

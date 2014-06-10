@@ -262,8 +262,8 @@ install-indep:
 install-man: install-man-stamp
 install-man-stamp:
 	# Install man pages
-	$(MAKE) -C install/man installman $(INSTALLOPTS)
-	for s in ${INSTALL_DIR}/usr/man/man[1-9] ; do cd $${s} && ( gzip -d *.gz || true ) && for f in *.[1-9] ; do ${MV} $${f} $${f%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${f#*.}" ; done ; done || true
+	$(MAKE) -C install/man installman $(INSTALLOPTS) NO_MAN_COMPRESS=1
+	for s in ${INSTALL_DIR}/usr/man/man[1-9] ; do cd $${s} && for f in *.[1-9] ; do ${MV} $${f} $${f%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${f#*.}" ; done ; done || true
 	pod2man -c 'Free pascal for Debian GNU/Linux' debian/fpc-depends > debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
 	dh_installman -s
 	${RM} ${INSTALL_DIR}/usr/man
