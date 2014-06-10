@@ -2253,7 +2253,7 @@ DEBVERSION=$(firstword $(subst -, ,${DEBPACKAGEVERSION}))
 DEBBUILD=$(lastword $(subst -, ,${DEBPACKAGEVERSION}))
 DEBSRC=${PACKAGE_NAME}-${DEBVERSION}
 DEBSRCDIR=${BUILDDIR}/${DEBSRC}
-DEBSRC_ORIG=${PACKAGE_NAME}_${DEBVERSION}.orig
+DEBSRC_ORIG=${PACKAGE_NAME}_${PACKAGE_VERSION}.orig
 BUILDDATE=$(shell /bin/date --utc +%Y%m%d)
 ifdef MENTORS
 DEB_BUILDPKG_OPT=-sa
@@ -2276,8 +2276,10 @@ ifndef SIGN
 DEB_BUILDPKG_OPT+= -us -uc
 endif
 debcheck:
-ifneq ($(DEBVERSION),$(PACKAGE_VERSION))
+ifneq (${DEBVERSION},${PACKAGE_VERSION})
+ifneq (${SNAPSHOT},1)
 	! ${ECHO} "Debian version ($(DEBVERSION)) is not correct, expect $(PACKAGE_VERSION)"
+endif
 endif
 ifeq ($(wildcard ${DEBSRC_ORIG}.tar.gz),)
 ifndef DEBUSESVN
@@ -2310,8 +2312,18 @@ else
 endif
 debsetup:
 	$(COPYTREE) ${DEBDIR} $(DEBSRCDIR)/debian
-ifdef SNAPSHOT
+ifeq (${SNAPSHOT},1)
+ifneq (${DEBVERSION},${PACKAGE_VERSION})
+	sed -i ${DEBSRCDIR}/debian/changelog \
+	-e "1i\fpc (${PACKAGE_VERSION}-0~${BUILDDATE}) unstable; urgency=low" \
+	-e "1i\ " \
+	-e "1i\  * Build daily snapshots." \
+	-e "1i\ " \
+	-e "1i\ -- Abou Al Montacir <abou.almontacir@sfr.fr>  $(shell date -R)" \
+	-e "1i\ "
+else
 	sed -e 's/${DEBPACKAGEVERSION}/${DEBPACKAGEVERSION}~${BUILDDATE}/' -i $(DEBSRCDIR)/debian/changelog
+endif
 endif
 	chmod 755 $(DEBSRCDIR)/debian/rules
 	find $(DEBSRCDIR) -name '.svn' | xargs ${DELTREE}
