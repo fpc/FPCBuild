@@ -48,7 +48,8 @@ do
     move_examples "${PACKAGE_NAME}" "${PACKAGE_CONTENT}"
 done
 
-echo '**** Examples copyed ****'
+echo '**** Examples copied ****'
 
-rmdir $EXAMPLE_TEMP
-
+if [ -d $EXAMPLE_TEMP ] ; then
+    rmdir $EXAMPLE_TEMP
+fi

@@ -1,0 +1,1265 @@
+This patch adds support for armhf architecture.
+
+Index: fpc-2.6.0/fpcsrc/rtl/arm/setjump.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/rtl/arm/setjump.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/rtl/arm/setjump.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -16,7 +16,7 @@
+ 
+ function fpc_setjmp(var S : jmp_buf) : longint;assembler;[Public, alias : 'FPC_SETJMP'];nostackframe; compilerproc;
+   asm
+-    {$if defined(FPUVFPV2) or defined(FPUVFPV3)}
++    {$if defined(FPUVFPV2) or defined(FPUVFPV3) or defined(FPUVFPV3_D16)}
+     {$if defined(CPUARMV3) or defined(CPUARMV4) or defined(CPUARMV5)}
+     fstmiax r0!, {d8-d15}
+     {$else}
+@@ -46,7 +46,7 @@
+     movs    r0, r1
+     it eq
+     moveq   r0, #1
+-    {$if defined(FPUVFPV2) or defined(FPUVFPV3)}
++    {$if defined(FPUVFPV2) or defined(FPUVFPV3) or defined(FPUVFPV3_D16)}
+     fldmiad ip!, {d8-d15}
+     {$endif}
+     ldmia   ip,{v1-v6, sl, fp}
+@@ -57,7 +57,7 @@
+     mov     ip, r0
+     movs    r0, r1
+     moveq   r0, #1
+-    {$if defined(FPUVFPV2) or defined(FPUVFPV3)}
++    {$if defined(FPUVFPV2) or defined(FPUVFPV3) or defined(FPUVFPV3_D16)}
+     {$if defined(CPUARMV3) or defined(CPUARMV4) or defined(CPUARMV5)}
+     fldmiax ip!, {d8-d15}
+     {$else}
+Index: fpc-2.6.0/fpcsrc/rtl/arm/math.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/rtl/arm/math.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/rtl/arm/math.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -14,7 +14,7 @@
+ 
+  **********************************************************************}
+ 
+-{$if defined(FPUFPA) or defined(FPUFPA10) or defined(FPUFPA11) or defined(FPUVFPV2) or defined(FPUVFPV3)}
++{$if defined(FPUFPA) or defined(FPUFPA10) or defined(FPUFPA11) or defined(FPUVFPV2) or defined(FPUVFPV3) or defined(FPUVFPV3_D16)}
+     {$define FPC_SYSTEM_HAS_ABS}
+     function fpc_abs_real(d : ValReal) : ValReal;compilerproc;
+     begin
+Index: fpc-2.6.0/fpcsrc/rtl/arm/mathu.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/rtl/arm/mathu.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/rtl/arm/mathu.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -177,7 +177,7 @@
+ begin
+ end;
+ 
+-{$elseif defined(darwin) or defined(FPUVFPV2) or defined(FPUVFPV3)}
++{$elseif defined(darwin) or defined(FPUVFPV2) or defined(FPUVFPV3) or defined(FPUVFPV3_d16)}
+ 
+ const
+   _VFP_ENABLE_IM  =  1 shl 8;         { invalid operation      }
+Index: fpc-2.6.0/fpcsrc/rtl/arm/arm.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/rtl/arm/arm.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/rtl/arm/arm.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -30,7 +30,7 @@
+ {$if not(defined(wince)) and not(defined(gba)) and not(defined(nds)) and not(defined(FPUSOFT)) and not(defined(FPULIBGCC))}
+ 
+ {$define FPC_SYSTEM_HAS_SYSINITFPU}
+-{$if not defined(darwin) and not defined(FPUVFPV2) and not defined(FPUVFPV3)}
++{$if not defined(darwin) and not defined(FPUVFPV2) and not defined(FPUVFPV3) and not defined(FPUVFPV3_D16)}
+ Procedure SysInitFPU;{$ifdef SYSTEMINLINE}inline;{$endif}
+ begin
+   { Enable FPU exceptions, but disable INEXACT, UNDERFLOW, DENORMAL }
+Index: fpc-2.6.0/fpcsrc/rtl/arm/setjumph.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/rtl/arm/setjumph.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/rtl/arm/setjumph.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -16,7 +16,7 @@
+ 
+ type
+    jmp_buf = packed record
+-{$if defined(FPUVFPV2) or defined(FPUVFPV3)}
++{$if defined(FPUVFPV2) or defined(FPUVFPV3) or defined(FPUVFPV3_D16)}
+       d8,d9,d10,d11,d12,d13,d14,d15: double;
+ {$endif}
+       v1,v2,v3,v4,v5,v6,sl,fp,sp,pc : dword;
+Index: fpc-2.6.0/fpcsrc/compiler/systems.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/systems.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/systems.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -210,7 +210,7 @@
+ 
+        tabi = (abi_default
+             ,abi_powerpc_sysv,abi_powerpc_aix
+-            ,abi_eabi,abi_armeb
++            ,abi_eabi,abi_armeb,abi_eabihf
+        );
+ 
+ 
+Index: fpc-2.6.0/fpcsrc/compiler/systems.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/systems.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/systems.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -305,7 +305,7 @@
+              'mips','arm', 'powerpc64', 'avr', 'mipsel');
+ 
+        abi2str : array[tabi] of string[10] =
+-         ('DEFAULT','SYSV','AIX','EABI','ARMEB');
++         ('DEFAULT','SYSV','AIX','EABI','ARMEB','EABIHF');
+ 
+     var
+        targetinfos   : array[tsystem] of psysteminfo;
+Index: fpc-2.6.0/fpcsrc/compiler/pp.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/pp.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/pp.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -43,6 +43,7 @@
+   FPC_ARMEB           create an arm big endian compiler
+   FPC_OARM            create an arm oabi compiler, only needed when the host
+                       compiler is ARMEL or ARMEB
++  FPC_ARMHF           create an armhf (eabi vfp variant) compiler
+   -----------------------------------------------------------------
+   cpuflags            The target processor has status flags (on by default)
+   cpufpemu            The target compiler will also support emitting software
+Index: fpc-2.6.0/fpcsrc/compiler/arm/narminl.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/narminl.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/narminl.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -89,7 +89,8 @@
+                end;
+             end;
+           fpu_vfpv2,
+-          fpu_vfpv3:
++          fpu_vfpv3,
++          fpu_vfpv3_d16:
+             begin
+               location_force_mmregscalar(current_asmdata.CurrAsmList,left.location,true);
+               location_copy(location,left.location);
+@@ -118,7 +119,8 @@
+               fpu_fpa11:
+                 expectloc:=LOC_FPUREGISTER;
+               fpu_vfpv2,
+-              fpu_vfpv3:
++              fpu_vfpv3,
++              fpu_vfpv3_d16:
+                 expectloc:=LOC_MMREGISTER;
+               else
+                 internalerror(2009112401);
+@@ -140,7 +142,8 @@
+               fpu_fpa11:
+                 expectloc:=LOC_FPUREGISTER;
+               fpu_vfpv2,
+-              fpu_vfpv3:
++              fpu_vfpv3,
++              fpu_vfpv3_d16:
+                 expectloc:=LOC_MMREGISTER;
+               else
+                 internalerror(2009112402);
+@@ -162,7 +165,8 @@
+               fpu_fpa11:
+                 expectloc:=LOC_FPUREGISTER;
+               fpu_vfpv2,
+-              fpu_vfpv3:
++              fpu_vfpv3,
++              fpu_vfpv3_d16:
+                 expectloc:=LOC_MMREGISTER;
+               else
+                 internalerror(2009112403);
+@@ -213,7 +217,8 @@
+           fpu_fpa11:
+             current_asmdata.CurrAsmList.concat(setoppostfix(taicpu.op_reg_reg(A_ABS,location.register,left.location.register),get_fpu_postfix(resultdef)));
+           fpu_vfpv2,
+-          fpu_vfpv3:
++          fpu_vfpv3,
++          fpu_vfpv3_d16:
+             begin
+               if singleprec then
+                 op:=A_FABSS
+@@ -239,7 +244,8 @@
+           fpu_fpa11:
+             current_asmdata.CurrAsmList.concat(setoppostfix(taicpu.op_reg_reg_reg(A_MUF,location.register,left.location.register,left.location.register),get_fpu_postfix(resultdef)));
+           fpu_vfpv2,
+-          fpu_vfpv3:
++          fpu_vfpv3,
++          fpu_vfpv3_d16:
+             begin
+               if singleprec then
+                 op:=A_FMULS
+@@ -265,7 +271,8 @@
+           fpu_fpa11:
+             current_asmdata.CurrAsmList.concat(setoppostfix(taicpu.op_reg_reg(A_SQT,location.register,left.location.register),get_fpu_postfix(resultdef)));
+           fpu_vfpv2,
+-          fpu_vfpv3:
++          fpu_vfpv3,
++          fpu_vfpv3_d16:
+             begin
+               if singleprec then
+                 op:=A_FSQRTS
+Index: fpc-2.6.0/fpcsrc/compiler/arm/cgcpu.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/cgcpu.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/cgcpu.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -1430,7 +1430,8 @@
+                       end;
+                 end;
+               fpu_vfpv2,
+-              fpu_vfpv3:
++              fpu_vfpv3,
++              fpu_vfpv3_d16:
+                 begin;
+                   mmregs:=rg[R_MMREGISTER].used_in_proc-paramanager.get_volatile_registers_mm(pocall_stdcall);
+                 end;
+@@ -1501,7 +1502,7 @@
+              begin
+                reference_reset(ref,4);
+                if (tg.direction*tarmprocinfo(current_procinfo).floatregstart>=1023) or
+-                  (current_settings.fputype in [fpu_vfpv2,fpu_vfpv3]) then
++                  (current_settings.fputype in [fpu_vfpv2,fpu_vfpv3,fpu_vfpv3_d16]) then
+                  begin
+                    if not is_shifter_const(tarmprocinfo(current_procinfo).floatregstart,shift) then
+                      begin
+@@ -1529,7 +1530,8 @@
+                        lastfloatreg-firstfloatreg+1,ref));
+                    end;
+                  fpu_vfpv2,
+-                 fpu_vfpv3:
++                 fpu_vfpv3,
++                 fpu_vfpv3_d16:
+                    begin
+                      ref.index:=ref.base;
+                      ref.base:=NR_NO;
+@@ -1583,7 +1585,8 @@
+                       end;
+                 end;
+               fpu_vfpv2,
+-              fpu_vfpv3:
++              fpu_vfpv3,
++              fpu_vfpv3_d16:
+                 begin;
+                   { restore vfp registers? }
+                   mmregs:=rg[R_MMREGISTER].used_in_proc-paramanager.get_volatile_registers_mm(pocall_stdcall);
+@@ -1595,7 +1598,7 @@
+               begin
+                 reference_reset(ref,4);
+                 if (tg.direction*tarmprocinfo(current_procinfo).floatregstart>=1023) or
+-                   (current_settings.fputype in [fpu_vfpv2,fpu_vfpv3]) then
++                   (current_settings.fputype in [fpu_vfpv2,fpu_vfpv3,fpu_vfpv3_d16]) then
+                   begin
+                     if not is_shifter_const(tarmprocinfo(current_procinfo).floatregstart,shift) then
+                       begin
+@@ -1622,7 +1625,8 @@
+                         lastfloatreg-firstfloatreg+1,ref));
+                     end;
+                   fpu_vfpv2,
+-                  fpu_vfpv3:
++                  fpu_vfpv3,
++                  fpu_vfpv3_d16:
+                     begin
+                       ref.index:=ref.base;
+                       ref.base:=NR_NO;
+Index: fpc-2.6.0/fpcsrc/compiler/arm/narmcnv.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/narmcnv.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/narmcnv.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -116,7 +116,8 @@
+               fpu_fpa11:
+                 expectloc:=LOC_FPUREGISTER;
+               fpu_vfpv2,
+-              fpu_vfpv3:
++              fpu_vfpv3,
++              fpu_vfpv3_d16:
+                 expectloc:=LOC_MMREGISTER;
+               else
+                 internalerror(2009112702);
+@@ -195,7 +196,8 @@
+               end;
+             end;
+           fpu_vfpv2,
+-          fpu_vfpv3:
++          fpu_vfpv3,
++          fpu_vfpv3_d16:
+             begin
+               location_reset(location,LOC_MMREGISTER,def_cgsize(resultdef));
+               signed:=left.location.size=OS_S32;
+Index: fpc-2.6.0/fpcsrc/compiler/arm/rarmnum.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/rarmnum.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/rarmnum.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -25,52 +25,52 @@
+ tregister($02000006),
+ tregister($02000007),
+ tregister($04060000),
+-tregister($04060000),
++tregister($04060020),
+ tregister($04070000),
+ tregister($04060001),
+-tregister($04060001),
++tregister($04060021),
+ tregister($04070001),
+ tregister($04060002),
+-tregister($04060002),
++tregister($04060022),
+ tregister($04070002),
+ tregister($04060003),
+-tregister($04060003),
++tregister($04060023),
+ tregister($04070003),
+ tregister($04060004),
+-tregister($04060004),
++tregister($04060024),
+ tregister($04070004),
+ tregister($04060005),
+-tregister($04060005),
++tregister($04060025),
+ tregister($04070005),
+ tregister($04060006),
+-tregister($04060006),
++tregister($04060026),
+ tregister($04070006),
+ tregister($04060007),
+-tregister($04060007),
++tregister($04060027),
+ tregister($04070007),
+ tregister($04060008),
+-tregister($04060008),
++tregister($04060028),
+ tregister($04070008),
+ tregister($04060009),
+-tregister($04060009),
++tregister($04060029),
+ tregister($04070009),
+ tregister($0406000A),
+-tregister($0406000A),
++tregister($0406002A),
+ tregister($0407000A),
+ tregister($0406000B),
+-tregister($0406000B),
++tregister($0406002B),
+ tregister($0407000B),
+ tregister($0406000C),
+-tregister($0406000C),
++tregister($0406002C),
+ tregister($0407000C),
+ tregister($0406000D),
+-tregister($0406000D),
++tregister($0406002D),
+ tregister($0407000D),
+ tregister($0406000E),
+-tregister($0406000E),
++tregister($0406002E),
+ tregister($0407000E),
+ tregister($0406000F),
+-tregister($0406000F),
++tregister($0406002F),
+ tregister($0407000F),
+ tregister($04070010),
+ tregister($04070011),
+Index: fpc-2.6.0/fpcsrc/compiler/arm/narmcal.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/narmcal.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/narmcal.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -41,13 +41,15 @@
+     cgbase,
+     cpubase,cpuinfo,
+     ncgutil,
+-    paramgr;
++    paramgr,
++    systems;
+ 
+   procedure tarmcallnode.set_result_location(realresdef: tstoreddef);
+     begin
+-      if (realresdef.typ=floatdef) and
++      if (realresdef.typ=floatdef) and
++         (target_info.abi <> abi_eabihf) and
+          ((cs_fp_emulation in current_settings.moduleswitches) or
+-          (current_settings.fputype in [fpu_vfpv2,fpu_vfpv3])) then
++          (current_settings.fputype in [fpu_vfpv2,fpu_vfpv3,fpu_vfpv3_d16])) then
+         begin
+           { keep the fpu values in integer registers for now, the code
+             generator will move them to memory or an mmregister when necessary
+Index: fpc-2.6.0/fpcsrc/compiler/arm/rarmsup.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/rarmsup.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/rarmsup.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -25,52 +25,52 @@
+ RS_F6 = $06;
+ RS_F7 = $07;
+ RS_S0 = $00;
+-RS_S1 = $00;
++RS_S1 = $20;
+ RS_D0 = $00;
+ RS_S2 = $01;
+-RS_S3 = $01;
++RS_S3 = $21;
+ RS_D1 = $01;
+ RS_S4 = $02;
+-RS_S5 = $02;
++RS_S5 = $22;
+ RS_D2 = $02;
+ RS_S6 = $03;
+-RS_S7 = $03;
++RS_S7 = $23;
+ RS_D3 = $03;
+ RS_S8 = $04;
+-RS_S9 = $04;
++RS_S9 = $24;
+ RS_D4 = $04;
+ RS_S10 = $05;
+-RS_S11 = $05;
++RS_S11 = $25;
+ RS_D5 = $05;
+ RS_S12 = $06;
+-RS_S13 = $06;
++RS_S13 = $26;
+ RS_D6 = $06;
+ RS_S14 = $07;
+-RS_S15 = $07;
++RS_S15 = $27;
+ RS_D7 = $07;
+ RS_S16 = $08;
+-RS_S17 = $08;
++RS_S17 = $28;
+ RS_D8 = $08;
+ RS_S18 = $09;
+-RS_S19 = $09;
++RS_S19 = $29;
+ RS_D9 = $09;
+ RS_S20 = $0A;
+-RS_S21 = $0A;
++RS_S21 = $2A;
+ RS_D10 = $0A;
+ RS_S22 = $0B;
+-RS_S23 = $0B;
++RS_S23 = $2B;
+ RS_D11 = $0B;
+ RS_S24 = $0C;
+-RS_S25 = $0C;
++RS_S25 = $2C;
+ RS_D12 = $0C;
+ RS_S26 = $0D;
+-RS_S27 = $0D;
++RS_S27 = $2D;
+ RS_D13 = $0D;
+ RS_S28 = $0E;
+-RS_S29 = $0E;
++RS_S29 = $2E;
+ RS_D14 = $0E;
+ RS_S30 = $0F;
+-RS_S31 = $0F;
++RS_S31 = $2F;
+ RS_D15 = $0F;
+ RS_D16 = $10;
+ RS_D17 = $11;
+Index: fpc-2.6.0/fpcsrc/compiler/arm/cpubase.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/cpubase.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/cpubase.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -87,7 +87,7 @@
+ 
+       { MM Super register first and last }
+       first_mm_supreg    = RS_S0;
+-      first_mm_imreg     = $20;
++      first_mm_imreg     = $30;
+ 
+ { TODO: Calculate bsstart}
+       regnumber_count_bsstart = 64;
+@@ -106,7 +106,7 @@
+       { registers which may be destroyed by calls }
+       VOLATILE_INTREGISTERS = [RS_R0..RS_R3,RS_R12..RS_R14];
+       VOLATILE_FPUREGISTERS = [RS_F0..RS_F3];
+-      VOLATILE_MMREGISTERS =  [RS_D0..RS_D7,RS_D16..RS_D31];
++      VOLATILE_MMREGISTERS =  [RS_D0..RS_D7,RS_D16..RS_D31,RS_S1..RS_S15];
+ 
+       VOLATILE_INTREGISTERS_DARWIN = [RS_R0..RS_R3,RS_R9,RS_R12..RS_R14];
+ 
+@@ -319,7 +319,7 @@
+ 
+       NR_FPU_RESULT_REG = NR_F0;
+ 
+-      NR_MM_RESULT_REG  = NR_NO;
++      NR_MM_RESULT_REG  = NR_D0;
+ 
+       NR_RETURN_ADDRESS_REG = NR_FUNCTION_RETURN_REG;
+ 
+Index: fpc-2.6.0/fpcsrc/compiler/arm/narmmat.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/narmmat.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/narmmat.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -273,7 +273,8 @@
+                 cgsize2fpuoppostfix[def_cgsize(resultdef)]));
+             end;
+           fpu_vfpv2,
+-          fpu_vfpv3:
++          fpu_vfpv3,
++          fpu_vfpv3_d16:
+             begin
+               location_force_mmregscalar(current_asmdata.CurrAsmList,left.location,true);
+               location:=left.location;
+Index: fpc-2.6.0/fpcsrc/compiler/arm/rarmrni.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/rarmrni.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/rarmrni.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -25,37 +25,37 @@
+ 23,
+ 24,
+ 25,
+-26,
+-29,
+ 28,
+ 31,
+-32,
+-35,
+ 34,
+ 37,
+-38,
+-41,
+ 40,
+ 43,
+-44,
+-47,
+ 46,
+ 49,
+-50,
+-53,
+ 52,
+ 55,
+-56,
+-59,
+ 58,
+ 61,
+-62,
+-65,
+ 64,
+ 67,
++70,
++26,
++29,
++32,
++35,
++38,
++41,
++44,
++47,
++50,
++53,
++56,
++59,
++62,
++65,
+ 68,
+ 71,
+-70,
+ 27,
+ 30,
+ 33,
+Index: fpc-2.6.0/fpcsrc/compiler/arm/rarmstd.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/rarmstd.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/rarmstd.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -69,7 +69,7 @@
+ 's28',
+ 's29',
+ 'd14',
+-'s20',
++'s30',
+ 's21',
+ 'd15',
+ 'd16',
+Index: fpc-2.6.0/fpcsrc/compiler/arm/armreg.dat
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/armreg.dat	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/armreg.dat	2012-03-28 20:18:04.000000000 +0000
+@@ -34,57 +34,60 @@
+ F7,$02,$00,$07,f7,32,23
+ 
+ ; MM registers
+-; S0/S1/D0 etc have the same register number because the register allocated
+-; cannot deal with D0 conflicting with both S0 and S1. This unfortunately
+-; means that we can only use 16 single precision registers instead of 32,
+-; even if no double precision ones are used...
++; odd numbered single registers must not be made available to the register
++; allocator because it cannot deal with D0 conflicting with both S0 and S1.
++; This unfortunately means that we can only use 16 single precision registers
++; instead of 32,  even if no double precision ones are used...
++; Nevertheless the odd numbered single registers must have seperate register
++; numbers to allow implementation of the "EABI VFP hardfloat" calling convention.
++
+ S0,$04,$06,$00,s0,0,0
+-S1,$04,$06,$00,s1,0,0
++S1,$04,$06,$20,s1,0,0
+ D0,$04,$07,$00,d0,0,0
+ S2,$04,$06,$01,s2,0,0
+-S3,$04,$06,$01,s3,0,0
++S3,$04,$06,$21,s3,0,0
+ D1,$04,$07,$01,d1,0,0
+ S4,$04,$06,$02,s4,0,0
+-S5,$04,$06,$02,s5,0,0
++S5,$04,$06,$22,s5,0,0
+ D2,$04,$07,$02,d2,0,0
+ S6,$04,$06,$03,s6,0,0
+-S7,$04,$06,$03,s7,0,0
++S7,$04,$06,$23,s7,0,0
+ D3,$04,$07,$03,d3,0,0
+ S8,$04,$06,$04,s8,0,0
+-S9,$04,$06,$04,s9,0,0
++S9,$04,$06,$24,s9,0,0
+ D4,$04,$07,$04,d4,0,0
+ S10,$04,$06,$05,s10,0,0
+-S11,$04,$06,$05,s11,0,0
++S11,$04,$06,$25,s11,0,0
+ D5,$04,$07,$05,d5,0,0
+ S12,$04,$06,$06,s12,0,0
+-S13,$04,$06,$06,s13,0,0
++S13,$04,$06,$26,s13,0,0
+ D6,$04,$07,$06,d6,0,0
+ S14,$04,$06,$07,s14,0,0
+-S15,$04,$06,$07,s15,0,0
++S15,$04,$06,$27,s15,0,0
+ D7,$04,$07,$07,d7,0,0
+ S16,$04,$06,$08,s16,0,0
+-S17,$04,$06,$08,s17,0,0
++S17,$04,$06,$28,s17,0,0
+ D8,$04,$07,$08,d8,0,0
+ S18,$04,$06,$09,s18,0,0
+-S19,$04,$06,$09,s19,0,0
++S19,$04,$06,$29,s19,0,0
+ D9,$04,$07,$09,d9,0,0
+ S20,$04,$06,$0A,s20,0,0
+-S21,$04,$06,$0A,s21,0,0
++S21,$04,$06,$2A,s21,0,0
+ D10,$04,$07,$0A,d10,0,0
+ S22,$04,$06,$0B,s22,0,0
+-S23,$04,$06,$0B,s23,0,0
++S23,$04,$06,$2B,s23,0,0
+ D11,$04,$07,$0B,d11,0,0
+ S24,$04,$06,$0C,s24,0,0
+-S25,$04,$06,$0C,s25,0,0
++S25,$04,$06,$2C,s25,0,0
+ D12,$04,$07,$0C,d12,0,0
+ S26,$04,$06,$0D,s26,0,0
+-S27,$04,$06,$0D,s27,0,0
++S27,$04,$06,$2D,s27,0,0
+ D13,$04,$07,$0D,d13,0,0
+ S28,$04,$06,$0E,s28,0,0
+-S29,$04,$06,$0E,s29,0,0
++S29,$04,$06,$2E,s29,0,0
+ D14,$04,$07,$0E,d14,0,0
+-S30,$04,$06,$0F,s20,0,0
+-S31,$04,$06,$0F,s21,0,0
++S30,$04,$06,$0F,s30,0,0
++S31,$04,$06,$2F,s21,0,0
+ D15,$04,$07,$0F,d15,0,0
+ D16,$04,$07,$10,d16,0,0
+ D17,$04,$07,$11,d17,0,0
+Index: fpc-2.6.0/fpcsrc/compiler/arm/cpuinfo.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/cpuinfo.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/cpuinfo.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -55,7 +55,8 @@
+       fpu_fpa10,
+       fpu_fpa11,
+       fpu_vfpv2,
+-      fpu_vfpv3
++      fpu_vfpv3,
++      fpu_vfpv3_d16
+      );
+ 
+    tcontrollertype =
+@@ -115,14 +116,15 @@
+      'CORTEXM3'
+    );
+ 
+-   fputypestr : array[tfputype] of string[6] = ('',
++   fputypestr : array[tfputype] of string[9] = ('',
+      'SOFT',
+      'LIBGCC',
+      'FPA',
+      'FPA10',
+      'FPA11',
+      'VFPV2',
+-     'VFPV3'
++     'VFPV3',
++     'VFPV3_D16'
+    );
+ 
+    controllertypestr : array[tcontrollertype] of string[20] =
+@@ -164,7 +166,7 @@
+       12 { No model specified }
+      );
+ 
+-   vfp_scalar = [fpu_vfpv2,fpu_vfpv3];
++   vfp_scalar = [fpu_vfpv2,fpu_vfpv3,fpu_vfpv3_d16];
+ 
+    { Supported optimizations, only used for information }
+    supported_optimizerswitches = genericlevel1optimizerswitches+
+Index: fpc-2.6.0/fpcsrc/compiler/arm/rarmsri.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/rarmsri.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/rarmsri.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -72,7 +72,6 @@
+ 53,
+ 28,
+ 55,
+-70,
+ 71,
+ 56,
+ 58,
+@@ -84,6 +83,7 @@
+ 67,
+ 68,
+ 29,
++70,
+ 31,
+ 32,
+ 34,
+Index: fpc-2.6.0/fpcsrc/compiler/arm/narmadd.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/narmadd.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/narmadd.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -164,7 +164,8 @@
+                  cgsize2fpuoppostfix[def_cgsize(resultdef)]));
+             end;
+           fpu_vfpv2,
+-          fpu_vfpv3:
++          fpu_vfpv3,
++          fpu_vfpv3_d16:
+             begin
+               { force mmreg as location, left right doesn't matter
+                 as both will be in a fpureg }
+@@ -248,7 +249,8 @@
+                    cgsize2fpuoppostfix[def_cgsize(resultdef)]));
+             end;
+           fpu_vfpv2,
+-          fpu_vfpv3:
++          fpu_vfpv3,
++          fpu_vfpv3_d16:
+             begin
+               location_force_mmregscalar(current_asmdata.CurrAsmList,left.location,true);
+               location_force_mmregscalar(current_asmdata.CurrAsmList,right.location,true);
+Index: fpc-2.6.0/fpcsrc/compiler/arm/cpupi.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/cpupi.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/cpupi.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -106,7 +106,8 @@
+                 floatsavesize:=(lastfloatreg-firstfloatreg+1)*12;
+             end;
+           fpu_vfpv2,
+-          fpu_vfpv3:
++          fpu_vfpv3,
++          fpu_vfpv3_d16:
+             begin
+               floatsavesize:=0;
+               regs:=cg.rg[R_MMREGISTER].used_in_proc-paramanager.get_volatile_registers_mm(pocall_stdcall);
+Index: fpc-2.6.0/fpcsrc/compiler/arm/rarmcon.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/rarmcon.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/rarmcon.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -25,52 +25,52 @@
+ NR_F6 = tregister($02000006);
+ NR_F7 = tregister($02000007);
+ NR_S0 = tregister($04060000);
+-NR_S1 = tregister($04060000);
++NR_S1 = tregister($04060020);
+ NR_D0 = tregister($04070000);
+ NR_S2 = tregister($04060001);
+-NR_S3 = tregister($04060001);
++NR_S3 = tregister($04060021);
+ NR_D1 = tregister($04070001);
+ NR_S4 = tregister($04060002);
+-NR_S5 = tregister($04060002);
++NR_S5 = tregister($04060022);
+ NR_D2 = tregister($04070002);
+ NR_S6 = tregister($04060003);
+-NR_S7 = tregister($04060003);
++NR_S7 = tregister($04060023);
+ NR_D3 = tregister($04070003);
+ NR_S8 = tregister($04060004);
+-NR_S9 = tregister($04060004);
++NR_S9 = tregister($04060024);
+ NR_D4 = tregister($04070004);
+ NR_S10 = tregister($04060005);
+-NR_S11 = tregister($04060005);
++NR_S11 = tregister($04060025);
+ NR_D5 = tregister($04070005);
+ NR_S12 = tregister($04060006);
+-NR_S13 = tregister($04060006);
++NR_S13 = tregister($04060026);
+ NR_D6 = tregister($04070006);
+ NR_S14 = tregister($04060007);
+-NR_S15 = tregister($04060007);
++NR_S15 = tregister($04060027);
+ NR_D7 = tregister($04070007);
+ NR_S16 = tregister($04060008);
+-NR_S17 = tregister($04060008);
++NR_S17 = tregister($04060028);
+ NR_D8 = tregister($04070008);
+ NR_S18 = tregister($04060009);
+-NR_S19 = tregister($04060009);
++NR_S19 = tregister($04060029);
+ NR_D9 = tregister($04070009);
+ NR_S20 = tregister($0406000A);
+-NR_S21 = tregister($0406000A);
++NR_S21 = tregister($0406002A);
+ NR_D10 = tregister($0407000A);
+ NR_S22 = tregister($0406000B);
+-NR_S23 = tregister($0406000B);
++NR_S23 = tregister($0406002B);
+ NR_D11 = tregister($0407000B);
+ NR_S24 = tregister($0406000C);
+-NR_S25 = tregister($0406000C);
++NR_S25 = tregister($0406002C);
+ NR_D12 = tregister($0407000C);
+ NR_S26 = tregister($0406000D);
+-NR_S27 = tregister($0406000D);
++NR_S27 = tregister($0406002D);
+ NR_D13 = tregister($0407000D);
+ NR_S28 = tregister($0406000E);
+-NR_S29 = tregister($0406000E);
++NR_S29 = tregister($0406002E);
+ NR_D14 = tregister($0407000E);
+ NR_S30 = tregister($0406000F);
+-NR_S31 = tregister($0406000F);
++NR_S31 = tregister($0406002F);
+ NR_D15 = tregister($0407000F);
+ NR_D16 = tregister($04070010);
+ NR_D17 = tregister($04070011);
+Index: fpc-2.6.0/fpcsrc/compiler/arm/cpupara.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/cpupara.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/cpupara.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -44,9 +44,9 @@
+           function create_varargs_paraloc_info(p : tabstractprocdef; varargspara:tvarargsparalist):longint;override;
+           function get_funcretloc(p : tabstractprocdef; side: tcallercallee; def: tdef): tcgpara;override;
+          private
+-          procedure init_values(var curintreg, curfloatreg, curmmreg: tsuperregister; var cur_stack_offset: aword);
++          procedure init_values(var curintreg, curfloatreg, curmmreg: tsuperregister; var cur_stack_offset: aword; var sparesinglereg: tregister);
+           function create_paraloc_info_intern(p : tabstractprocdef; side: tcallercallee; paras: tparalist;
+-            var curintreg, curfloatreg, curmmreg: tsuperregister; var cur_stack_offset: aword):longint;
++            var curintreg, curfloatreg, curmmreg: tsuperregister; var cur_stack_offset: aword; var sparesinglereg: tregister; isvariadic: boolean):longint;
+           procedure create_funcretloc_info(p : tabstractprocdef; side: tcallercallee);
+        end;
+ 
+@@ -110,7 +110,7 @@
+       end;
+ 
+ 
+-    function getparaloc(calloption : tproccalloption; p : tdef) : tcgloc;
++    function getparaloc(calloption : tproccalloption; p : tdef; isvariadic: boolean) : tcgloc;
+       begin
+          { Later, the LOC_REFERENCE is in most cases changed into LOC_REGISTER
+            if push_addr_param for the def is true
+@@ -119,11 +119,15 @@
+             orddef:
+               getparaloc:=LOC_REGISTER;
+             floatdef:
+-              if (calloption in [pocall_cdecl,pocall_cppdecl,pocall_softfloat]) or
++              if (target_info.abi = abi_eabihf) and
++                 (not isvariadic) then
++                getparaloc:=LOC_MMREGISTER
++              else if (calloption in [pocall_cdecl,pocall_cppdecl,pocall_softfloat]) or
+                  (cs_fp_emulation in current_settings.moduleswitches) or
+-                 (current_settings.fputype in [fpu_vfpv2,fpu_vfpv3]) then
++                 (current_settings.fputype in [fpu_vfpv2,fpu_vfpv3,fpu_vfpv3_d16]) then
+                 { the ARM eabi also allows passing VFP values via VFP registers,
+-                  but at least neither Mac OS X nor Linux seems to do that }
++                  but Mac OS X doesn't seem to do that and linux only does it if
++                  built with the "-mfloat-abi=hard" option }
+                 getparaloc:=LOC_REGISTER
+               else
+                 getparaloc:=LOC_FPUREGISTER;
+@@ -213,17 +217,18 @@
+       end;
+ 
+ 
+-    procedure tarmparamanager.init_values(var curintreg, curfloatreg, curmmreg: tsuperregister; var cur_stack_offset: aword);
++    procedure tarmparamanager.init_values(var curintreg, curfloatreg, curmmreg: tsuperregister; var cur_stack_offset: aword; var sparesinglereg: tregister);
+       begin
+         curintreg:=RS_R0;
+         curfloatreg:=RS_F0;
+         curmmreg:=RS_D0;
+         cur_stack_offset:=0;
++        sparesinglereg := NR_NO;
+       end;
+ 
+ 
+     function tarmparamanager.create_paraloc_info_intern(p : tabstractprocdef; side: tcallercallee; paras: tparalist;
+-        var curintreg, curfloatreg, curmmreg: tsuperregister; var cur_stack_offset: aword):longint;
++        var curintreg, curfloatreg, curmmreg: tsuperregister; var cur_stack_offset: aword; var sparesinglereg: tregister; isvariadic: boolean):longint;
+ 
+       var
+         nextintreg,nextfloatreg,nextmmreg : tsuperregister;
+@@ -302,7 +307,7 @@
+                   paralen := paradef.size
+                 else
+                   paralen := tcgsize2size[def_cgsize(paradef)];
+-                loc := getparaloc(p.proccalloption,paradef);
++                loc := getparaloc(p.proccalloption,paradef,isvariadic);
+                 if (paradef.typ in [objectdef,arraydef,recorddef]) and
+                   not is_special_array(paradef) and
+                   (hp.varspez in [vs_value,vs_const]) then
+@@ -349,7 +354,7 @@
+                     LOC_REGISTER:
+                       begin
+                         { align registers for eabi }
+-                        if (target_info.abi=abi_eabi) and
++                        if (target_info.abi in [abi_eabi,abi_eabihf]) and
+                            firstparaloc and
+                            (paradef.alignment=8) then
+                           begin
+@@ -405,6 +410,52 @@
+                             end;
+                           end;
+                       end;
++                    LOC_MMREGISTER:
++                      begin
++                        if (nextmmreg<=RS_D7) or
++                           ((paraloc^.size = OS_F32) and
++                            (sparesinglereg<>NR_NO)) then
++                          begin
++                            paraloc^.loc:=LOC_MMREGISTER;
++                            case paraloc^.size of
++                              OS_F32:
++                                if sparesinglereg = NR_NO then
++                                  begin
++                                    paraloc^.register:=newreg(R_MMREGISTER,nextmmreg,R_SUBFS);
++                                    sparesinglereg:=newreg(R_MMREGISTER,nextmmreg-RS_S0+RS_S1,R_SUBFS);
++                                    inc(nextmmreg);
++                                  end
++                                else
++                                  begin
++                                    paraloc^.register:=sparesinglereg;
++                                    sparesinglereg := NR_NO;
++                                  end;
++                              OS_F64:
++                                begin
++                                  paraloc^.register:=newreg(R_MMREGISTER,nextmmreg,R_SUBFD);
++                                  inc(nextmmreg);
++                                end;
++                              else
++                                internalerror(2012031601);
++                            end;
++                          end
++                        else
++                          begin
++                            { once a floating point parameters has been placed
++                            on the stack we must not pass any more in vfp regs
++                            even if there is a single precision register still
++                            free}
++                            sparesinglereg := NR_NO;
++                            { LOC_REFERENCE always contains everything that's left }
++                            paraloc^.loc:=LOC_REFERENCE;
++                            paraloc^.size:=int_cgsize(paralen);
++                            if (side=callerside) then
++                              paraloc^.reference.index:=NR_STACK_POINTER_REG;
++                            paraloc^.reference.offset:=stack_offset;
++                            inc(stack_offset,align(paralen,4));
++                            paralen:=0;
++                         end;
++                      end;
+                     LOC_REFERENCE:
+                       begin
+                         if push_addr_param(hp.varspez,paradef,p.proccalloption) then
+@@ -415,7 +466,7 @@
+                         else
+                           begin
+                             { align stack for eabi }
+-                            if (target_info.abi=abi_eabi) and
++                            if (target_info.abi in [abi_eabi,abi_eabihf]) and
+                                firstparaloc and
+                                (paradef.alignment=8) then
+                               stack_offset:=align(stack_offset,8);
+@@ -499,9 +550,28 @@
+         { Return in FPU register? }
+         if def.typ=floatdef then
+           begin
+-            if (p.proccalloption in [pocall_softfloat]) or
++            if target_info.abi = abi_eabihf then
++              begin
++                paraloc^.loc:=LOC_MMREGISTER;
++                case retcgsize of
++                  OS_64,
++                  OS_F64:
++                    begin
++                      paraloc^.register:=NR_MM_RESULT_REG;
++                    end;
++                  OS_32,
++                  OS_F32:
++                    begin
++                      paraloc^.register:=NR_S0;
++                    end;
++                  else
++                    internalerror(2012032501);
++                end;
++                paraloc^.size:=retcgsize;
++              end
++            else if (p.proccalloption in [pocall_softfloat]) or
+                (cs_fp_emulation in current_settings.moduleswitches) or
+-               (current_settings.fputype in [fpu_vfpv2,fpu_vfpv3]) then
++               (current_settings.fputype in [fpu_vfpv2,fpu_vfpv3,fpu_vfpv3_d16]) then
+               begin
+                 case retcgsize of
+                   OS_64,
+@@ -563,10 +633,11 @@
+       var
+         cur_stack_offset: aword;
+         curintreg, curfloatreg, curmmreg: tsuperregister;
++        sparesinglereg:tregister;
+       begin
+-        init_values(curintreg,curfloatreg,curmmreg,cur_stack_offset);
++        init_values(curintreg,curfloatreg,curmmreg,cur_stack_offset,sparesinglereg);
+ 
+-        result:=create_paraloc_info_intern(p,side,p.paras,curintreg,curfloatreg,curmmreg,cur_stack_offset);
++        result:=create_paraloc_info_intern(p,side,p.paras,curintreg,curfloatreg,curmmreg,cur_stack_offset,sparesinglereg,false);
+ 
+         create_funcretloc_info(p,side);
+      end;
+@@ -576,13 +647,14 @@
+       var
+         cur_stack_offset: aword;
+         curintreg, curfloatreg, curmmreg: tsuperregister;
++        sparesinglereg:tregister;
+       begin
+-        init_values(curintreg,curfloatreg,curmmreg,cur_stack_offset);
++        init_values(curintreg,curfloatreg,curmmreg,cur_stack_offset,sparesinglereg);
+ 
+-        result:=create_paraloc_info_intern(p,callerside,p.paras,curintreg,curfloatreg,curmmreg,cur_stack_offset);
++        result:=create_paraloc_info_intern(p,callerside,p.paras,curintreg,curfloatreg,curmmreg,cur_stack_offset,sparesinglereg,true);
+         if (p.proccalloption in [pocall_cdecl,pocall_cppdecl]) then
+           { just continue loading the parameters in the registers }
+-          result:=create_paraloc_info_intern(p,callerside,varargspara,curintreg,curfloatreg,curmmreg,cur_stack_offset)
++          result:=create_paraloc_info_intern(p,callerside,varargspara,curintreg,curfloatreg,curmmreg,cur_stack_offset,sparesinglereg,true)
+         else
+           internalerror(200410231);
+       end;
+Index: fpc-2.6.0/fpcsrc/compiler/systems/i_linux.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/systems/i_linux.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/systems/i_linux.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -534,6 +534,70 @@
+             abi : abi_default
+           );
+ 
++{$ifdef FPC_ARMHF}
++       system_arm_linux_info : tsysteminfo =
++          (
++            system       : system_arm_Linux;
++            name         : 'Linux for ARMHF';
++            shortname    : 'Linux';
++            flags        : [tf_needs_symbol_size,tf_needs_symbol_type,tf_files_case_sensitive,
++                            tf_requires_proper_alignment,
++                            tf_smartlink_sections,tf_smartlink_library,tf_has_winlike_resources];
++            cpu          : cpu_arm;
++            unit_env     : 'LINUXUNITS';
++            extradefines : 'UNIX;HASUNIX;CPUARMHF';
++            exeext       : '';
++            defext       : '.def';
++            scriptext    : '.sh';
++            smartext     : '.sl';
++            unitext      : '.ppu';
++            unitlibext   : '.ppl';
++            asmext       : '.s';
++            objext       : '.o';
++            resext       : '.res';
++            resobjext    : '.or';
++            sharedlibext : '.so';
++            staticlibext : '.a';
++            staticlibprefix : 'libp';
++            sharedlibprefix : 'lib';
++            sharedClibext : '.so';
++            staticClibext : '.a';
++            staticClibprefix : 'lib';
++            sharedClibprefix : 'lib';
++            importlibprefix : 'libimp';
++            importlibext : '.a';
++            Cprefix      : '';
++            newline      : #10;
++            dirsep       : '/';
++            assem        : as_gas;
++            assemextern  : as_gas;
++            link         : nil;
++            linkextern   : nil;
++            ar           : ar_gnu_ar;
++            res          : res_elf;
++            dbg          : dbg_stabs;
++            script       : script_unix;
++            endian       : endian_little;
++            alignment    :
++              (
++                procalign       : 4;
++                loopalign       : 4;
++                jumpalign       : 0;
++                constalignmin   : 0;
++                constalignmax   : 8;
++                varalignmin     : 0;
++                varalignmax     : 8;
++                localalignmin   : 4;
++                localalignmax   : 8;
++                recordalignmin  : 0;
++                recordalignmax  : 8;
++                maxCrecordalign : 8
++              );
++            first_parm_offset : 8;
++            stacksize    : 8*1024*1024;
++            abi : abi_eabihf
++          );
++{$else FPC_ARMHF}
+ {$ifdef FPC_ARMEL}
+        system_arm_linux_info : tsysteminfo =
+           (
+@@ -726,6 +790,7 @@
+           );
+ {$endif FPC_ARMEB}
+ {$endif FPC_ARMEL}
++{$endif FPC_ARMHF}
+ 
+        system_mips_linux_info : tsysteminfo =
+           (
+Index: fpc-2.6.0/fpcsrc/compiler/systems/t_linux.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/systems/t_linux.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/systems/t_linux.pas	2012-03-28 20:18:33.000000000 +0000
+@@ -185,11 +185,15 @@
+ {$endif powerpc64}
+ 
+ {$ifdef arm}
++{$ifdef FPC_ARMHF}
++     defdynlinker:='/lib/arm-linux-gnueabihf/ld-linux.so.3';
++{$else FPC_ARMHF}
+ {$ifdef FPC_ARMEL}
+      defdynlinker:='/lib/ld-linux.so.3';
+ {$else FPC_ARMEL}
+      defdynlinker:='/lib/ld-linux.so.2';
+ {$endif FPC_ARMEL}
++{$endif FPC_ARMHF}
+ {$endif arm}
+ 
+ {$ifdef mips}
+Index: fpc-2.6.0/fpcsrc/compiler/options.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/options.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/options.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -2660,6 +2660,11 @@
+     undef_system_macro('FPC_ABI_'+abi2str[abi]);
+   def_system_macro('FPC_ABI_'+abi2str[target_info.abi]);
+ 
++  { Define FPC_ABI_EABI in addition to FPC_ABI_EABIHF on EABI VFP hardfloat
++    systems since most code needs to behave the same on both}
++  if target_info.abi = abi_eabihf then
++    def_system_macro('FPC_ABI_EABI');
++
+   { Write logo }
+   if option.ParaLogo then
+     option.writelogo;
+@@ -2823,6 +2828,24 @@
+     end;
+ 
+ {$ifdef arm}
++  if target_info.abi = abi_eabihf then
++    begin
++      if not(option.FPUSetExplicitly) then
++        begin
++          init_settings.fputype:=fpu_vfpv3_d16
++        end
++      else
++        begin
++          if not (init_settings.fputype in [fpu_vfpv2,fpu_vfpv3,fpu_vfpv3_d16]) then
++            begin
++              Message(option_illegal_fpu_eabihf);
++              StopOptions(1);
++            end;
++        end;
++    end;
++{$endif arm}
++
++{$ifdef arm}
+ { set default cpu type to ARMv6 for Darwin unless specified otherwise }
+ if (target_info.system=system_arm_darwin) then
+   begin
+@@ -2831,6 +2854,16 @@
+     if not option.OptCPUSetExplicitly then
+       init_settings.optimizecputype:=cpu_armv6;
+   end;
++
++{ set default cpu type to ARMv7 for ARMHF unless specified otherwise }
++if (target_info.abi = abi_eabihf) then
++  begin
++    if not option.CPUSetExplicitly then
++      init_settings.cputype:=cpu_armv7;
++    if not option.OptCPUSetExplicitly then
++      init_settings.optimizecputype:=cpu_armv7;
++  end;
++
+ {$endif arm}
+ 
+   { now we can define cpu and fpu type }
+Index: fpc-2.6.0/fpcsrc/compiler/msg/errore.msg
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/msg/errore.msg	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/msg/errore.msg	2012-03-28 20:18:04.000000000 +0000
+@@ -2811,7 +2811,7 @@ unit_u_indirect_crc_changed=10062_U_Indirect interface (objects/classes) CRC cha
+ #
+ #  Options
+ #
+-# 11050 is the last used one
++# 11051 is the last used one
+ #
+ option_usage=11000_O_$1 [options] <inputfile> [options]
+ # BeginOfTeX
+@@ -2944,6 +2944,8 @@ option_invalid_iphoneos_deployment_target=11050_E_Invalid value for IPHONEOS_DEP
+ % XY.Z or XY.Z.AB with X, Y,Z , A and B all digits from 0-9.
+ % In case of iOS, it has to be X.Z.A, where X, Z and A can all be either 1 or 2
+ % digits from 0-9.
++option_illegal_fpu_eabihf=11051_E_You must use a FPU type of VFPV2, VFPV3 or VFPV3_D16 when using the EABIHF ABI target
++% The EABIHF (VFP hardfloat) ABI target can only be used with VFP FPUs.
+ %\end{description}
+ # EndOfTeX
+
+Index: fpc-2.6.0/fpcsrc/compiler/arm/agarmgas.pas
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/arm/agarmgas.pas	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/arm/agarmgas.pas	2012-03-28 20:18:04.000000000 +0000
+@@ -80,11 +80,19 @@
+         result:=inherited MakeCmdLine;
+         if (current_settings.fputype = fpu_soft) then
+           result:='-mfpu=softvfp '+result;
+-
++        if (current_settings.fputype = fpu_vfpv2) then
++          result:='-mfpu=vfpv2 '+result;
++        if (current_settings.fputype = fpu_vfpv3) then
++          result:='-mfpu=vfpv3 '+result;
++        if (current_settings.fputype = fpu_vfpv3_d16) then
++          result:='-mfpu=vfpv3-d16 '+result;
+         if current_settings.cputype = cpu_cortexm3 then
+           result:='-mcpu=cortex-m3 -mthumb -mthumb-interwork '+result;
+         if current_settings.cputype = cpu_armv7m then
+           result:='-march=armv7m -mthumb -mthumb-interwork '+result;
++        if target_info.abi = abi_eabihf then
++          { options based on what gcc uses on debian armhf }
++          result:='-mfloat-abi=hard -meabi=5 '+result;
+       end;
+ 
+     procedure TArmGNUAssembler.WriteExtraHeader;
+Index: fpc-2.6.0/fpcsrc/compiler/fpcdefs.inc
+===================================================================
+--- fpc-2.6.0.orig/fpcsrc/compiler/fpcdefs.inc	2012-03-28 20:18:02.000000000 +0000
++++ fpc-2.6.0/fpcsrc/compiler/fpcdefs.inc	2012-03-28 20:18:04.000000000 +0000
+@@ -111,13 +111,17 @@
+   {$define cpuneedsdiv32helper}
+   {$define cputargethasfixedstack}
+   { inherit FPC_ARMEL? }
+-  {$if defined(CPUARMEL) and not(defined(FPC_OARM)) and not(defined(FPC_ARMEB))}
++  {$if defined(CPUARMEL) and not(defined(FPC_OARM)) and not(defined(FPC_ARMEB)) and not(defined(FPC_ARMHF))}
+     {$define FPC_ARMEL}
+   {$endif}
+   { inherit FPC_ARMEB? }
+-  {$if defined(CPUARMEB) and not(defined(FPC_OARM)) and not(defined(FPC_ARMEL))}
++  {$if defined(CPUARMEB) and not(defined(FPC_OARM)) and not(defined(FPC_ARMEL)) and not(defined(FPC_ARMHF))}
+     {$define FPC_ARMEB}
+   {$endif}
++  { inherit FPC_ARMHF? }
++  {$if defined(CPUARMHF) and not(defined(FPC_OARM)) and not(defined(FPC_ARMEL)) and not(defined(FPC_ARMEB))}
++    {$define FPC_ARMHF}
++  {$endif}
+ {$endif arm}
+ 
+ {$ifdef m68k}

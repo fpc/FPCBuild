@@ -5,3 +5,15 @@ armhf.diff
 regenerate_messages.diff
 fix-FPCDIR-in-fpcmake.diff
 armhf-linker-path.diff
+relpath.patch
+fix-spell-errors.patch
+rename-instantfpc-to-ifpc.patch
+armhf-build-with-2.6.0.diff
+add-a-new-directive-CFGDIR-to-configuration-file.patch
+use-bfd-explicitly.diff
+kfreebsd-amd64_bootstrap.patch
+find_iconv_in_libc_on_debian.patch
+dont_build_fastcgi_fcl-web_and_fppkg_on_kfreebsd.patch
+fix-733618.patch
+change-path-of-localization-files-to-fit-Debian-standar.patch
+fix-encoding-of-localization-files-to-be-utf8.patch

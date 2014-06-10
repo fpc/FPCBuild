@@ -1,0 +1,32 @@
+Description: Use ld.bfd explicitly
+ Freepascal is broken with ld.gold, previously we conflicted with binutils-gold
+ but that makes us uninstallable with the new binutils.
+ 
+ So instead we take the approach of patching fpc to use ld.bfd directly
+Author: Peter Michael Green <plugwash@debian.org>
+Bug-Debian: http://bugs.debian.org/620815
+Bug-Debian: http://bugs.debian.org/624525
+Bug-Debian: http://bugs.debian.org/717651
+
+Index: fpc-2.6.2/fpcsrc/compiler/systems/t_linux.pas
+===================================================================
+--- fpc-2.6.2.orig/fpcsrc/compiler/systems/t_linux.pas	2013-07-23 21:41:40.000000000 +0000
++++ fpc-2.6.2/fpcsrc/compiler/systems/t_linux.pas	2013-07-24 00:38:25.000000000 +0000
+@@ -1031,7 +1031,7 @@
+   if HasExports then
+     cmdstr:=cmdstr+' -E';
+ 
+-  success:=DoExec(FindUtil(utilsprefix+BinStr),CmdStr,true,false);
++  success:=DoExec(FindUtil(utilsprefix+BinStr)+'.bfd',CmdStr,true,false);
+ 
+   { Create external .dbg file with debuginfo }
+   if success and (cs_link_separate_dbg_file in current_settings.globalswitches) then
+@@ -1086,7 +1090,7 @@
+   Replace(cmdstr,'$INIT',InitStr);
+   Replace(cmdstr,'$FINI',FiniStr);
+   Replace(cmdstr,'$SONAME',SoNameStr);
+-  success:=DoExec(FindUtil(utilsprefix+binstr),cmdstr,true,false);
++  success:=DoExec(FindUtil(utilsprefix+binstr)+'.bfd',cmdstr,true,false);
+ 
+ { Strip the library ? }
+   if success and (cs_link_strip in current_settings.globalswitches) then

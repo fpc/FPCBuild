@@ -1,0 +1,5 @@
+# Lintian believes these text files are pre-build Shockwave Flash (SWF)
+# or Flash Video (FLV) files, which is definitely not true.
+# Filing bug in lintian, but until that time, override
+fpc source: source-is-missing install/doc/cwsdpmi.txt
+fpc source: source-is-missing install/doc/cwsparam.txt

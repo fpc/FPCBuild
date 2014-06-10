@@ -2,7 +2,6 @@
 # debian/rules for Free Pascal
 
 DEB_PACKAGE_NAME = fpc
-DEB_DH_BUILDDEB_ARGS := -- -Z bzip2
 export DH_ALWAYS_EXCLUDE := COPYING:LICENSE
 export LANG:=C
 
@@ -39,6 +38,9 @@ endif
 ifeq ($(CPU_TARGET),powerpc)
 PPSUF=ppc
 endif
+ifeq ($(CPU_TARGET),powerpc64)
+PPSUF=ppc64
+endif
 ifeq ($(CPU_TARGET),alpha)
 PPSUF=axp
 endif
@@ -57,7 +59,9 @@ endif
 
 PPNEW=$(PPPRE)$(PPSUF)
 
-FPCTARGET=$(CPU_TARGET)-linux
+OS_TARGET=$(subst kfreebsd,freebsd,$(shell dpkg-architecture -qDEB_HOST_ARCH_OS))
+
+FPCTARGET=$(CPU_TARGET)-$(OS_TARGET)
 # Get version information from changelog file
 DEB_VERSION:=$(shell dpkg-parsechangelog | grep '^Version:' | cut -f 2 -d ' ')
 DEB_UPSTREAM_VERSION:=$(shell echo $(DEB_VERSION) | cut -f 1 -d -)
@@ -67,8 +71,7 @@ ifndef PACKAGESUFFIX
 export PACKAGESUFFIX=-${DEB_UPSTREAM_MAIN_VERSION}
 endif
 # Get directories
-BUILD_DIR:=$(shell pwd)
-INSTALL_DIR=${BUILD_DIR}/debian/tmp
+INSTALL_DIR=${CURDIR}/debian/tmp
 BIN_DIR=${INSTALL_DIR}/usr/bin
 LIB_DIR=${INSTALL_DIR}/usr/lib/${DEB_PACKAGE_NAME}/${DEB_UPSTREAM_MAIN_VERSION}
 DOC_DIR=${INSTALL_DIR}/usr/share/doc
@@ -88,14 +91,16 @@ endif
 RM:=rm -rf
 # Get fpcmake from path if none is specified.
 ifndef FPCMAKE
-FPCMAKE=fpcmake
+FPCMAKE=fpcsrc/utils/fpcm/fpcmake
 endif
 # Undefine FPCDIR if it was set
 unexport FPCDIR
-NEWPP=$(BUILD_DIR)/fpcsrc/compiler/$(PPNEW)
-NEWFPDOC=$(BUILD_DIR)/fpcsrc/utils/fpdoc/fpdoc
+NEWPP=$(CURDIR)/fpcsrc/compiler/$(PPNEW)
+NEWFPDOC=$(CURDIR)/fpcsrc/utils/fpdoc/fpdoc
 # Set default compilation options
-BUILDOPTS=PP=$(NEWPP)
+DEB_BUILD_FPC_OPT=debian/deb-build-fpc.cfg
+DEB_HOST_FPC_OPT=debian/deb-host-fpc.cfg
+BUILDOPTS=PP=$(NEWPP) OPT='@${CURDIR}/${DEB_HOST_FPC_OPT}'
 ifdef CROSSOPT
 BUILDOPTS+= CROSSOPT=${CROSSOPT}
 endif
@@ -103,18 +108,35 @@ INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP)
 
 export GDBLIBDIR=/usr/lib
 
+ifeq ($(OS_TARGET),freebsd)
+#exclude some stuff that doesn't appear to be built on kfreebsd
+#long term it might be an idea to review this list and see if there
+#is actually a way to get some of this stuff to build on kfreebsd
+#but for now getting stuff bootstrapped is the aim
+  DH_INSTALL_EXCLUDE_OPTS=-Xgrab_vcsa -Xuuid -Xopencl -Xptc -Xdbus -Xldap -Xproj4 -Xlibsee -Xlua -Xcdrom -Xnewt -Xa52 -Xdts -Xmad -Xmodplug -Xoggvorbis -Xopenal -Xdoc/fp -Xfpclasschart -Xmakeskel -Xunitdiff -Xfcl-web -Xfastcgi -Xzorba -Xfppkg
+else
+  DH_INSTALL_EXCLUDE_OPTS=
+endif
+
 #specify arm variant explicitly so we can use a starting
 #compiler from a different arm variant (for bootstrapping)
 ifeq ($(CPU_TARGET),arm)
   DEBIANARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
   ifeq ($(DEBIANARCH),arm)
-    CYCLEOPTS := OPT='-dFPC_OARM'
+    CYCLEOPTS:=OPT='@${CURDIR}/${DEB_HOST_FPC_OPT} -dFPC_OARM'
   else
-    CYCLEOPTS := OPT='-dFPC_$(DEBIANARCH)'
+    CYCLEOPTS:=OPT='@${CURDIR}/${DEB_HOST_FPC_OPT} -dFPC_$(DEBIANARCH)'
   endif
 else
-  CYCLEOPTS=
+  CYCLEOPTS:=OPT='@${CURDIR}/${DEB_HOST_FPC_OPT}'
 endif
+# Set default compilation options
+DEB_HOST_MULTIARCH ?=$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+DEB_BUILD_MULTIARCH ?=$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH)
+
+FPMAKE_BUILDOPTS=FPMAKE_SKIP_CONFIG='-n @${CURDIR}/${DEB_BUILD_FPC_OPT}'
+
+LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS | sed -e 's/-Wl,//g' -e 's/,/ /g')
 
 #export DH_VERBOSE=1
 
@@ -122,7 +144,7 @@ endif
 # Clean
 #
 
-clean: configure clean-patched
+clean: clean-patched clean-make-files
 	${RM} build-arch-stamp install-arch-stamp arrange-arch-stamp configure-stamp
 	${RM} install-man-stamp
 	${RM} build-doc-stamp install-doc-stamp
@@ -137,7 +159,6 @@ clean: configure clean-patched
 	${RM} debian/*.prerm
 	${RM} debian/*.templates
 	${RM} debian/README*.Debian
-	${RM} debian/copyright
 	${RM} debian/fpc-depends
 	${RM} debian-files-stamp
 	${RM} debian/files debian/docs debian/dirs debian/*.files debian/*.docs debian/*.examples debian/*.postinst debian/*.postrm
@@ -151,38 +172,54 @@ clean: configure clean-patched
 	${RM} fpcdocs/ref.haux
 	${RM} fpcdocs/ref.hind
 	${RM} fpcdocs/user.haux
+	#remove build config files
+	rm -f $(DEB_BUILD_FPC_OPT)
+	rm -f $(DEB_HOST_FPC_OPT)
 	dh_clean
 
-clean-patched:
+clean-patched: make-files
 	@echo "--- Cleaning"
 	dh_testdir
-	dh_testroot
 	$(MAKE) -C fpcsrc compiler_distclean
 	$(MAKE) -C fpcsrc rtl_distclean
 	$(MAKE) -C fpcsrc packages_distclean
 	$(MAKE) -C fpcsrc ide_distclean
 	$(MAKE) -C fpcsrc utils_distclean
 	$(MAKE) -C fpcdocs clean
-	find -regex '.*\.\(a\|or?\|so\.*\|ppu\)' -delete
-	dh_prep
+	find -regex '.*\.\(a\|or?\|so\.*\|ppu\|compiled\)' -delete
 
 ###################
 # Debian files
 #
 
 debian-files: debian-files-stamp
-debian-files-stamp:
+debian-files-stamp:debian/fixdeb debian/*.in
 	@echo "--- Creating/fixing *.install files"
-	/bin/bash debian/fixdeb debian $(FPCTARGET) $(PPNEW)
+	DEB_SUBST_PACKAGESUFFIX=${PACKAGESUFFIX} \
+	DEB_SUBST_PPCBIN=${PPNEW} \
+	DEB_SUBST_TARGET=${FPCTARGET} \
+	$< debian/*.in
 	touch debian-files-stamp
+
+make-files: make-files-stamp
+make-files-stamp:${FPCMAKE}
+	# Regenrate make files using fpcmake.
+	find * -name Makefile.fpc -exec ${FPCMAKE} -Tall -q '{}' ';'
+	touch $@
+
+clean-make-files:
+	# Remove auto-generated make files.
+	find * -name Makefile.fpc -execdir sh -c '${RM} $$(basename {} .fpc)' ';'
+	${RM} make-files-stamp
 
 ###################
 # Arch packages
 #
 
-configure: configure-stamp
+configure: debian-files clean-make-files make-files configure-stamp
 configure-stamp:
 	dh_testdir
+	dh_prep
 	# Remove auto-generated version file.
 	${RM} fpcsrc/compiler/version.inc
 	# Add version.inc:
@@ -190,7 +227,7 @@ configure-stamp:
 	touch configure-stamp
 
 build-arch: debian-files configure build-arch-stamp
-build-arch-stamp:
+build-arch-stamp: ${DEB_BUILD_FPC_OPT} ${DEB_HOST_FPC_OPT}
 	@echo "--- Building"
 	dh_testdir
 	# First make a new Compiler using a make cycle
@@ -198,9 +235,9 @@ build-arch-stamp:
 	# Then build RTL using new compiler
 	$(MAKE) -C fpcsrc rtl_clean rtl_smart $(BUILDOPTS)
 	# Finally build packages and tools using new compiler and new RTL
-	$(MAKE) -C fpcsrc packages_smart $(BUILDOPTS)
+	$(MAKE) -C fpcsrc packages_smart ${BUILDOPTS} ${FPMAKE_BUILDOPTS}
 	$(MAKE) -C fpcsrc ide_all $(BUILDOPTS)
-	$(MAKE) -C fpcsrc utils_all $(BUILDOPTS)
+	$(MAKE) -C fpcsrc utils_all ${BUILDOPTS}
 	touch build-arch-stamp
 
 install-arch: build-arch install-arch-stamp
@@ -219,6 +256,7 @@ install-arch-stamp:
 	$(MAKE) -C fpcsrc packages_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc ide_distinstall $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-ide/${DEB_UPSTREAM_MAIN_VERSION}
 	$(MAKE) -C fpcsrc utils_distinstall $(INSTALLOPTS)
+	$(MAKE) -C fpcsrc/utils/fpdoc/intl install $(INSTALLOPTS)
 	${MV} -t ${LIB_DIR} ${INSTALL_DIR}/usr/lib/fpc/lexyacc
 	${CP} -t  ${BIN_DIR} debian/fpc-depends
 	# Copy examples to the correct doc dir
@@ -231,7 +269,7 @@ install-arch-stamp:
 	$(MAKE) -C install/doc installdoc $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-compiler/${DEB_UPSTREAM_MAIN_VERSION}
 	# Install fpdoc latex styles
 	${CP} -t ${STY_DIR} \
-		${BUILD_DIR}/fpcdocs/*.sty
+		${CURDIR}/fpcdocs/*.sty
 	# Install lintian override files
 	set -x -e ; cd debian/overrides ; for PACKAGE in * ; do \
 	  if [ -d ../$${PACKAGE}${PACKAGESUFFIX} ] ; \
@@ -257,7 +295,7 @@ arrange-arch: install-arch arrange-arch-stamp install-man
 arrange-arch-stamp:
 	dh_testdir
 	dh_testroot
-	dh_install -s --sourcedir=debian/tmp --list-missing
+	dh_install -s --sourcedir=debian/tmp --list-missing $(DH_INSTALL_EXCLUDE_OPTS)
 	touch arrange-arch-stamp
 
 build-indep:
@@ -267,8 +305,8 @@ install-indep:
 install-man: install-man-stamp
 install-man-stamp:
 	# Install man pages
-	$(MAKE) -C install/man installman $(INSTALLOPTS) NO_MAN_COMPRESS=1
-	for s in ${INSTALL_DIR}/usr/man/man[1-9] ; do cd $${s} && for f in *.[1-9] ; do ${MV} $${f} $${f%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${f#*.}" ; done ; done || true
+	$(MAKE) -C install/man installman $(INSTALLOPTS)
+	for s in ${INSTALL_DIR}/usr/man/man[1-9] ; do cd $${s} && ( gzip -d *.gz || true ) && for f in *.[1-9] ; do ${MV} $${f} $${f%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${f#*.}" ; done ; done || true
 	pod2man -c 'Free pascal for Debian GNU/Linux' debian/fpc-depends > debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
 	dh_installman -s
 	${RM} ${INSTALL_DIR}/usr/man
@@ -278,7 +316,7 @@ install-man-stamp:
 # Documentation
 #
 
-build-doc: debian-files build-doc-stamp
+build-doc: build-doc-stamp
 build-doc-stamp:
 	@echo "--- Building Documentation"
 	dh_testdir
@@ -292,22 +330,29 @@ install-doc-stamp:
 	dh_testdir
 	dh_testroot
 	${MAKE} -C fpcdocs ${DOCTYPE}install INSTALL_PREFIX=${INSTALL_DIR}/usr INSTALL_DOCDIR=${DOC_DIR}/fp-docs/${DEB_UPSTREAM_MAIN_VERSION}
+
+	# The following lines are taken from https://wiki.debian.org/dedup.debian.net
+	# Replace duplicate files with symlinks
+	rdfind -outputname /dev/null -makesymlinks true ${DOC_DIR}
+	# Fix those symlinks to make them relative
+	symlinks -r -s -c ${DOC_DIR}
+
 	touch install-doc-stamp
 
 ###################
 # Source
 #
 
-install-source: install-source-stamp
-install-source-stamp: 
+install-source: clean-patched install-source-stamp
+install-source-stamp:
 	@echo "--- Cleaning the tree and copying the source code"
 	dh_testdir
 	dh_testroot
 	${MKDIR} ${SRC_DIR}
 	${CP} -t ${SRC_DIR} \
-	$(BUILD_DIR)/fpcsrc/compiler \
-	$(BUILD_DIR)/fpcsrc/packages \
-	$(BUILD_DIR)/fpcsrc/rtl
+		$(CURDIR)/fpcsrc/compiler \
+		$(CURDIR)/fpcsrc/packages \
+		$(CURDIR)/fpcsrc/rtl
 	touch install-source-stamp
 
 ###################
@@ -323,7 +368,13 @@ binary: binary-arch binary-indep
 # Deb building
 #
 
-binary-indep: clean-patched build-doc install-doc install-source debian-files
+configure-indep: configure-indep-stamp configure
+configure-indep-stamp:
+	@echo -- Configure indep
+	dh_prep
+	touch configure-indep-stamp
+
+binary-indep: configure-indep install-doc install-source
 	@echo "--- Building: arch-indep packages"
 	dh_testdir
 	dh_testroot
@@ -353,7 +404,7 @@ ifeq (${DEB_BUILD},0)
 	done
 endif
 	dh_compress -i -X.pdf
-	dh_fixperms -i
+	dh_fixperms
 	dh_installdebconf -i
 	dh_installdeb -i
 	dh_gencontrol -i
@@ -370,7 +421,7 @@ binary-arch: arrange-arch
 	dh_installexamples -a
 	dh_strip -s
 	dh_compress -a
-	dh_fixperms -a
+	dh_fixperms
 	dh_installdebconf -a
 	dh_installdeb -a
 	dh_shlibdeps -s
@@ -381,7 +432,30 @@ binary-arch: arrange-arch
 .PHONY: build clean binary binary-arch \
 	binary-indep debian-files build-arch \
 	install install-indep install-arch \
-	configure
+	configure configure-indep make-files clean-make-files \
+	get-orig-source build-doc
 
 get-orig-source:
-	-uscan --upstream-version=0 --rename
+	-uscan --upstream-version=0 --rename --force-download
+
+debian/%:debian/fixdeb debian/changelog debian/%.in
+	DEB_SUBST_PACKAGESUFFIX=${PACKAGESUFFIX} \
+	DEB_SUBST_PPCBIN=${PPNEW} \
+	DEB_SUBST_TARGET=${FPCTARGET} \
+	$< --gen-control $@.in
+
+fpcsrc/utils/fpcm/fpcmake:fpcsrc/utils/fpcm/Makefile ${DEB_BUILD_FPC_OPT}
+	${MAKE} -C ${@D} OPT=@${CURDIR}/${DEB_BUILD_FPC_OPT}
+
+fpcsrc/utils/fpcm/Makefile:fpcsrc/utils/fpcm/Makefile.fpc
+	fpcmake -Tall -q $<
+
+${DEB_BUILD_FPC_OPT}:
+	echo '# FPC configuration file for build system tools' > $@
+	echo '-k${LDFLAGS}' >> $@
+	echo '-Fl/usr/lib/${DEB_BUILD_MULTIARCH}' >> $@
+
+${DEB_HOST_FPC_OPT}:
+	echo '# FPC configuration file for host system applications' > $@
+	echo '-k${LDFLAGS}' >> $@
+	echo '-Fl/usr/lib/${DEB_HOST_MULTIARCH}' >> $@

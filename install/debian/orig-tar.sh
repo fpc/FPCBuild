@@ -1,17 +1,36 @@
-#!/bin/sh -e
+#!/bin/sh -xe
 
-# called by uscan with '--upstream-version' <version> <file>
-TAR=$3
-DIR=fpcbuild-$2
+PACKAGE_NAME=fpc
+TMP_DIR=`/bin/mktemp -d -t ${PACKAGE_NAME}.XXXXXX` || exit 1
+ORIG_PATH=$(pwd)
 
-# clean up the upstream tarball
-tar -x -z -f $TAR
-tar -c -z -f $TAR --exclude '*.dll' --exclude '*.exe' --exclude '*.log' --exclude '*.o' $DIR
-rm -rf $DIR
+while test $# -gt 0
+do
+	case $1 in
+		--upstream-version)
+			shift
+			VERSION=$1
+			;;
+		*)
+			ORIG_SRC_TAR=$(readlink -m $1)
+			;;
+	esac
+	shift
+done
 
-# move to directory 'tarballs'
-if [ -r .svn/deb-layout ]; then
-  . .svn/deb-layout
-  mv $TAR $origDir
-  echo "moved $TAR to $origDir"
-fi
+ORIG_SRC_DIR=${PACKAGE_NAME}
+DEB_SRC_DIR=${PACKAGE_NAME}-${VERSION}+dfsg
+DEB_SRC_TAR=${PACKAGE_NAME}_${VERSION}+dfsg.orig.tar.gz
+
+cd ${TMP_DIR}
+tar -axf ${ORIG_SRC_TAR}
+mv ${ORIG_SRC_DIR}* ${DEB_SRC_DIR}
+cd ${DEB_SRC_DIR}
+find -name Makefile.fpc -execdir sh -c 'rm $(basename {} .fpc)' ';'
+find -regex '.*\.\(a\|or?\|so\.*\|ppu\|compiled\|exe\|dll\)' -delete
+find -name '*.pp' -exec chmod a-x {} ';'
+cd ..
+tar -acf ${DEB_SRC_TAR} ${DEB_SRC_DIR}
+cd ${ORIG_PATH}
+mv ${TMP_DIR}/${DEB_SRC_TAR} ../
+rm -rf ${TMP_DIR}

@@ -1,0 +1,71 @@
+This patch fixes evaluation of default value for FPCDIR. (Closes: bug#662814)
+
+Index: fpcbuild/fpcsrc/utils/fpcm/fpcmmain.pp
+===================================================================
+--- fpcbuild/fpcsrc/utils/fpcm/fpcmmain.pp	(revision 20644)
++++ fpcbuild/fpcsrc/utils/fpcm/fpcmmain.pp	(working copy)
+@@ -303,6 +303,46 @@
+       end;
+ 
+ 
++{$ifdef UNIX}
++{$ifndef NO_UNIX_UNIT}
++      function ReadLink(LinkName: ansistring; Depth: byte = 0): ansistring;
++      {
++        Read a link (where it points to)
++        @Param LinkName
++        @Param Depth
++          0 means raw link value (could be relative path)
++        1 means expanded full path and name to liked file
++        2..255 follow links recursively up to Depth level
++      }
++      var
++        LinkedFileName: PChar;
++        i: cInt;
++      begin
++        GetMem(LinkedFileName, PATH_MAX + 1);
++        Result := ExpandFileName(LinkName);
++        repeat
++          i := fpReadLink(PChar(Result), LinkedFileName, PATH_MAX);
++          if i >= 0 then begin
++            LinkedFileName[i] := #0;
++            if Depth > 0 then begin
++              Result := ExpandFileName(FileSearch(LinkedFileName, PathSep + ExtractFileDir(Result)));
++              Dec(Depth);
++            end else begin
++              Result := LinkedFileName;
++            end;
++          end;
++        until (i <= 0) or (Depth <= 0);
++        if i < 0 then begin
++          if FpGetErrNo <> ESysEINVAL then begin
++            Result := '';
++          end;
++        end;
++        FreeMem(LinkedFileName, PATH_MAX + 1);
++      end;
++{$endif UNIX}
++{$endif NO_UNIX_UNIT}
++
++
+     function posidx(const substr,s : string;idx:integer):integer;
+       var
+         i,j : integer;
+@@ -1203,7 +1243,7 @@
+            end;
+            if FileExists('/usr/local/bin/ppc' + ppcSuffix[cpu]) then
+             begin
+-              s:=ExtractFilePath({$ifdef ver1_0}ReadLink{$else}fpReadlink{$endif}('/usr/local/bin/ppc' + ppcSuffix[cpu]));
++              s:=ExtractFilePath(ReadLink('/usr/local/bin/ppc' + ppcSuffix[cpu], 255));
+               if s<>'' then
+                begin
+                  if s[length(s)]='/' then
+@@ -1215,7 +1255,7 @@
+             begin
+               if FileExists('/usr/bin/ppc' + ppcSuffix[cpu]) then
+                begin
+-                 s:=ExtractFilePath({$ifdef ver1_0}ReadLink{$else}fpReadLink{$endif}('/usr/bin/ppc' + ppcSuffix[cpu]));
++                 s:=ExtractFilePath(ReadLink('/usr/bin/ppc' + ppcSuffix[cpu], 255));
+                  if s<>'' then
+                   begin
+                     if s[length(s)]='/' then

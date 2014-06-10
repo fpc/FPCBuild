@@ -1,4 +1,5 @@
 /usr/share/doc/fp-units-db
+/usr/lib/fpc/${VERSION}/units/${TARGET}/dblib
 /usr/lib/fpc/${VERSION}/units/${TARGET}/mysql
 /usr/lib/fpc/${VERSION}/units/${TARGET}/ibase
 /usr/lib/fpc/${VERSION}/units/${TARGET}/postgres

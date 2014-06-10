@@ -1,6 +1,7 @@
 debian/tmp/usr/man/man1/chmcmd-${VERSION}.1
 debian/tmp/usr/man/man1/chmls-${VERSION}.1
 debian/tmp/usr/man/man1/fd2pascal-${VERSION}.1
+debian/tmp/usr/man/man1/ifpc-${VERSION}.1
 debian/tmp/usr/man/man1/fppkg-${VERSION}.1
 debian/tmp/usr/man/man1/bin2obj-${VERSION}.1
 debian/tmp/usr/man/man1/data2inc-${VERSION}.1
@@ -24,5 +25,6 @@ debian/tmp/usr/man/man1/pyacc-${VERSION}.1
 debian/tmp/usr/man/man1/rstconv-${VERSION}.1
 debian/tmp/usr/man/man1/fpdoc-${VERSION}.1
 debian/tmp/usr/man/man1/fpclasschart-${VERSION}.1
+debian/tmp/usr/man/man1/relpath-${VERSION}.1
 debian/tmp/usr/man/man5/fpcmake-${VERSION}.5
 debian/tmp/usr/man/man5/ptop-${VERSION}.cfg.5

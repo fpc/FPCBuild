@@ -1,0 +1,15 @@
+This patch fixes path to the dynamic linker for armhf architecture.
+
+Index: fpc-2.6.0.svn.new/fpcsrc/compiler/systems/t_linux.pas
+===================================================================
+--- fpc-2.6.0.svn.new.orig/fpcsrc/compiler/systems/t_linux.pas	2012-04-21 11:47:00.000000000 +0000
++++ fpc-2.6.0.svn.new/fpcsrc/compiler/systems/t_linux.pas	2012-04-21 12:10:16.000000000 +0000
+@@ -186,7 +186,7 @@
+ 
+ {$ifdef arm}
+ {$ifdef FPC_ARMHF}
+-     defdynlinker:='/lib/arm-linux-gnueabihf/ld-linux.so.3';
++     defdynlinker:='/lib/ld-linux-armhf.so.3';
+ {$else FPC_ARMHF}
+ {$ifdef FPC_ARMEL}
+      defdynlinker:='/lib/ld-linux.so.3';

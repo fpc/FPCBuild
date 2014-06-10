@@ -1,0 +1,49 @@
+This patch update compiler messages after adding armhf architecture support.
+
+diff --git a/fpcsrc/compiler/msgidx.inc b/fpcsrc/compiler/msgidx.inc
+index 4537489..d30b945 100644
+--- a/fpcsrc/compiler/msgidx.inc
++++ b/fpcsrc/compiler/msgidx.inc
+@@ -877,6 +877,7 @@ const
+   option_debug_external_unsupported=11048;
+   option_invalid_macosx_deployment_target=11049;
+   option_invalid_iphoneos_deployment_target=11050;
++  option_illegal_fpu_eabihf=11051;
+   wpo_cant_find_file=12000;
+   wpo_begin_processing=12001;
+   wpo_end_processing=12002;
+@@ -901,9 +902,9 @@ const
+   option_info=11024;
+   option_help_pages=11025;
+ 
+-  MsgTxtSize = 61832;
++  MsgTxtSize = 61926;
+ 
+   MsgIdxMax : array[1..20] of longint=(
+     24,90,314,103,85,54,111,23,202,63,
+-    51,20,1,1,1,1,1,1,1,1
++    52,20,1,1,1,1,1,1,1,1
+   );
+diff --git a/fpcsrc/compiler/msgtxt.inc b/fpcsrc/compiler/msgtxt.inc
+index d699678..f015d78 100644
+--- a/fpcsrc/compiler/msgtxt.inc
++++ b/fpcsrc/compiler/msgtxt.inc
+@@ -1,7 +1,7 @@
+ {$ifdef Delphi}
+-const msgtxt : array[0..000257] of string[240]=(
++const msgtxt : array[0..000258] of string[240]=(
+ {$else Delphi}
+-const msgtxt : array[0..000257,1..240] of char=(
++const msgtxt : array[0..000258,1..240] of char=(
+ {$endif Delphi}
+   '01000_T_Compiler: $1'#000+
+   '01001_D_Compiler OS: $1'#000+
+@@ -1034,6 +1034,8 @@ const msgtxt : array[0..000257,1..240] of char=(
+   'e: $1'#000+
+   '11050_E_Invalid value for IPHONEOS_DEPLOYMENT_TARGET environment varia'+
+   'ble: $1'#000+
++  '11051_E_You must use a FPU type of VFPV2, VFPV3 or VFPV3_D','16 when us'+
++  'ing the EABIHF ABI target'#000+
+   '12000_F_Cannot open whole program optimization feedback fi','le "$1"'#000+
+   '12001_D_Processing whole program optimization information in wpo feedb'+
+   'ack file "$1"'#000+

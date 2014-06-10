@@ -1,13 +1,13 @@
 # Italian translation of fpc debconf messages.
 # Copyright (C) 2012, Beatrice Torracca
 # This file is distributed under the same license as the fpc package.
-# Beatrice Torracca <beatricet@libero.it>, 2012.
+# Beatrice Torracca <beatricet@libero.it>, 2012, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: fpc\n"
 "Report-Msgid-Bugs-To: fpc@packages.debian.org\n"
-"POT-Creation-Date: 2012-09-08 10:07-0400\n"
-"PO-Revision-Date: 2012-09-15 18:51+0200\n"
+"POT-Creation-Date: 2013-11-12 06:57+0100\n"
+"PO-Revision-Date: 2013-11-26 20:38+0200\n"
 "Last-Translator: Beatrice Torracca <beatricet@libero.it>\n"
 "Language-Team: Italian <debian-l10n-italian@lists.debian.org>\n"
 "Language: it\n"
@@ -63,3 +63,58 @@ msgstr ""
 "Per usare il sistema di alternative per il file di configurazione FPC a "
 "livello di sistema, si deve accettare di rinominare «/etc/fpc.cfg»; in caso "
 "contrario si dovrà gestire la cosa da soli manualmente."
+
+#. Type: select
+#. Description
+#. Type: string
+#. Description
+#: ../fp-compiler.templates.in:3001 ../fp-compiler.templates.in:4001
+msgid "Default MS Windows .rc resource compiler:"
+msgstr "Compilatore predefinito di risorse .rc di MS Windows:"
+
+#. Type: select
+#. Description
+#. Type: string
+#. Description
+#: ../fp-compiler.templates.in:3001 ../fp-compiler.templates.in:4001
+msgid ""
+"FPC supports compiling programs that embed resources as MS Windows .rc-"
+"format files on all platforms where the MinGW windres tool is available."
+msgstr ""
+"FPC permette la compilazione di programmi che incorporano risorse come file "
+"in formato .rc di MS Windows su tutte le piattaforme su cui è disponibile lo "
+"strumento MinGW windres."
+
+#. Type: select
+#. Description
+#. Type: string
+#. Description
+#: ../fp-compiler.templates.in:3001 ../fp-compiler.templates.in:4001
+msgid ""
+"In order to be able to compile projects using .rc files, you need first to "
+"manually install the package mingw32-binutils. mingw32-binutils is suggested "
+"by fp-compiler but not pulled in automatically."
+msgstr ""
+"Per poter compilare i progetti che usano file .rc, è necessario installare "
+"prima manualmente il pacchetto mingw32-binutils. mingw32-binutils è "
+"suggerito da fp-compiler, ma non viene richiamato automaticamente."
+
+#. Type: select
+#. Description
+#: ../fp-compiler.templates.in:3001
+msgid ""
+"If you want to enter a custom .rc file compiler that does not appear in this "
+"list or if you simply want to disable this feature, please select \"Select "
+"manually\"."
+msgstr ""
+"Se si desidera indicare un compilatore di file .rc personalizzato che non "
+"appare in questo elenco o se si desidera semplicemente disabilitare questa "
+"funzionalità, selezionare «Select manually»"
+
+#. Type: string
+#. Description
+#: ../fp-compiler.templates.in:4001
+msgid "If you don't want to use a default .rc file compiler, leave this blank."
+msgstr ""
+"Se non si desidera usare un compilatore di file .rc predefinito, lasciare "
+"vuoto questo campo."

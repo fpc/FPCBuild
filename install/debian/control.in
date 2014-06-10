@@ -2,17 +2,18 @@ Source: fpc
 Section: devel
 Priority: optional
 Maintainer: Carlos Laviola <claviola@debian.org>
-Uploaders: Torsten Werner <twerner@debian.org>, Abou Al Montacir <abou.almontacir@sfr.fr>, Peter Michael Green <plugwash@debian.org>
-DM-Upload-Allowed: yes
-Standards-Version: 3.9.3
+Uploaders: Abou Al Montacir <abou.almontacir@sfr.fr>,
+ Paul Gevers <elbrus@debian.org>,
+ Peter Michael Green <plugwash@debian.org>,
+ Torsten Werner <twerner@debian.org>
+Standards-Version: 3.9.5
 Build-Depends: debhelper (>= 7), fp-compiler, fp-units-base, fp-units-fcl, fp-utils, mawk | awk, libncurses-dev, binutils, ghostscript, po-debconf
-Build-Depends-Indep: hevea
-Vcs-Svn: https://bollin.googlecode.com/svn/fpc/trunk/
-Vcs-Browser: http://bollin.googlecode.com/svn/fpc/trunk/
+Build-Depends-Indep: hevea, rdfind, symlinks
+Vcs-Git: git://anonscm.debian.org/pkg-pascal/fpc.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-pascal/fpc.git
 Homepage: http://www.freepascal.org/
 
 Package: fpc${PACKAGESUFFIX}
-Section: metapackages
 Architecture: all
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (>= ${binary:Version}), fp-compiler${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-base${PACKAGESUFFIX} (>= ${binary:Version}), fp-ide${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-fcl${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-fv${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-gtk${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-gtk2${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-gnome1${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-db${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-gfx${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-net${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-misc${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-multimedia${PACKAGESUFFIX} (>= ${binary:Version}), fp-units-math${PACKAGESUFFIX} (>= ${binary:Version})
 Recommends: fp-utils${PACKAGESUFFIX}
@@ -54,13 +55,12 @@ Description: Free Pascal - SDK source code
  the Lazarus IDE.
 
 Package: fp-compiler${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), binutils
 Recommends: fp-utils${PACKAGESUFFIX} (>= ${binary:Version})
 Suggests: fp-docs${PACKAGESUFFIX} (>= ${source:Upstream-Version}), mingw32-binutils
 Provides: fp-compiler
 Breaks: fp-compiler (<= 2.4.0-3), fp-utils-2.4.4 (<= 2.4.4-2), fp-utils-2.4.2 (<= 2.4.2-3)
-Conflicts: binutils-gold
 Replaces: fp-compiler (<= 2.4.0-3), fp-utils-2.4.4 (<= 2.4.4-1)
 Description: Free Pascal - compiler
  The Free Pascal Compiler is an Object Pascal compiler supporting both Delphi
@@ -77,7 +77,7 @@ Description: Free Pascal - compiler
  This package contains the command line compiler.
 
 Package: fp-ide${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), ${shlibs:Depends}
 Recommends: fp-utils${PACKAGESUFFIX} (>= ${binary:Version})
 Suggests: fp-docs${PACKAGESUFFIX} (>= ${source:Upstream-Version})
@@ -100,7 +100,7 @@ Description: Free Pascal - IDE
  has an internal compiler.
 
 Package: fp-utils${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Recommends: fp-compiler${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-utils
@@ -145,7 +145,7 @@ Description: Free Pascal - documentation
  format.
 
 Package: fp-units-rtl${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}
 Recommends: fp-compiler${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-rtl, fpc-abi${PACKAGESUFFIX}
@@ -162,7 +162,7 @@ Description: Free Pascal - runtime libraries
  This package contains the RunTime Libraries for the Free Pascal Compiler.
 
 Package: fp-units-base${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-base
 Breaks: fp-units-base (<= 2.4.0-3)
@@ -180,7 +180,7 @@ Description: Free Pascal - base units
  Xutil), and ZLib.
 
 Package: fp-units-fcl${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), fp-units-base${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-fcl
 Breaks: fp-units-fcl (<= 2.4.0-3)
@@ -196,7 +196,7 @@ Description: Free Pascal - Free Component Library
  This package contains the Free Component Library for the Free Pascal Compiler.
 
 Package: fp-units-fv${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-fv
 Breaks: fp-units-fv (<= 2.4.0-3)
@@ -213,7 +213,7 @@ Description: Free Pascal - Free Vision units
  (which provide a framework for developing text user interfaces).
 
 Package: fp-units-gtk${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), fp-units-fcl${PACKAGESUFFIX} (= ${binary:Version}), libgtk2.0-dev
 Provides: fp-units-gtk
 Breaks: fp-units-gtk (<= 2.4.0-3)
@@ -230,7 +230,7 @@ Description: Free Pascal - GTK+ 1.2 units
  programs with GTK+ 1.2.
 
 Package: fp-units-gtk2${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), fp-units-fcl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-gtk2
 Breaks: fp-units-gtk2 (<= 2.4.0-3)
@@ -247,7 +247,7 @@ Description: Free Pascal - GTK+ 2.x units
  programs with GTK+ 2.x.
 
 Package: fp-units-gnome1${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), fp-units-gtk${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-gnome1
 Breaks: fp-units-gnome1 (<= 2.4.0-3)
@@ -264,7 +264,7 @@ Description: Free Pascal - GNOME 1 units
  programs for GNOME 1.
 
 Package: fp-units-db${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-db
 Breaks: fp-units-db (<= 2.4.0-3)
@@ -281,9 +281,18 @@ Description: Free Pascal - database-library units
  MySQL, PostgreSQL, ODBC, Oracle, and SQLite.
 
 Package: fp-units-gfx${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
-Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), fp-units-base${PACKAGESUFFIX} (= ${binary:Version}), libsvga1-dev [i386 amd64 armel armhf]
+Architecture: any
+Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), fp-units-base${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-gfx
+Recommends: libcairo2-dev,
+ libforms-dev,
+ libgd-dev,
+ libggi2-dev,
+ libgl1-mesa-dev,
+ libgraphviz-dev,
+ libpng-dev,
+ libxxf86dga-dev,
+ libxxf86vm-dev,
 Breaks: fp-units-gfx (<= 2.4.0-3)
 Replaces: fp-units-gfx (<= 2.4.0-3)
 Description: Free Pascal - graphics-library units
@@ -296,9 +305,12 @@ Description: Free Pascal - graphics-library units
  .
  This package contains Free Pascal units with bindings for cairo, forms, ggi,
  graph, libgd, libpng, opengl, and svgalib.
+ .
+ SVGALib is no longer packaged by Debian and should be installed manually by
+ users who want to link against it.
 
 Package: fp-units-net${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-net
 Breaks: fp-units-net (<= 2.4.0-3)
@@ -311,12 +323,12 @@ Description: Free Pascal - networking units
  Free Component Library (FCL) adding many Delphi extensions and interfacing
  with many popular open source libraries.
  .
- This package contains Free Pascal units for creating network tools: dbus,
+ This package contains Free Pascal units for creating network tools: D-Bus,
  httpd-1.3, httpd-2.0, httpd-2.2, ldap, libasync, libcurl, netdb, openssl,
  and pcap.
 
 Package: fp-units-math${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-math
 Breaks: fp-units-math (<= 2.4.0-3)
@@ -336,7 +348,7 @@ Description: Free Pascal - math units
   * symbolic (symbolic computing).
 
 Package: fp-units-misc${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Provides: fp-units-misc
 Breaks: fp-units-misc (<= 2.4.0-3)
@@ -353,7 +365,7 @@ Description: Free Pascal - miscellaneous units
  packaging system), PasZLib (a Pascal-only zlib implementation), and Utmp.
 
 Package: fp-units-multimedia${PACKAGESUFFIX}
-Architecture: i386 powerpc sparc amd64 armel armhf ppc64
+Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version}), libogg-dev, libvorbis-dev, a52dec-dev, libdts-dev, libmad0-dev, libmodplug-dev, libsdl-mixer1.2-dev
 Provides: fp-units-multimedia
 Breaks: fp-units-multimedia (<= 2.4.0-3)
@@ -389,7 +401,6 @@ Description: Free Pascal - Kylix compatibility units
 ##################### backward compatibility meta packages#####################
 
 Package: fpc
-Section: metapackages
 Architecture: all
 Depends: ${misc:Depends}, fpc${PACKAGESUFFIX} (= ${binary:Version})
 Recommends: fp-utils${PACKAGESUFFIX}
@@ -411,7 +422,6 @@ Description: Free Pascal - SDK suite dependency package
  packages they require by hand.
 
 Package: fpc-source
-Section: metapackages
 Architecture: all
 Depends: ${misc:Depends}, fpc-source${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - SDK source code dependency package
@@ -427,7 +437,6 @@ Description: Free Pascal - SDK source code dependency package
  the Lazarus IDE.
 
 Package: fp-compiler
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-compiler${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - compiler dependency package
@@ -446,7 +455,6 @@ Description: Free Pascal - compiler dependency package
  the package containing the command line compiler.
 
 Package: fp-ide
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-ide${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - IDE dependency package
@@ -466,7 +474,6 @@ Description: Free Pascal - IDE dependency package
  has an internal compiler.
 
 Package: fp-utils
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-utils${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - utilities dependency package
@@ -507,7 +514,6 @@ Description: Free Pascal - documentation dependency package
  format.
 
 Package: fp-units-rtl
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-rtl${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - runtime libraries dependency package
@@ -522,7 +528,6 @@ Description: Free Pascal - runtime libraries dependency package
  the package containing the RunTime Libraries for the Free Pascal Compiler.
 
 Package: fp-units-base
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-base${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - base units dependency package
@@ -539,7 +544,6 @@ Description: Free Pascal - base units dependency package
  Xutil), and ZLib.
 
 Package: fp-units-fcl
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-fcl${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - Free Component Library dependency package
@@ -554,7 +558,6 @@ Description: Free Pascal - Free Component Library dependency package
  the package containing the Free Component Library for the Free Pascal Compiler.
 
 Package: fp-units-fv
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-fv${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - Free Vision units dependency package
@@ -570,7 +573,6 @@ Description: Free Pascal - Free Vision units dependency package
  (which provide a framework for developing text user interfaces).
 
 Package: fp-units-gtk
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-gtk${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - GTK+ 1.2 units dependency package
@@ -586,7 +588,6 @@ Description: Free Pascal - GTK+ 1.2 units dependency package
  programs with GTK+ 1.2.
 
 Package: fp-units-gtk2
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-gtk2${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - GTK+ 2.x units dependency package
@@ -602,7 +603,6 @@ Description: Free Pascal - GTK+ 2.x units dependency package
  programs with GTK+ 2.x.
 
 Package: fp-units-gnome1
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-gnome1${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - GNOME 1 units dependency package
@@ -618,7 +618,6 @@ Description: Free Pascal - GNOME 1 units dependency package
  programs for GNOME 1.
 
 Package: fp-units-db
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-db${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - database-library units dependency package
@@ -634,7 +633,6 @@ Description: Free Pascal - database-library units dependency package
  MySQL, PostgreSQL, ODBC, Oracle, and SQLite.
 
 Package: fp-units-gfx
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-gfx${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - graphics-library units dependency package
@@ -648,9 +646,11 @@ Description: Free Pascal - graphics-library units dependency package
  This dependency package always depends on the latest available version of
  the package containing Free Pascal units with bindings for cairo, forms, ggi,
  graph, libgd, libpng, opengl, and svgalib.
+ .
+ SVGALib is no longer packaged by Debian and should be installed manually by
+ users who want to link against it.
 
 Package: fp-units-net
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-net${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - networking units dependency package
@@ -662,12 +662,11 @@ Description: Free Pascal - networking units dependency package
  with many popular open source libraries.
  .
  This dependency package always depends on the latest available version of
- the package containing Free Pascal units for creating network tools: dbus,
+ the package containing Free Pascal units for creating network tools: D-Bus,
  httpd-1.3, httpd-2.0, httpd-2.2, ldap, libasync, libcurl, netdb, openssl,
  and pcap.
 
 Package: fp-units-math
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-math${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - math units dependency package
@@ -686,7 +685,6 @@ Description: Free Pascal - math units dependency package
   * symbolic (symbolic computing).
 
 Package: fp-units-misc
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-misc${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - miscellaneous units dependency package
@@ -702,7 +700,6 @@ Description: Free Pascal - miscellaneous units dependency package
  packaging system), PasZLib (a Pascal-only zlib implementation), and Utmp.
 
 Package: fp-units-multimedia
-Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, fp-units-multimedia${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - multimedia units dependency package
@@ -718,7 +715,6 @@ Description: Free Pascal - multimedia units dependency package
  oggvorbis, and openal.
 
 Package: fp-units-i386
-Section: metapackages
 Architecture: i386
 Depends: ${misc:Depends}, fp-units-i386${PACKAGESUFFIX} (= ${binary:Version})
 Description: Free Pascal - Kylix compatibility units dependency package

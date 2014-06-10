@@ -10,7 +10,9 @@ update-alternatives \
     --slave ${FPCDIR}/lexyacc fplexyacc ${FPCDIR}/${VERSION}/lexyacc \
 	--slave /usr/bin/chmcmd chmcmd /usr/bin/chmcmd-${VERSION} \
 	--slave /usr/bin/chmls chmls /usr/bin/chmls-${VERSION} \
+	--slave /usr/bin/ifpc ifpc /usr/bin/ifpc-${VERSION} \
 	--slave /usr/bin/fppkg fppkg /usr/bin/fppkg-${VERSION} \
+	--slave /usr/bin/instantfpc instantfpc /usr/bin/ifpc-${VERSION} \
 	--slave /usr/bin/ppufiles ppufiles /usr/bin/ppufiles-${VERSION} \
 	--slave /usr/bin/ppudump ppudump /usr/bin/ppudump-${VERSION} \
 	--slave /usr/bin/ppumove ppumove /usr/bin/ppumove-${VERSION} \
@@ -31,17 +33,21 @@ update-alternatives \
 	--slave /usr/bin/fprcp fprcp /usr/bin/fprcp-${VERSION} \
 	--slave /usr/bin/fpdoc fpdoc /usr/bin/fpdoc-${VERSION} \
 	--slave /usr/bin/makeskel makeskel /usr/bin/makeskel-${VERSION} \
-	--slave /usr/bin/unitdiff unitdiff /usr/bin/unitdiff-${VERSION} \
+	--slave /usr/bin/relpath relpath /usr/bin/relpath-${VERSION} \
 	--slave /usr/bin/rmcvsdir rmcvsdir /usr/bin/rmcvsdir-${VERSION} \
+	--slave /usr/bin/unitdiff unitdiff /usr/bin/unitdiff-${VERSION} \
 	--slave /usr/share/man/man1/chmcmd.1.gz chmcmd.1.gz /usr/share/man/man1/chmcmd-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/chmls.1.gz chmls.1.gz /usr/share/man/man1/chmls-${VERSION}.1.gz \
+	--slave /usr/share/man/man1/ifpc.1.gz ifpc.1.gz /usr/share/man/man1/ifpc-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/fppkg.1.gz fppkg.1.gz /usr/share/man/man1/fppkg-${VERSION}.1.gz \
+	--slave /usr/share/man/man1/instantfpc.1.gz instantfpc.1.gz /usr/share/man/man1/ifpc-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/bin2obj.1.gz bin2obj.1.gz /usr/share/man/man1/bin2obj-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/data2inc.1.gz data2inc.1.gz /usr/share/man/man1/data2inc-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/fprcp.1.gz fprcp.1.gz /usr/share/man/man1/fprcp-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/h2paspp.1.gz h2paspp.1.gz /usr/share/man/man1/h2paspp-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/makeskel.1.gz makeskel.1.gz /usr/share/man/man1/makeskel-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/postw32.1.gz postw32.1.gz /usr/share/man/man1/postw32-${VERSION}.1.gz \
+	--slave /usr/share/man/man1/relpath.1.gz relpath.1.gz /usr/share/man/man1/relpath-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/rmcvsdir.1.gz rmcvsdir.1.gz /usr/share/man/man1/rmcvsdir-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/unitdiff.1.gz unitdiff.1.gz /usr/share/man/man1/unitdiff-${VERSION}.1.gz \
 	--slave /usr/share/man/man1/delp.1.gz delp.1.gz /usr/share/man/man1/delp-${VERSION}.1.gz \
