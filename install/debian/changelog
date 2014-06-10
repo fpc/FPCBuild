@@ -1,6 +1,5 @@
 fpc (2.6.1-0) unstable; urgency=low
 
-  * Daily snapshots build.
   * Added debconf screens to let user select a default .rc MS Windows resourse
     files compiler either from mingw32-binutils package or any others custom
     installed the system. (Closes: UpstreamBug#23092)
@@ -8,9 +7,18 @@ fpc (2.6.1-0) unstable; urgency=low
 
  -- Abou Al Montacir <abou.almontacir@sfr.fr>  Mon, 05 Nov 2012 19:52:00 +0000
 
+fpc (2.6.0-8) unstable; urgency=low
+
+  [Hiroyuki Yamamoto]
+  * Added support for ppc64 architecture. (Closes: Bug#692893)
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Wed, 14 Nov 2012 18:54:00 +0000
+
 fpc (2.6.0-7) unstable; urgency=low
 
+  [ Abou Al Montacir ]
   * Proofread templates by debian-l10n-english list. (Closes: Bug#686038)
+  * Added support for debconf translations
   * Added Danish translation. (Closes: Bug#687069)
   * Added Slovak translation. (Closes: Bug#687087)
   * Added Portuguese translation. (Closes: Bug#687116)
@@ -24,7 +32,11 @@ fpc (2.6.0-7) unstable; urgency=low
   * Added Swedish translation. (Closes: Bug#688424)
   * Added Spanish translation. (Closes: Bug#689468)
 
- -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 04 Oct 2012 09:12:00 +0000
+  [ Peter Michael Green ]
+  * Don't remove fpc.*dpkg* the release team don't like it and
+    as far as I can tell it isn't needed.
+
+ -- Peter Michael Green <plugwash@debian.org>  Sat, 13 Oct 2012 22:50:16 +0000
 
 fpc (2.6.0-6) unstable; urgency=low
 

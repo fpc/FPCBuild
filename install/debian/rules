@@ -17,11 +17,16 @@ CONVERTER=${DOCTYPE}
 endif
 # Undefine FPC if it was set
 unexport FPC
-
-# Detect name of new compiler, take care that debian uses amd64 instead of x86_64
-CPU_SOURCE := $(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_BUILD_ARCH_CPU))
-CPU_TARGET := $(subst amd64,x86_64,$(shell dpkg-architecture -qDEB_HOST_ARCH_CPU))
-
+# Build new compiler name
+CPU_SOURCE=$(shell dpkg-architecture -qDEB_BUILD_ARCH_CPU)
+CPU_TARGET=$(shell dpkg-architecture -qDEB_HOST_ARCH_CPU)
+# Take care that Debian uses amd64 while FPC perfers x86_64 instead
+CPU_SOURCE := $(subst amd64,x86_64,${CPU_SOURCE})
+CPU_TARGET := $(subst amd64,x86_64,${CPU_TARGET})
+# Take care that debian uses ppc64 while FPC prefers powerpc64 instead
+CPU_SOURCE := $(subst ppc64,powerpc64,${CPU_SOURCE})
+CPU_TARGET := $(subst ppc64,powerpc64,${CPU_TARGET})
+# Shuld get rid of this one day, as it is done automatically  by FPC make files
 ifeq ($(CPU_TARGET),m68k)
 PPSUF=68k
 endif
