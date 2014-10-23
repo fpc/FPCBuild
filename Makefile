@@ -2312,6 +2312,13 @@ renametoshort:
 	-mv $(PKGPRE)$(PKGUNITSPRE)hermes$(ZIPSUFFIX).zip uherm$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-js$(ZIPSUFFIX).zip ufcjs$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fppkg$(ZIPSUFFIX).zip ufppk$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-sdo$(ZIPSUFFIX).zip ufcsd$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-stl$(ZIPSUFFIX).zip ufcst$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)libtar$(ZIPSUFFIX).zip ultar$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-console$(ZIPSUFFIX).zip urtlc$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-extra$(ZIPSUFFIX).zip urtle$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-objpas$(ZIPSUFFIX).zip urtlo$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-unicode$(ZIPSUFFIX).zip urtlu$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)rtl$(ZIPSUFFIX).zip rtl$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)ide$(ZIPSUFFIX).zip ide$(ZIPSUFFIXSHORT).zip
 shortsrc:
