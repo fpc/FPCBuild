@@ -139,7 +139,13 @@ installbinary ()
   ln -sf "$LIBDIR/ppc${PPCSUFFIX}" "$EXECDIR/ppc${PPCSUFFIX}"
 
   echo "Installing utilities..."
-  unztarfromtar "$BINARYTAR" "${CROSSPREFIX}utils.$1.tar.gz" "$PREFIX"
+  listtarfiles "$BINARYTAR" packages ${CROSSPREFIX}utils
+  for f in $packages
+  do
+    p=`echo "$f" | sed -e 's+^.*utils-\([^\.]*\)\..*+\1+' -e 's+^.*\(utils\)[^\.]*\..*+\1+'`
+	echo "Installing $p"
+    unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
+  done
 
   # Should this be here at all without a big Linux test around it?
   if [ "x$UID" = "x0" ]; then
