@@ -8,8 +8,8 @@
 #
 
 # Release Version will be replaced by makepack
-VERSION=2.6.4
-FULLVERSION=2.6.4
+VERSION=%version%
+FULLVERSION=%fullversion%
 
 # some useful functions
 # ask displays 1st parameter, and ask new value for variable, whose name is
