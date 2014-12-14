@@ -65,14 +65,13 @@ utils. Provided units are the runtime library (RTL), free component library
 %build
 FPCDIR=
 NEWPP=`pwd`/compiler/%{ppcname}
-NEWFPDOC=`pwd`/utils/fpdoc/fpdoc
 	make compiler_cycle
 	make rtl_clean rtl_smart FPC=${NEWPP}
         make packages_smart FPC=${NEWPP}
 	make ide_all FPC=${NEWPP}
 	make utils_all FPC=${NEWPP}
 if [ -z ${NODOCS} ]; then
-	make -C fpcdocs pdf FPC=${NEWPP} FPDOC=${NEWFPDOC}
+	make -C fpcdocs pdf FPC=${NEWPP}
 fi
 
 %install
