@@ -138,6 +138,37 @@ installbinary ()
   rm -f "$EXECDIR/ppc${PPCSUFFIX}"
   ln -sf "$LIBDIR/ppc${PPCSUFFIX}" "$EXECDIR/ppc${PPCSUFFIX}"
 
+  echo "Installing rtl packages..."
+  listtarfiles "$BINARYTAR" packages units-rtl
+  for f in $packages
+  do
+    p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
+	echo "Installing $p"
+    unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
+  done
+
+  echo "Installing fcl..."
+  listtarfiles "$BINARYTAR" packages units-fcl
+  for f in $packages
+  do
+    p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
+	echo "Installing $p"
+    unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
+  done
+
+  echo "Installing packages..."
+  listtarfiles "$BINARYTAR" packages units
+  for f in $packages
+  do
+    if ! echo "$f" | grep -q fcl > /dev/null ; then
+      if ! echo "$f" | grep -q rtl > /dev/null ; then
+        p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
+	echo "Installing $p"
+        unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
+      fi
+    fi
+  done
+
   echo "Installing utilities..."
   listtarfiles "$BINARYTAR" packages ${CROSSPREFIX}utils
   for f in $packages
@@ -159,28 +190,6 @@ installbinary ()
     fi
   fi
 
-  if yesno "Install FCL"; then
-    listtarfiles "$BINARYTAR" packages units
-    for f in $packages
-    do
-      if echo "$f" | grep -q fcl > /dev/null ; then
-        p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
-	echo "Installing $p"
-        unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
-      fi
-    done
-  fi
-  if yesno "Install packages"; then
-    listtarfiles "$BINARYTAR" packages units
-    for f in $packages
-    do
-      if ! echo "$f" | grep -q fcl > /dev/null ; then
-        p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
-	echo "Installing $p"
-        unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
-      fi
-    done
-  fi
   rm -f *."$1".tar.gz
 }
 
