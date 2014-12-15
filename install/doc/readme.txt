@@ -294,7 +294,9 @@ so that people sending answers know about it and send you a copy.
 Information about available lists and subscription can be found
 on http://lists.freepascal.org/mailman/listinfo
 
-Web forum: http://forum.lazarus.freepascal.org (combined with Lazarus)
+Combined with Lazarus, an IDE for the Free Pascal Compiler:
+Web forum: http://forum.lazarus.freepascal.org (all questions)
+Wiki: http://wiki.freepascal.org
 
 WWW: http://www.freepascal.org
 FTP: ftp://ftp.freepascal.org/fpc
