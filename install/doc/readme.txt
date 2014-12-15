@@ -294,7 +294,7 @@ so that people sending answers know about it and send you a copy.
 Information about available lists and subscription can be found
 on http://lists.freepascal.org/mailman/listinfo
 
-Web forum: http://community.freepascal.org:10000 (all questions)
+Web forum: http://forum.lazarus.freepascal.org (combined with Lazarus)
 
 WWW: http://www.freepascal.org
 FTP: ftp://ftp.freepascal.org/fpc
