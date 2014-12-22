@@ -9,10 +9,10 @@
 
 Please also read the platform specific README file, if it exists.
 
-This package contains an advanced freeware 32-bit/64-bit pascal compiler for
-several platforms. The language and the runtime library are almost
-compatible with Turbo Pascal 7.0 and recent Delphi releases. There is also
-partial support for the Macintosh pascal dialect.
+This package contains an advanced freeware 16-bit/32-bit/64-bit pascal
+compiler for several platforms. The language and the runtime library are
+almost compatible with Turbo Pascal 7.0 and recent Delphi releases. There is
+also partial support for the Macintosh pascal dialect.
 
 News and changes related to this release are described in whatsnew.txt.
 
@@ -45,7 +45,7 @@ e-mail addresses are listed below.
 ****************************************************************************
 
 - high speed compiler
-- fully 32 or 64-bit code
+- fully 16, 32 or 64-bit code
   - 32 bit compiler can be used on x86_64 Linux distributions to compile
     32 bit applications
 - language features:
