@@ -123,6 +123,7 @@ rm -rf %{buildroot}
 %dir %{docdir}
 %doc %{docdir}/NEWS
 %doc %{docdir}/README
-%doc %{docdir}/readme.ide
 %doc %{docdir}/faq*
+%dir %{docdir}/ide
+%doc %{docdir}/ide/readme.ide
 %{_mandir}/*/*

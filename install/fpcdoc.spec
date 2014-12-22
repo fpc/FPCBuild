@@ -20,5 +20,5 @@ This package contains the documentation in PDF format
 %defattr(-, root, root)
 %dir %{docdir}
 %doc %{docdir}/*.pdf
-%dir %{exampledir}
-%doc %{exampledir}/*
+%dir %{docdir}/*
+%doc %{docdir}/*/*
