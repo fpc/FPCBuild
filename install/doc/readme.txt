@@ -366,9 +366,9 @@ COPYING.v3, COPYING.DJ, COPYING.EMX, COPYING.RSX, license.upx and licensez.ip.
 
 FPC for JVM comes with some third party tools which are convered by
 the following licenses:
-  - jasmin.jar comes under the license described in doc/jasminli.txt
+  - jasmin.jar comes under the license described in jasminli.txt
   - bcel-6.0-SNAPSHOT.jar comes under the Apache 2.0 license, described by
-    doc/apache2.txt
+    apache2.txt
 
 Some of the licenses of the third party tools require to make the source
 available. If you cannot find the sources or information where to find
