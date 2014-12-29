@@ -104,12 +104,24 @@ $(BUILDSTAMP):
         $(MAKE) -C fpcsrc build
 
 buildx64: fpcsrc/build-stamp.x86_64-win64
+
 fpcsrc/build-stamp.x86_64-win64:
         $(MAKE) -C fpcsrc build OS_TARGET=win64 CPU_TARGET=x86_64
 
 buildce: fpcsrc/build-stamp.arm-wince
+
 fpcsrc/build-stamp.arm-wince:
         $(MAKE) -C fpcsrc build OS_TARGET=wince CPU_TARGET=arm
+		
+buildjvm: fpcsrc/build-stamp.jvm-java fpcsrc/build-stamp.jvm-android
+
+fpcsrc/build-stamp.jvm-java:
+# currently, jvm supports only build base, so we have to use make all here		
+        $(MAKE) -C fpcsrc all OS_TARGET=java CPU_TARGET=jvm
+		
+fpcsrc/build-stamp.jvm-android:
+# currently, jvm supports only build base, so we have to use make all here		
+        $(MAKE) -C fpcsrc all OS_TARGET=android CPU_TARGET=jvm
 
 clean: $(addsuffix _distclean,$(TARGET_DIRS))
         -rm -f fpcsrc/build-stamp.*
@@ -126,11 +138,11 @@ endif
 ifeq ($(OS_TARGET),win64)
         $(COPY) $(addprefix $(CVSINSTALL)/crossbinw64/, *.exe) $(INSTALL_BINDIR)
 endif
-ifndef SNAPSHOT
-ifndef CROSSINSTALL
-# readme & whatsnew and docs
+# readme, whatsnew, licenses and additional docs, they must be always included
         $(MKDIR) $(INSTALL_DOCDIR)
         -$(COPY) $(addprefix $(CVSINSTALL)/doc/,*.txt copying* license* faq.*) $(INSTALL_DOCDIR)
+ifndef SNAPSHOT
+ifndef CROSSINSTALL
 # bingo32 (cwsdpmi,wmemu387.dxe)
 ifeq ($(OS_TARGET),go32v2)
         $(COPY) $(CVSINSTALL)/bingo32/*.dxe $(INSTALL_BINDIR)
@@ -158,6 +170,10 @@ endif
 # manpages for UNIX systems
 ifneq ($(findstring $(OS_TARGET),linux freebsd netbsd openbsd sunos qnx),)
         $(MAKE) -C $(CVSINSTALL)/man installman
+endif
+# jvm utils
+ifeq ($(CPU_TARGET),jvm)
+        $(COPY) $(CVSINSTALL)/jvm/*.jar $(INSTALL_BINDIR)
 endif
 endif
 endif
@@ -731,7 +747,7 @@ ifndef NODOCS
 endif
         $(MAKE) install INSTALL_PREFIX=$(INNODIR)
         rmcvsdir$(EXEEXT) $(INNODIR)
-        fpcsubst -i install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+        fpcmkcfg -t install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
         $(INNOCMD_ISCC)
         $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
 
@@ -742,7 +758,7 @@ innocebuild: innocheck buildce
         $(COPYTREE) demo $(INNODIR)
         $(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=wince CPU_TARGET=arm
         rmcvsdir$(EXEEXT) $(INNODIR)
-        fpcsubst -i install/fpcce.ist -o $(INNODIR)/fpcce.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+        fpcmkcfg -t install/fpcce.ist -o $(INNODIR)/fpcce.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
         "$(ISCCPROG)" $(INNODIR)/fpcce.iss
         $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
 
@@ -753,21 +769,37 @@ innox64build: innocheck buildx64
         $(COPYTREE) demo $(INNODIR)
         $(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=win64 CPU_TARGET=x86_64
         rmcvsdir$(EXEEXT) $(INNODIR)
-        fpcsubst -i install/fpcx64.ist -o $(INNODIR)/fpcx64.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+        fpcmkcfg -t install/fpcx64.ist -o $(INNODIR)/fpcx64.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
         "$(ISCCPROG)" $(INNODIR)/fpcx64.iss
         $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
+		
+innojvmbuild: innocheck buildjvm
+        rmcvsdir$(EXEEXT) $(INNODIR)
+        $(DELTREE) $(INNODIR)
+        $(MKDIR) $(INNODIR)
+# currently, jvm supports only buildbase, so we have to use installbase here		
+        $(MAKE) installbase INSTALL_PREFIX=$(INNODIR) OS_TARGET=java CPU_TARGET=jvm
+        $(MAKE) installbase INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=jvm
+        rmcvsdir$(EXEEXT) $(INNODIR)
+        fpcmkcfg -t install/fpcjvm.ist -o $(INNODIR)/fpcjvm.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+        "$(ISCCPROG)" $(INNODIR)/fpcjvm.iss
+        $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(CPU_TARGET).exe		
 
 innoclean:
         rmcvsdir$(EXEEXT) $(INNODIR)
         $(DELTREE) $(INNODIR)
 
 innoce : checkfpcdir
-	$(MAKE) OS_TARGET=wince CPU_TARGET=arm innocebuild NOGDB=1
-        $(MAKE) innoclean	
+		$(MAKE) OS_TARGET=wince CPU_TARGET=arm innocebuild NOGDB=1
+		$(MAKE) innoclean	
 
 innox64 : checkfpcdir
-	$(MAKE) OS_TARGET=win64 CPU_TARGET=x86_64 innox64build NOGDB=1
+		$(MAKE) OS_TARGET=win64 CPU_TARGET=x86_64 innox64build NOGDB=1
         $(MAKE) innoclean	
+
+innojvm : checkfpcdir
+		$(MAKE) OS_TARGET=java CPU_TARGET=jvm innojvmbuild NOGDB=1
+		$(MAKE) innoclean	
 
 inno: checkfpcdir innobuild innoclean
 

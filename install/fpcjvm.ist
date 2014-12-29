@@ -1,0 +1,92 @@
+;**********************************************************************
+; We don't use the INNO Setup preprocessor. It is unfortunately quite buggy.
+; So, this script must be preprocessed by our own tools.
+; The preprocessor will replace anything enclosed in percent characters
+; by the value specified in it's config file. Standard there are only
+; the following things;
+; FPCVERSION   Version of FPC.
+; BUILDDIR     Build directory.
+;**********************************************************************
+;
+; ISS Build script generated on %BUILDDATE% - %BUILDTIME%
+;
+[Setup]
+AppName=Free Pascal JVM
+; this must match with the main installer
+AppID=FreePascal
+AppVerName=Free Pascal CE %FPCVERSION%
+AppPublisher=Free Pascal Team
+AppPublisherURL=http://www.freepascal.org/
+AppSupportURL=http://www.freepascal.org/
+AppUpdatesURL=http://www.freepascal.org/
+DefaultDirName={sd}\FPC\%FPCVERSION%
+DefaultGroupName=Free Pascal
+AllowNoIcons=yes
+; InfoAfterFile=doc\fpc\whatsnew.txt
+Compression=bzip
+SolidCompression=true
+SourceDir=%BUILDDIR%
+InternalCompressLevel=max
+AppCopyright=GPL
+AppendDefaultDirName=false
+AlwaysShowComponentsList=false
+ShowLanguageDialog=yes
+; we put version numbers in the appdir, so never use old dirname
+UsePreviousAppDir=no
+
+; for the addon installer
+CreateUninstallRegKey=no
+UpdateUninstallLogAppName=no
+
+
+[Tasks]
+; Name: associatepp; Description: "Associate .pp files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide
+; Name: associateinc; Description: "Associate .inc files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide
+; Name: associatepas; Description: "Associate .pas files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide; Flags: unchecked
+; Name: associatedpr; Description: "Associate .dpr files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide; Flags: unchecked
+; Name: createdesktopicon; Description: "Create a desktop icon for the Free Pascal IDE"; Components: ide
+; Name: createidecfg; Description: "Create a default configuration for the Free Pascal IDE"; Components: ide
+; Name: createcfg; Description: "Create a standard configuration file for the compiler"
+
+[Files]
+; Base package
+Source: bin\jvm-android\ppcjvm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\jvm-android\bcel-6.0-SNAPSHOT.jar; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\jvm-android\jasmin.jar; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\jvm-android\javapp.jar; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: doc\fpc\apache2.txt; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\jasminli.txt; DestDir: {app}\doc\fpc; Components: base
+; Include license and readme files, so they are available even if somebody installs this package alone though
+; it will not result in a working fpc installation
+Source: doc\fpc\COPYING; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.dj; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.emx; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.fpc; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.rsx; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\COPYING.v2; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\COPYING.v3; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\faq.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\faq.htm; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\licensez.ip; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\readme.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist isreadme; Components: base
+Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+
+Source: units\jvm-java\rtl\*.*; DestDir: {app}\units\jvm-java\rtl; Components: base_java
+Source: units\jvm-android\rtl\*.*; DestDir: {app}\units\jvm-android\rtl; Components: base_android
+
+; Units
+Source: units\jvm-java\*.*; DestDir: {app}\units\jvm-java; Flags: ignoreversion recursesubdirs; Components: units_java
+Source: units\jvm-android\*.*; DestDir: {app}\units\jvm-android; Flags: ignoreversion recursesubdirs; Components: units_android
+
+
+[Components]
+Name: base; Description: Basic system for JVM; Flags: fixed; Types: Custom Minimum Full
+Name: base_java; Description: Basic units for JVM for Java; Types: Custom Minimum Full
+Name: base_android; Description: Basic units for JVM for Android; Types: Custom Minimum Full
+Name: units_java; Description: Extra units for JVM for Java; Types: Custom Minimum Full
+Name: units_android; Description: Extra units for JVM for Android; Types: Custom Minimum Full
+
+[Types]
+Name: Full; Description: Full installation
+Name: Minimum; Description: Minimum installation
+Name: Custom; Description: Custom installation; Flags: iscustom
