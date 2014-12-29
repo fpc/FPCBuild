@@ -56,15 +56,18 @@ Source: bin\i386-win32\fpcmkcfg.exe; DestDir: {app}\bin\i386-win32; Flags: ignor
 Source: bin\i386-win32\fppkg.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\rmcvsdir.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\fpcsubst.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
-Source: doc\fpc\copying; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\COPYING; DestDir: {app}\doc\fpc; Components: base
 Source: doc\fpc\copying.dj; DestDir: {app}\doc\fpc; Components: base
 Source: doc\fpc\copying.emx; DestDir: {app}\doc\fpc; Components: base
 Source: doc\fpc\copying.fpc; DestDir: {app}\doc\fpc; Components: base
 Source: doc\fpc\copying.rsx; DestDir: {app}\doc\fpc; Components: base
-Source: doc\fpc\readme.txt; DestDir: {app}\doc\fpc; Components: base; Flags: isreadme
-Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\COPYING.v2; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\COPYING.v3; DestDir: {app}\doc\fpc; Components: base
 Source: doc\fpc\faq.txt; DestDir: {app}\doc\fpc; Components: base
 Source: doc\fpc\faq.htm; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\licensez.ip; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\readme.txt; DestDir: {app}\doc\fpc; Components: base; Flags: isreadme
+Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Components: base
 Source: msg\*.*; DestDir: {app}\msg; Components: base
 Source: units\i386-win32\rtl\*.*; DestDir: {app}\units\i386-win32\rtl; Components: base
 Source: unicode\*.*; DestDir: {app}\unicode; Flags: recursesubdirs; Components: base
@@ -98,7 +101,7 @@ Source: bin\i386-win32\unit.pt; DestDir: {app}\bin\i386-win32; Flags: ignorevers
 Source: bin\i386-win32\program.pt; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: ide
 Source: bin\i386-win32\tpgrep.tdf; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: ide
 Source: bin\i386-win32\grep.tdf; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: ide
-Source: docs\fpc-ide-%FPCVERSION%\readme.ide; DestDir: {app}\doc\ide; Flags: ignoreversion; Components: ide
+Source: docs\ide\readme.ide; DestDir: {app}\doc\ide; Flags: ignoreversion; Components: ide
 ; Make tools
 Source: bin\i386-win32\gdate.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\gecho.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
@@ -142,7 +145,7 @@ Source: bin\i386-win32\chmcmd.exe; DestDir: {app}\bin\i386-win32; Flags: ignorev
 Source: bin\i386-win32\fpcres.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\yylex.cod; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\yyparse.cod; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
-Source: units\i386-win32\lexyacc\*.*; DestDir: {app}\units\i386-win32\lexyacc; Flags: ignoreversion; Components: utils
+Source: units\i386-win32\utils-lexyacc\*.*; DestDir: {app}\units\i386-win32\utils-lexyacc; Flags: ignoreversion; Components: utils
 ; Demos
 Source: demo\*.*; DestDir: {app}\demo; Flags: ignoreversion recursesubdirs ; Components: demo
 ; Documentation

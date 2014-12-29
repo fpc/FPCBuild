@@ -63,6 +63,20 @@ Source: bin\i386-win32\arm-wince-objcopy.exe; DestDir: {app}\bin\i386-win32; Fla
 Source: bin\i386-win32\arm-wince-gdb.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: gdb
 Source: bin\i386-win32\arm-wince-pe-stub.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: gdb
 Source: units\arm-wince\rtl\*.*; DestDir: {app}\units\arm-wince\rtl; Components: base
+; Include license and readme files, so they are available even if somebody installs this package alone though
+; it will not result in a working fpc installation
+Source: doc\fpc\COPYING; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.dj; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.emx; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.fpc; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.rsx; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\COPYING.v2; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\COPYING.v3; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\faq.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\faq.htm; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\licensez.ip; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\readme.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist isreadme; Components: base
+Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
 
 ; Units
 Source: units\arm-wince\*.*; DestDir: {app}\units\arm-wince; Flags: ignoreversion recursesubdirs; Components: units
