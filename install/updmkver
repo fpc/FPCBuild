@@ -20,3 +20,6 @@ find -name Makefile.fpc\
 	-exec sed -i -e 's/^version=.*/version='"${NEWVER}"'/' '{}' ';'\
 	-exec "${FPCMAKE}" -q -Tall '{}' ';'
 
+find -name Makefile.fpc.fpcmake\
+	-exec sed -i -e 's/^version=.*/version='"${NEWVER}"'/' '{}' ';'
+
