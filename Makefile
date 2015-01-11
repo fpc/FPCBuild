@@ -2160,6 +2160,7 @@ help:
 	@$(ECHO)    inno      "Build Windows (Innosetup) based installer"
 	@$(ECHO)    innox64   "Build Win32-Win64 cross compiler installer"
 	@$(ECHO)    innoce    "Build Win32-Wince cross compiler installer"
+	@$(ECHO)    innomsdos "Build Win32-MsDos cross compiler installer"
 	@$(ECHO)    tar       Build .tar installer
 	@$(ECHO)
 	@$(ECHO) FV based installer Targets:
@@ -2205,6 +2206,9 @@ ifeq ($(OS_TARGET),wince)
 endif
 ifeq ($(OS_TARGET),win64)
 	$(COPY) $(addprefix $(CVSINSTALL)/crossbinw64/, *.exe) $(INSTALL_BINDIR)
+endif
+ifeq ($(OS_TARGET),msdos)
+	$(COPY) $(addprefix $(CVSINSTALL)/crossbinmsdos/, *.exe *.dll) $(INSTALL_BINDIR)
 endif
 	$(MKDIR) $(INSTALL_DOCDIR)
 	-$(COPY) $(addprefix $(CVSINSTALL)/doc/,*.txt copying* license* faq.*) $(INSTALL_DOCDIR)
@@ -2691,6 +2695,30 @@ innojvmbuild: innocheck buildjvm
 	fpcmkcfg -t install/fpcjvm.ist -o $(INNODIR)/fpcjvm.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcjvm.iss
 	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(CPU_TARGET).exe		
+buildmsdos_subarch_mm:
+	$(MAKE) -C fpcsrc clean buildbase OS_SOURCE=win32 CPU_SOURCE=i386 OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+	$(MAKE) install CROSSINSTALL=1 INSTALL_PREFIX=$(INNODIR) OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+		$(MOVE) $(INNODIR)/units/msdos $(INNODIR)/units/msdos_/$(SUBARCH)-$(MEMORY_MODEL)
+buildmsdos_subarch:
+	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=tiny
+	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=small
+	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=medium
+	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=compact
+	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=large
+innomsdosbuild: innocheck
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	$(DELTREE) $(INNODIR)
+	$(MKDIR) $(INNODIR)
+	$(COPYTREE) demo $(INNODIR)
+	$(MKDIR) $(INNODIR)/units/msdos_
+	$(MAKE) buildmsdos_subarch SUBARCH=8086
+	$(MAKE) buildmsdos_subarch SUBARCH=80186
+	$(MAKE) buildmsdos_subarch SUBARCH=80286
+		$(MOVE) $(INNODIR)/units/msdos_ $(INNODIR)/units/msdos
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	fpcsubst -i install/fpcmsdos.ist -o $(INNODIR)/fpcmsdos.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+	"$(ISCCPROG)" $(INNODIR)/fpcmsdos.iss
+	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
 innoclean:
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
@@ -2703,4 +2731,7 @@ innox64 : checkfpcdir
 innojvm : checkfpcdir
 		$(MAKE) OS_TARGET=java CPU_TARGET=jvm innojvmbuild NOGDB=1
 		$(MAKE) innoclean	
+innomsdos : checkfpcdir
+	$(MAKE) OS_TARGET=msdos CPU_TARGET=i8086 innomsdosbuild NOGDB=1
+	$(MAKE) innoclean	
 inno: checkfpcdir innobuild innoclean
