@@ -1,0 +1,97 @@
+;**********************************************************************
+; We don't use the INNO Setup preprocessor. It is unfortunately quite buggy.
+; So, this script must be preprocessed by our own tools.
+; The preprocessor will replace anything enclosed in percent characters
+; by the value specified in it's config file. Standard there are only
+; the following things;
+; FPCVERSION   Version of FPC.
+; BUILDDIR     Build directory.
+;**********************************************************************
+;
+; ISS Build script generated on %BUILDDATE% - %BUILDTIME%
+;
+[Setup]
+AppName=Free Pascal i8086
+; this must match with the main installer
+AppID=FreePascal
+AppVerName=Free Pascal i8086 %FPCVERSION%
+AppPublisher=Free Pascal Team
+AppPublisherURL=http://www.freepascal.org/
+AppSupportURL=http://www.freepascal.org/
+AppUpdatesURL=http://www.freepascal.org/
+DefaultDirName={sd}\FPC\%FPCVERSION%
+DefaultGroupName=Free Pascal
+AllowNoIcons=yes
+; InfoAfterFile=doc\fpc\whatsnew.txt
+Compression=bzip
+SolidCompression=true
+SourceDir=%BUILDDIR%
+InternalCompressLevel=max
+AppCopyright=GPL
+AppendDefaultDirName=false
+AlwaysShowComponentsList=false
+ShowLanguageDialog=yes
+; we put version numbers in the appdir, so never use old dirname
+UsePreviousAppDir=no
+
+; for the addon installer
+CreateUninstallRegKey=no
+UpdateUninstallLogAppName=no
+
+
+[Tasks]
+; Name: associatepp; Description: "Associate .pp files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide
+; Name: associateinc; Description: "Associate .inc files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide
+; Name: associatepas; Description: "Associate .pas files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide; Flags: unchecked
+; Name: associatedpr; Description: "Associate .dpr files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: ide; Flags: unchecked
+; Name: createdesktopicon; Description: "Create a desktop icon for the Free Pascal IDE"; Components: ide
+; Name: createidecfg; Description: "Create a default configuration for the Free Pascal IDE"; Components: ide
+; Name: createcfg; Description: "Create a standard configuration file for the compiler"
+
+[Files]
+; Base package
+Source: bin\i386-win32\ppcross8086.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\msdos-nasm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+Source: bin\i386-win32\msdos-wlib.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+Source: bin\i386-win32\msdos-wlink.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+Source: bin\i386-win32\wlibd.dll; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+Source: bin\i386-win32\wlinkd.dll; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+; Include license and readme files, so they are available even if somebody installs this package alone though
+; it will not result in a working fpc installation
+Source: doc\fpc\COPYING; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.dj; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.emx; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.fpc; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.rsx; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\COPYING.v2; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\COPYING.v3; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\faq.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\faq.htm; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\libffi.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\licensez.ip; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\readme.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist isreadme; Components: base
+Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+
+; Units
+Source: units\msdos\*.*; DestDir: {app}\units\msdos; Flags: ignoreversion recursesubdirs; Components: base
+
+
+[INI]
+; Filename: {app}\Free Pascal.url; Section: InternetShortcut; Key: URL; String: http://www.freepascal.org/
+
+[Components]
+Name: base; Description: Basic system for win32 to i8086-msdos crosscompiler; Flags: fixed; Types: Custom Minimum Full
+Name: binutils; Description: Open Watcom linker and NASM assembler; Flags: fixed; Types: Custom Minimum Full
+%DisableDocs%Name: docs; Description: Documentation in PDF; Types: Custom Full
+; Name: ide; Description: Integrated Development Environment; Types: Custom Full
+; Name: utils; Description: Free Pascal Utilities; Types: Custom Full
+; Name: make; Description: GNU make; Types: Custom Full
+; Name: demo; Description: Demos; Types: Custom Full
+; Name: gdb; Description: GNU debugger; Types: Full Custom
+; Name: units; Description: Units; Types: Full Minimum Custom
+; Name: examples; Description: Examples; Types: Full Custom
+
+[Types]
+Name: Full; Description: Full installation
+Name: Minimum; Description: Minimum installation
+Name: Custom; Description: Custom installation; Flags: iscustom
