@@ -51,9 +51,9 @@ UpdateUninstallLogAppName=no
 [Files]
 ; Base package
 Source: bin\i386-win32\ppcross8086.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
-Source: bin\i386-win32\msdos-nasm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
-Source: bin\i386-win32\msdos-wlib.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
-Source: bin\i386-win32\msdos-wlink.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+Source: bin\i386-win32\nasm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+Source: bin\i386-win32\wlib.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
+Source: bin\i386-win32\wlink.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\wlibd.dll; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\wlinkd.dll; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 ; Include license and readme files, so they are available even if somebody installs this package alone though
