@@ -790,8 +790,8 @@ innojvmbuild: innocheck buildjvm
         $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(CPU_TARGET).exe		
 
 buildmsdos_subarch_mm:
-        $(MAKE) -C fpcsrc clean buildbase OS_SOURCE=win32 CPU_SOURCE=i386 OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
-        $(MAKE) install CROSSINSTALL=1 INSTALL_PREFIX=$(INNODIR) OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+        $(MAKE) -C fpcsrc clean buildbase OS_SOURCE=win32 CPU_SOURCE=i386 OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+        $(MAKE) install CROSSINSTALL=1 INSTALL_PREFIX=$(INNODIR) OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
 		$(MOVE) $(INNODIR)/units/msdos $(INNODIR)/units/msdos_/$(SUBARCH)-$(MEMORY_MODEL)
 
 buildmsdos_subarch:
