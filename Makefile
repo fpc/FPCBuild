@@ -2315,7 +2315,7 @@ sunoszip: checkfpcdir
 renametoshort:
 	-mv $(PKGPRE)base$(ZIPSUFFIX).zip base$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)compiler$(ZIPSUFFIX).zip comp$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)utils$(ZIPSUFFIX).zip util$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils$(ZIPSUFFIX).zip utils$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)installer$(ZIPSUFFIX).zip inst$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)asld$(ZIPSUFFIX).zip asld$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)make$(ZIPSUFFIX).zip make$(ZIPSUFFIXSHORT).zip
