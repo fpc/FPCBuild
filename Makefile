@@ -2208,7 +2208,7 @@ ifeq ($(OS_TARGET),win64)
 	$(COPY) $(addprefix $(CVSINSTALL)/crossbinw64/, *.exe) $(INSTALL_BINDIR)
 endif
 ifeq ($(OS_TARGET),msdos)
-	$(COPY) $(addprefix $(CVSINSTALL)/crossbinmsdos/, *.exe *.dll) $(INSTALL_BINDIR)
+	$(COPY) $(addprefix $(CVSINSTALL)/crossbinmsdos/, *.exe) $(INSTALL_BINDIR)
 endif
 	$(MKDIR) $(INSTALL_DOCDIR)
 	-$(COPY) $(addprefix $(CVSINSTALL)/doc/,*.txt copying* license* faq.*) $(INSTALL_DOCDIR)
