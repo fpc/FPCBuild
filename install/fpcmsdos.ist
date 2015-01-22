@@ -22,6 +22,7 @@ AppUpdatesURL=http://www.freepascal.org/
 DefaultDirName={sd}\FPC\%FPCVERSION%
 DefaultGroupName=Free Pascal
 AllowNoIcons=yes
+InfoBeforeFile=doc\fpc\i8086.txt
 ; InfoAfterFile=doc\fpc\whatsnew.txt
 Compression=bzip
 SolidCompression=true
@@ -52,10 +53,6 @@ UpdateUninstallLogAppName=no
 ; Base package
 Source: bin\i386-win32\ppcross8086.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\nasm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
-Source: bin\i386-win32\wlib.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
-Source: bin\i386-win32\wlink.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
-Source: bin\i386-win32\wlibd.dll; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
-Source: bin\i386-win32\wlinkd.dll; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 ; Include license and readme files, so they are available even if somebody installs this package alone though
 ; it will not result in a working fpc installation
 Source: doc\fpc\COPYING; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
@@ -71,6 +68,8 @@ Source: doc\fpc\libffi.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Co
 Source: doc\fpc\licensez.ip; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
 Source: doc\fpc\readme.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist isreadme; Components: base
 Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+; Extra documentation file for i8086
+Source: doc\fpc\i8086.txt; DestDir: {app}\doc\fpc; Components: base
 
 ; Units
 Source: units\msdos\*.*; DestDir: {app}\units\msdos; Flags: ignoreversion recursesubdirs; Components: base
@@ -81,7 +80,7 @@ Source: units\msdos\*.*; DestDir: {app}\units\msdos; Flags: ignoreversion recurs
 
 [Components]
 Name: base; Description: Basic system for win32 to i8086-msdos crosscompiler; Flags: fixed; Types: Custom Minimum Full
-Name: binutils; Description: Open Watcom linker and NASM assembler; Flags: fixed; Types: Custom Minimum Full
+Name: binutils; Description: NASM assembler; Flags: fixed; Types: Custom Minimum Full
 %DisableDocs%Name: docs; Description: Documentation in PDF; Types: Custom Full
 ; Name: ide; Description: Integrated Development Environment; Types: Custom Full
 ; Name: utils; Description: Free Pascal Utilities; Types: Custom Full
