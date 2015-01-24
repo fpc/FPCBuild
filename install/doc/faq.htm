@@ -114,6 +114,7 @@
     <li><a href="#libci386">Libc is missing on platforms other than i386</a>
     <li><a href="#vgamissing">Why can't the linker find "vga"?</a>
     <li><a href="#unix-asldmissing">Compiler indicates missing as and ld</a>
+    <li><a href="#unix-ld219">An error occurred while linking, or &quot;did you forget -T?&quot;</a>
    </OL>
    <li>OS/2 related information
    <OL>
@@ -166,9 +167,10 @@
             the main ones).
 	
             <p>The Free Pascal compiler is available for several
-            architectures, x86, Sparc (v8,v9), ARM, x86_64 (AMD64/Opteron)
-            and Powerpc. An older version (the 1.0 series) also supports
-            m68k.
+            architectures: x86, Sparc (v8,v9), ARM, x86_64 (AMD64/Opteron),
+            PowerPC and PowerPC64. An older version (the 1.0 series) and
+            current development version also support m68k, the current development version also
+            supports MIPS (in both big endian and little endian modes).
   	  	
             <p>The compiler is written in Pascal and is able to compile its
             own sources. The source files are under GPL and included.
@@ -188,16 +190,22 @@
               <li>08/2006: 2.0.4 version
               <li>09/2007: 2.2.0 version
               <li>08/2008: 2.2.2 version
+              <li>04/2009: 2.2.4 version
+	      <li>12/2009: 2.4.0 version
+	      <li>11/2010: 2.4.2 version
+	      <li>05/2011: 2.4.4 version
+	      <li>01/2012: 2.6.0 version
+              <li>12/2012: 2.6.2 version
+              <li>02/2014: 2.6.4 version
             </ul>
             
 
         <li><a name='versions'></a>
           <h3>Which versions exist, and which one should I use?</h3>
           
-            <p>The latest official version is 2.2.2, bugfix release for 2.2.0.
-            New development is performed in 2.3.x series, which eventually
-            gets released as either 2.4.0, or 3.0.0 (depending on amount of accumulated
-            changes at the time of release).
+            <p>The latest official version is 2.6.4, the second fixes release in the 2.6.x series.
+            New development is performed in 2.7.x series, which eventually
+            gets released as 2.8.0 or 3.0.0, depending on milestones achieved.
 
             <h4>Historic versions</h4>
 
@@ -217,11 +225,16 @@
               1.1.x.
              <li>Eventually the 1.1.x versions, when stabilized were released
               as the 2.0.x series, preceded by betas marked as 1.9.x. Fixes on
-              2.0 release were numbered 2.0.x, fixes on 2.2 release 2.2.x.</li>
-             <li>The new development after the 2.2.0 release is numbered 2.3.x
+              2.0 release were numbered 2.0.x, fixes on 2.2 release 2.2.x, fixes on the 2.4 release as 2.4.x etc</li>
+             <li>The new development after the 2.4.0 release is numbered 2.5.x
               and so on.
-			  <li>Repackagings that affect sources are indicated with a single letter as 
-			      suffix (e.g. 2.0.4a), this is usually the case for platforms that weren't part of the original release round.
+		<li>Repackagings that affect sources are indicated with a single letter as 
+			suffix (e.g. 2.0.4a), this is usually the case for platforms that weren't part of the original release round.
+             <li>The stable branch (fixes_2_4) always has an odd last number (2.4.1, 2.4.3). 
+                  Compilers with such versions are snapshots, and e.g. a snapshot with 2.4.1 can
+ 		  be anywhere between 2.4.0 and the moment 2.4.2 branched off (may 2010). Likewise
+		 the fixes_2_4 branch will hold version 2.4.3 till 2.4.4 is branched off (typically
+ 		 two months before its release).  After 2.4.4 the stable branch's number is updated to 2.4.5 etc.
             </ul>
             <p>
 
@@ -239,10 +252,14 @@
             users. Ask in the maillists if it is worth the trouble in your case if
             you're not sure.
 
-            <p>We advise all users to upgrade to the newest version for their
-            target (Preferably the new stable 2.2.x series).
+            <p>Snapshots of the stable branch (fixes_2_6) are meant to test release engineering. They are
+		mainly interesting in the months before a release to extensively
+		test the branch from which the release is created.
 
-            <p> A graphical timeline of the FPC project plus its near future would
+            <p>We advise all users to upgrade to the newest version for their
+            target (preferably the new stable 2.6.x series).
+
+            <p>A graphical timeline of the FPC project plus its near future would
             be:
             <img src="pic/timeline.png">
           
@@ -256,7 +273,7 @@
             compiler on as many platforms as possible. GNU Pascal tries to
             implement a portable pascal compiler based on POSIX.
             <DT><b>Version:</b>
-            <DD>Currently, Free Pascal is at version 2.2.2 (August 2008). GNU Pascal is at
+            <DD>Currently, Free Pascal is at version 2.6.4 (Februari 2014). GNU Pascal is at
             version 2.1 (from 2002, which can be built with several different GCC's as backend; 
             their Mac OS X version is an exception though, as it follows the GCC version number).
             <DT><b>Tracking:</b>
@@ -268,7 +285,9 @@
             e.g. DOS, Win32 (no Unix porting layer needed), Linux, FreeBSD,
             NetBSD, OS/2, BeOS, Classic Mac OS, Mac OS X, and AmigaOS, on,  at
             the moment the following architectures: x86,
-            x86_64 (AMD64), Sparc, PowerPC, ARM and Motorola (Motorola only in version 1.0.x).
+            x86_64 (AMD64), Sparc, PowerPC, PowerPC64, ARM, Motorola m68k (m68k only in version 1.0.x
+            and the latest development versions) and MIPS (both big endian and little endian mode available
+            in the latest development versions).
 
             GNU Pascal runs basically on any system that can run GNU C, and for which the buildprocess was verified.
             <DT><b>Bootstrapping:</b>
@@ -283,7 +302,7 @@
             implements the Delphi Object Pascal language and has some Mac Pascal extensions.
             GNU Pascal supports ISO 7185, ISO 10206, (most of) Borland Pascal 7.0
             <DT><b>Extensions:</b>
-            <DD>Free Pascal implements method, function and operator overloading. (later Delphi versions add these, so strictly not an extension anymore)
+            <DD>Free Pascal implements method, function and operator overloading (later Delphi versions add these, so strictly not an extension anymore)
             GNU Pascal implements operator overloading.
             <DT><b>License:</b>
             <DD>Both compilers come under the GNU GPL.
@@ -331,10 +350,10 @@
               <li>Distribute the LGPL license with your product.
             </ul>
 
-            <p> The compiler source code, on the other hand, comes under
+            <p>The compiler source code, on the other hand, comes under
             the GNU Public license, which means that any usage of the compiler
             source can only be used in software projects which have the same
-            license. 
+            license.
           
 
         <li><a name='WhereToGetFP'></a>
@@ -377,7 +396,6 @@
         <li><a name='snapshot'></a>
           <h3>I want a new version NOW</h3>
 
-          I want a new version NOW
             <p>In the time between the release of new official versions, you can
             have a look at and test developer versions (so-called "snapshots"). Be
             warned though: this is work under progress, so in addition to old bugs
@@ -390,7 +408,7 @@
 
             <p>The latest snapshot can always be downloaded from the <A
             href="http://www.freepascal.org/develop.var#snapshot">development</a>
-            web page. 
+            web page.
           
         
 
@@ -530,7 +548,7 @@
 
             <OL>
                 <li>
-                    <p>You can create smartlinked applications. To turn on
+                    You can create smartlinked applications. To turn on
                     the generation of smartlinkable units, use the -Cx command
                     line option when compiling your units. To turn on
                     the linking of previously generated smarlinkable units, use the -XX
@@ -578,7 +596,7 @@
             and, if found, is used instead of <TT>fpc.cfg</TT>. 
 			
 			<p> Since 1.0.6 is now over 5 years old, 
-			the <TT>ppc386.cfg</TT> support will be phased out. 2.2.2 will warn, and 2.4.0 will no longer search <TT>ppc386.cfg</TT>
+			the <TT>ppc386.cfg</TT> support will be phased out. 2.2.2 will warn, and 2.4.0+ will no longer search <TT>ppc386.cfg</TT>
 
             <p> Versions prior to Free Pascal 1.0.6 do not recognize <TT>fpc.cfg</TT>,
             so if you wish to use an earlier version of the compiler using the
@@ -714,9 +732,9 @@
 	   in the future.<p>
 
            While the FPC core developpers are somewhat interested out of
-	   academic curiousity (mainly because it could be a pilot for
-	   creating bytecode) there are however several problems with .NET
-	   in combination with FPC:
+	   academic curiousity (mainly because it could be a pilot for a
+	   generalized backend creating bytecode) there are however several
+	   problems with .NET in combination with FPC:
 	   	
         <OL> 
         <li>
@@ -734,8 +752,9 @@
  	<li>There is nothing <em>practical</em> known yet about how portable
 	    an average .NET program will be. Little experiments with hello
 	    world level code mean nothing, that kind of code works with
-	    plain C too. A good test would be to see existing non trivial
-	    codebases run unmodified under mono. Just like we try to do for
+	    nearly any language. A good test would be to see existing non trivial
+	    codebases run unmodified under mono, that were not designed with mono
+            in mind. Just like we try to do for
 	    Delphi</li>
 
         <li> The fact that on Windows 80% of the .NET code seems to be
@@ -767,12 +786,12 @@
     codegenerator, and maybe some base libraries) and if the work is
     suitable for inclusion in FPC (a very big if), we will of course
     include it.<p>
-
-    These problems are pretty much similar for the Java (bytecode) too. 
-    One has to mutilate the language, and rewrite the libraries from
-    scratch on the base libraries of the target (Java/.NET). Such an
-    attempt would have little synergy with the FPC project as it is
-    today.<p>
+    
+    Since support for <a href="http://wiki.freepascal.org/FPC_JVM">generating JVM bytecode</a> has been added to the
+    compiler, such a project may be more realistic now than it has been
+    in the past. Many of the caveats mentioned above still hold though:
+    language compatibility is not 100% and most standard units will have
+    to be reimplemented.<p>
                  
 
    </OL>
@@ -924,8 +943,7 @@
           
             <p>
             It is possible to call functions coded in C, which were compiled
-            with the GNU C compiler (<TT>GCC</TT>). Versions which have been
-            tested are version 2.7.2 through 2.95.2 of GCC. For calling the
+            with the GNU C compiler (<TT>GCC</TT>). For calling the
             C function strcmp declare the following:
             
             <PRE>function strcmp(s1 : pchar;s2 : pchar) : integer;cdecl;external;</PRE>
@@ -946,6 +964,9 @@
             <p>Since version 1.9.2, the compiler also uses the register calling
             convention, which means the compiler can assemble assembler routines
             in Delphi source code without modification.
+
+            <p>Since version 1.9.8, the register calling convention is default
+	    for Delphi mode.
 
             <p>A description of the AT&amp;T syntax can be found in the GNU
             Assembler documentation. 
@@ -1617,7 +1638,23 @@
 
             <p> It is to note that the Solaris version of FPC contains these tools. 
         
+        <li><a name=unix-ld219></a>
+            <h3>An error occurred while linking, or &quot;did you forget -T?&quot;</h3>
 
+            <p>There is a bug in GNU LD 2.19 and 2.19.1 that causes it to crash
+            when processing FPC-generated linker scripts. This bug has been fixed
+            in the mean time.</p>
+
+            <p>At the same time, LD has been modified to emit a warning of the form 
+            <pre>
+               /usr/bin/ld: warning: link.res contains output sections; did you forget -T?
+            </pre></p>
+
+            <p>This warning is benign, and FPC intentionally does not pass -T to LD. The reason
+            is that if -T is used, LD's internal linker script is ignored and only
+            FPC's linker script is used. Such linker scripts also contain paths to
+            libraries however, and if we would ignore the internal linker script then
+            LD would no longer find libraries in distribution-specific directories.</p>
 
    </OL>
    <LI><h2>OS/2 related information </h2>
@@ -1719,7 +1756,7 @@
             for information about OS/2 fixpaks and links for downloading them.
             This issue isn't valid for WarpServer for e-Business, MCP and eComStation - these already have
             the correct version.
-            
+
         <li><a name="os2-as-failing"></a><h3>Compilation under OS/2 fails with error "Can't call the assembler"</h3>
             <p>Apart from the point mentioned <a href="#os2-fp">above</a>,
             there is at least one more potential reason for issues with
@@ -1733,8 +1770,7 @@
             from the command line (e.g. "as --version" to show the installed
             as.exe version) may be helpful to see name of the missing dynamic
             library or other details about the problem.
-            
-        
+
    </OL>
 
    <LI><h2>BeOS related information </h2>
