@@ -167,10 +167,9 @@
             the main ones).
 	
             <p>The Free Pascal compiler is available for several
-            architectures: x86, Sparc (v8,v9), ARM, x86_64 (AMD64/Opteron),
-            PowerPC and PowerPC64. An older version (the 1.0 series) and
-            current development version also support m68k, the current development version also
-            supports MIPS (in both big endian and little endian modes).
+            architectures: x86, Sparc (v8, v9), ARM, x86_64 (AMD64/Opteron),
+            PowerPC and PowerPC64, m68k, MIPS (both big endian and little
+            endian modes), JVM and i8086.
   	  	
             <p>The compiler is written in Pascal and is able to compile its
             own sources. The source files are under GPL and included.
@@ -205,7 +204,7 @@
           
             <p>The latest official version is 2.6.4, the second fixes release in the 2.6.x series.
             New development is performed in 2.7.x series, which eventually
-            gets released as 2.8.0 or 3.0.0, depending on milestones achieved.
+            gets released as 3.0.0.
 
             <h4>Historic versions</h4>
 
@@ -230,7 +229,7 @@
               and so on.
 		<li>Repackagings that affect sources are indicated with a single letter as 
 			suffix (e.g. 2.0.4a), this is usually the case for platforms that weren't part of the original release round.
-             <li>The stable branch (fixes_2_4) always has an odd last number (2.4.1, 2.4.3). 
+             <li>The stable branch (e.g. fixes_2_4) always has an odd last number (2.4.1, 2.4.3). 
                   Compilers with such versions are snapshots, and e.g. a snapshot with 2.4.1 can
  		  be anywhere between 2.4.0 and the moment 2.4.2 branched off (may 2010). Likewise
 		 the fixes_2_4 branch will hold version 2.4.3 till 2.4.4 is branched off (typically
@@ -257,7 +256,8 @@
 		test the branch from which the release is created.
 
             <p>We advise all users to upgrade to the newest version for their
-            target (preferably the new stable 2.6.x series).
+            target (see information about released
+            <a href="#versions">versions</a> above).
 
             <p>A graphical timeline of the FPC project plus its near future would
             be:
@@ -273,7 +273,7 @@
             compiler on as many platforms as possible. GNU Pascal tries to
             implement a portable pascal compiler based on POSIX.
             <DT><b>Version:</b>
-            <DD>Currently, Free Pascal is at version 2.6.4 (Februari 2014). GNU Pascal is at
+            <DD>Currently, Free Pascal is at version 2.6.4 (February 2014). GNU Pascal is at
             version 2.1 (from 2002, which can be built with several different GCC's as backend; 
             their Mac OS X version is an exception though, as it follows the GCC version number).
             <DT><b>Tracking:</b>
@@ -285,9 +285,8 @@
             e.g. DOS, Win32 (no Unix porting layer needed), Linux, FreeBSD,
             NetBSD, OS/2, BeOS, Classic Mac OS, Mac OS X, and AmigaOS, on,  at
             the moment the following architectures: x86,
-            x86_64 (AMD64), Sparc, PowerPC, PowerPC64, ARM, Motorola m68k (m68k only in version 1.0.x
-            and the latest development versions) and MIPS (both big endian and little endian mode available
-            in the latest development versions).
+            x86_64 (AMD64), Sparc, PowerPC, PowerPC64, ARM, Motorola m68k,
+            MIPS (both big endian and little endian mode), JVM and i8086.
 
             GNU Pascal runs basically on any system that can run GNU C, and for which the buildprocess was verified.
             <DT><b>Bootstrapping:</b>
