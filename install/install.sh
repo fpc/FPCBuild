@@ -226,6 +226,25 @@ case "$OSNAME" in
   freebsd)
      PREFIX=/usr/local
   ;;
+  sunos)
+     # Check if GNU llinker is recent enough, version 2.21 is needed at least
+     GNU_LD=`which gld`
+     supported_emulations=`"$GNU_LD" --target-help | sed -n "s|.*supported emulations:||p" `
+     supports_elf_i386_sol2=`echo $supported_emulations | grep -w elf_i386_sol2 `
+     supports_elf_x86_64_sol2=`echo $supported_emulations | grep -w elf_x86_64_sol2 `
+     if [ "$supports_elf_i386_sol2" = "" ]; then
+       echo -n "GNU linker $GNU_LD does not support elf_i386_sol2 emulation, please consider "
+       echo "upgrading binutils package to at least version 2.21"
+     elif [ "$supports_elf_x86_64_sol2" = "" ]; then
+       echo -n "GNU linker $GNU_LD does not support elf_x86_64_sol2 emulation, please consider "
+       echo "upgrading binutils package to at least version 2.21"
+     fi
+     PREFIX=/usr/local
+     # Use GNU tar if present
+     if [ "`which gtar`" != "" ]; then
+       TAR=`which gtar`
+     fi
+  ;;
   *)
      # Install in /usr/local or /usr ?
      if checkpath /usr/local/bin; then
