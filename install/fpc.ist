@@ -49,7 +49,6 @@ Source: bin\i386-win32\ppc386.exe; DestDir: {app}\bin\i386-win32; Flags: ignorev
 Source: bin\i386-win32\ppudump.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\ppufiles.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\ppumove.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
-Source: bin\i386-win32\cygwin1.dll; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\fp32.ico; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\fpc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\fpcmkcfg.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
@@ -86,8 +85,6 @@ Source: bin\i386-win32\windres.h; DestDir: {app}\bin\i386-win32; Flags: ignoreve
 Source: bin\i386-win32\strip.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: binutils
 Source: bin\i386-win32\gdb.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: gdb
 Source: bin\i386-win32\libexpat-1.dll; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: gdb
-Source: bin\i386-win32\cygncurses-8.dll; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: gdb
-Source: bin\i386-win32\cygiconv-2.dll; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: gdb
 ; IDE files
 Source: bin\i386-win32\fp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: ide
 Source: bin\i386-win32\fp32.ico; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: ide
