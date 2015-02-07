@@ -2623,6 +2623,15 @@ rpm: checkfpcdir rpmcopy rpmbuild rpmclean
 endif   # spec found
 endif   # rpm available
 endif   # inUnix
+ifeq ($(CPU_TARGET),i8086)
+WLINK:=$(strip $(wildcard $(addsuffix /wlink.exe,$(SEARCHPATH))))
+ifeq ($(WLINK),)
+WLINK:=$(strip $(wildcard $(addsuffix /wlink,$(SEARCHPATH))))
+endif
+ifeq ($(WLINK),)
+$(error You need an installation of Open Watcom in order to build this platform)
+endif
+endif
 ifndef ISCCPROG
 ISCCPROG=$(subst $(PATHSEP),/,$(ProgramFiles))/inno setup 5/iscc.exe
 endif # ISCCPROG
@@ -2732,6 +2741,6 @@ innojvm : checkfpcdir
 		$(MAKE) OS_TARGET=java CPU_TARGET=jvm innojvmbuild NOGDB=1
 		$(MAKE) innoclean	
 innomsdos : checkfpcdir
-	$(MAKE) OS_TARGET=msdos CPU_TARGET=i8086 innomsdosbuild NOGDB=1
+	$(MAKE) OS_TARGET=msdos CPU_TARGET=i8086 innomsdosbuild NOGDB=1 CROSSBINDIR=$(BASEDIR)/install/crossbinmsdos
 	$(MAKE) innoclean	
 inno: checkfpcdir innobuild innoclean
