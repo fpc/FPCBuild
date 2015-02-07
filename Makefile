@@ -2732,6 +2732,6 @@ innojvm : checkfpcdir
 		$(MAKE) OS_TARGET=java CPU_TARGET=jvm innojvmbuild NOGDB=1
 		$(MAKE) innoclean	
 innomsdos : checkfpcdir
-	$(MAKE) OS_TARGET=msdos CPU_TARGET=i8086 innomsdosbuild NOGDB=1
+	$(MAKE) OS_TARGET=msdos CPU_TARGET=i8086 innomsdosbuild NOGDB=1 CROSSBINDIR=$(BASEDIR)/install/crossbinmsdos
 	$(MAKE) innoclean	
 inno: checkfpcdir innobuild innoclean
