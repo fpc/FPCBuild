@@ -2623,6 +2623,15 @@ rpm: checkfpcdir rpmcopy rpmbuild rpmclean
 endif   # spec found
 endif   # rpm available
 endif   # inUnix
+ifeq ($(CPU_TARGET),i8086)
+WLINK:=$(strip $(wildcard $(addsuffix /wlink.exe,$(SEARCHPATH))))
+ifeq ($(WLINK),)
+WLINK:=$(strip $(wildcard $(addsuffix /wlink,$(SEARCHPATH))))
+endif
+ifeq ($(WLINK),)
+$(error You need an installation of Open Watcom in order to build this platform)
+endif
+endif
 ifndef ISCCPROG
 ISCCPROG=$(subst $(PATHSEP),/,$(ProgramFiles))/inno setup 5/iscc.exe
 endif # ISCCPROG

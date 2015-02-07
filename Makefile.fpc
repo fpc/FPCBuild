@@ -704,6 +704,20 @@ endif   # rpm available
 endif   # inUnix
 
 ##########################################################################
+# Open Watcom detection
+##########################################################################
+
+ifeq ($(CPU_TARGET),i8086)
+WLINK:=$(strip $(wildcard $(addsuffix /wlink.exe,$(SEARCHPATH))))
+ifeq ($(WLINK),)
+WLINK:=$(strip $(wildcard $(addsuffix /wlink,$(SEARCHPATH))))
+endif
+ifeq ($(WLINK),)
+$(error You need an installation of Open Watcom in order to build this platform)
+endif
+endif
+
+##########################################################################
 # Inno setup
 ##########################################################################
 
