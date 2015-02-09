@@ -33,6 +33,8 @@ AlwaysShowComponentsList=false
 ShowLanguageDialog=yes
 ; we put version numbers in the appdir, so never use old dirname
 UsePreviousAppDir=no
+; we update the CLASSPATH variable, so set ChangesEnvironment
+ChangesEnvironment=yes
 
 ; for the addon installer
 CreateUninstallRegKey=no
