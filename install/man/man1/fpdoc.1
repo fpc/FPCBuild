@@ -5,10 +5,7 @@ fpdoc \- The FPC Pascal unit documentation generator.
 .SH SYNOPSIS
 
 \fBfpdoc\fP \-\-input=inputcommand [\-\-output=output] [\-\-format=fmt] 
-[\-\-descr=descriptionfile] [\-\-show-private] [\-\-hide-protected]
-[\-\-lang=language] [\-\-content=contentfile] [\-\-import=importfile]
-[\-\-package=packagename] [\-\-html-search=searchpage] [\-\-ostarget=target]
-[\-\-cpu-target=target] [\-\-latex-extension=ext] [\-\-latex-highlight]
+[\-\-descr=descriptionfile] [\-\-package=packagename] [options]
 
 .SH Description
 
@@ -43,11 +40,33 @@ used to create cross-links in documentation for different units, using the
 .B --import
 option.
 .TP
+.BI \-\-cputarget=value
+This option tells 
+.B fpdoc
+for which CPU to generate documentation. This simply defines the approriate CPU macros.
+.TP
 .BI \-\-descr=descfile
 This option specifies the name of a description file
 .B descfile
 that contains the actual documentation for the unit. 
 This option can be given several times, for several description files.
+.TP
+.BI \-\-descr\-dir=dir
+This option specifies the name of a directory with XML description files, named
+.B dir
+This option can be given several times, for several description directories. 
+This option is equivalent to specifying all files in the directory with the \-\-descr option.
+.TP
+.BI \-\-dont\-trim
+This option tells fpdoc not to trim whitespace in the XML files.
+By default, whitespace is trimmed from the input, which can have undesirable side\-effects
+in for instance PRE tags.
+.TP
+.BI \-\-dry\-run
+This option tells 
+.B fpdoc 
+not to generate any output, but just parse all input. This can be used with the verbose option
+to check what errors remain in the documentation, or what is still missing.
 .TP
 .BI \-\-format=fmt
 Specifies the format
@@ -56,11 +75,20 @@ in which the documentation will be generated. Currenly,
 the following formats are known:
 .RS
 .TP
+.I chm
+CHM with 8.3 conforming filenames, for windows mostly.
+.TP
+.I dxml
+Delphi compatible XML output.
+.TP
 .I htm
 HTML with 8.3 conforming filenames.
 .TP
 .I html
 HTML with long filenames.
+.TP
+.I ipf
+IPF output (OS/2 format, can be used with docview from fpGUI).
 .TP
 .I xhtml
 XHTML with long filesnames.
@@ -68,9 +96,21 @@ XHTML with long filesnames.
 .I latex
 LaTex, which uses the fpc.sty style used by the Free Pascal documentation.
 .TP
+.I man
+man page output (unix manual pages, one page per identifier).
+.TP
+.I rtf
+RTF output.
+.TP
+.I txt
+Plain text output.
+.TP
 .I xml-struct
 Structured XML.
 .RE
+.TP
+.BI \-\-help
+Show a command-line option summary.
 .TP
 .BI \-\-hide\-protected
 By default, the documentation will include descriptions and listings of
@@ -105,6 +145,15 @@ single or double quotes, so the shell will not break them in parts.
 It is possible to specify multiple input commands; they will be treated one
 by one, and documentation will be generated for each of them.
 .TP
+.B \-\-input\-dir=dir
+This option tells 
+.B fpdoc
+to add all .pas and .pp files in the directory named
+.B cmd
+as input files to the documenter. This is equivalend to specifying all files in the directory with the 
+.B \-\-input 
+command.
+.TP
 .BI \-\-lang=language
 Sets the language for the output file. This will mainly set the strings used
 for the headers in various parts of the documentation files (by default
@@ -133,6 +182,16 @@ Switches on an internal latex syntax highlighter. This is not yet
 implemented. By default, syntax highlighting is provided by the syntax
 package that comes with fpc.
 .TP
+.BI \-\-mo\-dir=dir
+This option tells 
+.B fpdoc
+where to look for the translation files that can be used to internationalize  fpdoc's output.
+.TP
+.BI \-\-ostarget=value
+This option tells 
+.B fpdoc
+for which operating system to generate documentation. This simply defines the approriate operating system macros.
+.TP
 .BI \-\-output=name 
 This option tells 
 .B fpdoc
@@ -154,17 +213,37 @@ Specifies the package name. All units will be documented as part of
 nodes inside a package node with this name will be considered when
 documenting.
 .TP
+.B \-\-parse\-impl
+(Experimental) try to parse the implementation of a unit too, this can be used for syntax checking.
+.TP
+.B \-\-project=file
+This option tells 
+.B fpdoc
+to read all options from a project file. This is an XML file, please see the documentation 
+for more information about the format for this file.
+.TP
 .BI \-\-show\-private 
 By default, no documentation is generated for private methods or fields.
 This option causes 
 .B fpdoc
 to generate documentation for these methods as well.
 .TP
+.BI \-\-verbose 
+By default, 
+.B fpdoc
+is sparse with output. This tells fpdoc to generate some more information about what it is doing.
+.TP
 .BI \-\-warn\-no\-node 
 If this option is specified, 
 .B fpdoc
 will emit a warning if it does not find a description node for an identifier
 it is documenting.
+.TP
+.BI \-\-write\-project=file 
+If this option is specified, 
+.B fpdoc
+will write a fpdoc project file (to the specified file name) that corresponds 
+to the command-line options given.
 
 .SH SEE ALSO
 .IP 
