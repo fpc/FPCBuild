@@ -14,11 +14,10 @@
  **********************************************************************}
 
 { * 2005.01.10 * }
-{ * Needs MorphOS RTL 2005.01.10 or later! * }
 
 program getvolumes;
 
-uses doslib;
+uses amigados;
 
 
 { * this function converts a BCPL-style string pointer to * }

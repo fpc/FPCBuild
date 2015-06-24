@@ -21,7 +21,7 @@
 {$macro on}
 program muidemo2;
 
-uses exec, doslib, intuition, mui, aboxlib, muihelper;
+uses exec, amigados, intuition, mui, amigalib, utility, muihelper;
 
 // temp hack
 const

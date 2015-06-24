@@ -19,7 +19,7 @@
 
 program window;
 
-uses exec, intuition, graphics, utility;
+uses exec, intuition, agraphics, utility;
 
 { * Enable this to run on custom screen. If it's not * }
 { * enabled, window will open on default pubscreen   * }
@@ -76,7 +76,6 @@ begin
   if Not InitGraphicsLibrary then ShutDown(ERRMSG_NOGFX,20);
 
 {$IFDEF CUSTOMSCREEN}
-  myScreen:=NIL;
   { * Opening our custom screen * }
   myScreen:=OpenScreenTags(NIL,[SA_Width,640,SA_Height,480,
                                 SA_Depth,24,
@@ -85,7 +84,6 @@ begin
   if myScreen=NIL then ShutDown(ERRMSG_NOSCREEN,20);
 {$ENDIF}
 
-  myWindow:=NIL;
   { * We open our window here. * }
   myWindow:=OpenWindowTags(NIL,[WA_Left,0,WA_Top,0,
                                 WA_Width,400,WA_Height,300,
@@ -111,6 +109,11 @@ end;
 
 
 begin
+{$IFDEF CUSTOMSCREEN}
+  myScreen:=nil;
+{$ENDIF}
+  myWindow:=nil;
+
   Init;
   Quit:=False;
   LeftButton:=False;
@@ -137,7 +140,7 @@ begin
         IDCMP_REFRESHWINDOW:
           begin
             BeginRefresh(myWindow);
-            EndRefresh(myWindow, 1);
+            EndRefresh(myWindow, true);
           end;
         IDCMP_VANILLAKEY:
           begin

@@ -14,11 +14,10 @@
  **********************************************************************}
 
 { * 2005.01.30 * }
-{ * Needs MorphOS RTL 2005.01.30 or later! * }
 
 program AHITest;
 
-uses exec,doslib,utility,ahi; // AHI SUXX! :)
+uses exec,amigados,utility,ahi; // AHI SUXX! :)
 
 
 const

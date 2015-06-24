@@ -21,7 +21,7 @@
 {$MODE FPC}
 program process;
 
-uses exec, utility, doslib;
+uses exec, utility, amigados;
 
 type
   pMyMsg = ^tMyMsg;
@@ -105,7 +105,7 @@ begin
    { * you probably want to do some stuff in the background * }
    { * so it's more useful to poll then. Replace Delay() * }
    { * with your code, or more, add your code after it. * }
-   Delay(1);
+   DOSDelay(1);
  until finish;
 
 
@@ -136,6 +136,7 @@ begin
    ShutDown('Can''t create message ports.');
 
  { * Setting up StartupMsg * }
+ FillChar(ThStartupMsg,sizeof(ThStartupMsg),0);
  with ThStartupMsg do begin
    with mm_MsgNode do begin
      mn_Node.ln_Type:=NT_MESSAGE;

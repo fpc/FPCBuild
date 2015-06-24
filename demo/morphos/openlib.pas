@@ -17,7 +17,7 @@
 
 program openlib;
 
-uses exec, intuition, graphics, utility;
+uses exec, intuition, agraphics, utility;
 
 { * You can enable this to manually open needed libraries, * }
 { * else it will use functions built into the units;       * }

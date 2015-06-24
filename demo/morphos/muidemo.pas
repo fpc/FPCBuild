@@ -22,7 +22,7 @@
 
 program muidemo;
 
-uses exec, doslib, intuition, mui, aboxlib;
+uses exec, amigados, intuition, mui, amigalib, utility;
 
 var
   app: pObject_;

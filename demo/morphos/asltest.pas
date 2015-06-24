@@ -3,7 +3,7 @@
     Free Pascal for MorphOS example
 
     Copyright (C) 2005 by Karoly Balogh
-    Based on work of Nils Sjoholm
+    Based on the work of Nils Sjoholm
 
     See the file COPYING.FPC, included in this distribution,
     for details about the copyright.
@@ -15,7 +15,6 @@
  **********************************************************************}
 
 { * 2005.01.30 * }
-{ * Needs MorphOS RTL 2005.01.30 or later! * }
 
 program ASLtest;
 
