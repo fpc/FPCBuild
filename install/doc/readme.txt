@@ -9,7 +9,7 @@
 
 Please also read the platform specific README file, if it exists.
 
-This package contains an advanced freeware 16-bit/32-bit/64-bit pascal
+This package contains an advanced freeware 32-bit/64-bit/16-bit pascal
 compiler for several platforms. The language and the runtime library are
 almost compatible with Turbo Pascal 7.0 and recent Delphi releases. There is
 also partial support for the Macintosh pascal dialect.
