@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 2.6.0
+                               Version 3.0.0
 
 ****************************************************************************
 * Introduction
@@ -9,14 +9,14 @@
 
 Please also read the platform specific README file, if it exists.
 
-This package contains an advanced freeware 16-bit/32-bit/64-bit pascal
+This package contains an advanced freeware 32-bit/64-bit/16-bit pascal
 compiler for several platforms. The language and the runtime library are
 almost compatible with Turbo Pascal 7.0 and recent Delphi releases. There is
 also partial support for the Macintosh pascal dialect.
 
 News and changes related to this release are described in whatsnew.txt.
 
-Free Pascal 2.6.0 is currently available for the following platforms:
+Free Pascal 3.0.0 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-powerpc
@@ -98,12 +98,17 @@ e-mail addresses are listed below.
 
 i386, x86_64, PowerPC or Sparc processor
 Win32:
- - Win95/98/Me/2000/2003/XP/Vista or WinNT
+ - MS Windows NT/2000/2003/XP/Vista/7 (Win95, 98 and ME are not supported
+   in FPC officially any longer).
  - 16 MB RAM
 OS/2:
  - OS/2 Warp v3.0 with one of late fixpaks - FP 35 should be fine,
    OS/2 Warp v4.0 with FP 5 and above, WSeB, MCP or any eComStation version
-   (OS/2 2.0/2.1 currently not supported, not even for compiled programs)
+   (OS/2 2.0/2.1 currently not supported, not even for compiled programs).
+ - Certain features (e.g. Unicode support in the RTL) require proper support
+   only available in later OS/2 versions (at least OS/2 Warp 4.0 FP14),
+   otherwise the functionality may be limited (but the binaries still work
+   even on the older versions, albeit with some limitations).
 Linux:
  - system running a 2.4.x kernel
 FreeBSD:
@@ -119,14 +124,13 @@ Mac OS (classic)
 * Quick start - Win32
 ****************************************************************************
 
-Download the distribution package (fpc-2.6.0.i386-win32.exe) and run it
+Download the distribution package (fpc-3.0.0.i386-win32.exe) and run it
 - it is a self-extracting installer, so just follow the instructions
-to install it. Don't forget to set the PATH environment variable if you
-install FPC under Win95/98/ME (the installer should do it automatically
-under WinNT/2k/XP).
+to install it. The installer should set the PATH environment variable as
+appropriate.
 
 To test the compiler, change to the demo\texts directory of the FPC tree
-and type
+and type on the command line:
         fpc hello
         hello
 
@@ -135,7 +139,7 @@ and type
 * Quick start - DOS
 ****************************************************************************
 
-Download distribution archive (dos260.zip for GO32v2) and unzip it into
+Download distribution archive (dos300.zip for GO32v2) and unzip it into
 a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -158,7 +162,7 @@ and type
 * Quick start - OS/2 / eComStation
 ****************************************************************************
 
-Download distribution archive (os2260.zip for OS/2 or eComStation) and unzip
+Download distribution archive (os2300.zip for OS/2 or eComStation) and unzip
 it into a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -183,7 +187,7 @@ and type
 * Quick start - Linux/FreeBSD
 ****************************************************************************
 
-Download fpc-2.6.0.<cpu>-<os>.tar and untar into a temporary directory.
+Download fpc-3.0.0.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
@@ -203,7 +207,7 @@ and later, additionally install the "Command Line Tools" by going to
 
 There are two methods to install Free Pascal for Mac OS X.
 
-1) Download and install the Mac OS X package (fpc-2.6.0.powerpc-macosx.dmg)
+1) Download and install the Mac OS X package (fpc-3.0.0.powerpc-macosx.dmg)
 
 This gives you the Free Pascal Compiler and the Xcode integration kit.
 
@@ -269,8 +273,9 @@ options.
 ****************************************************************************
 
 The documentation is available as HTML pages, PDF, PS, and text although the
-recommended format is pdf. These are all available on
-ftp://ftp.freepascal.org/fpc/dist/docs-2.6.0
+recommended format is pdf. The latest PDF version is available on
+ftp://ftp.freepascal.org/fpc/dist/docs-pdf/, other formats are available
+for download in the directory of the respective distributed release.
 
 NB that there is at present no FPC specific documentation for the platform
 specific API (like Win32 system functions, etc.). There is a note in the ftp
@@ -362,7 +367,7 @@ The compiler and most utilities and executables distributed in this package
 fall under the GPL, for more information read the file COPYING.v2.
 
 Some specific utilities and programs come under the license described in
-COPYING.v3, COPYING.DJ, COPYING.EMX, COPYING.RSX, license.upx and licensez.ip.
+COPYING.v3, COPYING.DJ, COPYING.EMX, COPYING.RSX and licensez.ip.
 
 FPC for JVM comes with some third party tools which are convered by
 the following licenses:
