@@ -1,7 +1,71 @@
 
                             Free Pascal Compiler
 
-                                Version 2.6.4
+                                Version 3.0.0
+
+******************************************************************************
+                              What's New in 3.0.0
+******************************************************************************
+
+Free Pascal 3.0.0 is a new major release providing support for new
+architectures and targets and also many new features and compatibility fixes.
+
+Please also see http://wiki.freepascal.org/User_Changes_3.0.0 for a list
+of changes that may affect the behaviour of previously working code, and
+how to cope with these changes.
+
+Some highlights are:
+
+Platforms:
+  * New processor architecture: MIPS (big and little endian variants)
+  * New processor architecture: i8086 (primarily focusing legacy MS-DOS)
+  * New "processor" architecture: JVM
+  * Revived support for Motorola 68k processors (previously available
+    in 1.0.x series)
+  * Considerably extended supported range of ARM processor variants
+  * New platform: AIX/PowerPC
+  * New platform: AIX/PowerPC64
+  * New platform: Android/ARM
+  * New platform: Android/i386
+  * New platform: Android/JVM
+  * New platform: Android/MIPSEL
+  * New platform: AROS/i386
+  * New platform: DragonFly/x86_64
+  * New platform: Java/JVM
+  * New platform: Linux/MIPS
+  * New platform: Linux/MIPSEL
+  * New platform: msdos/i8086
+
+Compiler:
+  * New support for codepage-aware strings (bringing improved compatibility
+    to recent Delphi versions)
+  * Support for processor sub-architectures (mostly for ARM variants)
+  * Support for multiple memory models (i8086 - including memory models
+    not supported with the last TP/BP compilers)
+
+RTL:
+  * Partial support for codepage-aware strings and Unicode in the RTL
+    including transparent character set conversion
+  * OS/2 RTL finally provides full support for UnicodeString handling
+    when running under OS/2 versions including such support (OS/2 Warp 4
+    and up)
+  * Direct support for certain OS/2 API functions only available in later
+    OS/2 versions while allowing the created binaries to run also on older
+    versions
+
+Packages:
+  * Big improvements of fpmake (fpmkunit) - all packages and utilities
+    (actually everything except the compiler and RTL) are now built using
+    fpmake which somewhat decreases dependency on external utilities.
+  * New packages rtl-* containing units previously included in RTL; this
+    allowed streamlining the RTL and thus speeding up RTL building.
+  * New package fpwidestring - native implementation of Unicode string
+    handling routines. This allows full support of UnicodeString also
+    on targets not supporting Unicode natively or possibly on targets
+    requiring linking to libc for such support.
+
+See http://bugs.freepascal.org/changelog_page.php for the list of reported
+bugs which have been fixed in this release.
 
 ******************************************************************************
                               What's New in 2.6.4
@@ -19,8 +83,8 @@ Compiler:
 
 Packages:
   * Lots and lots fixes and improvements for fcl-db
-  * web and json packages synchronized.
-  * improvements to the chmcmd compiler.
+  * Web and json packages synchronized.
+  * Improvements to the chmcmd compiler.
   * Several fixes for winunits (and winceunits)
 
 Platforms:
@@ -28,11 +92,6 @@ Platforms:
 
 See http://bugs.freepascal.org/changelog_page.php for the list of reported
 bugs which have been fixed in this release.
-
-
-                            Free Pascal Compiler
-
-                                Version 2.6.2
 
 ******************************************************************************
                               What's New in 2.6.2
@@ -56,7 +115,7 @@ Packages:
         * Support for JSON dataset added among others
   * Fixes and improvements for fcl-passrc (and fpdoc)
   * Updates for PTCPas and gtk2
-  * fpmkunit improvements (better support for future switch to fpmake)
+  * Fpmkunit improvements (better support for future switch to fpmake)
   * Several fixes for x11
   * Several fixes for winunits (and winceunits)
 
