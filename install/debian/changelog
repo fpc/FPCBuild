@@ -1,3 +1,9 @@
+fpc (3.0.0rc1-0) unstable; urgency=low
+
+  * Release candidate build.
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 06 Aug 2015 22:40:18 +0200
+
 fpc (3.0.1-0) unstable; urgency=low
 
   * Daily snapshots build.

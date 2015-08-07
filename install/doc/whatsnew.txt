@@ -1,10 +1,10 @@
 
                             Free Pascal Compiler
 
-                                Version 3.0.0
+                              Version 3.0.0-rc1
 
 ******************************************************************************
-                              What's New in 3.0.0
+                           What's New in 3.0.0-rc1
 ******************************************************************************
 
 Free Pascal 3.0.0 is a new major release providing support for new
