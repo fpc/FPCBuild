@@ -116,8 +116,6 @@ FreeBSD:
     works on 6.x too. Older versions might need specific adaptations.
 Mac OS X:
  - Mac OS X 10.4 and higher
-Mac OS (classic)
- - Mac OS 9.2 has been tested, should probably also work from 7.5.3 and up.
 
 
 ****************************************************************************
@@ -201,64 +199,24 @@ and type
 * Quick start - Mac OS X/Darwin
 ****************************************************************************
 
-Xcode must be installed before FPC is installed. In case of Xcode 4.3
-and later, additionally install the "Command Line Tools" by going to
-"Preferences" and then "Downloads".
+The Xcode command line tools must be installed before FPC is installed. See
+the download page for more information (the method changes with almost every
+new Xcode and/or Mac OS X release, so the information in this readme is
+usually out of date).
 
 There are two methods to install Free Pascal for Mac OS X.
 
-1) Download and install the Mac OS X package (fpc-3.0.0.powerpc-macosx.dmg)
-
-This gives you the Free Pascal Compiler and the Xcode integration kit.
+1) Download and install the Mac OS X installer package
 
 2) Install fpc using fink
 
-This gives you the Free Pascal Compiler, including all libraries, packages
-and units from its sources, including Free Vision and the IDE, which partly
-works using X11 xterm.
+This second method additionally includes a text mode IDE, which partly works
+using XQuartz xterm.
 
 
-With method 1 follow the instructions to install the XCode integration kit
-at:
-
-http://www.freepascal.org/xcode.html
-
-Method 2 is mainly meant for using the compiler through the command
-line. Fink takes care of setting the PATH variable. You can also use the
-command line with Free Pascal installed using method 1. The main point
-is to change your PATH as described below:
-
-The compiler is called "fpc" and will be installed in /usr/local/bin. This
-directory may not be in your PATH yet (if you type "fpc" in a Terminal
-window and you get something like "fpc: command not found", then it isn't).
-If the installation directory is not yet in your PATH, you will have to add
-it. To get an idea, how to do this, follow the instructions at:
-
-"http://fink.sourceforge.net/doc/users-guide/install.php#setup"
-
-to determine which file you have to edit, but instead of adding the line
-suggested there, add the following at the end:
-
-- if your shell is the Bourne shell (bash):
-
- 	export PATH=/usr/local/bin:$PATH
-
-When using Terminal.app add this to ".bash_profile",
-when using the X11 xterm add this to ".bashrc".
-If these files do not exist yet in your home directory, you have to create
-them, for example with nano (or any other text editor):
-
-	nano .bash_profile
-
-- if your shell is the C Shell (csh or tcsh):
-
-	setenv PATH /usr/local/bin:${PATH}
-
-Next, close the Terminal window and open a new one. Now, the PATH should
-be set correctly. After installing the package, you can write your
-source code in your favorite editor (including Project Builder and XCode).
-To compile something, go to the directory containing your source files in
-Terminal and type:
+After installing the package, you can write your source code in your favorite
+editor (including Project Builder and XCode). To compile something, go to the
+directory containing your source files in Terminal and type:
 
         fpc name_of_your_source_file
 
@@ -374,6 +332,9 @@ the following licenses:
   - jasmin.jar comes under the license described in jasminli.txt
   - bcel-6.0-SNAPSHOT.jar comes under the Apache 2.0 license, described by
     apache2.txt
+
+Portions of FPC are based on libffi. See libffi.txt for the license of that
+code.
 
 Some of the licenses of the third party tools require to make the source
 available. If you cannot find the sources or information where to find
