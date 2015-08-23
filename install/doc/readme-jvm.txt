@@ -18,6 +18,6 @@ Instead of the standard FPC RTL and packages, you can make use of the standard J
 
 Usage
 
-The compiler binary's name is ppcjvm, and it can also be invoked using fpc -Pjvm.
+The compiler binary's name is ppcjvm, and it can also be invoked using fpc -Pjvm. The default target "operating system" is the Java JDK. You can change target Android by specifying the -Tandroid command line parameter when compiling.
 
 If you wish to create additional Pascal units to interface with other Java classes, you can use the javapp utility. See http://wiki.freepascal.org/FPC_JVM/Building#Creating_interfaces_for_other_Java_classes for more information.
