@@ -1,0 +1,67 @@
+.TH pas2jni 1 "12 Dec 1999" "Free Pascal" "Free Pascal Java Native Interface generation tool"
+.SH NAME
+pas2jni - Free Pascal Java Native Interface generation tool
+
+.SH SYNOPSIS
+.B pas2jni
+[\fIoptions\fR] \fI<unit> \fR[\fI<unit2> <unit3> \fR...]
+
+Generate a Java native interface description and library from compiled Free Pascal units.
+pas2jni generates per unit 2 files: a library that provides access to the functions and 
+procedures in the pascal unit in a manner that Java understands, and a .java file that 
+describes the library, and can be used to access the libary from Java.
+
+.SH OPTIONS
+.TP
+.B \-U<path> 
+Unit search path, semicolon delimited. Wildcards are allowed.
+.TP
+.B \-L<name> 
+Set output library name. By default, this is the name of the unit followed by 'jni'.
+.TP
+.B \-P<name> 
+Set Java package name. This is by default 'pas'. 
+.TP
+.B \-O<path> 
+Set output path for Pascal files. This is the current directory, by default.
+.TP
+.B \-J<path> 
+Set output path for Java files. By default, this is 'pas'.
+.TP
+.B \-D<prog> 
+Set full path to the "ppudump" program. The ppudump program is needed to analyse the contents of the unit files.
+.TP
+.B \-I<list> 
+Include the list of specified objects in the output. 
+The list is semicolon delimited. 
+To read this list from a file use \fB\-I\fR@<file>
+.TP
+.B \-E <list> 
+Exclude the list of specified objects from the output. The list is
+semicolon delimited. To read this list from a file use \fB\-E\fR@<file>
+.TP
+.B -?
+Show a help message.
+.SH EXAMPLES
+The following will create a file
+.I pas/getopts.java 
+and a library file
+.I getoptsjni.pas
+unit from the standard getopts unit:
+
+pas2jni units/x86_64-linux/getopts.ppu
+
+The following will create a file
+.I getopts.java 
+and a library file
+.I pasgetopts.pas
+unit from the standard getopts unit:
+
+pas2jni -J. -O. -Lpasgetopts -units/x86_64-linux/getopts.ppu
+
+
+.SH "SEE ALSO"
+.IP
+.BR  java (1)
+.BR  fpc (1)
+.BR  javapp (1)
