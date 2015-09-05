@@ -1,0 +1,41 @@
+.TH pas2fpm 1 "12 Dec 1999" "Free Pascal" "Free Pascal fpmake file generation tool"
+.SH NAME
+pas2fpm \- The Free Pascal unit to fpmake.pp file generator tool.
+
+.SH SYNOPSIS
+
+.B pas2fpm [options] file1...filen
+
+.SH DESCRIPTION
+
+.B pas2fpm
+Creates a fpmake.pp file from the unit files specified. 
+It tries to order the units in an optimal form by scanning the uses clause.
+It does not handle program files, only unit files are supported.
+
+.SH USAGE
+
+.B pas2fpm
+takes the following options at this time:
+.TP
+.B \-h 
+Displays a short help message.
+.TP
+.B \-o outputfile
+By default, 
+.I pas2fpm
+writes a file 
+.I fpmake.pp
+and with this option, the name can be changed.
+.TP
+.B \-p packagename
+Specify the name for the package in the fpmake file.
+.TP
+.B \-v
+Be verbose: write some diagnostic output.
+
+.SH SEE ALSO
+.IP 
+.BR  fppkg (1)
+.BR  fpc (1)
+.BR  make (1)
