@@ -1,0 +1,33 @@
+.TH fpcjres "1" "September 2015" "fpcjres - resource file converter" "User Commands"
+.SH NAME
+fpcjres \- manual page for fpcjres: a resource file converter
+.SH DESCRIPTION
+fpcjres 
+This program is called by the free pascal compiler and is used to 
+translate {$R xxx} directives to java resources that can be included in a java class.
+
+Syntax: fpcjres [options] <inputfile> [<inputfile>...] [\-o <outputfile>]
+.SH OPTIONS
+.TP
+.B \-\-help, \-h \-?
+Show a help message screen.
+.TP
+.B \-\-version, \-V
+Show program version.
+.TP
+.B \-\-verbose\fR, \-v
+Be verbose.
+.TP
+.B \-\-input, \-i <x>
+Ignored for compatibility with other tools.
+.TP
+.B \-\-output, \-o <x>
+Set the output file name.
+.TP
+.B @<file>
+Read more options from file <file>
+
+.SH "SEE ALSO"
+
+.IP
+BR fpc (1)
