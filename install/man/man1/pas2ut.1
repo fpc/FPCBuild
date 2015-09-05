@@ -1,0 +1,173 @@
+.TH pas2ut 1 "5 sep 2015" "Free Pascal" "Free Pascal unit test creation tool"
+.SH NAME
+pas2ut \- The Free Pascal unit to unit test case conversion tool.
+
+.SH SYNOPSIS
+
+.B pas2ut [options] inputfile [outputfile]
+
+.SH DESCRIPTION
+
+.B pas2ut
+Scans the input file for classes and routines, and creates a testcase for
+all classes and routines found in the interface section of the file. 
+It can generate a unit or an include file. All tests are created with a 
+standard fail message. By default, only tests for public, published  
+and default visibility members of classes are generated.
+
+.SH USAGE
+
+.B pas2ut
+takes the following options at this time:
+.TP
+--defaultclasstest=list  
+Specify a comma-separated list of default tests for each class. 
+The elements in the list must be valid pascal identifiers.
+.TP
+.B
+\-\-failmessage=Msg        
+Set the message for the 
+.I Fail()
+statement inside each test method.
+.TP
+.B
+\-\-limit=list
+Specify a comma\-separated list of global identifiers for which to generate tests.
+By default, tests are generated for all global identifiers in the interface section of a unit.
+.TP
+.B
+\-\-prefix=name            
+Set the prefix for the test names (default is 
+.I "Test"
+). A test is named after the identifier it tests, with this prefix.
+.TP
+.B
+\-\-singletestclass
+Use a single test class for each class found. 
+The default is to create a testcase class per class in the input unit.
+.TP
+.B
+\-\-skip\-classes           
+Do not generate test code for classes, only for functions and procedures.
+.TP
+.B
+\-\-skip\-declaration       
+Do not generate declarations for the tests, only implementations.
+.TP
+.B
+\-\-skip\-default           
+skip tests for default visibility members. 
+By default, they are generated, together with Public or published members.
+.TP
+.B
+\-\-skip\-fail              
+Do not create 
+.I fail() 
+statements in test routine implementations.
+.TP
+.B
+\-\-skip\-fields            
+Do not generate testcases for fields of classes (only for methods and properties).
+.TP
+.B
+\-\-skip\-functions         
+Do not generate tests for functions/procedures, only for classes.
+.TP
+.B
+\-\-skip\-implementation    
+Do not generate (empty) implementation for the tests, only a class declaration is generated.
+(it can be completed in an IDE such as Lazarus or MSIDE)
+.TP
+.B
+\-\-skip\-methods
+Do not generate tests for methods of classes, only for fields and properties.
+.TP
+.B
+\-\-skip\-properties        
+Do not generate tests for properties of classes, only for fields and methods.
+.TP
+.B
+\-\-skip\-property\-default  
+Do not generate a default test for each property.
+.TP
+.B
+\-\-skip\-public
+Skip tests for public members, only protected members will be tested if \-\-test\-protected is in effect.
+.TP
+.B
+\-\-skip\-published         
+Do not generate tests for published members, only public and default members will be tested.
+.TP
+.B
+\-\-skip\-register          
+Do not generate RegisterTests statement.
+.TP
+.B
+\-\-skip\-setup             
+Do not override the 
+.I TTestCase.Setup() 
+method in the generated class.
+.TP
+.B
+\-\-skip\-teardown
+Do not override the
+.I TTestCase.TearDown()
+method in the generated class.
+.TP
+.B
+\-\-skip\-unit
+Do not generate a unit, just an include file.
+.TP
+.B
+\-\-testparentname=name    
+Set the name of the parent class for generated test classes. The default is 
+.I TTestCase
+\, this can be used to set another class name.
+.TP
+.B
+\-\-test\-property\-bounds   
+Generate a 
+.I GetBounds 
+test for each property.
+.TP
+.B
+\-\-test\-property\-maxlen
+Generate a 
+.I MaxLen 
+test for each property.
+.TP
+.B
+\-\-test\-property\-notify   
+Generate a 
+.I Notify 
+test for each property.
+.TP
+.B
+\-\-test\-property\-required 
+Generate a 
+.I Required 
+test for each property.
+.TP
+.B
+\-\-test\-protected         
+Also generate tests for protected class members. 
+By default, tests are only generated for public, published and default visibility members.
+.TP
+.B
+\-\-testunitname=name      
+Set the name of the generated unit (default is taken from output file name)
+.TP
+.B
+\-\-tiopf
+Create tiopf tests  (this is the same as specifying \-\-default,\-\-bounds,\-\-required,\-\-notify and \-\-maxlen tests.)
+
+.TP
+.B
+\-\-unittestclassname=name 
+Set the global unit test class name. To be used with \-\-singletestclass.
+.RE 1
+The \-\-limit and \-\-defaultclasstest may be specified multiple times.
+
+.SH SEE ALSO
+.IP 
+.BR  fpc (1)
