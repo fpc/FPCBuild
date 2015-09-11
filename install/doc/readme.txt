@@ -29,9 +29,11 @@ Free Pascal 3.0.0 is currently available for the following platforms:
 - FreeBSD-x86_64
 - Mac OS X/Darwin for PowerPC (32 and 64 bit)
 - Mac OS X/Darwin for Intel (32 and 64 bit)
-- iOS, iPhoneSimulator
+- iOS (ARM and AArch64/ARM64) and iPhoneSimulator (32 and 64 bit)
 - OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 - GO32v2-i386
+- AIX 5.3 and later for PowerPC (32 and 64 bit)
+- Java JVM (1.5 and later) and Android Dalvik (Android 4.0 and later)
 
 There are other platforms (like other BSD variants) which are more or less
 working, but there is currently no maintainer for them and thus we cannot
