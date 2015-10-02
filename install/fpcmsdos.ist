@@ -32,8 +32,7 @@ AppCopyright=GPL
 AppendDefaultDirName=false
 AlwaysShowComponentsList=false
 ShowLanguageDialog=yes
-; we put version numbers in the appdir, so never use old dirname
-UsePreviousAppDir=no
+UsePreviousAppDir=yes
 
 ; for the addon installer
 CreateUninstallRegKey=no
