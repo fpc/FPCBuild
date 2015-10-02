@@ -132,6 +132,7 @@ Source: bin\i386-win32\fprcp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreve
 Source: bin\i386-win32\h2pas.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\h2paspp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\makeskel.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\pas2jni.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\plex.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\postw32.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\ppdep.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
