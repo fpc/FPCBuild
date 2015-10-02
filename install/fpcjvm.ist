@@ -23,7 +23,7 @@ DefaultDirName={sd}\FPC\%FPCVERSION%
 DefaultGroupName=Free Pascal
 AllowNoIcons=yes
 ; InfoAfterFile=doc\fpc\whatsnew.txt
-Compression=bzip
+Compression=lzma/max
 SolidCompression=true
 SourceDir=%BUILDDIR%
 InternalCompressLevel=max
@@ -31,8 +31,7 @@ AppCopyright=GPL
 AppendDefaultDirName=false
 AlwaysShowComponentsList=false
 ShowLanguageDialog=yes
-; we put version numbers in the appdir, so never use old dirname
-UsePreviousAppDir=no
+UsePreviousAppDir=yes
 ; we update the CLASSPATH variable, so set ChangesEnvironment
 ChangesEnvironment=yes
 

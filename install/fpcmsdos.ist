@@ -24,7 +24,7 @@ DefaultGroupName=Free Pascal
 AllowNoIcons=yes
 InfoBeforeFile=doc\fpc\i8086.txt
 ; InfoAfterFile=doc\fpc\whatsnew.txt
-Compression=bzip
+Compression=lzma/max
 SolidCompression=true
 SourceDir=%BUILDDIR%
 InternalCompressLevel=max
@@ -32,8 +32,7 @@ AppCopyright=GPL
 AppendDefaultDirName=false
 AlwaysShowComponentsList=false
 ShowLanguageDialog=yes
-; we put version numbers in the appdir, so never use old dirname
-UsePreviousAppDir=no
+UsePreviousAppDir=yes
 
 ; for the addon installer
 CreateUninstallRegKey=no
