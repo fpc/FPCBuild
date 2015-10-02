@@ -1,0 +1,234 @@
+;**********************************************************************
+; We don't use the INNO Setup preprocessor. It is unfortunately quite buggy.
+; So, this script must be preprocessed by our own tools.
+; The preprocessor will replace anything enclosed in percent characters
+; by the value specified in it's config file. Standard there are only
+; the following things;
+; FPCVERSION   Version of FPC.
+; BUILDDIR     Build directory.
+;**********************************************************************
+;
+; ISS Build script generated on %BUILDDATE% - %BUILDTIME%
+;
+[Setup]
+AppName=Free Pascal Android
+; this must match with the main installer
+AppID=FreePascal
+AppVerName=Free Pascal Android %FPCVERSION%
+AppPublisher=Free Pascal Team
+AppPublisherURL=http://www.freepascal.org/
+AppSupportURL=http://www.freepascal.org/
+AppUpdatesURL=http://www.freepascal.org/
+DefaultDirName={sd}\FPC\%FPCVERSION%
+DefaultGroupName=Free Pascal
+AllowNoIcons=yes
+; InfoAfterFile=doc\fpc\whatsnew.txt
+Compression=lzma/max
+SolidCompression=true
+SourceDir=%BUILDDIR%
+InternalCompressLevel=max
+AppCopyright=GPL
+AppendDefaultDirName=false
+AlwaysShowComponentsList=false
+ShowLanguageDialog=yes
+UsePreviousAppDir=yes
+
+; for the addon installer
+CreateUninstallRegKey=no
+UpdateUninstallLogAppName=no
+
+[Files]
+; Base package
+Source: bin\i386-win32\ppcrossarm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\ppcross386.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\ppcrossmipsel.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+
+Source: units\arm-android\rtl\*.*; DestDir: {app}\units\arm-android\rtl; Components: base
+Source: units\i386-android\rtl\*.*; DestDir: {app}\units\i386-android\rtl; Components: base
+Source: units\mipsel-android\rtl\*.*; DestDir: {app}\units\mipsel-android\rtl; Components: base
+
+; Include license and readme files, so they are available even if somebody installs this package alone though
+; it will not result in a working fpc installation
+Source: doc\fpc\COPYING; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.dj; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.emx; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.fpc; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\copying.rsx; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\COPYING.v2; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\COPYING.v3; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\faq.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\faq.htm; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\licensez.ip; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+Source: doc\fpc\readme.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist isreadme; Components: base
+Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
+
+; Units
+Source: units\arm-android\*.*; DestDir: {app}\units\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm
+Source: units\i386-android\*.*; DestDir: {app}\units\i386-android; Flags: ignoreversion recursesubdirs; Components: units_x86
+Source: units\mipsel-android\*.*; DestDir: {app}\units\mipsel-android; Flags: ignoreversion recursesubdirs; Components: units_mips
+
+[Components]
+Name: base; Description: "Free Pascal cross compiler for Android"; Flags: fixed; Types: Custom Minimum Full
+Name: units_arm; Description: "Units for ARM CPU"; Types: Full Custom
+Name: units_x86; Description: "Units for x86 CPU"; Types: Full Custom
+Name: units_mips; Description: "Units for MIPS CPU"; Types: Full Custom
+
+[Types]
+Name: Full; Description: Full installation
+Name: Minimum; Description: Minimum installation
+Name: Custom; Description: Custom installation; Flags: iscustom
+
+[Code]
+
+var
+  NdkPathPage: TInputDirWizardPage;
+  NdkPath: string;
+  NdkLib, NdkBinARM, NdkBin86, NdkBinMIPS: string;
+
+procedure InitializeWizard;
+begin
+  NdkPathPage:=CreateInputDirPage(wpSelectProgramGroup, 'Android NDK', 'Where Android NDK files are located?', 'Select a path where Android NDK files are located:', False, 'NewFolder');
+  NdkPathPage.Add('');
+  NdkPath:=GetPreviousData('NdkPath', '');
+  NdkPathPage.Values[0]:=NdkPath;
+end;
+
+function FindBinUtils(const FolderPrefix, UtilPrefix: string): string;
+var
+  sr: TFindRec;
+  dir: string;
+  res: boolean;
+begin
+  dir:=NdkPath + 'toolchains\';
+  res:=FindFirst(dir + FolderPrefix + '-*.*', sr);
+  while res do begin
+    if sr.Attributes and FILE_ATTRIBUTE_DIRECTORY <> 0 then begin
+      Result:=dir + sr.Name + '\prebuilt\windows\bin';
+      if FileExists(Result + '\' + UtilPrefix + '-as.exe') then
+        exit;
+    end;
+    res:=FindNext(sr);
+  end;
+  FindClose(sr);
+  MsgBox('Unable to find NDK binutils for ' + UtilPrefix + '.', mbError, MB_OK);
+  Result:='';
+end;
+
+function NextButtonClick(CurPage: Integer): Boolean;
+begin
+  Result:=True;
+  if CurPage = NdkPathPage.ID then begin
+    NdkPath:=Trim(NdkPathPage.Values[0])
+    Result:=NdkPath <> '';
+    NdkPath:=AddBackslash(NdkPath);
+    if not Result then begin
+      MsgBox('Please select an NDK path.', mbError, MB_OK);
+      exit;
+    end;
+    Result:=False;
+    // Find libs
+    NdkLib:=NdkPath + 'platforms\android-9\';
+    if not FileExists(NdkLib + 'arch-x86\usr\lib\crtbegin_so.o') then begin
+      MsgBox('Unable to find NDK library files.', mbError, MB_OK);
+      exit;
+    end;
+    // Find binutils
+    NdkBinARM:=FindBinUtils('arm-linux-androideabi', 'arm-linux-androideabi');
+    if NdkBinARM = '' then
+      exit;
+    NdkBin86:=FindBinUtils('x86', 'i686-linux-android');
+    if NdkBin86 = '' then
+      exit;
+    NdkBinMIPS:=FindBinUtils('mipsel-linux-android', 'mipsel-linux-android');
+    if NdkBinMIPS = '' then
+      exit;
+    Result:=True;
+  end;
+end;
+
+const
+  strStartConf = '# --- Android NDK config begin ---';
+  strEndConf   = '# --- Android NDK config end ---';
+
+procedure WriteConfig;
+var
+  conf, nconf: TStringList;
+  fn: string;
+  i, j: integer;
+begin
+  fn:=ExpandConstant('{app}\bin\i386-win32\fpc.cfg');
+  nconf:=nil;
+  conf:=TStringList.Create;
+  try
+    if FileExists(fn) then
+      conf.LoadFromFile(fn);
+    
+    i:=conf.IndexOf(strStartConf);
+    j:=conf.IndexOf(strEndConf);
+    if (i >= 0) and (j >= 0) and (i < j) then begin
+      // Delete existing config
+      for j:=j downto i do
+        conf.Delete(i);
+    end
+    else
+      if i >= 0 then
+        conf.Delete(i)
+      else
+        if j >= 0 then begin
+          i:=j;
+          conf.Delete(i);
+        end
+        else
+          i:=conf.Count;
+          
+    if (i > 0) and (Trim(conf[i - 1]) <> '') then begin
+      conf.Insert(i, '');
+      i:=i + 1;
+    end;
+    
+    if (i < conf.Count) and (Trim(conf[i + 1]) <> '') then
+      conf.Insert(i, '');
+
+    // NDK config
+    nconf:=TStringList.Create;
+    nconf.Add(strStartConf);
+    nconf.Add('');
+    nconf.Add('#ifdef android');
+    nconf.Add('  #ifdef cpuarm');
+    nconf.Add('    -Fl' + NdkLib + 'arch-arm\usr\lib');
+    nconf.Add('    -FD' + NdkBinARM);
+    nconf.Add('  #endif');
+    nconf.Add('  #ifdef cpu386');
+    nconf.Add('    -Fl' + NdkLib + 'arch-x86\usr\lib');
+    nconf.Add('    -FD' + NdkBin86);
+    nconf.Add('  #endif');
+    nconf.Add('  #ifdef cpumips32');
+    nconf.Add('    -Fl' + NdkLib + 'arch-mips\usr\lib');
+    nconf.Add('    -FD' + NdkBinMIPS);
+    nconf.Add('  #endif');
+    nconf.Add('#endif');
+    nconf.Add('');
+    nconf.Add(strEndConf);
+
+    for j:=nconf.Count - 1 downto 0 do
+      conf.Insert(i, nconf[j]);
+
+    conf.SaveToFile(fn);
+  finally
+    conf.Free;
+    nconf.Free;
+  end;
+  
+  // Save NDK path
+  if RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\FreePascal_is1') then
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\FreePascal_is1',
+                        'Inno Setup CodeFile: NdkPath', NdkPath);
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if CurStep = ssPostInstall then begin
+    WriteConfig;
+  end;
+end;
+
