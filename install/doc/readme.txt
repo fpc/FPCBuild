@@ -99,7 +99,9 @@ e-mail addresses are listed below.
 * Minimum requirements
 ****************************************************************************
 
-i386, x86_64, PowerPC, ARM or Sparc processor
+Processor:
+  i386, x86_64, PowerPC, ARM, MIPS, i8086, Motorola 68k, Sparc or JVM 
+  runtime
 Win32:
  - MS Windows NT/2000/XP or later (Win95, 98 and ME are not supported
    in FPC officially any longer).
