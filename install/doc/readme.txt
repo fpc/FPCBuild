@@ -22,8 +22,8 @@ Free Pascal 3.0.0 is currently available for the following platforms:
 - Linux-powerpc
 - Linux-sparc
 - Linux-ARM
-- Win32-i386 (Win95/98/Me/XP/2000/2003/Vista/7 and WinNT)
-- Win64-x86_64 (XP/Vista/2003)
+- Win32-i386 (2000/XP, WinNT or later)
+- Win64-x86_64 (XP or later)
 - Wince-ARM (cross compiled from win32-i386)
 - FreeBSD-i386
 - FreeBSD-x86_64
@@ -99,9 +99,9 @@ e-mail addresses are listed below.
 * Minimum requirements
 ****************************************************************************
 
-i386, x86_64, PowerPC or Sparc processor
+i386, x86_64, PowerPC, ARM or Sparc processor
 Win32:
- - MS Windows NT/2000/2003/XP/Vista/7 (Win95, 98 and ME are not supported
+ - MS Windows NT/2000/XP or later (Win95, 98 and ME are not supported
    in FPC officially any longer).
  - 16 MB RAM
 OS/2:
