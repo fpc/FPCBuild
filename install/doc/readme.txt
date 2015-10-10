@@ -31,6 +31,7 @@ Free Pascal 3.0.0 is currently available for the following platforms:
 - Mac OS X/Darwin for Intel (32 and 64 bit)
 - iOS (ARM and AArch64/ARM64) and iPhoneSimulator (32 and 64 bit)
 - OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
+- Haiku-i386
 - GO32v2-i386
 - Nintendo Gameboy Advance-ARM (cross compile from win32-i386)
 - Nintendo DS-ARM (cross compile from win32-i386)
