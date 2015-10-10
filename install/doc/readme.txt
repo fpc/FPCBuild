@@ -32,6 +32,9 @@ Free Pascal 3.0.0 is currently available for the following platforms:
 - iOS (ARM and AArch64/ARM64) and iPhoneSimulator (32 and 64 bit)
 - OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 - GO32v2-i386
+- Nintendo Gameboy Advance-ARM (cross compile from win32-i386)
+- Nintendo DS-ARM (cross compile from win32-i386)
+- Nintendo Wii-powerpc (cross compile from win32-i386)
 - AIX 5.3 and later for PowerPC (32 and 64 bit)
 - Java JVM (1.5 and later) and Android Dalvik (Android 4.0 and later)
 - Android (ARM, i386, MIPS) via cross-compiling.
