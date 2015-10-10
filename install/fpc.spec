@@ -19,6 +19,7 @@ BuildRequires: fpc
 %define fpcdir %{_libdir}/fpc/%{version}
 %define docdir %{_docdir}/fpc-%{version}
 %define exampledir %{docdir}/examples
+%global debug_package %{nil}
 
 %ifarch ppc
 %define ppcname ppcppc
