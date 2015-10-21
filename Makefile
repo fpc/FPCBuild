@@ -2204,7 +2204,7 @@ fpcsrc/build-stamp.i386-android:
 	$(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=i386 CROSSBINDIR=$(ANDROID_X86_BINUTILS) BINUTILSPREFIX=i686-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-x86/usr/lib"
 build_android_mipsel: fpcsrc/build-stamp.mipsel-android
 fpcsrc/build-stamp.mipsel-android:
-	$(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=mipsel CROSSBINDIR=$(ANDROID_MIPS_BINUTILS) BINUTILSPREFIX=mipsel-linux-android- CROSSOPT="$(CROSSOPT) -O- -Fl$(NDK_LIB)/arch-mips/usr/lib"
+	$(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=mipsel CROSSBINDIR=$(ANDROID_MIPS_BINUTILS) BINUTILSPREFIX=mipsel-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-mips/usr/lib"
 clean: $(addsuffix _distclean,$(TARGET_DIRS))
 	-rm -f fpcsrc/build-stamp.*
 distclean: clean
