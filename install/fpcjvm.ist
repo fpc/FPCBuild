@@ -77,7 +77,9 @@ Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; 
 
 ; Units
 Source: units\jvm-java\*.*; DestDir: {app}\units\jvm-java; Flags: ignoreversion recursesubdirs; Components: units_java
+Source: fpmkinst\jvm-java\*.*; DestDir: {app}\fpmkinst\jvm-java; Flags: ignoreversion recursesubdirs; Components: units_java
 Source: units\jvm-android\*.*; DestDir: {app}\units\jvm-android; Flags: ignoreversion recursesubdirs; Components: units_android
+Source: fpmkinst\jvm-android\*.*; DestDir: {app}\fpmkinst\jvm-android; Flags: ignoreversion recursesubdirs; Components: units_android
 
 [Components]
 Name: base; Description: Basic system for JVM; Flags: fixed; Types: Custom Minimum Full

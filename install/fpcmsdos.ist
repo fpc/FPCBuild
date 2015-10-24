@@ -72,6 +72,7 @@ Source: doc\fpc\i8086.txt; DestDir: {app}\doc\fpc; Components: base
 
 ; Units
 Source: units\msdos\*.*; DestDir: {app}\units\msdos; Flags: ignoreversion recursesubdirs; Components: base
+Source: fpmkinst\msdos\*.*; DestDir: {app}\fpmkinst\msdos; Flags: ignoreversion recursesubdirs; Components: base
 
 
 [INI]

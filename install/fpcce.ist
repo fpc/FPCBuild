@@ -79,6 +79,7 @@ Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; 
 
 ; Units
 Source: units\arm-wince\*.*; DestDir: {app}\units\arm-wince; Flags: ignoreversion recursesubdirs; Components: units
+Source: fpmkinst\arm-wince\*.*; DestDir: {app}\fpmkinst\arm-wince; Flags: ignoreversion recursesubdirs; Components: units
 
 
 [Components]
