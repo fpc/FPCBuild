@@ -39,6 +39,7 @@ Free Pascal 3.0.0 is currently available for the following platforms:
 - AIX 5.3 and later for PowerPC (32 and 64 bit)
 - Java JVM (1.5 and later) and Android Dalvik (Android 4.0 and later)
 - Android (ARM, i386, MIPS) via cross-compiling.
+- MSDos-i8086 (cross compiled from win32-i386 or Linux) 
 
 There are other platforms (like other BSD variants) which are more or less
 working, but there is currently no maintainer for them and thus we cannot
