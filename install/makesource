@@ -25,12 +25,14 @@ mkdir buildsrc
 cd buildsrc
 svn co http://svn.freepascal.org/svn/fpc/$SVNPATH fpc
 
-find -name .svn -type d | xargs tar -cvf $OUTPUTDIR/SVNfiles-$VERSION.tar.gz 
+find -name .svn -type d | xargs tar -cvzf $OUTPUTDIR/SVNfiles-$VERSION.tar.gz 
 
-svn export fpc fpc-$VERSION
-
+svn export fpc fpc-$VERSION --native-eol CRLF
 rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
 zip -D9r $OUTPUTDIR/$PACKNAME.zip fpc-$VERSION
+
+rm -rf fpc-$VERSION
+svn export fpc fpc-$VERSION
 tar cfv - fpc-$VERSION/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
 cd ..
 rm -rf buildsrc
