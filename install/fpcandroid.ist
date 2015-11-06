@@ -64,8 +64,11 @@ Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; 
 
 ; Units
 Source: units\arm-android\*.*; DestDir: {app}\units\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm
+Source: fpmkinst\arm-android\*.*; DestDir: {app}\fpmkinst\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm
 Source: units\i386-android\*.*; DestDir: {app}\units\i386-android; Flags: ignoreversion recursesubdirs; Components: units_x86
+Source: fpmkinst\i386-android\*.*; DestDir: {app}\fpmkinst\i386-android; Flags: ignoreversion recursesubdirs; Components: units_x86
 Source: units\mipsel-android\*.*; DestDir: {app}\units\mipsel-android; Flags: ignoreversion recursesubdirs; Components: units_mips
+Source: fpmkinst\mipsel-android\*.*; DestDir: {app}\fpmkinst\mipsel-android; Flags: ignoreversion recursesubdirs; Components: units_mips
 
 [Components]
 Name: base; Description: "Free Pascal cross compiler for Android"; Flags: fixed; Types: Custom Minimum Full

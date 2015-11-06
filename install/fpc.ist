@@ -153,6 +153,7 @@ Source: demo\*.*; DestDir: {app}\demo; Flags: ignoreversion recursesubdirs ; Com
 
 ; Units
 Source: units\i386-win32\*.*; DestDir: {app}\units\i386-win32; Flags: ignoreversion recursesubdirs; Components: units
+Source: fpmkinst\i386-win32\*.*; DestDir: {app}\fpmkinst\i386-win32; Flags: ignoreversion recursesubdirs; Components: units
 ; Examples
 Source: examples\*.*; DestDir: {app}\examples; Flags: ignoreversion recursesubdirs; Components: examples
 
