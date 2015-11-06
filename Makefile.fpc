@@ -738,6 +738,7 @@ endif
 ##########################################################################
 
 ifeq ($(OS_TARGET),android)
+ifneq ($(CPU_TARGET),jvm)
 
 ifeq ($(NDK),)
   $(error It is needed to set the Android NDK path using NDK=<path>)
@@ -770,6 +771,7 @@ endif
 
 unexport BUILDFULLNATIVE
 
+endif
 endif
 
 ##########################################################################

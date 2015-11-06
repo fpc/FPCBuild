@@ -2643,6 +2643,7 @@ $(error You need an installation of Open Watcom in order to build this platform)
 endif
 endif
 ifeq ($(OS_TARGET),android)
+ifneq ($(CPU_TARGET),jvm)
 ifeq ($(NDK),)
   $(error It is needed to set the Android NDK path using NDK=<path>)
 endif
@@ -2668,6 +2669,7 @@ ifeq ($(wildcard $(NDK_LIB)/arch-x86/usr/lib/crtbegin_so.o),)
   $(error Unable to find NDK library files in $(NDK_LIB))
 endif
 unexport BUILDFULLNATIVE
+endif
 endif
 ifndef ISCCPROG
 ISCCPROG=$(subst $(PATHSEP),/,$(ProgramFiles))/inno setup 5/iscc.exe
