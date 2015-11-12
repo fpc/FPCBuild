@@ -129,11 +129,12 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
           ☆ 01/2012: 2.6.0 released
           ☆ 02/2013: 2.6.2 released
           ☆ 03/2014: 2.6.4 released
+          ☆ 01/2015: 3.0.0 released
      2. Which versions exist, and which one should I use?
 
-        The latest official version is 2.6.4, the second fixes release in the
-        2.6.x series. New development is performed in the 2.7.x series, which
-        will eventually be released as 2.8.0 or 3.0.0, depending on milestones
+        The latest official version is 3.0.0, the first release in the 3.0.x
+        series. New development is performed in the 3.1.x series, which will
+        eventually be released as 3.2.0 or 4.0.0, depending on milestones
         achieved.
 
         Historic versions
@@ -159,14 +160,14 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
           ☆ Repackagings that affect sources are indicated with a single letter
             as suffix (e.g. 2.0.4a). This is usually the case for platforms
             that weren't part of the original release round.
-          ☆ The stable branch (currently, fixes_2_6, previously fixes_2_4)
-            always has an odd last number (2.4.3,2.6.1 and 2.6.3). Compilers
-            with such versions are snapshots, and e.g. a snapshot with 2.4.1
-            can be anywhere between 2.4.0 and the moment 2.4.2 branched off
-            (May 2010). Likewise, after the release of 2.4.2 the fixes_2_4
-            branch identified itself as version 2.4.3 till 2.4.4 branched off
-            (typically two months before its release). After 2.4.4, the stable
-            branch's number was updated to 2.4.5, after 2.6.0 to 2.6.1 etc.
+          ☆ The stable branch (currently, fixes_3_0, previously fixes_2_6)
+            always has an odd last number (2.6.1, 2.6.3 and 3.0.1). Compilers
+            with such versions are snapshots, and e.g. a snapshot with 2.6.1
+            can be anywhere between 2.6.0 and the moment 2.6.2 branched off
+            (Jan 2013). Likewise, after the release of 2.6.2 the fixes_2_6
+            branch identified itself as version 2.6.3 till 2.6.4 branched off
+            (typically two months before its release). After 2.6.4, the stable
+            branch's number was updated to 2.6.5, after 3.0.0 to 3.0.1 etc.
 
         Normally, you would want to use a release. Releases are considered
         stable, and easier to support (the bugs, quirks and unintended
@@ -183,12 +184,12 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
         users. Ask on the mailing lists if it is worth the trouble in your case
         if you are not sure.
 
-        Snapshots of the stable branch (fixes_2_6) are meant to test release
+        Snapshots of the stable branch (fixes_3_0) are meant to test release
         engineering. They are mainly interesting in the months before a release
         to extensively test the branch from which the release is created.
 
         We advise all users to upgrade to the newest version for their target
-        (preferably the new stable 2.6.x series).
+        (preferably the new stable 3.0.x series).
 
         A graphical timeline of the FPC project plus its near future would be:
         [timeline]
@@ -199,10 +200,10 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
             on as many platforms as possible. GNU Pascal tries to implement a
             portable pascal compiler based on POSIX.
         Version:
-            Currently, Free Pascal is at version 2.6.4 (March 2014). GNU Pascal
-            is stopped version 2.1 (from 2002, which can be built with several
-            different GCC's as backend; their Mac OS X version is an exception
-            though, as it follows the GCC version number).
+            Currently, Free Pascal is at version 3.0.0 (November 2015). GNU
+            Pascal is stopped version 2.1 (from 2002, which can be built with
+            several different GCC's as backend; their Mac OS X version is an
+            exception though, as it follows the GCC version number).
         Tracking:
             Between releases, development versions of FPC are available through
             daily snapshots and the source via SVN. GPC issues a set of patches
@@ -958,7 +959,7 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
 
         This error typically looks like this:
 
-                         Free Pascal Compiler version 2.2.x [xxxx/yy/zz] for i386
+                         Free Pascal Compiler version 3.0.x [xxxx/yy/zz] for i386
                          Copyright (c) 1993-2008 by Florian Klaempfl
                          Target OS: Linux for i386
                          Compiling test.pp
