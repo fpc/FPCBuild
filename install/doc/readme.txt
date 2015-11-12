@@ -79,7 +79,7 @@ e-mail addresses are listed below.
   - sophisticated register allocator
 - integrated BASM (built-in assembler) parser
   - supports ATT syntax used by GNU C
-  - supports Intel syntax used by Turbo Pascal (80x86-only)
+  - supports Intel syntax used by Turbo Pascal (x86-only)
 - can compile code into assembler source code for these assemblers:
   - GNU Assembler (GAS)
   - Netwide assembler (Nasm)
