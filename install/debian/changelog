@@ -1,8 +1,8 @@
-fpc (3.0.1-0) unstable; urgency=low
+fpc (3.0.0-1) unstable; urgency=low
 
-  * Daily snapshots build.
+  * New release.
 
- -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 05 Jan 2015 22:40:18 +0200
+ -- Joost van der Sluis <joost@cnoc.nl>  Fri, 13 Nov 2015 21:40:18 +0100
 
 fpc (2.7.1-0) unstable; urgency=low
 

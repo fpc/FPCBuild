@@ -326,7 +326,7 @@ FPCFPMAKE=$(FPC)
 endif
 endif
 override PACKAGE_NAME=fpc
-override PACKAGE_VERSION=3.0.1
+override PACKAGE_VERSION=3.0.0
 ifneq ($(wildcard install),)
 CVSINSTALL=install
 else

@@ -129,7 +129,7 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
           ☆ 01/2012: 2.6.0 released
           ☆ 02/2013: 2.6.2 released
           ☆ 03/2014: 2.6.4 released
-          ☆ 01/2015: 3.0.0 released
+          ☆ 11/2015: 3.0.0 released
      2. Which versions exist, and which one should I use?
 
         The latest official version is 3.0.0, the first release in the 3.0.x
