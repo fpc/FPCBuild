@@ -206,8 +206,7 @@ echo
 # Here we start the thing.
 HERE=`pwd`
 
-OSNAME=`uname -s | tr A-Z a-z`
-
+OSNAME=`uname -s | tr "[:upper:]" "[:lower:]"`
 case "$OSNAME" in
   haiku)
      # Install in /boot/common or /boot/home/config ?
@@ -229,7 +228,7 @@ case "$OSNAME" in
   sunos)
      # Check if GNU llinker is recent enough, version 2.21 is needed at least
      GNU_LD=`which gld`
-     supported_emulations=`"$GNU_LD" --target-help | sed -n "s|.*supported emulations:||p" `
+     supported_emulations=`"$GNU_LD" --target-help | sed -n "s|^\(elf.*\):|\1|p" `
      supports_elf_i386_sol2=`echo $supported_emulations | grep -w elf_i386_sol2 `
      supports_elf_x86_64_sol2=`echo $supported_emulations | grep -w elf_x86_64_sol2 `
      if [ "$supports_elf_i386_sol2" = "" ]; then
@@ -242,8 +241,10 @@ case "$OSNAME" in
      PREFIX=/usr/local
      # Use GNU tar if present
      if [ "`which gtar`" != "" ]; then
-       TAR=`which gtar`
+       CMDTAR=`which gtar`
+       TAR="$CMDTAR --no-same-owner"
      fi
+     echo "Using TAR binary=$CMDTAR"
   ;;
   *)
      # Install in /usr/local or /usr ?
