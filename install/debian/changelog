@@ -1,15 +1,181 @@
-
 fpc (3.1.1-0) unstable; urgency=low
 
   * Daily snapshots build.
 
- -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 05 Jan 2015 22:40:18 +0200
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Wed, 24 Feb 2016 09:27:05 +0100
 
-fpc (2.7.1-0) unstable; urgency=low
+fpc (3.0.0+dfsg-2) unstable; urgency=medium
 
-  * Daily snapshots build.
+  * Upload to unstable
+  * Make reverse dependent package more reproducible by adding
+    let_ppudump_honor_TZ_var.patch
+  * Add after_patch_arm64_systems.pas.patch (Closes: #807479)
+  * Fix i386 issue with duplicate files in multiple packages
+  * Move cairo units from gfx to gtk2 package (Closes: #810573)
+  * Switch to 'dpkg-parsechangelog --show-field' instead of bumping
+    build-depends on dpkg-dev to >=1.17.21.
 
- -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 22 May 2014 22:40:18 +0200
+ -- Paul Gevers <elbrus@debian.org>  Thu, 28 Jan 2016 20:04:04 +0100
+
+fpc (3.0.0+dfsg-1) experimental; urgency=medium
+
+  * New upstream release
+  * Reproducibility never ends: add honor_SOURCE_DATE_EPOCH_in_date.patch
+    to improve some timestamps in binaries
+
+ -- Paul Gevers <elbrus@debian.org>  Fri, 27 Nov 2015 14:51:44 +0100
+
+fpc (3.0.0~rc2+dfsg-3) experimental; urgency=medium
+
+  * Make package finally build reproducible (hopefully)
+  * Add fpm files to the respective packages
+  * Update auto-pkg-tests with results from CI + runs on my amd64 system
+  * use debfix to create and dh_lintian to install lintian overrides
+  * Update testsuite for 3.0.0 layout
+  * Restructure the clean targets to allow time reduction if desired
+  * Reorganize d/rules to make sure the source is copied early
+  * Add fix_typo_in_ppc64.patch to allow ppc64 to build again and don't
+    install graph and opencl there as these units aren't build
+
+ -- Paul Gevers <elbrus@debian.org>  Thu, 12 Nov 2015 20:35:17 +0100
+
+fpc (3.0.0~rc2+dfsg-2) experimental; urgency=medium
+
+  * The second Edmund Grimley Evans release: arm64 bootstrapped
+    (Closes: #784569)
+    - enable arm64 patches
+  * Another try to fix the FTBFS on armhf (missed this dh-exec issue)
+
+ -- Paul Gevers <elbrus@debian.org>  Sat, 31 Oct 2015 11:16:23 +0100
+
+fpc (3.0.0~rc2+dfsg-1) experimental; urgency=medium
+
+  * New upstream release candidate
+    - Remove obsolete patch
+    - Update + refresh patches that require changes
+  * Fix FTBFS on powerpc (the previous fix was not complete)
+  * Fix FTBFS on armhf, the logic was not in the right place
+  * Add patches (but don't apply them yet) to support arm64, see
+    bug 784569
+  * Simplify logic in *.install.in and d/rules for arch dependent
+    install by using dh-exec
+
+ -- Paul Gevers <elbrus@debian.org>  Wed, 28 Oct 2015 19:40:13 +0100
+
+fpc (3.0.0~rc1+dfsg-2) experimental; urgency=medium
+
+  * The first Edmund Grimley Evans release (thanks for your work)
+  * Fix FTBFS on i386, powerpc and ppc64 with new patch:
+    fix_FTBFS_on_linux_not_amd64.patch (Closes: #800811)
+  * Fix FTBFS on armhf by not optimizing during the first cycles of
+    building the new compiler (it is suggested that our 2.6.4 armhf
+    compiler may have had bugs and upstream didn't support it)
+
+ -- Paul Gevers <elbrus@debian.org>  Sat, 10 Oct 2015 21:06:43 +0200
+
+fpc (3.0.0~rc1+dfsg-1) experimental; urgency=medium
+
+  * New upstream release (Release candidate 1)
+  * Drop obsolete changes and refresh most other ones
+  * Include "upstream" patch from Abou to fix IDE data file location
+  * Include man pages for new binaries (forgotten upstream)
+  * Fix documentation build process (source location is wrong)
+  * Update d/moveexamples to also move documentation
+  * Add shlibs:Depends to packages containing binaries
+  * Distribute new units of the packages
+  * Update description of the multimedia unit and add libvlc-dev to
+    its Recommends
+  * Use fpcmake from the installed packages for now as building the
+    new fpcmake in the clean target is broken
+  * Several units aren't build on ARM anymore, so exclude them from
+    the installation
+  * Hopefully improve reproducible building by adding LC_ALL=C to the
+    documentation build line
+  * Convert d/copyright to machine readable format (what a hell)
+
+ -- Paul Gevers <elbrus@debian.org>  Sun, 13 Sep 2015 20:44:48 +0200
+
+fpc (2.6.4+dfsg-8) unstable; urgency=medium
+
+  * Fix FTBFS, I missed two dependencies of fpgtk removed in the
+    previous upload (Closes: #795323)
+  * Bump dephelper compat to 9 (now matching in d/compat and d/control)
+    and update d/clean to fix the clean target
+
+ -- Paul Gevers <elbrus@debian.org>  Fri, 14 Aug 2015 13:16:44 +0200
+
+fpc (2.6.4+dfsg-7) unstable; urgency=medium
+
+  * Fix path mistake in run-upstream-testsuite
+  * Add more locations with time stamps to the configure target
+    - Add patch to create fpmkunitsrc.inc in the right folder
+  * Minor clean-up of d/rules by moving to be deleted files to d/clean
+  * Wrap-and-sort d/control(|.in)
+  * Move libgtk2.0-dev back to Depends, but now of the gtk2 package
+  * Stop building and shipping gtk1 and gnome1 packages as the
+    corresponding libraries are removed more than 6 years ago from
+    Debian
+  * Add Hungarian translation for debconf from upstream SVN and make
+    sure that translations are always up-to-date in clean target
+  * Missed one timestamp locale in the previous upload
+
+ -- Paul Gevers <elbrus@debian.org>  Mon, 10 Aug 2015 13:23:15 +0200
+
+fpc (2.6.4+dfsg-6) unstable; urgency=medium
+
+  * Fix typo in debian/tests/control which caused the autopkgtest to fail
+  * Improve the timestamp in d/rules to not depend on the timezone which
+    caused the build to fail reproducibility tests.
+  * Migrate maintainership to the Pascal Packaging Team
+  * Update TODO list
+  * Move -dev packages from Depends to Recommends in our unit packages
+  * Add Suggests to fp-units-db-<ver>
+
+ -- Paul Gevers <elbrus@debian.org>  Sun, 31 May 2015 13:25:57 +0200
+
+fpc (2.6.4+dfsg-5) unstable; urgency=medium
+
+  [ José de Figueiredo ]
+  * Udated the Brazilian Portuguese translation of PO debconf.
+    (Closes: Bug#778442)
+
+  [ Paul Gevers ]
+  * Add fpc-source to depends of fp-utils, fpcmake needs it.
+  * True to build reproducible
+    - Add patch to not have the timestamp in makefiles created by fpcmake
+    - Add patch to not include timestamp in fpdoc generated documentation
+    - Replace build time by Debian changelog time in binaries
+    - Replace build time by Debian changelog time in man page for fpc-depends
+  * Refresh patches with fuzz
+  * Add TODO list
+  * Add autopkgtest for the upstream testsuite
+
+ -- Paul Gevers <elbrus@debian.org>  Mon, 25 May 2015 20:16:52 +0200
+
+fpc (2.6.4+dfsg-4) unstable; urgency=low
+
+  * Let "Select manually" be translatable in debconf questions and update
+    language files accordingly.
+  * Bump standards version to 3.9.6 (no changes)
+  * New/updated translations
+    - Danish (Joe Hansen) (Closes: #763984)
+    - Dutch (Paul Gevers)
+    - German (Chris Leick) (Closes: #763807)
+    - Italian (Beatrice Torracca) (Closes: #764934)
+    - Japanese (victory)
+    - Swedish (Martin Bagge / brother) (Closes: #763446)
+
+ -- Paul Gevers <elbrus@debian.org>  Mon, 13 Oct 2014 21:16:54 +0200
+
+fpc (2.6.4+dfsg-3) unstable; urgency=low
+
+  [ Abou Al Montacir ]
+  * Added libgmp-dev to recommended packages list of fp-units-math in order to
+    avoid users getting lik errors about missing libgmp. (Closes: Bug#749418)
+  [ Michal Šimůnek ]
+  * Updated Czech translation of PO debconf. (Closes: Bug#751387)
+
+ -- Abou Al Montacir <abou.almontacir@sfr.fr>  Thu, 12 Jun 2014 21:01:47 +0200
 
 fpc (2.6.4+dfsg-2) unstable; urgency=medium
 

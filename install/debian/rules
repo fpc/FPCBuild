@@ -22,6 +22,9 @@ CPU_TARGET=$(shell dpkg-architecture -qDEB_HOST_ARCH_CPU)
 # Take care that Debian uses amd64 while FPC perfers x86_64 instead
 CPU_SOURCE := $(subst amd64,x86_64,${CPU_SOURCE})
 CPU_TARGET := $(subst amd64,x86_64,${CPU_TARGET})
+# Take care that Debian uses arm64 while FPC perfers aarch64 instead
+CPU_SOURCE := $(subst arm64,aarch64,${CPU_SOURCE})
+CPU_TARGET := $(subst arm64,aarch64,${CPU_TARGET})
 # Take care that debian uses ppc64 while FPC prefers powerpc64 instead
 CPU_SOURCE := $(subst ppc64,powerpc64,${CPU_SOURCE})
 CPU_TARGET := $(subst ppc64,powerpc64,${CPU_TARGET})
@@ -47,6 +50,9 @@ endif
 ifeq ($(CPU_TARGET),arm)
 PPSUF=arm
 endif
+ifeq ($(CPU_TARGET),aarch64)
+PPSUF=a64
+endif
 ifeq ($(CPU_TARGET),sparc)
 PPSUF=sparc
 endif
@@ -63,7 +69,8 @@ OS_TARGET=$(subst kfreebsd,freebsd,$(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
 
 FPCTARGET=$(CPU_TARGET)-$(OS_TARGET)
 # Get version information from changelog file
-DEB_VERSION:=$(shell dpkg-parsechangelog | grep '^Version:' | cut -f 2 -d ' ')
+DEB_VERSION:=$(shell dpkg-parsechangelog --show-field Version)
+DEB_DATE:=$(shell date --utc --date="`dpkg-parsechangelog --show-field Date`" +%Y/%m/%d)
 DEB_UPSTREAM_VERSION:=$(shell echo $(DEB_VERSION) | cut -f 1 -d -)
 DEB_UPSTREAM_MAIN_VERSION:=$(shell echo ${DEB_UPSTREAM_VERSION} | sed -e 's/^\([0-9\.]*\).*/\1/')
 DEB_BUILD=$(lastword $(subst -, ,${DEB_VERSION}))
@@ -76,7 +83,7 @@ BIN_DIR=${INSTALL_DIR}/usr/bin
 LIB_DIR=${INSTALL_DIR}/usr/lib/${DEB_PACKAGE_NAME}/${DEB_UPSTREAM_MAIN_VERSION}
 DOC_DIR=${INSTALL_DIR}/usr/share/doc
 SRC_DIR=${INSTALL_DIR}/usr/share/fpcsrc/${DEB_UPSTREAM_MAIN_VERSION}
-EXAMPLE_TEMP=${INSTALL_DIR}/usr/share/doc
+EXAMPLE_TEMP=${INSTALL_DIR}/usr/share/doc/fpc-${DEB_UPSTREAM_MAIN_VERSION}
 STY_DIR=${INSTALL_DIR}/usr/share/texmf/tex/latex/fpc-${DEB_UPSTREAM_MAIN_VERSION}
 # Get utils
 ifndef MKDIR
@@ -91,7 +98,9 @@ endif
 RM:=rm -rf
 # Get fpcmake from path if none is specified.
 ifndef FPCMAKE
-FPCMAKE=fpcsrc/utils/fpcm/fpcmake
+# In 3.0.0rc1 building the new fpcmake doesn't work outside the full build
+#FPCMAKE=fpcsrc/utils/fpcm/fpcmake
+FPCMAKE=$(shell which fpcmake)
 endif
 # Undefine FPCDIR if it was set
 unexport FPCDIR
@@ -108,28 +117,18 @@ INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP)
 
 export GDBLIBDIR=/usr/lib
 
-ifeq ($(OS_TARGET),freebsd)
-#exclude some stuff that doesn't appear to be built on kfreebsd
-#long term it might be an idea to review this list and see if there
-#is actually a way to get some of this stuff to build on kfreebsd
-#but for now getting stuff bootstrapped is the aim
-  DH_INSTALL_EXCLUDE_OPTS=-Xgrab_vcsa -Xuuid -Xopencl -Xptc -Xdbus -Xldap -Xproj4 -Xlibsee -Xlua -Xcdrom -Xnewt -Xa52 -Xdts -Xmad -Xmodplug -Xoggvorbis -Xopenal -Xdoc/fp -Xfpclasschart -Xmakeskel -Xunitdiff -Xfcl-web -Xfastcgi -Xzorba -Xfppkg
-else
-  DH_INSTALL_EXCLUDE_OPTS=
-endif
-
-#specify arm variant explicitly so we can use a starting
-#compiler from a different arm variant (for bootstrapping)
 ifeq ($(CPU_TARGET),arm)
   DEBIANARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
-  ifeq ($(DEBIANARCH),arm)
-    CYCLEOPTS:=OPT='@${CURDIR}/${DEB_HOST_FPC_OPT} -dFPC_OARM'
-  else
-    CYCLEOPTS:=OPT='@${CURDIR}/${DEB_HOST_FPC_OPT} -dFPC_$(DEBIANARCH)'
-  endif
+  # Disable optimization for the first runs as there may be bugs associated
+  # with that, preventing proper building new versions (cf bug 800811)
+  #
+  # Unsure if the -d option is still needed, this code was originally used to
+  # bootstrap other arm flavors
+  CYCLEOPTS:=OPT='@${CURDIR}/${DEB_HOST_FPC_OPT} -dFPC_$(DEBIANARCH)' OPTLEVEL1=-O-
 else
   CYCLEOPTS:=OPT='@${CURDIR}/${DEB_HOST_FPC_OPT}'
 endif
+
 # Set default compilation options
 DEB_HOST_MULTIARCH ?=$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 DEB_BUILD_MULTIARCH ?=$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH)
@@ -138,55 +137,103 @@ FPMAKE_BUILDOPTS=FPMAKE_SKIP_CONFIG='-n @${CURDIR}/${DEB_BUILD_FPC_OPT}'
 
 LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS | sed -e 's/-Wl,//g' -e 's/,/ /g')
 
+# Until we switch to shorthand dh, we need to set this ourselves for
+# reproducible builds
+export SOURCE_DATE_EPOCH = $(shell date -d "$$(dpkg-parsechangelog -SDate)" +%s)
+
 #export DH_VERBOSE=1
 
 ###################
 # Clean
 #
 
-clean: clean-patched clean-make-files
-	${RM} build-arch-stamp install-arch-stamp arrange-arch-stamp configure-stamp
-	${RM} install-man-stamp
-	${RM} build-doc-stamp install-doc-stamp
-	${RM} build-indep-stamp install-indep-stamp
-	${RM} install-source-stamp
-	${RM} debian/*.install
-	${RM} debian/*.config
-	${RM} debian/*.doc-base
-	${RM} debian/*.links
-	${RM} debian/*.manpages
-	${RM} debian/*.preinst
-	${RM} debian/*.prerm
-	${RM} debian/*.templates
-	${RM} debian/README*.Debian
-	${RM} debian/fpc-depends
-	${RM} debian-files-stamp
-	${RM} debian/files debian/docs debian/dirs debian/*.files debian/*.docs debian/*.examples debian/*.postinst debian/*.postrm
-	${RM} debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
-	# Remove auto-generated version file.
-	${RM} fpcsrc/compiler/version.inc
-	#remove some stuff that seems to get left behind by the upstream build
-	${RM} fpcsrc/compiler/utils/msg2inc
-	${RM} fpcdocs/fpdoc.haux
-	${RM} fpcdocs/prog.haux
-	${RM} fpcdocs/ref.haux
-	${RM} fpcdocs/ref.hind
-	${RM} fpcdocs/user.haux
-	#remove build config files
-	rm -f $(DEB_BUILD_FPC_OPT)
-	rm -f $(DEB_HOST_FPC_OPT)
+# The default clean target is very heavy for an already clean tree because it
+# regenerates all the Makefiles from Makefile.fpc files to be able to call all
+# the upstream distclean targets. Therefor the clean target is split into
+# multiple components and you can fool the makefiles target when ZERO generated
+# Makefiles are found by setting the variable MAY_FOOL_CLEAN to anything but
+# the empty string. This is propably a reasonable trade-off under all
+# circumstances, but to prevent anything bad from happening during official
+# builds, it is not the default.
+clean: check-makefiles clean-all-but-makefiles clean-makefiles
+	# Make sure the debconf translations are always up-to-date
+	debconf-updatepo
 	dh_clean
 
-clean-patched: make-files
-	@echo "--- Cleaning"
+# See comment above clean target. Fool make-file when approriate
+check-makefiles:
+ifdef MAY_FOOL_CLEAN
+	for fpcfile in `find . -name Makefile.fpc` ; do \
+		if [ -f `dirname $$fpcfile`/Makefile ] ; then \
+			GOINGTOFOOLCLEAN=false ; \
+		fi ; \
+	done ; \
+	if [ "$$GOINGTOFOOLCLEAN" != false ] ; then \
+		echo Beware of empty Makefiles: we are going to fool the makefiles target now ; \
+		for fpcfile in `find . -name Makefile.fpc` ; do \
+			touch `dirname $$fpcfile`/Makefile ; \
+		done ; \
+		touch makefiles-stamp ; \
+	fi
+endif
+
+# In essence, this is the real clean target, except it doesn't remove the
+# generated Makefiles. It should do ALL the other cleaning though.
+clean-all-but-makefiles: makefiles
 	dh_testdir
-	$(MAKE) -C fpcsrc compiler_distclean
-	$(MAKE) -C fpcsrc rtl_distclean
-	$(MAKE) -C fpcsrc packages_distclean
-	$(MAKE) -C fpcsrc ide_distclean
-	$(MAKE) -C fpcsrc utils_distclean
-	$(MAKE) -C fpcdocs clean
+
+	# Call upstream clean targets
+	[ ! -s fpcsrc/Makefile ]  || $(MAKE) -C fpcsrc compiler_distclean
+	[ ! -s fpcsrc/Makefile ]  || $(MAKE) -C fpcsrc rtl_distclean
+	[ ! -s fpcsrc/Makefile ]  || $(MAKE) -C fpcsrc packages_distclean
+	[ ! -s fpcsrc/Makefile ]  || $(MAKE) -C fpcsrc ide_distclean
+	[ ! -s fpcsrc/Makefile ]  || $(MAKE) -C fpcsrc utils_distclean
+	[ ! -s fpcdocs/Makefile ] || $(MAKE) -C fpcdocs clean
+	# Just in case they forgot something
 	find -regex '.*\.\(a\|or?\|so\.*\|ppu\|compiled\)' -delete
+	# Not all empty directories are cleaned up properly by the upstream
+	find . -type d -empty -delete
+
+	# Revert hardcoded dates
+	sed --in-place "s/EncodeDate([^(^)]*)/Now/" fpcsrc/packages/fpmkunit/src/fpmkunit.pp
+	sed --in-place "s/\\\\date\\\{.*\\\}/\\\\date\\\{\`date +'%B %Y'\`\\\}/" fpcdocs/Makefile.fpc
+
+	# Remove build config files; because we use a variable, lets not put it in
+	# d/clean
+	rm -f $(DEB_BUILD_FPC_OPT)
+	rm -f $(DEB_HOST_FPC_OPT)
+
+	# Remove the gnome1, gtk1, fpgtk and imlib packages
+	# as they depend on libraries long go removed from Debian.
+	rm -rf fpcsrc/packages/gnome1
+	rm -rf fpcsrc/packages/gtk1
+	rm -rf fpcsrc/packages/imlib
+	rm -rf fpcsrc/packages/fpgtk
+	# The following packages depend on (at least) fpgtk and were
+	# not build in Debian anyways. The makefiles target fails to run
+	# if we remove the above, but not these because fpcmake checks
+	# for all Makefile.fpc files and notices that the dependency is
+	# not fullfilled.
+	rm -rf fpcsrc/utils/fpdoc/fpde
+	rm -rf fpcsrc/utils/fpmc
+
+	dh_clean
+
+
+makefiles: makefiles-stamp
+makefiles-stamp: $(patsubst %.fpc,%,$(shell find demo fpcdocs fpcsrc -name Makefile.fpc))
+	# Make files are now generated.
+	touch $@
+
+%Makefile:%Makefile.fpc ${FPCMAKE}
+	# Regenerate make files using fpcmake.
+	${FPCMAKE} -Tall -q $<
+
+clean-makefiles:
+	# Remove auto-generated Makefiles.
+	${RM} makefiles-stamp
+	find . -name Makefile.fpc -execdir sh -c '${RM} $$(basename {} .fpc)' ';'
+
 
 ###################
 # Debian files
@@ -199,37 +246,58 @@ debian-files-stamp:debian/fixdeb debian/*.in
 	DEB_SUBST_PPCBIN=${PPNEW} \
 	DEB_SUBST_TARGET=${FPCTARGET} \
 	$< debian/*.in
+	# Because we use dh-exec to track units that don't need to install
+	# everywhere, we need the <package>.install files to be executable 
+	chmod a+x debian/*.install
 	touch debian-files-stamp
 
-make-files: make-files-stamp
-make-files-stamp:$(patsubst %.fpc,%,$(shell find ${CURDIR}/* -name Makefile.fpc))
-# Make files are now generated.
-	touch $@
 
-# Regenrate make files using fpcmake.
-%Makefile:%Makefile.fpc ${FPCMAKE}
-	${FPCMAKE} -Tall -q $<
+###################
+# Source
+#
 
-clean-make-files:
-	# Remove auto-generated make files.
-	find * -name Makefile.fpc -execdir sh -c '${RM} $$(basename {} .fpc)' ';'
-	${RM} make-files-stamp
+prepare-source: prepare-source-stamp
+prepare-source-stamp:
+	dh_testdir
+	dh_prep
+	# Add version.inc:
+	echo \'$(DEB_VERSION)\' > fpcsrc/compiler/version.inc
+	# To obtain reproducible builds, we need to force a date in several
+	# locations
+	# Timestamp in prog.html & ref.html & user.html
+	# Note: replace directly with correct string
+	sed --in-place "s/\`date +'%B %Y'\`/$(shell LC_ALL=C date --utc --date=${DEB_DATE} +'%B %Y')/" fpcdocs/Makefile.fpc
+	# Checksum in fastcgi/fpunits.cfg & fcl-web/fpunits.cfg
+	# Note: revert in clean target
+	sed --in-place "s/Now/EncodeDate($(shell date --utc --date=${DEB_DATE} +'%Y, %m, %d'))/" fpcsrc/packages/fpmkunit/src/fpmkunit.pp
+
+	# Now that we are done with all changes to files in the packaging, let's
+	# make sure that all the timestamps are reproducible.
+	find fpcsrc -type f -newermt "@$${SOURCE_DATE_EPOCH}" -print0 | \
+		xargs -0r touch --no-dereference --date="@$${SOURCE_DATE_EPOCH}"
+
+	touch prepare-source-stamp
+
+# Annoying thing is we need to do this very early to save lots of overhead. If
+# it can be done on a clean tree, right after prepare-source we don't need
+# cleaning, right.
+install-source: prepare-source install-source-stamp
+install-source-stamp:
+	@echo "--- Copying the source code"
+	dh_testdir
+	${MKDIR} ${SRC_DIR}
+	${CP} -t ${SRC_DIR} \
+		$(CURDIR)/fpcsrc/compiler \
+		$(CURDIR)/fpcsrc/packages \
+		$(CURDIR)/fpcsrc/rtl
+	touch install-source-stamp
+
 
 ###################
 # Arch packages
 #
 
-configure: debian-files make-files configure-stamp
-configure-stamp:
-	dh_testdir
-	dh_prep
-	# Remove auto-generated version file.
-	${RM} fpcsrc/compiler/version.inc
-	# Add version.inc:
-	echo \'$(DEB_VERSION)\' > fpcsrc/compiler/version.inc
-	touch configure-stamp
-
-build-arch: debian-files configure build-arch-stamp
+build-arch: debian-files install-source makefiles build-arch-stamp
 build-arch-stamp: ${DEB_BUILD_FPC_OPT} ${DEB_HOST_FPC_OPT}
 	@echo "--- Building"
 	dh_testdir
@@ -260,9 +328,10 @@ install-arch-stamp:
 	$(MAKE) -C fpcsrc ide_distinstall $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-ide/${DEB_UPSTREAM_MAIN_VERSION}
 	$(MAKE) -C fpcsrc utils_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc/utils/fpdoc/intl install $(INSTALLOPTS)
-	${MV} -t ${LIB_DIR} ${INSTALL_DIR}/usr/lib/fpc/lexyacc
+	${CP} -t ${LIB_DIR} \
+		${INSTALL_DIR}/usr/lib/fpc/lexyacc
 	${CP} -t  ${BIN_DIR} debian/fpc-depends
-	# Copy examples and docs to the correct doc dir
+	# Copy examples to the correct doc dir
 	/bin/bash debian/moveexamples ${EXAMPLE_TEMP} ${DOC_DIR} ${DEB_UPSTREAM_MAIN_VERSION}
 	# Rename executables
 	for f in  ${BIN_DIR}/* ; do ${MV} $$f $${f}-${DEB_UPSTREAM_MAIN_VERSION} ; done
@@ -273,44 +342,38 @@ install-arch-stamp:
 	# Install fpdoc latex styles
 	${CP} -t ${STY_DIR} \
 		${CURDIR}/fpcdocs/*.sty
-	# Install lintian override files
-	set -x -e ; cd debian/overrides ; for PACKAGE in * ; do \
-	  if [ -d ../$${PACKAGE}${PACKAGESUFFIX} ] ; \
-	  then \
-	  	${MKDIR} ../$${PACKAGE}${PACKAGESUFFIX}/usr/share/lintian/overrides ; \
-	    sed -e "s/$${PACKAGE}/&${PACKAGESUFFIX}/g" $${PACKAGE} > ../$${PACKAGE}${PACKAGESUFFIX}/usr/share/lintian/overrides/$${PACKAGE}${PACKAGESUFFIX} ; \
-	  fi ; \
-	done
-ifeq (${DEB_BUILD},0)
-	# We are building upstream debs, install override files for build = 0
-	set -x -e ; cd debian ; for PACKAGE in `sed -n -e 's/Package: \(.*\)/\1/p' control` ; do \
-	  if [ -d $${PACKAGE} ] ; \
-	  then \
-	    ${MKDIR} $${PACKAGE}/usr/share/lintian/overrides ; \
-	    echo "$${PACKAGE}: debian-revision-should-not-be-zero" >> $${PACKAGE}/usr/share/lintian/overrides/$${PACKAGE} ; \
-	  fi ; \
-	done
-endif
-	find ${INSTALL_DIR} -empty -delete
 	touch install-arch-stamp
 
 arrange-arch: install-arch arrange-arch-stamp install-man
 arrange-arch-stamp:
 	dh_testdir
 	dh_testroot
-	dh_install -s --sourcedir=debian/tmp --list-missing $(DH_INSTALL_EXCLUDE_OPTS)
+	# Expected here:
+	# usr/lib/fpc/lexyacc/yyparse.cod
+	# usr/lib/fpc/lexyacc/yylex.cod
+	# usr/bin/unihelper-<version>
+	# usr/bin/ptop.rsj-<version>
+	# usr/bin/mkx86ins-<version>
+	# usr/bin/mkinsad-<version>
+	# usr/bin/mkarmins-<version>
+	# usr/bin/mka64ins-<version>
+	# usr/bin/makeskel.rsj-<version>
+	# usr/bin/cldrparser-<version>
+	dh_install -s --sourcedir=debian/tmp --list-missing
 	touch arrange-arch-stamp
 
-build-indep:
-install-indep:
-	touch install-indep-stamp
+# This is a policy required target, for our purpose, it needs to trigger
+# debian-files and install-source at least if that didn't happen yet.
+build-indep: debian-files install-source build-doc
+install-indep: install-doc install-man
 
 install-man: install-man-stamp
 install-man-stamp:
 	# Install man pages
 	$(MAKE) -C install/man installman $(INSTALLOPTS)
 	for s in ${INSTALL_DIR}/usr/man/man[1-9] ; do cd $${s} && ( gzip -d *.gz || true ) && for f in *.[1-9] ; do ${MV} $${f} $${f%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${f#*.}" ; done ; done || true
-	pod2man -c 'Free pascal for Debian GNU/Linux' debian/fpc-depends > debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
+	pod2man -c 'Free pascal for Debian GNU/Linux' -d ${DEB_DATE} debian/fpc-depends > \
+		debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
 	dh_installman -s
 	${RM} ${INSTALL_DIR}/usr/man
 	touch install-man-stamp
@@ -319,12 +382,17 @@ install-man-stamp:
 # Documentation
 #
 
-build-doc: build-doc-stamp
+build-doc: makefiles build-doc-stamp
 build-doc-stamp:
 	@echo "--- Building Documentation"
 	dh_testdir
 	${MKDIR} fpcsrc/compiler/utils/units/${FPCTARGET}
-	$(MAKE) -C fpcdocs $(CONVERTER)
+	# Until the whole locale is properly set to include at least UTF-8 in some
+	# more generic way than on a per d/rules file basis, we need to set the
+	# locale here to get reproducible builds (because of sorting in index
+	# pages) and to fix some characters in some documentation files that are
+	# non-ascii.
+	LC_ALL=C.UTF-8 $(MAKE) -C fpcdocs $(CONVERTER)
 	touch build-doc-stamp
 
 install-doc: build-doc install-doc-stamp
@@ -342,21 +410,6 @@ install-doc-stamp:
 
 	touch install-doc-stamp
 
-###################
-# Source
-#
-
-install-source: clean-patched install-source-stamp
-install-source-stamp:
-	@echo "--- Cleaning the tree and copying the source code"
-	dh_testdir
-	dh_testroot
-	${MKDIR} ${SRC_DIR}
-	${CP} -t ${SRC_DIR} \
-		$(CURDIR)/fpcsrc/compiler \
-		$(CURDIR)/fpcsrc/packages \
-		$(CURDIR)/fpcsrc/rtl
-	touch install-source-stamp
 
 ###################
 # Generic
@@ -371,13 +424,7 @@ binary: binary-arch binary-indep
 # Deb building
 #
 
-configure-indep: configure-indep-stamp configure
-configure-indep-stamp:
-	@echo -- Configure indep
-	dh_prep
-	touch configure-indep-stamp
-
-binary-indep: configure-indep install-doc install-source
+binary-indep: install-indep
 	@echo "--- Building: arch-indep packages"
 	dh_testdir
 	dh_testroot
@@ -388,24 +435,7 @@ binary-indep: configure-indep install-doc install-source
 	  -not -regex '.*\.\(fpc\|inc\|pas\|pp\)' -delete
 	find debian/fpc-source${PACKAGESUFFIX}/usr/share/fpcsrc/ -type d \
 	  -empty -delete
-	# Install lintian override files
-	set -x -e ; cd debian/overrides ; for PACKAGE in * ; do \
-	  if [ -d ../$${PACKAGE}${PACKAGESUFFIX} ] ; \
-	  then \
-	  	${MKDIR} ../$${PACKAGE}${PACKAGESUFFIX}/usr/share/lintian/overrides ; \
-	    sed -e "s/$${PACKAGE}/&${PACKAGESUFFIX}/g" $${PACKAGE} > ../$${PACKAGE}${PACKAGESUFFIX}/usr/share/lintian/overrides/$${PACKAGE}${PACKAGESUFFIX} ; \
-	  fi ; \
-	done
-ifeq (${DEB_BUILD},0)
-	# We are building upstream debs, install override files for build = 0
-	set -x -e ; cd debian ; for PACKAGE in `sed -n -e 's/Package: \(.*\)/\1/p' control` ; do \
-	  if [ -d $${PACKAGE} ] ; \
-	  then \
-	    ${MKDIR} $${PACKAGE}/usr/share/lintian/overrides ; \
-	    echo "$${PACKAGE}: debian-revision-should-not-be-zero" >> $${PACKAGE}/usr/share/lintian/overrides/$${PACKAGE} ; \
-	  fi ; \
-	done
-endif
+	dh_lintian -i
 	dh_compress -i -X.pdf
 	dh_fixperms
 	dh_installdebconf -i
@@ -423,6 +453,7 @@ binary-arch: arrange-arch
 	dh_installchangelogs -a
 	dh_installexamples -a
 	dh_strip -s
+	dh_lintian -a
 	dh_compress -a
 	dh_fixperms
 	dh_installdebconf -a
@@ -432,11 +463,11 @@ binary-arch: arrange-arch
 	dh_md5sums -s
 	dh_builddeb -s $(DEB_DH_BUILDDEB_ARGS)
 
-.PHONY: build clean binary binary-arch \
-	binary-indep debian-files build-arch \
-	install install-indep install-arch \
-	configure configure-indep make-files clean-make-files \
-	get-orig-source build-doc
+.PHONY: arrange-arch binary binary-arch binary-indep build build-arch	\
+	build-doc build-indep check-makefiles clean clean-all-but-makefiles	\
+	clean-makefiles debian-files get-orig-source install install-arch	\
+	install-doc install-indep install-man install-source makefiles		\
+	prepare-source
 
 get-orig-source:
 	-uscan --upstream-version=0 --rename --force-download

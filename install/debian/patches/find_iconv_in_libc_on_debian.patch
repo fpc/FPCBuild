@@ -1,9 +1,11 @@
 Description: iconv in kfreebsd is found in libc as on linux
  On FreeBSD, iconv is a seperate library. In Debian, it is found in libc.
 Author: Paul Gevers <elbrus@debian.org>
---- a/fpcsrc/rtl/unix/cwstring.pp
-+++ b/fpcsrc/rtl/unix/cwstring.pp
-@@ -26,9 +26,10 @@
+Index: fpc/fpcsrc/rtl/unix/cwstring.pp
+===================================================================
+--- fpc.orig/fpcsrc/rtl/unix/cwstring.pp
++++ fpc/fpcsrc/rtl/unix/cwstring.pp
+@@ -26,9 +26,10 @@ procedure SetCWidestringManager;
  implementation
  
  {$linklib c}
@@ -15,7 +17,7 @@ Author: Paul Gevers <elbrus@debian.org>
    {$define iconv_is_in_libc}
  {$endif}
  
-@@ -102,7 +103,7 @@
+@@ -102,7 +103,7 @@ function mblen(const s: pchar; n: size_t
  
  
  const
@@ -24,7 +26,7 @@ Author: Paul Gevers <elbrus@debian.org>
    __LC_CTYPE = 0;
    LC_ALL = 6;
    _NL_CTYPE_CLASS = (__LC_CTYPE shl 16);
-@@ -189,7 +189,7 @@
+@@ -195,7 +196,7 @@ type
    {$endif}
  {$endif}
  

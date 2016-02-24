@@ -3,10 +3,10 @@ Date: Wed, 15 Jan 2014 21:49:04 +0100
 Subject: Change path of localization fies to fit Debian standard. (Closes: Bug#73368)
 Bug-Debian: http://bugs.debian.org/73368
 
-diff --git a/fpcsrc/utils/fpdoc/intl/dglobals.de.po b/fpcsrc/utils/fpdoc/intl/dglobals.de.po
-index bf52569..d9e1176 100644
---- a/fpcsrc/utils/fpdoc/intl/dglobals.de.po
-+++ b/fpcsrc/utils/fpdoc/intl/dglobals.de.po
+Index: fpc/fpcsrc/utils/fpdoc/intl/dglobals.de.po
+===================================================================
+--- fpc.orig/fpcsrc/utils/fpdoc/intl/dglobals.de.po
++++ fpc/fpcsrc/utils/fpdoc/intl/dglobals.de.po
 @@ -1,6 +1,6 @@
  #: dglobals:sdocpackagetitle
  msgid "Reference for package '%s'"
@@ -75,11 +75,11 @@ index bf52569..d9e1176 100644
  
  #: dglobals.sdocprevious
  msgid "Previous"
-diff --git a/fpcsrc/utils/fpdoc/intl/dwriter.de.po b/fpcsrc/utils/fpdoc/intl/dwriter.de.po
-index ebe2f3f..d9d5804 100644
---- a/fpcsrc/utils/fpdoc/intl/dwriter.de.po
-+++ b/fpcsrc/utils/fpdoc/intl/dwriter.de.po
-@@ -4,23 +4,23 @@ msgstr "Beim Schreiben der Datei \"%s\" ist ein Fehler aufgetrete: %s"
+Index: fpc/fpcsrc/utils/fpdoc/intl/dwriter.de.po
+===================================================================
+--- fpc.orig/fpcsrc/utils/fpdoc/intl/dwriter.de.po
++++ fpc/fpcsrc/utils/fpdoc/intl/dwriter.de.po
+@@ -4,23 +4,23 @@ msgstr "Beim Schreiben der Datei \"%s\"
  
  #: dwriter:serrinvalidshortdescr
  msgid "Invalid short description"
@@ -108,7 +108,7 @@ index ebe2f3f..d9d5804 100644
  
  #: dwriter:serrlistisempty
  msgid "List is empty - need at least one \"li\" element"
-@@ -28,11 +28,11 @@ msgstr "Liste ist leer - brauche mindestens ein \"li\"-Element"
+@@ -28,11 +28,11 @@ msgstr "Liste ist leer - brauche mindest
  
  #: dwriter:serrinvalidremarkcontent
  msgid "Invalid <remark> content (illegal XML element: \"%s\")"
@@ -122,7 +122,7 @@ index ebe2f3f..d9d5804 100644
  
  #: dwriter:serrdefinitionentrymissing
  msgid "Definition entry after definition term is missing"
-@@ -40,11 +40,11 @@ msgstr "Definitionseintrag nach Definitionsterm fehlt"
+@@ -40,11 +40,11 @@ msgstr "Definitionseintrag nach Definiti
  
  #: dwriter:serrtableinvalidbordervalue
  msgid "Invalid \"border\" value for <table>"
@@ -136,7 +136,7 @@ index ebe2f3f..d9d5804 100644
  
  #: dwriter:serrtablerowempty
  msgid "Table row is empty (no \"td\" elements found)"
-@@ -52,7 +52,7 @@ msgstr "Tabellenzeile ist leer (keine \"td\"-Elemente gefunden)"
+@@ -52,7 +52,7 @@ msgstr "Tabellenzeile ist leer (keine \"
  
  #: dwriter:serrinvalidcontentbeforesectiontitle
  msgid "Invalid content before section title"
@@ -145,18 +145,18 @@ index ebe2f3f..d9d5804 100644
  
  #: dwriter:serrsectiontitleexpected
  msgid "Section title (\"title\" element) expected"
-@@ -76,5 +76,5 @@ msgstr "Warnung: Ziel-ID von <printshort> ist unbekannt: \"%s\""
+@@ -76,5 +76,5 @@ msgstr "Warnung: Ziel-ID von <printshort
  
  #: dwriter:serrunknownlink
  msgid "Could not resolve link to \"%s\""
 -msgstr "Konnte Link auf \"%s\" nicht auflösen"
 +msgstr "Konnte Link auf \"%s\" nicht auflÃ¶sen"
  
-diff --git a/fpcsrc/utils/fpdoc/intl/fpdoc.de.po b/fpcsrc/utils/fpdoc/intl/fpdoc.de.po
-index e53f7d7..2ad9f91 100644
---- a/fpcsrc/utils/fpdoc/intl/fpdoc.de.po
-+++ b/fpcsrc/utils/fpdoc/intl/fpdoc.de.po
-@@ -4,7 +4,7 @@ msgstr "FPDoc - Free-Pascal-Dokumentationstool"
+Index: fpc/fpcsrc/utils/fpdoc/intl/fpdoc.de.po
+===================================================================
+--- fpc.orig/fpcsrc/utils/fpdoc/intl/fpdoc.de.po
++++ fpc/fpcsrc/utils/fpdoc/intl/fpdoc.de.po
+@@ -4,7 +4,7 @@ msgstr "FPDoc - Free-Pascal-Dokumentatio
  
  #: fpdoc:scopyright
  msgid "(c) 2000 - 2003 Areca Systems GmbH / Sebastian Guenther, sg@freepascal.org"
@@ -165,7 +165,7 @@ index e53f7d7..2ad9f91 100644
  
  #: fpdoc:scmdlinehelp
  msgid "See documentation for usage."
-@@ -16,11 +16,11 @@ msgstr "Ignoriere unbekannte Option \"%s\""
+@@ -16,11 +16,11 @@ msgstr "Ignoriere unbekannte Option \"%s
  
  #: fpdoc:scmdlineinvalidformat
  msgid "Invalid format \"%s\" specified"
@@ -179,10 +179,10 @@ index e53f7d7..2ad9f91 100644
  
  #: fpdoc:swritingpages
  msgid "Writing %d pages..."
-diff --git a/fpcsrc/utils/fpdoc/intl/fpdocmk.de.po b/fpcsrc/utils/fpdoc/intl/fpdocmk.de.po
-index c7fa2d1..fc822a1 100644
---- a/fpcsrc/utils/fpdoc/intl/fpdocmk.de.po
-+++ b/fpcsrc/utils/fpdoc/intl/fpdocmk.de.po
+Index: fpc/fpcsrc/utils/fpdoc/intl/fpdocmk.de.po
+===================================================================
+--- fpc.orig/fpcsrc/utils/fpdoc/intl/fpdocmk.de.po
++++ fpc/fpcsrc/utils/fpdoc/intl/fpdocmk.de.po
 @@ -18,33 +18,33 @@ msgstr ""
  
  #: fpdocmk:stitle
@@ -224,10 +224,10 @@ index c7fa2d1..fc822a1 100644
  "einen an."
  
  #: fpdocmk:sdone
-diff --git a/fpcsrc/utils/fpdoc/intl/fpdocstr.de.po b/fpcsrc/utils/fpdoc/intl/fpdocstr.de.po
-index 677e547..3a351d6 100644
---- a/fpcsrc/utils/fpdoc/intl/fpdocstr.de.po
-+++ b/fpcsrc/utils/fpdoc/intl/fpdocstr.de.po
+Index: fpc/fpcsrc/utils/fpdoc/intl/fpdocstr.de.po
+===================================================================
+--- fpc.orig/fpcsrc/utils/fpdoc/intl/fpdocstr.de.po
++++ fpc/fpcsrc/utils/fpdoc/intl/fpdocstr.de.po
 @@ -50,11 +50,11 @@ msgstr "Alias-Typ"
  
  #: fpdocstr:sptreetypealiastype
@@ -315,10 +315,10 @@ index 677e547..3a351d6 100644
  
  #: fpdocstr:sdocpage
  msgid "Page"
-diff --git a/fpcsrc/utils/fpdoc/intl/makeskel.de.po b/fpcsrc/utils/fpdoc/intl/makeskel.de.po
-index c564c7a..0d2d113 100644
---- a/fpcsrc/utils/fpdoc/intl/makeskel.de.po
-+++ b/fpcsrc/utils/fpdoc/intl/makeskel.de.po
+Index: fpc/fpcsrc/utils/fpdoc/intl/makeskel.de.po
+===================================================================
+--- fpc.orig/fpcsrc/utils/fpdoc/intl/makeskel.de.po
++++ fpc/fpcsrc/utils/fpdoc/intl/makeskel.de.po
 @@ -1,10 +1,10 @@
  #: makeskel:stitle
  msgid "MakeSkel - FPDoc skeleton XML description file generator"

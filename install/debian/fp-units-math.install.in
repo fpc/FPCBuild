@@ -1,5 +1,6 @@
-/usr/lib/fpc/${VERSION}/units/${TARGET}/gmp
-/usr/lib/fpc/${VERSION}/units/${TARGET}/numlib
-/usr/lib/fpc/${VERSION}/units/${TARGET}/proj4
-/usr/lib/fpc/${VERSION}/units/${TARGET}/symbolic
-/usr/share/doc/fp-units-math
+#! /usr/bin/dh-exec
+usr/lib/fpc/*/*/*/gmp*
+usr/lib/fpc/*/*/*/numlib*
+usr/lib/fpc/*/*/*/proj4*        [!freebsd-math]
+usr/lib/fpc/*/*/*/symbolic*
+usr/share/doc/fp-units-math     [!freebsd-any]

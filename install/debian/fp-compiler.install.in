@@ -1,9 +1,10 @@
-/usr/bin/fpc-${VERSION}
-/usr/bin/fpc-depends-${VERSION}
-/usr/bin/fpcmkcfg-${VERSION}
-/usr/bin/fpcres-${VERSION}
-/usr/bin/grab_vcsa-${VERSION}
-/usr/lib/fpc/${VERSION}/${PPCBIN}
-/usr/lib/fpc/${VERSION}/samplecfg
-/usr/lib/fpc/${VERSION}/msg
-/usr/share/doc/fp-compiler
+#! /usr/bin/dh-exec
+usr/bin/fpc-*
+usr/bin/fpc-depends-*
+usr/bin/fpcmkcfg-*
+usr/bin/fpcres-*
+usr/bin/grab_vcsa-*         [!freebsd-any]
+usr/lib/fpc/*/${PPCBIN}
+usr/lib/fpc/*/msg
+usr/lib/fpc/*/samplecfg
+usr/share/doc/fp-compiler   [!freebsd-any]

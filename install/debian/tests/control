@@ -1,0 +1,11 @@
+Tests: run-upstream-testsuite
+# Building the testsuite requires at least Makefiles to be made
+Restrictions: rw-build-tree, allow-stderr
+# Running the testsuite as root can change the system time; not sure
+# if this warrants a:
+# Restrictions: breaks-testbed
+#
+# zlib1g-dev is needed for at least test/packages/zlib/tzlib1.pp
+# libgcc seems to be needed for test/packages/webtbs/tw14265.pp
+#   although installing libgcc-5-dev doesn't seem to help
+Depends: @, zlib1g-dev

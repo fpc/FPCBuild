@@ -1,8 +1,10 @@
-/usr/lib/fpc/${VERSION}/units/${TARGET}/a52
-/usr/lib/fpc/${VERSION}/units/${TARGET}/dts
-/usr/lib/fpc/${VERSION}/units/${TARGET}/mad
-/usr/lib/fpc/${VERSION}/units/${TARGET}/modplug
-/usr/lib/fpc/${VERSION}/units/${TARGET}/oggvorbis
-/usr/lib/fpc/${VERSION}/units/${TARGET}/openal
-/usr/lib/fpc/${VERSION}/units/${TARGET}/sdl
-/usr/share/doc/fp-units-multimedia
+#! /usr/bin/dh-exec
+usr/lib/fpc/*/*/*/a52*              [!freebsd-any]
+usr/lib/fpc/*/*/*/dts*              [!freebsd-any]
+usr/lib/fpc/*/*/*/libvlc*
+usr/lib/fpc/*/*/*/mad*              [!freebsd-any]
+usr/lib/fpc/*/*/*/modplug*          [!freebsd-any]
+usr/lib/fpc/*/*/*/oggvorbis*        [!freebsd-any]
+usr/lib/fpc/*/*/*/openal*           [!freebsd-any]
+usr/lib/fpc/*/*/*/sdl*
+usr/share/doc/fp-units-multimedia   [!freebsd-any]

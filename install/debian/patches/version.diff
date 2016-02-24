@@ -1,8 +1,10 @@
 This patch adds Debian build version to compiler full version.
 
---- fpc-2.2.4~/fpcsrc/compiler/version.pas
-+++ fpc-2.2.4/fpcsrc/compiler/version.pas
-@@ -78,6 +78,9 @@
+Index: fpc/fpcsrc/compiler/version.pas
+===================================================================
+--- fpc.orig/fpcsrc/compiler/version.pas
++++ fpc/fpcsrc/compiler/version.pas
+@@ -84,6 +84,9 @@ function full_version_string:string;
  
  implementation
  
@@ -12,7 +14,7 @@ This patch adds Debian build version to compiler full version.
  function version_string:string;
  begin
    version_string := version_nr+'.'+release_nr+'.'+patch_nr;
-@@ -86,11 +89,7 @@
+@@ -92,11 +95,7 @@ end;
  
  function full_version_string:string;
  begin

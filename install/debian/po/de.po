@@ -1,14 +1,14 @@
 # Translation of the fpc debconf template to German.
 # Copyright (C) 1999 Peter Vreman.
 # This file is distributed under the same license as the fpc package.
-# Copyright of this file Chris Leick <c.leick@vollbio.de> 2012-2013.
+# Copyright of this file Chris Leick <c.leick@vollbio.de> 2012-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: fpc 2.6.2-6\n"
+"Project-Id-Version: fpc 2.6.4+dfsg-4\n"
 "Report-Msgid-Bugs-To: fpc@packages.debian.org\n"
-"POT-Creation-Date: 2013-11-12 06:57+0100\n"
-"PO-Revision-Date: 2013-11-12 10:10+0100\n"
+"POT-Creation-Date: 2015-06-19 17:31+0200\n"
+"PO-Revision-Date: 2014-10-02 18:05+0100\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: de <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -64,10 +64,17 @@ msgstr ""
 "andernfalls müssen Sie dies selbst verwalten."
 
 #. Type: select
+#. Choices
+#. This string should be in sync with the translation in the description
+#: ../fp-compiler.templates.in:3001
+msgid "Select manually"
+msgstr "Manuelle Auswahl"
+
+#. Type: select
 #. Description
 #. Type: string
 #. Description
-#: ../fp-compiler.templates.in:3001 ../fp-compiler.templates.in:4001
+#: ../fp-compiler.templates.in:3002 ../fp-compiler.templates.in:4001
 msgid "Default MS Windows .rc resource compiler:"
 msgstr "Standard-Compiler für .rc-Ressourcen unter MS Windows:"
 
@@ -75,7 +82,7 @@ msgstr "Standard-Compiler für .rc-Ressourcen unter MS Windows:"
 #. Description
 #. Type: string
 #. Description
-#: ../fp-compiler.templates.in:3001 ../fp-compiler.templates.in:4001
+#: ../fp-compiler.templates.in:3002 ../fp-compiler.templates.in:4001
 msgid ""
 "FPC supports compiling programs that embed resources as MS Windows .rc-"
 "format files on all platforms where the MinGW windres tool is available."
@@ -88,7 +95,7 @@ msgstr ""
 #. Description
 #. Type: string
 #. Description
-#: ../fp-compiler.templates.in:3001 ../fp-compiler.templates.in:4001
+#: ../fp-compiler.templates.in:3002 ../fp-compiler.templates.in:4001
 msgid ""
 "In order to be able to compile projects using .rc files, you need first to "
 "manually install the package mingw32-binutils. mingw32-binutils is suggested "
@@ -100,7 +107,9 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../fp-compiler.templates.in:3001
+#. "Select manually" should be in sync with the text elsewhere in the
+#. translation
+#: ../fp-compiler.templates.in:3002
 msgid ""
 "If you want to enter a custom .rc file compiler that does not appear in this "
 "list or if you simply want to disable this feature, please select \"Select "
@@ -108,7 +117,7 @@ msgid ""
 msgstr ""
 "Falls Sie einen benutzerdefinierten Compiler für .rc-Dateien eingeben "
 "möchten, der nicht in dieser Liste erscheint oder falls Sie diese "
-"Funktionalität deaktivieren wollen, wählen Sie bitte »Select manually«."
+"Funktionalität deaktivieren wollen, wählen Sie bitte »Manuelle Auswahl«."
 
 #. Type: string
 #. Description

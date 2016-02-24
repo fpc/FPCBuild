@@ -27,7 +27,7 @@ tar -axf ${ORIG_SRC_TAR}
 mv ${ORIG_SRC_DIR}* ${DEB_SRC_DIR}
 cd ${DEB_SRC_DIR}
 find -name Makefile.fpc -execdir sh -c 'rm $(basename {} .fpc)' ';'
-find -regex '.*\.\(a\|or?\|so\.*\|ppu\|compiled\|exe\|dll\)' -delete
+find -regex '.*\.\(a\|or?\|so\.*\|ppu\|compiled\|exe\|dll\|jar\)' -delete
 find -name '*.pp' -exec chmod a-x {} ';'
 cd ..
 tar -acf ${DEB_SRC_TAR} ${DEB_SRC_DIR}

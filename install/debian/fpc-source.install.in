@@ -1,3 +1,4 @@
-/usr/share/fpcsrc/${VERSION}/compiler
-/usr/share/fpcsrc/${VERSION}/packages
-/usr/share/fpcsrc/${VERSION}/rtl
+#! /usr/bin/dh-exec
+usr/share/fpcsrc/*/compiler
+usr/share/fpcsrc/*/packages
+usr/share/fpcsrc/*/rtl

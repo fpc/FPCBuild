@@ -1,14 +1,15 @@
-/usr/lib/fpc/${VERSION}/units/${TARGET}/hermes
-/usr/lib/fpc/${VERSION}/units/${TARGET}/opencl
-/usr/lib/fpc/${VERSION}/units/${TARGET}/opengl
-/usr/lib/fpc/${VERSION}/units/${TARGET}/xforms
-/usr/lib/fpc/${VERSION}/units/${TARGET}/svgalib
-/usr/lib/fpc/${VERSION}/units/${TARGET}/ggi
-/usr/lib/fpc/${VERSION}/units/${TARGET}/imagemagick
-/usr/lib/fpc/${VERSION}/units/${TARGET}/libgd
-/usr/lib/fpc/${VERSION}/units/${TARGET}/libpng
-/usr/lib/fpc/${VERSION}/units/${TARGET}/graph
-/usr/lib/fpc/${VERSION}/units/${TARGET}/cairo
-/usr/lib/fpc/${VERSION}/units/${TARGET}/ptc
-/usr/lib/fpc/${VERSION}/units/${TARGET}/rsvg
-/usr/share/doc/fp-units-gfx
+#! /usr/bin/dh-exec
+usr/lib/fpc/*/*/*/ggi*
+usr/lib/fpc/*/*/*/graph*        [!linux-arm64 !linux-armel !linux-armhf !linux-ppc64]
+usr/lib/fpc/*/*/*/hermes*
+usr/lib/fpc/*/*/*/imagemagick*
+usr/lib/fpc/*/*/*/libgd*
+usr/lib/fpc/*/*/*/libpng*
+usr/lib/fpc/*/*/*/opencl*       [!freebsd-any !linux-arm64 !linux-armel !linux-armhf !linux-powerpc !linux-ppc64]
+usr/lib/fpc/*/*/*/opengl*
+usr/lib/fpc/*/*/*/opengles*
+usr/lib/fpc/*/*/*/ptc*          [!freebsd-any]
+usr/lib/fpc/*/*/*/rsvg*
+usr/lib/fpc/*/*/*/svgalib*
+usr/lib/fpc/*/*/*/xforms*
+usr/share/doc/fp-units-gfx      [!freebsd-any]

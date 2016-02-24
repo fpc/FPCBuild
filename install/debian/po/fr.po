@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fpc\n"
 "Report-Msgid-Bugs-To: fpc@packages.debian.org\n"
-"POT-Creation-Date: 2013-11-12 06:57+0100\n"
+"POT-Creation-Date: 2015-06-19 17:31+0200\n"
 "PO-Revision-Date: 2013-11-14 17:34-0400\n"
 "Last-Translator: David Prévot <david@tilapin.org>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -66,10 +66,17 @@ msgstr ""
 "devrez gérer cela vous-même."
 
 #. Type: select
+#. Choices
+#. This string should be in sync with the translation in the description
+#: ../fp-compiler.templates.in:3001
+msgid "Select manually"
+msgstr "Sélectionnez vous-même"
+
+#. Type: select
 #. Description
 #. Type: string
 #. Description
-#: ../fp-compiler.templates.in:3001 ../fp-compiler.templates.in:4001
+#: ../fp-compiler.templates.in:3002 ../fp-compiler.templates.in:4001
 msgid "Default MS Windows .rc resource compiler:"
 msgstr "Compilateur de ressources .rc MS Windows par défaut :"
 
@@ -77,7 +84,7 @@ msgstr "Compilateur de ressources .rc MS Windows par défaut :"
 #. Description
 #. Type: string
 #. Description
-#: ../fp-compiler.templates.in:3001 ../fp-compiler.templates.in:4001
+#: ../fp-compiler.templates.in:3002 ../fp-compiler.templates.in:4001
 msgid ""
 "FPC supports compiling programs that embed resources as MS Windows .rc-"
 "format files on all platforms where the MinGW windres tool is available."
@@ -90,7 +97,7 @@ msgstr ""
 #. Description
 #. Type: string
 #. Description
-#: ../fp-compiler.templates.in:3001 ../fp-compiler.templates.in:4001
+#: ../fp-compiler.templates.in:3002 ../fp-compiler.templates.in:4001
 msgid ""
 "In order to be able to compile projects using .rc files, you need first to "
 "manually install the package mingw32-binutils. mingw32-binutils is suggested "
@@ -103,7 +110,9 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../fp-compiler.templates.in:3001
+#. "Select manually" should be in sync with the text elsewhere in the
+#. translation
+#: ../fp-compiler.templates.in:3002
 msgid ""
 "If you want to enter a custom .rc file compiler that does not appear in this "
 "list or if you simply want to disable this feature, please select \"Select "

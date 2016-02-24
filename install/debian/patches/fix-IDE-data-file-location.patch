@@ -4,38 +4,42 @@ Description: Align fp IDE template file paths with Debian standards
   This patch fixes this by making the IDE looking for templates in the base
   installation directory.
 Author: Abou Al Montacir <abou.almontacir@sfr.fr>
---- a/fpcsrc/ide/fpmake.pp
-+++ b/fpcsrc/ide/fpmake.pp
-@@ -201,16 +201,16 @@ begin
+Index: fpc/fpcsrc/ide/fpmake.pp
+===================================================================
+--- fpc.orig/fpcsrc/ide/fpmake.pp
++++ fpc/fpcsrc/ide/fpmake.pp
+@@ -204,16 +204,16 @@ begin
      T.Directory:='compiler';
      T.Install:=false;
  
--    P.InstallFiles.Add('fp.ans','$(BININSTALLDIR)');
--    P.InstallFiles.Add('gplprog.pt','$(BININSTALLDIR)');
--    P.InstallFiles.Add('gplunit.pt','$(BININSTALLDIR)');
--    P.InstallFiles.Add('program.pt','$(BININSTALLDIR)');
--    P.InstallFiles.Add('unit.pt','$(BININSTALLDIR)');
--    P.InstallFiles.Add('cvsco.tdf','$(BININSTALLDIR)');
--    P.InstallFiles.Add('cvsdiff.tdf','$(BININSTALLDIR)');
--    P.InstallFiles.Add('cvsup.tdf','$(BININSTALLDIR)');
--    P.InstallFiles.Add('grep.tdf','$(BININSTALLDIR)');
--    P.InstallFiles.Add('tpgrep.tdf','$(BININSTALLDIR)');
-+    P.InstallFiles.Add('fp.ans','$(BASEINSTALLDIR)/ide');
-+    P.InstallFiles.Add('gplprog.pt','$(BASEINSTALLDIR)/ide');
-+    P.InstallFiles.Add('gplunit.pt','$(BASEINSTALLDIR)/ide');
-+    P.InstallFiles.Add('program.pt','$(BASEINSTALLDIR)/ide');
-+    P.InstallFiles.Add('unit.pt','$(BASEINSTALLDIR)/ide');
-+    P.InstallFiles.Add('cvsco.tdf','$(BASEINSTALLDIR)/ide');
-+    P.InstallFiles.Add('cvsdiff.tdf','$(BASEINSTALLDIR)/ide');
-+    P.InstallFiles.Add('cvsup.tdf','$(BASEINSTALLDIR)/ide');
-+    P.InstallFiles.Add('grep.tdf','$(BASEINSTALLDIR)/ide');
-+    P.InstallFiles.Add('tpgrep.tdf','$(BASEINSTALLDIR)/ide');
-     P.InstallFiles.Add('fp32.ico', [win32, win64], '$(BININSTALLDIR)');
+-    P.InstallFiles.Add('fp.ans','$(bininstalldir)');
+-    P.InstallFiles.Add('gplprog.pt','$(bininstalldir)');
+-    P.InstallFiles.Add('gplunit.pt','$(bininstalldir)');
+-    P.InstallFiles.Add('program.pt','$(bininstalldir)');
+-    P.InstallFiles.Add('unit.pt','$(bininstalldir)');
+-    P.InstallFiles.Add('cvsco.tdf','$(bininstalldir)');
+-    P.InstallFiles.Add('cvsdiff.tdf','$(bininstalldir)');
+-    P.InstallFiles.Add('cvsup.tdf','$(bininstalldir)');
+-    P.InstallFiles.Add('grep.tdf','$(bininstalldir)');
+-    P.InstallFiles.Add('tpgrep.tdf','$(bininstalldir)');
++    P.InstallFiles.Add('fp.ans','$(baseinstalldir)/ide');
++    P.InstallFiles.Add('gplprog.pt','$(baseinstalldir)/ide');
++    P.InstallFiles.Add('gplunit.pt','$(baseinstalldir)/ide');
++    P.InstallFiles.Add('program.pt','$(baseinstalldir)/ide');
++    P.InstallFiles.Add('unit.pt','$(baseinstalldir)/ide');
++    P.InstallFiles.Add('cvsco.tdf','$(baseinstalldir)/ide');
++    P.InstallFiles.Add('cvsdiff.tdf','$(baseinstalldir)/ide');
++    P.InstallFiles.Add('cvsup.tdf','$(baseinstalldir)/ide');
++    P.InstallFiles.Add('grep.tdf','$(baseinstalldir)/ide');
++    P.InstallFiles.Add('tpgrep.tdf','$(baseinstalldir)/ide');
+     P.InstallFiles.Add('fp32.ico', [win32, win64], '$(bininstalldir)');
  
-     P.Sources.AddDoc('readme.ide');
---- a/fpcsrc/ide/fpini.pas
-+++ b/fpcsrc/ide/fpini.pas
-@@ -170,12 +170,12 @@ begin
+     with P.Sources do
+Index: fpc/fpcsrc/ide/fpini.pas
+===================================================================
+--- fpc.orig/fpcsrc/ide/fpini.pas
++++ fpc/fpcsrc/ide/fpini.pas
+@@ -178,12 +178,12 @@ begin
     end;
  {$endif WINDOWS}
  {$else}
@@ -51,9 +55,11 @@ Author: Abou Al Montacir <abou.almontacir@sfr.fr>
      end;
    IDEdir:=CompleteDir(FExpand('~/.fp'));
    If Not ExistsDir(IDEdir) Then
---- a/fpcsrc/ide/fptemplt.pas
-+++ b/fpcsrc/ide/fptemplt.pas
-@@ -276,6 +276,7 @@ begin
+Index: fpc/fpcsrc/ide/fptemplt.pas
+===================================================================
+--- fpc.orig/fpcsrc/ide/fptemplt.pas
++++ fpc/fpcsrc/ide/fptemplt.pas
+@@ -280,6 +280,7 @@ begin
    New(Templates, Init(10,10));
    ScanDir('.');
    ScanDir(IDEDir);

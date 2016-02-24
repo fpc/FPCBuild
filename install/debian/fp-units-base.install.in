@@ -1,9 +1,10 @@
-/usr/share/doc/fp-units-base
-/usr/lib/fpc/${VERSION}/units/${TARGET}/fpmkunit
-/usr/lib/fpc/${VERSION}/units/${TARGET}/paszlib
-/usr/lib/fpc/${VERSION}/units/${TARGET}/pasjpeg
-/usr/lib/fpc/${VERSION}/units/${TARGET}/ncurses
-/usr/lib/fpc/${VERSION}/units/${TARGET}/x11
-/usr/lib/fpc/${VERSION}/units/${TARGET}/regexpr
-/usr/lib/fpc/${VERSION}/units/${TARGET}/hash
-/usr/lib/fpc/${VERSION}/units/${TARGET}/uuid
+#! /usr/bin/dh-exec
+usr/lib/fpc/*/*/*/fpmkunit*
+usr/lib/fpc/*/*/*/hash*
+usr/lib/fpc/*/*/*/ncurses*
+usr/lib/fpc/*/*/*/pasjpeg*
+usr/lib/fpc/*/*/*/paszlib*
+usr/lib/fpc/*/*/*/regexpr*
+usr/lib/fpc/*/*/*/uuid*         [!freebsd-any]
+usr/lib/fpc/*/*/*/x11*
+usr/share/doc/fp-units-base     [!freebsd-any]

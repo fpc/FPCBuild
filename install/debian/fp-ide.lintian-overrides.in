@@ -1,0 +1,3 @@
+# Free pascal binaries are often statically linked.
+fp-ide${PACKAGESUFFIX} binary: statically-linked-binary
+fp-ide${PACKAGESUFFIX}: statically-linked-binary

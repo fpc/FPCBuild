@@ -1,1 +1,2 @@
-/usr/share/doc/fp-docs
+#! /usr/bin/dh-exec
+usr/share/doc/fp-docs   [!freebsd-any]

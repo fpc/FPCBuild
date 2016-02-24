@@ -1,22 +1,25 @@
-/usr/share/doc/fp-units-misc
-/usr/lib/fpc/${VERSION}/units/${TARGET}/bzip2
-/usr/lib/fpc/${VERSION}/units/${TARGET}/chm
-/usr/lib/fpc/${VERSION}/units/${TARGET}/fpindexer
-/usr/lib/fpc/${VERSION}/units/${TARGET}/fppkg
-/usr/lib/fpc/${VERSION}/units/${TARGET}/iconvenc
-/usr/lib/fpc/${VERSION}/units/${TARGET}/libxml2
-/usr/lib/fpc/${VERSION}/units/${TARGET}/libsee
-/usr/lib/fpc/${VERSION}/units/${TARGET}/lua
-/usr/lib/fpc/${VERSION}/units/${TARGET}/utmp
-/usr/lib/fpc/${VERSION}/units/${TARGET}/pthreads
-/usr/lib/fpc/${VERSION}/units/${TARGET}/zlib
-/usr/lib/fpc/${VERSION}/units/${TARGET}/tcl
-/usr/lib/fpc/${VERSION}/units/${TARGET}/cdrom
-/usr/lib/fpc/${VERSION}/units/${TARGET}/bfd
-/usr/lib/fpc/${VERSION}/units/${TARGET}/syslog
-/usr/lib/fpc/${VERSION}/units/${TARGET}/gdbint
-/usr/lib/fpc/${VERSION}/units/${TARGET}/unzip
-/usr/lib/fpc/${VERSION}/units/${TARGET}/newt
-/usr/lib/fpc/${VERSION}/units/${TARGET}/fftw
-/usr/lib/fpc/${VERSION}/units/${TARGET}/aspell
-/usr/lib/fpc/${VERSION}/units/${TARGET}/users
+#! /usr/bin/dh-exec
+usr/lib/fpc/*/*/*/aspell*
+usr/lib/fpc/*/*/*/bfd*
+usr/lib/fpc/*/*/*/bzip2*
+usr/lib/fpc/*/*/*/cdrom*        [!freebsd-any]
+usr/lib/fpc/*/*/*/chm*
+usr/lib/fpc/*/*/*/fftw*
+usr/lib/fpc/*/*/*/fpindexer*
+usr/lib/fpc/*/*/*/fppkg*        [!freebsd-any]
+usr/lib/fpc/*/*/*/gdbint*
+usr/lib/fpc/*/*/*/iconvenc*
+usr/lib/fpc/*/*/*/jni*
+usr/lib/fpc/*/*/*/libsee*       [!freebsd-any]
+usr/lib/fpc/*/*/*/libtar*
+usr/lib/fpc/*/*/*/libxml2*
+usr/lib/fpc/*/*/*/lua*          [!freebsd-any]
+usr/lib/fpc/*/*/*/newt*         [!freebsd-any]
+usr/lib/fpc/*/*/*/pthreads*
+usr/lib/fpc/*/*/*/syslog*
+usr/lib/fpc/*/*/*/tcl*
+usr/lib/fpc/*/*/*/unzip*
+usr/lib/fpc/*/*/*/users*
+usr/lib/fpc/*/*/*/utmp*
+usr/lib/fpc/*/*/*/zlib*
+usr/share/doc/fp-units-misc     [!freebsd-any]

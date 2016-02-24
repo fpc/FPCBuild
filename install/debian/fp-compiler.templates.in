@@ -27,8 +27,13 @@ _Description: Rename "/etc/fpc.cfg" to "/etc/fpc.cfg.bak"?
 
 Template: fp-compiler/windres-select
 Type: select
-Choices: ${choices}
+# This string should be in sync with the translation in the description
+#flag:translate:2
+__Choices: ${choices}, Select manually
 Default: Select manually
+#flag:comment:4
+# "Select manually" should be in sync with the text elsewhere in the
+# translation
 _Description: Default MS Windows .rc resource compiler:
  FPC supports compiling programs that embed resources as MS Windows
  .rc-format files on all platforms where the MinGW windres tool is available.

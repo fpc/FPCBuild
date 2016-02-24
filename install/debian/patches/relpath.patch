@@ -4,8 +4,10 @@ order to be used with lazarus. As these libraries may be compiled without
 need to build depend on Lazarus, we add it in fp-utils package which is likely
 to be used by any big project which build depends on fp-compiler.
 
---- /dev/null	2013-04-25 22:57:42.765358414 +0200
-+++ fpc-2.6.2/fpcsrc/utils/relpath.pas	2013-05-07 16:21:46.000000000 +0200
+Index: fpc/fpcsrc/utils/relpath.pas
+===================================================================
+--- /dev/null
++++ fpc/fpcsrc/utils/relpath.pas
 @@ -0,0 +1,16 @@
 +program relpath;
 +uses
@@ -23,9 +25,10 @@ to be used by any big project which build depends on fp-compiler.
 +	end;
 +	WriteLn(ExtractRelativePath(IncludeTrailingPathDelimiter(BaseDir), TargetDir));
 +end.
-
---- /dev/null	2013-04-25 22:57:42.765358414 +0200
-+++ fpc-2.6.2/install/man/man1/relpath.1	2013-05-07 16:21:46.000000000 +0200
+Index: fpc/install/man/man1/relpath.1
+===================================================================
+--- /dev/null
++++ fpc/install/man/man1/relpath.1
 @@ -0,0 +1,32 @@
 +.TH relpath 1 "7 May 2013" "Free Pascal" "Relative path computing tool"
 +.SH NAME
@@ -59,15 +62,15 @@ to be used by any big project which build depends on fp-compiler.
 +.SH SEE ALSO
 +.IP 
 +.BR  readlink (1)
-
---- a/fpcsrc/utils/fpmake.pp
-+++ b/fpcsrc/utils/fpmake.pp
-@@ -86,6 +86,8 @@ begin
+Index: fpc/fpcsrc/utils/fpmake.pp
+===================================================================
+--- fpc.orig/fpcsrc/utils/fpmake.pp
++++ fpc/fpcsrc/utils/fpmake.pp
+@@ -84,6 +84,7 @@ begin
+     P.Targets.AddProgram('mkinsadd.pp');
+     P.Targets.AddProgram('postw32.pp');
+     P.Targets.AddProgram('rmcvsdir.pp');
++    P.Targets.AddProgram('relpath.pas');
+     P.Targets.AddProgram('grab_vcsa.pp',[linux]);
+     T:=P.Targets.AddProgram('fpcsubst.pp');
      T.Dependencies.AddUnit('usubst');
-     P.Targets.AddUnit('usubst.pp').install:=false;
-     P.Targets.AddUnit('ptopu.pp').install:=false;
-+
-+    T:=P.Targets.AddProgram('relpath.pas');
-     end;
- end;
- 

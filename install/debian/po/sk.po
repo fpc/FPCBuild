@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fpc 2.6.2-6\n"
 "Report-Msgid-Bugs-To: fpc@packages.debian.org\n"
-"POT-Creation-Date: 2013-11-12 06:57+0100\n"
+"POT-Creation-Date: 2015-06-19 17:31+0200\n"
 "PO-Revision-Date: 2013-11-23 20:22+0100\n"
 "Last-Translator: Slavko <linux@slavino.sk>\n"
 "Language-Team: slovenčina <linux@slavino.sk>\n"
@@ -69,10 +69,17 @@ msgstr ""
 "spravovať manuálne."
 
 #. Type: select
+#. Choices
+#. This string should be in sync with the translation in the description
+#: ../fp-compiler.templates.in:3001
+msgid "Select manually"
+msgstr "Vybrať manuálne"
+
+#. Type: select
 #. Description
 #. Type: string
 #. Description
-#: ../fp-compiler.templates.in:3001 ../fp-compiler.templates.in:4001
+#: ../fp-compiler.templates.in:3002 ../fp-compiler.templates.in:4001
 msgid "Default MS Windows .rc resource compiler:"
 msgstr "Predvolený kompilátor .rc resource MS Windows:"
 
@@ -80,7 +87,7 @@ msgstr "Predvolený kompilátor .rc resource MS Windows:"
 #. Description
 #. Type: string
 #. Description
-#: ../fp-compiler.templates.in:3001 ../fp-compiler.templates.in:4001
+#: ../fp-compiler.templates.in:3002 ../fp-compiler.templates.in:4001
 msgid ""
 "FPC supports compiling programs that embed resources as MS Windows .rc-"
 "format files on all platforms where the MinGW windres tool is available."
@@ -93,7 +100,7 @@ msgstr ""
 #. Description
 #. Type: string
 #. Description
-#: ../fp-compiler.templates.in:3001 ../fp-compiler.templates.in:4001
+#: ../fp-compiler.templates.in:3002 ../fp-compiler.templates.in:4001
 msgid ""
 "In order to be able to compile projects using .rc files, you need first to "
 "manually install the package mingw32-binutils. mingw32-binutils is suggested "
@@ -105,7 +112,9 @@ msgstr ""
 
 #. Type: select
 #. Description
-#: ../fp-compiler.templates.in:3001
+#. "Select manually" should be in sync with the text elsewhere in the
+#. translation
+#: ../fp-compiler.templates.in:3002
 msgid ""
 "If you want to enter a custom .rc file compiler that does not appear in this "
 "list or if you simply want to disable this feature, please select \"Select "

@@ -1,3 +1,4 @@
-/usr/lib/fpc/${VERSION}/units/${TARGET}/libc
-/usr/lib/fpc/${VERSION}/units/${TARGET}/unixutil
-#/usr/share/doc/fp-units-i386
+#! /usr/bin/dh-exec
+usr/lib/fpc/*/*/*/libc
+usr/lib/fpc/*/fpmkinst/*/libc.fpm
+usr/lib/fpc/*/*/*/unixutil*

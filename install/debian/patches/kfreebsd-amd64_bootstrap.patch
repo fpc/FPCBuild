@@ -9,9 +9,11 @@ Description: kfreebsd bootstrap necessities
  It still doesn't work though, as the symbols it links to are wrong.
 Author: Paul Gevers <elbrus@debian.org>
 
---- a/fpcsrc/compiler/systems/t_bsd.pas
-+++ b/fpcsrc/compiler/systems/t_bsd.pas
-@@ -187,13 +187,8 @@
+Index: fpc/fpcsrc/compiler/systems/t_bsd.pas
+===================================================================
+--- fpc.orig/fpcsrc/compiler/systems/t_bsd.pas
++++ fpc/fpcsrc/compiler/systems/t_bsd.pas
+@@ -187,15 +187,8 @@ begin
         DllCmd[2]:='strip --strip-unneeded $EXE'
       else
         DllCmd[2]:='strip -x $EXE';
@@ -20,6 +22,8 @@ Author: Paul Gevers <elbrus@debian.org>
 -      DynamicLinker:='/usr/libexec/ld.so'
 -     else if target_info.system in systems_netbsd then
 -      DynamicLinker:='/usr/libexec/ld.elf_so'
+-     else if target_info.system=system_x86_64_dragonfly then
+-      DynamicLinker:='/libexec/ld-elf.so.2'
 -     else
 -       DynamicLinker:='';
 +     { On Debian systems it seems we have to set the dynamicLinker }
@@ -27,23 +31,27 @@ Author: Paul Gevers <elbrus@debian.org>
     end;
  end;
  
---- a/fpcsrc/rtl/unix/initc.pp
-+++ b/fpcsrc/rtl/unix/initc.pp
-@@ -56,7 +56,7 @@
+Index: fpc/fpcsrc/rtl/unix/initc.pp
+===================================================================
+--- fpc.orig/fpcsrc/rtl/unix/initc.pp
++++ fpc/fpcsrc/rtl/unix/initc.pp
+@@ -60,7 +60,7 @@ function geterrnolocation: pcint; cdecl;
  {$endif}
  
- {$ifdef FreeBSD} // tested on x86
+ {$if defined(FreeBSD) or defined(DragonFly)} // tested on x86
 -function geterrnolocation: pcint; cdecl;external clib name '__error';
 +function geterrnolocation: pcint; cdecl;external clib name '__errno_location';
  {$endif}
  
  {$ifdef OpenBSD} // tested on x86
---- a/fpcsrc/rtl/bsd/sysos.inc
-+++ b/fpcsrc/rtl/bsd/sysos.inc
-@@ -23,7 +23,7 @@
+Index: fpc/fpcsrc/rtl/bsd/sysos.inc
+===================================================================
+--- fpc.orig/fpcsrc/rtl/bsd/sysos.inc
++++ fpc/fpcsrc/rtl/bsd/sysos.inc
+@@ -23,7 +23,7 @@ type libcint=longint;
       plibcint=^libcint;
  
- {$ifdef FreeBSD} // tested on x86
+ {$if defined(FreeBSD) or defined(DragonFly)} // tested on x86
 -function geterrnolocation: Plibcint; cdecl;external clib name '__error';
 +function geterrnolocation: Plibcint; cdecl;external clib name '__errno_location';
  {$else}

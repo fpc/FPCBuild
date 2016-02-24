@@ -9,7 +9,6 @@ CFG_PATH='/etc/fpc.cfg'
 PKG_CFG_PATH="/etc/fpc-${VERSION}.cfg"
 LIB_DIR="/usr/lib/fpc"
 MAN_DIR="/usr/share/man/man1"
-SHARE_DIR="/usr/share/fpcsrc"
 
 # Debhelper code
 #DEBHELPER#
@@ -26,7 +25,7 @@ then
 fi
 
 # Create new compiler configuration file
-fpcmkcfg-${VERSION} -0 -d "basepath=${LIB_DIR}/\$fpcversion" -d "sharepath=${SHARE_DIR}/\$fpcversion" -o "${CFG_FILE}"
+fpcmkcfg-${VERSION} -0 -d "basepath=${LIB_DIR}/\$fpcversion" -o "${PKG_CFG_PATH}"
 # Add multiarch path to /etc/fpc.cfg so executables linked against libc can be corectly linked
 echo '# multiarch library search path' >> ${PKG_CFG_PATH}
 echo '-Fl/usr/lib/$fpctarget-*' >> ${PKG_CFG_PATH}
