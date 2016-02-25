@@ -18,10 +18,10 @@ Index: fpc/fpcsrc/compiler/globals.pas
      function gettimestr:string;
      function filetimestring( t : longint) : string;
      function getrealtime : real;
-@@ -754,11 +755,28 @@ getdatestr
+@@ -754,11 +755,29 @@ getdatestr
     }
        var
--        st: TSystemTime;
+         st: TSystemTime;
 +        SourceDateEpoch: string;
        begin
 -        GetLocalTime(st);
