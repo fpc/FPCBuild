@@ -53,6 +53,7 @@ Source: bin\i386-win32\ppufiles.exe; DestDir: {app}\bin\i386-win32; Flags: ignor
 Source: bin\i386-win32\ppumove.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\fp32.ico; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\fpc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\instantfpc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\fpcmkcfg.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\fppkg.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\rmcvsdir.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
@@ -126,6 +127,7 @@ Source: bin\i386-win32\delp.exe; DestDir: {app}\bin\i386-win32; Flags: ignorever
 Source: bin\i386-win32\fpcmake.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\fpdoc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\fpmc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+
 ; makes no sense since we don't deliever the gtk dlls
 ; Source: bin\i386-win32\fpmcgtk.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
 Source: bin\i386-win32\fprcp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
