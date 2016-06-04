@@ -37,6 +37,7 @@ SOURCEOS=`fpc -iSO | head -n1`
 HOSTOS=`uname -s | tr "[:upper:]" "[:lower:]"`
 
 MAKE=make
+TAR=tar
 
 case "$HOSTOS" in
  *freebsd*) MAKE=gmake
@@ -45,6 +46,13 @@ case "$HOSTOS" in
  *netbsd*) MAKE=gmake
 	EXTRAOPT="-Fl/usr/pkg/lib"
   ;;
+
+ *sunos*) MAKE=gmake
+     # Use GNU tar if present
+     if [ "`which gtar`" != "" ]; then
+       TAR=`which gtar`
+     fi
+ ;;
  *openbsd*) MAKE=gmake
 	EXTRAOPT="-Fl/usr/local/lib"
   ;;
@@ -158,7 +166,7 @@ BINFILES=
 for p in $BINPACKAGES; do
   BINFILES="$BINFILES ${CROSSPREFIX}$p*.$FULLSOURCE.tar.gz"
 done
-tar cf $BINARYTAR $BINFILES
+${TAR} cf $BINARYTAR $BINFILES
 if [ $? != 0 ]; then
   echo "Failed to create $BINARYTAR"
   exit 1
@@ -181,7 +189,7 @@ TARNAME=${DIRNAME}.tar
 echo "Creating $TARNAME"
 mkdir $DIRNAME
 mv $RELFILES $DIRNAME
-tar cf $TARNAME $DIRNAME
+${TAR} cf $TARNAME $DIRNAME
 if [ $? != 0 ]; then
   echo "Failed to create $TARNAME"
   exit 1
