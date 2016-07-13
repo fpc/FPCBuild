@@ -1,16 +1,16 @@
 
                             Free Pascal Compiler
 
-                                Version 3.0.0
+                                Version 3.0.2
 
 ******************************************************************************
-                              What's New in 3.0.0
+                              What's New in 3.0.2
 ******************************************************************************
 
-Free Pascal 3.0.0 is a new major release providing support for new
+Free Pascal 3.0.2 is a new major release providing support for new
 architectures and targets and also many new features and compatibility fixes.
 
-Please also see http://wiki.freepascal.org/User_Changes_3.0.0 for a list
+Please also see http://wiki.freepascal.org/User_Changes_3.0.2 for a list
 of changes that may affect the behaviour of previously working code, and
 how to cope with these changes.
 
