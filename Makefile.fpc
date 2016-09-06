@@ -46,6 +46,9 @@ ifndef DIST_DESTDIR
 export DIST_DESTDIR:=$(BASEDIR)
 endif
 
+# This list should be the same as in fpcsrc/Makefile.fpc and in fpcsrc/ide/Makefile.fpc
+GDBMI_DEFAULT_OS_LIST=aix darwin freebsd haiku linux netbsd openbsd solaris win32 win64
+
 
 [rules]
 #####################################################################
@@ -416,12 +419,31 @@ ifndef BUILDDIR
 BUILDDIR=$(BASEDIR)/build
 endif
 
+# Use of GDBMI for text mode IDE, starting with version 3.1.1
+ifeq ($(findstring 3.0.,$(FPC_VERSION)),)
+ifndef NOGDB
+#  Determine if we should use GDBMI for Text Mode IDE compilation
+ifndef NOGDBMI
+ifneq ($(findstring $(OS_TARGET),$(GDBMI_DEFAULT_OS_LIST)),)
+export GDBMI=1
+endif
+endif #NOGDB
+endif #Not 3.0.X version
+
+ifdef GDBMI
+ifeq ($(GDBMI),0)
+LOOKFORLIBGDBDIR=1
+else
+LOOKFORLIBGDBDIR=0
+endif
+else
+LOOKFORLIBGDBDIR=1
+endif
+
 #
 # Automatic detection if libgdb.a is present (logic copied from ide/Makefile.fpc)
 #
-
-ifndef NOGDB
-
+ifeq ($(LOOKFORLIBGDBDIR),1)
 # Try to find GDB library
 # Look for a valid LIBGDBDIR environment variable
 ifdef LIBGDBDIR
@@ -456,6 +478,7 @@ ifeq ($(LIBGDBFILE),)
 $(error No libgdb.a found, supply NOGDB=1 to disable debugger support)
 endif
 endif
+endif  #ifeq ($(LOOKFORLIBGDBDIR),1)
 endif  #NOGDB
 
 
