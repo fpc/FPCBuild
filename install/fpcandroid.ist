@@ -109,6 +109,11 @@ begin
       Result:=dir + sr.Name + '\prebuilt\windows\bin';
       if FileExists(Result + '\' + UtilPrefix + '-as.exe') then
         exit;
+      if IsWin64 then begin
+        Result:=dir + sr.Name + '\prebuilt\windows-x86_64\bin';
+        if FileExists(Result + '\' + UtilPrefix + '-as.exe') then
+          exit;
+      end;
     end;
     res:=FindNext(sr);
   end;
