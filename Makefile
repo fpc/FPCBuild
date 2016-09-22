@@ -2742,10 +2742,21 @@ override NDK:=$(subst $(PATHSEP),/,$(NDK))
 ifeq ($(wildcard $(NDK)),)
   $(error NDK path does not exist: $(NDK))
 endif
-gettoolchain=$(dir $(firstword $(foreach d, $(wildcard $(NDK)/toolchains/$(1)-*.*), $(wildcard $(d)/prebuilt/windows/bin/$(2)-as$(SRCEXEEXT)))))
+NDKARCH:=windows
+gettoolchain=$(dir $(firstword $(foreach d, $(wildcard $(NDK)/toolchains/$(1)-*.*), $(wildcard $(d)/prebuilt/$(NDKARCH)/bin/$(2)-as$(SRCEXEEXT)))))
 ANDROID_ARM_BINUTILS:=$(call gettoolchain,arm-linux-androideabi,arm-linux-androideabi)
 ifeq ($(ANDROID_ARM_BINUTILS),)
-  $(error Unable to find binutils for arm-android)
+  WINARCH:=$(PROCESSOR_ARCHITEW6432)
+  ifeq ($(WINARCH),)
+    WINARCH:=$(PROCESSOR_ARCHITECTURE)
+  endif
+  ifeq ($(WINARCH),AMD64)
+    NDKARCH:=windows-x86_64
+    ANDROID_ARM_BINUTILS:=$(call gettoolchain,arm-linux-androideabi,arm-linux-androideabi)
+  endif
+  ifeq ($(ANDROID_ARM_BINUTILS),)
+    $(error Unable to find binutils for arm-android)
+  endif
 endif
 ANDROID_X86_BINUTILS:=$(call gettoolchain,x86,i686-linux-android)
 ifeq ($(ANDROID_X86_BINUTILS),)
@@ -2860,7 +2871,10 @@ innomsdosbuild: innocheck
 	fpcsubst -i install/fpcmsdos.ist -o $(INNODIR)/fpcmsdos.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcmsdos.iss
 	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
-innoandroidbuild: build_android_arm build_android_i386 build_android_mipsel
+innoandroidbuild:
+	$(MAKE) build_android_arm OS_TARGET=android CPU_TARGET=arm
+	$(MAKE) build_android_i386 OS_TARGET=android CPU_TARGET=i386
+	$(MAKE) build_android_mipsel OS_TARGET=android CPU_TARGET=mipsel
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
 	$(MKDIR) $(INNODIR)
