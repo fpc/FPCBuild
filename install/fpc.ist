@@ -269,3 +269,124 @@ FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default conf
 FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for the Free Pascal IDE"; Parameters: "-2 -d ""basepath={app}"" -d ""sharepath={app}"" -o ""{app}\bin\i386-Win32\fp.ini"""; Tasks: createidecfg
 FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file the Free Pascal Packager (fppkg)"; Parameters: "-3 -p -o ""{localappdata}\FreePascal\fppkg\fppkg.cfg"""; Tasks: createfppkgcfg
 FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default compiler configuration file for Free Pascal Packager (fppkg)"; Parameters: "-4 -p -d ""GlobalPrefix={app}"" -o ""{localappdata}\FreePascal\fppkg\config\default"""; Tasks: createfppkgcfg
+
+[Code]
+
+const
+  regUninstall = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\FreePascal_is1';
+
+var
+  OldInstDir: string;
+
+function RegReadString(RootKey: Integer; const SubKeyName, ValueName, DefValue: String): String;
+begin
+  if not RegQueryStringValue(RootKey, SubKeyName, ValueName, Result) then
+    Result:=DefValue;
+end;
+
+procedure CleanupPath(const Dir: string);
+var
+  p, s, path, newpath, oldpath, regpath: string;
+  i, regroot: integer;
+begin
+  if Dir = '' then
+    exit;
+  if IsHKLMWriteable then begin
+    regroot:=HKEY_LOCAL_MACHINE;
+    regpath:='SYSTEM\CurrentControlSet\Control\Session Manager\Environment';
+  end
+  else begin
+    regroot:=HKEY_CURRENT_USER;
+    regpath:='Environment';
+  end;
+
+  path:=RegReadString(regroot, regpath, 'PATH', '')
+  if path = '' then
+    exit;
+
+  newpath:='';
+  oldpath:=path;
+  p:=AddBackslash(Dir) + 'bin\i386-win32';
+  while path <> '' do begin
+    i:=Pos(';', path);
+    if i = 0 then
+      i:=Length(path) + 1;
+    s:=Copy(path, 1, i - 1);
+    Delete(path, 1, i);
+    if CompareText(RemoveBackslash(s), p) <> 0 then begin
+      if newpath <> '' then
+        newpath:=newpath + ';';
+      newpath:=newpath + s;
+    end;
+  end;
+
+  if newpath <> oldpath then
+    RegWriteStringValue(regroot, regpath, 'PATH', newpath);
+end;
+
+function InitializeSetup(): Boolean;
+var
+  UninstallApp, OldName, CurName, CurVer, s: string;
+  i: integer;
+begin
+  Result:=False;
+  CurVer:='%FPCVERSION%';
+  CurName:='Free Pascal ' + CurVer;
+  OldName:=RegReadString(HKEY_LOCAL_MACHINE, regUninstall, 'DisplayName', '');
+  OldInstDir:=RegReadString(HKEY_LOCAL_MACHINE, regUninstall, 'InstallLocation', '');
+  UninstallApp:=RemoveQuotes(RegReadString(HKEY_LOCAL_MACHINE, regUninstall, 'UninstallString', ''));
+  if (OldInstDir <> '') and (OldName <> CurName) and FileExists(UninstallApp) then begin
+    i:=MsgBox('Other version of Free Pascal is already installed on this computer:'#13#10#13#10+
+              OldName + ' (' + RemoveBackslash(OldInstDir) + ')'#13#10#13#10+
+              'Uninstall the existing version of Free Pascal?',
+              mbConfirmation, MB_YESNOCANCEL or MB_DEFBUTTON2);
+
+    case i of
+      IDCANCEL:
+        // Cancel installation
+        exit;
+
+      IDYES:
+        begin
+          // Uninstall existing version
+          i:=0;
+          s:='';
+          if not Exec(UninstallApp, '/SILENT', OldInstDir, SW_SHOW, ewWaitUntilTerminated, i) then
+            s:='Unable to execute the uninstaller.'#13#10 + SysErrorMessage(i)
+          else
+            if i <> 0 then
+              s:=Format('The uninstaller returned an error code: %d', [i]);
+
+          if s <> '' then begin
+            i:=MsgBox(s + #13#10#13#10'Continue installation?', mbError, MB_YESNO);
+            if i <> IDYES then
+              exit;
+          end;
+
+          // Remove path of the uninstalled FPC from the PATH environment variable
+          CleanupPath(OldInstDir);
+          OldInstDir:='';
+        end;
+    end;
+  end;
+
+  Result:=True;
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if CurStep = ssInstall then begin
+    // Remove existing FPC path from the PATH environment variable
+    CleanupPath(OldInstDir);
+    CleanupPath(ExpandConstant('{app}'));
+  end;
+end;
+
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+begin
+  if CurUninstallStep = usUninstall then begin
+    // Remove FPC path from the PATH environment variable
+    OldInstDir:=RegReadString(HKEY_LOCAL_MACHINE, regUninstall, 'InstallLocation', '');
+    CleanupPath(OldInstDir);
+  end;
+end;
