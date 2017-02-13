@@ -6,7 +6,7 @@ rem in February 2017 for 3.0.2 test
 rem Variables used below, this should be the only part
 rem that needs to be updated on a future release
 
-set BATCH_RELEASE_VERSION=3.0.2
+set BATCH_RELEASE_VERSION=3.1.1
 set BATCH_OS_TARGET=go32v2
 set NAT_OS_TARGET=win32
 rem To avoid problems, it seems better to keep thios directory
