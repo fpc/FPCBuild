@@ -1,19 +1,20 @@
 @echo off
 
-rem Batch to generate Dos 2.4.2 zips
+rem Batch to generate Dos 3.0.2 zips
 rem Used on a Windows XP SP3
-rem in october 2010 for 2.4.2rc1 test
+rem in February 2017 for 3.0.2 test
 rem Variables used below, this should be the only part
 rem that needs to be updated on a future release
 
-set BATCH_RELEASE_VERSION=2.4.2
+set BATCH_RELEASE_VERSION=3.0.2
 set BATCH_OS_TARGET=go32v2
+set NAT_OS_TARGET=win32
 rem To avoid problems, it seems better to keep thios directory
 rem name within the 8.3 constraints
 set BATCH_FPCBUILD_DRIVE=e:
-set BATCH_FPCBUILD_DIR=%BATCH_FPCBUILD_DRIVE%\pas\fpcbuild.242
+set BATCH_FPCBUILD_DIR=%BATCH_FPCBUILD_DRIVE%\pas\fpcbuild-%BATCH_RELEASE_VERSION%
 rem Same with forward slashes
-set GNU_FPCBUILD_DIR=%BATCH_FPCBUILD_DRIVE%/pas/fpcbuild.242
+set GNU_FPCBUILD_DIR=%BATCH_FPCBUILD_DRIVE%/pas/fpcbuild-%BATCH_RELEASE_VERSION%
 set GO32ZIPDIR=go32v2-zips
 
 rem To avoid upx compression
@@ -56,20 +57,24 @@ make demozip OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LIMIT83fs%
 if errorlevel 1 goto got_make_error
 make docsrc OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LIMIT83fs%
 if errorlevel 1 goto got_make_error
-make go32v2zip OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LIMIT83fs%
+make go32v2zip OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LIMIT83fs% BUILDFULLNATIVE=1
 if errorlevel 1 goto got_make_error
-make utilities OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LIMIT83fs%
+make utilities OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LIMIT83fs% BUILDFULLNATIVE=1
 if errorlevel 1 goto got_make_error
+
 :stageide
-make -C fpcsrc/rtl all OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LIMIT83fs%
-if errorlevel 1 goto got_make_error
-make -C fpcsrc/packages all OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LIMIT83fs%
-if errorlevel 1 goto got_make_error
-make -C fpcsrc ide_zipinstall OS_TARGET=%BATCH_OS_TARGET% OPT=-Fl%USEDGDBDIR% LIMIT83fs=%LIMIT83fs%
+rem make -C fpcsrc/rtl all OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LIMIT83fs% BUILDFULLNATIVE=1
+rem if errorlevel 1 goto got_make_error
+rem make -C fpcsrc/packages all OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LIMIT83fs% BUILDFULLNATIVE=1
+rem if errorlevel 1 goto got_make_error
+set FPC=%GNU_FPCBUILD_DIR%/fpcsrc/compiler/ppc.exe
+echo Using new compiler %FPC%
+rem This still fails unless you set FPCDIR explicitly...
+make -C fpcsrc ide_zipinstall OS_TARGET=%BATCH_OS_TARGET% OPT=-Fl%USEDGDBDIR% LIMIT83fs=%LIMIT83fs% BUILDFULLNATIVE=1 FPCDIR=%GNU_FPCBUILD_DIR%/fpcsrc
 if errorlevel 1 goto got_make_error
 
 :stageinst
-make -C fpcsrc installer_all OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LIMIT83fs%
+make -C fpcsrc installer_all OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LIMIT83fs% BUILDFULLNATIVE=1
 if errorlevel 1 goto got_make_error
 mkdir %GO32ZIPDIR%
 cp fpcsrc/installer/install.exe %GO32ZIPDIR%
