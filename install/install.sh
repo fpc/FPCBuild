@@ -122,6 +122,10 @@ installbinary ()
       PPCSUFFIX=ia64;;
     alpha*)
       PPCSUFFIX=axp;;
+    aarch64*)
+      PPCSUFFIX=a64;;
+    i8086*)
+      PPCSUFFIX=8086;;
   esac
 
   # Install compiler/RTL. Mandatory.
@@ -245,6 +249,20 @@ case "$OSNAME" in
        TAR="$CMDTAR --no-same-owner"
      fi
      echo "Using TAR binary=$CMDTAR"
+  ;;
+  aix)
+     # Use GNU tar if present
+     if [ "`which gtar`" != "" ]; then
+       CMDTAR=`which gtar`
+       TAR="$CMDTAR --no-same-owner"
+     fi
+     echo "Using TAR binary=$CMDTAR"
+     # Install in /usr/local or /usr ?
+     if checkpath /usr/local/bin; then
+         PREFIX=/usr/local
+     else
+         PREFIX=/usr
+     fi
   ;;
   *)
      # Install in /usr/local or /usr ?
