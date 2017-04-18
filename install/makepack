@@ -10,11 +10,6 @@ set -e
 # if it is not equal to yes, the documentation is assumed present in a file doc-pdf.tar.gz
 MAKEDOCS=no
 
-# Set this to "no" if you want don't want to check for libgdb.a
-if [ "$CHECKLIBGDB" = "" ]; then
-  CHECKLIBGDB=yes
-fi
-
 # avoid abort of script if FPCDIR isn't set
 FPCDIR=dummy
 unset FPCDIR
@@ -25,6 +20,8 @@ unset FPCDIR
 # Retrieve version from fpcsrc/Makefile.fpc
 FULLVERSION=`grep '^version *=' fpcsrc/Makefile.fpc | sed 's+[^=]*= *\(.*\)+\1+'`
 VERSION=`grep '^version *=' fpcsrc/Makefile.fpc | sed 's+[^=]*= *\([0-9\.]*\).*+\1+'`
+
+
 
 # Retrieve current system info by calling FPC. We need
 # to use the | head -n1 to fix a bug in fpc 1.9.4 and earlier
@@ -70,6 +67,36 @@ else
   TARGETOS=$SOURCEOS
 fi
 
+# Set this to "no" if you want don't want to check for libgdb.a
+# Retrieve GDBMI_DEFAULT_OS_LIST from Makefile.fpc
+GDBMI_DEFAULT_OS_LIST=`grep '^GDBMI_DEFAULT_OS_LIST *=' Makefile.fpc | sed 's+[^=]*= *\(.*\)+\1+'`
+
+# Use of GDBMI for text mode IDE, starting with version 3.1.1
+if  [ "X${VERSION%3.0.}" != "X${VERSION}" ] ; then
+  if  [ "X${NOGDB}" == "X" ] ; then
+#  Determine if we should use GDBMI for Text Mode IDE compilation
+    if [ "X${NOGDBMI}" == "X" ]; then
+      if [ "X$,${GDBMI_DEFAULT_OS_LIST$%{TARGETOS}}" != "X${GDBMI_DEFAULT_LIST}" ] ; then
+        export GDBMI=1
+      fi
+    fi
+  fi #NOGDB
+fi #Not 3.0.X version
+
+if [ "X${GDBMI}" != "X" ] ; then
+if [ "X${GDBMI}" == "X0" ] ; then
+if [ "$CHECKLIBGDB" = "" ]; then
+  CHECKLIBGDB=yes
+fi
+else
+CHECKLIBGDB=no
+fi
+else
+if [ "$CHECKLIBGDB" = "" ]; then
+  CHECKLIBGDB=yes
+fi
+fi
+
 FULLTARGET=$TARGETCPU-$TARGETOS
 FULLSOURCE=$SOURCECPU-$SOURCEOS
 
@@ -101,7 +128,9 @@ if [ "$CROSS" = "" ]; then
       exit 1
     fi
   else
-    export NOGDB=1
+    if [ "X${GDBMI}" == "X" ]; then
+      export NOGDB=1
+    fi
   fi
 fi
 
