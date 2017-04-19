@@ -2505,10 +2505,14 @@ ifeq ($(GDBMI),0)
 LOOKFORLIBGDBDIR=1
 else
 LOOKFORLIBGDBDIR=0
-endif
+endif #GDBMI=0
 else
+ifndef NOGDB
 LOOKFORLIBGDBDIR=1
-endif
+else
+LOOKFORLIBGDBDIR=0
+endif #NOGDB
+endif #GDBMI
 ifeq ($(LOOKFORLIBGDBDIR),1)
 ifdef LIBGDBDIR
 override LIBGDBFILE:=$(firstword $(wildcard $(addsuffix /libgdb.a,$(LIBGDBDIR))))
