@@ -439,10 +439,14 @@ ifeq ($(GDBMI),0)
 LOOKFORLIBGDBDIR=1
 else
 LOOKFORLIBGDBDIR=0
-endif
+endif #GDBMI=0
 else
+ifndef NOGDB
 LOOKFORLIBGDBDIR=1
-endif
+else
+LOOKFORLIBGDBDIR=0
+endif #NOGDB
+endif #GDBMI
 
 #
 # Automatic detection if libgdb.a is present (logic copied from ide/Makefile.fpc)
