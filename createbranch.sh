@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Default read-only HTTP URL used for externals
-SVNHTTPURL=http://svn.freepascal.org/svn
+SVNHTTPURL=https://svn.freepascal.org/svn
 
 if [ $# -lt 1 ]; then
   echo "Usage: $0 <branch/tag name>"
