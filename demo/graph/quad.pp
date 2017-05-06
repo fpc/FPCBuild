@@ -106,7 +106,7 @@ Procedure fatal(fcall:String);
 Begin
   textmode(CO80);
   clrscr;
-  Writeln('A fatal error has occured');
+  Writeln('A fatal error has occurred');
   Writeln('Error: ',fcall);
   Writeln;
   Write('Hit enter to halt program--');
