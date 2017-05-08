@@ -45,6 +45,10 @@ case "$HOSTOS" in
   ;;
 
  *sunos*) MAKE=gmake
+     # Use system linker if on solaris machine
+     if [ "$SOURCEOS" == "solaris" ]; then
+       EXTRAOPT="-Xn"
+     fi
      # Use GNU tar if present
      if [ "`which gtar`" != "" ]; then
        TAR=`which gtar`
