@@ -38,9 +38,9 @@ $SVN copy $SVNURL/fpcbuild/$OLDSVNTAG $SVNURL/fpcbuild/$NEWSVNTAG -m "$COMMITMSG
 
 # Generate svn:externals property
 cat << EXTERNALEOF > external.lst
-fpcsrc $SVNHTTPURL/fpc/$NEWSVNTAG
-fpcdocs $SVNHTTPURL/fpcdocs/trunk
-logs $SVNHTTPURL/logs
+../../../fpc/$NEWSVNTAG fpcsrc
+../../../fpcdocs/trunk fpcdocs
+../../../logs logs
 EXTERNALEOF
 echo
 echo "External list:"
