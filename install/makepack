@@ -187,10 +187,21 @@ fi
 DIRNAME=${CROSSPREFIX}fpc-$FULLVERSION.$FULLSOURCE
 TARNAME=${DIRNAME}.tar
 echo "Creating $TARNAME"
+# Erase directory if it exists
+if [ -d $DIRNAME ] ; then
+  rm -Rf $DIRNAME
+fi
+# Erase tar file if it already exists
+if [ -f $TARNAME ] ; then
+  rm -f $TARNAME
+fi
+
 mkdir $DIRNAME
 mv $RELFILES $DIRNAME
 ${TAR} cf $TARNAME $DIRNAME
 if [ $? != 0 ]; then
   echo "Failed to create $TARNAME"
   exit 1
+else
+  echo "Successfully created `pwd`/$TARNAME"
 fi

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Default read-only HTTP URL used for externals
-SVNHTTPURL=http://svn.freepascal.org/svn
+SVNHTTPURL=https://svn.freepascal.org/svn
 
 if [ $# -lt 1 ]; then
   echo "Usage: $0 <branch/tag name>"
@@ -38,9 +38,9 @@ $SVN copy $SVNURL/fpcbuild/$OLDSVNTAG $SVNURL/fpcbuild/$NEWSVNTAG -m "$COMMITMSG
 
 # Generate svn:externals property
 cat << EXTERNALEOF > external.lst
-fpcsrc $SVNHTTPURL/fpc/$NEWSVNTAG
-fpcdocs $SVNHTTPURL/fpcdocs/trunk
-logs $SVNHTTPURL/logs
+../../../fpc/$NEWSVNTAG fpcsrc
+../../../fpcdocs/trunk fpcdocs
+../../../logs logs
 EXTERNALEOF
 echo
 echo "External list:"

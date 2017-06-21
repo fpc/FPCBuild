@@ -161,6 +161,10 @@ endif
 # readme, whatsnew, licenses and additional docs, they must be always included
         $(MKDIR) $(INSTALL_DOCDIR)
         -$(COPY) $(addprefix $(CVSINSTALL)/doc/,*.txt copying* license* faq.*) $(INSTALL_DOCDIR)
+# but don't include readme-jvm.txt for lfn challenged targets (gives problems unzipping)
+ifneq ($(findstring $(OS_TARGET),$(LIMIT83fs)),)
+	$(DEL) $(INSTALL_DOCDIR)/readme-jvm.txt
+endif
 ifndef SNAPSHOT
 ifndef CROSSINSTALL
 # bingo32 (cwsdpmi,wmemu387.dxe)
