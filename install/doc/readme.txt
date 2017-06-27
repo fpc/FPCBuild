@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 3.0.0
+                               Version 3.0.4
 
 ****************************************************************************
 * Introduction
@@ -16,7 +16,7 @@ also partial support for the Macintosh pascal dialect.
 
 News and changes related to this release are described in whatsnew.txt.
 
-Free Pascal 3.0.0 is currently available for the following platforms:
+Free Pascal 3.0.4 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-powerpc
@@ -133,7 +133,7 @@ Mac OS X:
 * Quick start - Win32
 ****************************************************************************
 
-Download the distribution package (fpc-3.0.0.i386-win32.exe) and run it
+Download the distribution package (fpc-3.0.4.i386-win32.exe) and run it
 - it is a self-extracting installer, so just follow the instructions
 to install it. The installer should set the PATH environment variable as
 appropriate.
@@ -196,7 +196,7 @@ and type
 * Quick start - Linux/FreeBSD
 ****************************************************************************
 
-Download fpc-3.0.0.<cpu>-<os>.tar and untar into a temporary directory.
+Download fpc-3.0.4.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
