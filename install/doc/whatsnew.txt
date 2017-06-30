@@ -18,6 +18,7 @@
  Packages:
    * fcl-pdf updates
    * fcl-passrc updates.
+   * fix traceback on ELF based systems
 
  See http://bugs.freepascal.org/changelog_page.php for the list of reported
  bugs which have been fixed in this release.
