@@ -18,6 +18,6 @@ fpc-intel-macosx/usr/local - placeholder directory for compiler files
 After fixing version numbers and updating the required files, then placing the Documentation
 and compiler files into the right directory, use:
 
-"packagestool -x fpc-intel-macosx/fpc-intel-macosx.pkgproj"
+"packagesbuild -v fpc-intel-macosx/fpc-intel-macosx.pkgproj"
 
-to build the installer .pkg file.
+to build the installer .pkg file. This command is part of the aforementioned Packages tool.
