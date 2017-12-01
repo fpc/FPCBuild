@@ -28,9 +28,14 @@ INTERFACE
 {$ifdef Unix}
   {$define MouseAPI}
 {$endif}
-{$ifdef mswindows}
+{$ifdef Win16}
   {$define MouseAPI}
-  {$define UseGraphics} {Mandatory}
+{$endif}
+{$ifdef mswindows}
+  {$ifndef Win16}
+    {$define MouseAPI}
+    {$define UseGraphics} {Mandatory}
+  {$endif}
 {$endif}
 {$IFDEF Ver70}
   {$define MouseAPI}
@@ -46,7 +51,9 @@ INTERFACE
 {$endif}
 {$ifdef UseGraphics}
  {$ifdef mswindows}
+  {$ifndef Win16}
    {$define Win32Graph}
+  {$endif}
  {$endif}
 {$endif}
 
