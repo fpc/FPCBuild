@@ -58,30 +58,30 @@ GDBMI_DEFAULT_OS_LIST=aix darwin freebsd haiku linux netbsd openbsd solaris win3
 .PHONY: help checkfpcdir
 
 help:
-        @$(ECHO)
-        @$(ECHO) Targets
-        @$(ECHO)    all         Alias for build
-        @$(ECHO)    build       Build a new compiler and all packages
-        @$(ECHO)    install     Install newly build files
-        @$(ECHO)    zipinstall  Create zip/tar of installed files
-        @$(ECHO)    singlezipinstall  Alias for zipinstall
-        @$(ECHO)
-        @$(ECHO) Distribution Targets:
-        @$(ECHO)    rpm         Build linux .rpm packages
-        @$(ECHO)    deb         Build linux .deb packages
-        @$(ECHO)    inno        "Build Windows (Innosetup) based installer"
-        @$(ECHO)    innox64     "Build Win32-Win64 cross compiler installer"
-        @$(ECHO)    innoce      "Build Win32-Wince cross compiler installer"
-        @$(ECHO)    innomsdos   "Build Win32-MsDos cross compiler installer"
-        @$(ECHO)    innoandroid "Build Win32-Android cross compiler installer"
-        @$(ECHO)    tar         Build .tar installer
-        @$(ECHO)
-        @$(ECHO) FV based installer Targets:
-        @$(ECHO)    go32v2zip   Build .zip files for go32v2
-        @$(ECHO)    os2zip      Build .zip files for OS/2
-        @$(ECHO)    sourcezip   Build .zip files for the sources
-        @$(ECHO)
-        @exit
+	@$(ECHO)
+	@$(ECHO) Targets
+	@$(ECHO)    all         Alias for build
+	@$(ECHO)    build       Build a new compiler and all packages
+	@$(ECHO)    install     Install newly build files
+	@$(ECHO)    zipinstall  Create zip/tar of installed files
+	@$(ECHO)    singlezipinstall  Alias for zipinstall
+	@$(ECHO)
+	@$(ECHO) Distribution Targets:
+	@$(ECHO)    rpm         Build linux .rpm packages
+	@$(ECHO)    deb         Build linux .deb packages
+	@$(ECHO)    inno        "Build Windows (Innosetup) based installer"
+	@$(ECHO)    innox64     "Build Win32-Win64 cross compiler installer"
+	@$(ECHO)    innoce      "Build Win32-Wince cross compiler installer"
+	@$(ECHO)    innomsdos   "Build Win32-MsDos cross compiler installer"
+	@$(ECHO)    innoandroid "Build Win32-Android cross compiler installer"
+	@$(ECHO)    tar         Build .tar installer
+	@$(ECHO)
+	@$(ECHO) FV based installer Targets:
+	@$(ECHO)    go32v2zip   Build .zip files for go32v2
+	@$(ECHO)    os2zip      Build .zip files for OS/2
+	@$(ECHO)    sourcezip   Build .zip files for the sources
+	@$(ECHO)
+	@exit
 
 
 ##########################################################################
@@ -106,64 +106,64 @@ all: build
 
 build: $(BUILDSTAMP)
 $(BUILDSTAMP):
-        $(MAKE) -C fpcsrc build
+	$(MAKE) -C fpcsrc build
 
 buildx64: fpcsrc/build-stamp.x86_64-win64
 
 fpcsrc/build-stamp.x86_64-win64:
-        $(MAKE) -C fpcsrc build OS_TARGET=win64 CPU_TARGET=x86_64
+	$(MAKE) -C fpcsrc build OS_TARGET=win64 CPU_TARGET=x86_64
 
 buildce: fpcsrc/build-stamp.arm-wince
 
 fpcsrc/build-stamp.arm-wince:
-        $(MAKE) -C fpcsrc build OS_TARGET=wince CPU_TARGET=arm
+	$(MAKE) -C fpcsrc build OS_TARGET=wince CPU_TARGET=arm
 		
 buildjvm: fpcsrc/build-stamp.jvm-java fpcsrc/build-stamp.jvm-android
 
 fpcsrc/build-stamp.jvm-java:
 # currently, jvm supports only build base, so we have to use make all here		
-        $(MAKE) -C fpcsrc all OS_TARGET=java CPU_TARGET=jvm
+	$(MAKE) -C fpcsrc all OS_TARGET=java CPU_TARGET=jvm
 		
 fpcsrc/build-stamp.jvm-android:
 # currently, jvm supports only build base, so we have to use make all here		
-        $(MAKE) -C fpcsrc all OS_TARGET=android CPU_TARGET=jvm
+	$(MAKE) -C fpcsrc all OS_TARGET=android CPU_TARGET=jvm
 
 build_android_arm: fpcsrc/build-stamp.arm-android
 
 fpcsrc/build-stamp.arm-android:
-        $(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=arm CROSSBINDIR=$(ANDROID_ARM_BINUTILS) BINUTILSPREFIX=arm-linux-androideabi- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-arm/usr/lib"
+	$(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=arm CROSSBINDIR=$(ANDROID_ARM_BINUTILS) BINUTILSPREFIX=arm-linux-androideabi- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-arm/usr/lib"
 
 build_android_i386: fpcsrc/build-stamp.i386-android
 
 fpcsrc/build-stamp.i386-android:
-        $(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=i386 CROSSBINDIR=$(ANDROID_X86_BINUTILS) BINUTILSPREFIX=i686-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-x86/usr/lib"
+	$(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=i386 CROSSBINDIR=$(ANDROID_X86_BINUTILS) BINUTILSPREFIX=i686-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-x86/usr/lib"
 
 build_android_mipsel: fpcsrc/build-stamp.mipsel-android
 
 fpcsrc/build-stamp.mipsel-android:
-        $(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=mipsel CROSSBINDIR=$(ANDROID_MIPS_BINUTILS) BINUTILSPREFIX=mipsel-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-mips/usr/lib"
+	$(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=mipsel CROSSBINDIR=$(ANDROID_MIPS_BINUTILS) BINUTILSPREFIX=mipsel-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-mips/usr/lib"
 
 clean: $(addsuffix _distclean,$(TARGET_DIRS))
-        -rm -f fpcsrc/build-stamp.*
+	-rm -f fpcsrc/build-stamp.*
 
 distclean: clean
 
 installbase:
 # create dirs
-        $(MKDIR) $(INSTALL_BASEDIR)
-        $(MKDIR) $(INSTALL_BINDIR)
+	$(MKDIR) $(INSTALL_BASEDIR)
+	$(MKDIR) $(INSTALL_BINDIR)
 ifeq ($(OS_TARGET),wince)
-        $(COPY) $(addprefix $(CVSINSTALL)/crossbinwce/, *.exe) $(INSTALL_BINDIR)
+	$(COPY) $(addprefix $(CVSINSTALL)/crossbinwce/, *.exe) $(INSTALL_BINDIR)
 endif
 ifeq ($(OS_TARGET),win64)
-        $(COPY) $(addprefix $(CVSINSTALL)/crossbinw64/, *.exe) $(INSTALL_BINDIR)
+	$(COPY) $(addprefix $(CVSINSTALL)/crossbinw64/, *.exe) $(INSTALL_BINDIR)
 endif
 ifeq ($(OS_TARGET),msdos)
-        $(COPY) $(addprefix $(CVSINSTALL)/crossbinmsdos/, *.exe) $(INSTALL_BINDIR)
+	$(COPY) $(addprefix $(CVSINSTALL)/crossbinmsdos/, *.exe) $(INSTALL_BINDIR)
 endif
 # readme, whatsnew, licenses and additional docs, they must be always included
-        $(MKDIR) $(INSTALL_DOCDIR)
-        -$(COPY) $(addprefix $(CVSINSTALL)/doc/,*.txt copying* license* faq.*) $(INSTALL_DOCDIR)
+	$(MKDIR) $(INSTALL_DOCDIR)
+	-$(COPY) $(addprefix $(CVSINSTALL)/doc/,*.txt copying* license* faq.*) $(INSTALL_DOCDIR)
 # but don't include readme-jvm.txt for lfn challenged targets (gives problems unzipping)
 ifneq ($(findstring $(OS_TARGET),$(LIMIT83fs)),)
 	$(DEL) $(INSTALL_DOCDIR)/readme-jvm.txt
@@ -172,59 +172,59 @@ ifndef SNAPSHOT
 ifndef CROSSINSTALL
 # bingo32 (cwsdpmi,wmemu387.dxe)
 ifeq ($(OS_TARGET),go32v2)
-        $(COPY) $(CVSINSTALL)/bingo32/*.dxe $(INSTALL_BINDIR)
-        $(COPY) $(CVSINSTALL)/bingo32/*.exe $(INSTALL_BINDIR)
+	$(COPY) $(CVSINSTALL)/bingo32/*.dxe $(INSTALL_BINDIR)
+	$(COPY) $(CVSINSTALL)/bingo32/*.exe $(INSTALL_BINDIR)
 endif
 # binw32 (*.dll,*.exe,*.ico)
 ifneq ($(patsubst %/,%,$(subst \,/,$(dir $(CPPROG)))),$(patsubst %/,%,$(subst \,/,$(INSTALL_BINDIR))))
 ifeq ($(OS_TARGET),win32)
-        $(COPY) $(addprefix $(CVSINSTALL)/binw32/,*.ico *.exe *.dll *.h *.manifest) $(INSTALL_BINDIR)
+	$(COPY) $(addprefix $(CVSINSTALL)/binw32/,*.ico *.exe *.dll *.h *.manifest) $(INSTALL_BINDIR)
 endif
 # binw64 (some extensions have no corresponding files yet, thus we need to
 # ignore errors.
 ifeq ($(OS_TARGET),win64)
-        -$(COPY) $(addprefix $(CVSINSTALL)/binw64/,*.ico *.exe *.dll *.h *.manifest) $(INSTALL_BINDIR)
+	-$(COPY) $(addprefix $(CVSINSTALL)/binw64/,*.ico *.exe *.dll *.h *.manifest) $(INSTALL_BINDIR)
 endif
 endif
 # binos2 (emx.dll,emxwrap.dll,unzip32.dll,fp2.ico)
 ifeq ($(OS_TARGET),os2)
-        $(COPY) $(addprefix $(CVSINSTALL)/binos2/,*.ico *.dll) $(INSTALL_BINDIR)
+	$(COPY) $(addprefix $(CVSINSTALL)/binos2/,*.ico *.dll) $(INSTALL_BINDIR)
 endif
 # binos2 (emx.dll,emxwrap.dll,unzip32.dll,fp2.ico)
 ifeq ($(OS_TARGET),emx)
-        $(COPY) $(addprefix $(CVSINSTALL)/binos2/,*.ico *.dll) $(INSTALL_BINDIR)
+	$(COPY) $(addprefix $(CVSINSTALL)/binos2/,*.ico *.dll) $(INSTALL_BINDIR)
 endif
 # manpages for UNIX systems
 ifneq ($(findstring $(OS_TARGET),linux freebsd netbsd openbsd sunos qnx),)
-        $(MAKE) -C $(CVSINSTALL)/man installman
+	$(MAKE) -C $(CVSINSTALL)/man installman
 endif
 # jvm utils
 ifeq ($(CPU_TARGET),jvm)
-        $(COPY) $(CVSINSTALL)/jvm/*.jar $(INSTALL_BINDIR)
+	$(COPY) $(CVSINSTALL)/jvm/*.jar $(INSTALL_BINDIR)
 endif
 endif
 endif
 # install generated things
-        $(MAKE) -C fpcsrc installbase
+	$(MAKE) -C fpcsrc installbase
 
 install: $(BUILDSTAMP)
-        $(MAKE) installbase
-        $(MAKE) -C fpcsrc installother
+	$(MAKE) installbase
+	$(MAKE) -C fpcsrc installother
 
 crossinstall: $(BUILDSTAMP)
-        $(MAKE) installbase CROSSINSTALL=1
-        $(MAKE) -C fpcsrc installother CROSSINSTALL=1
+	$(MAKE) installbase CROSSINSTALL=1
+	$(MAKE) -C fpcsrc installother CROSSINSTALL=1
 
 zipinstall: $(BUILDSTAMP)
-        $(MAKE) fpc_zipinstall ZIPTARGET=installbase ZIPNAME=base
-        $(MAKE) -C fpcsrc zipinstallother
+	$(MAKE) fpc_zipinstall ZIPTARGET=installbase ZIPNAME=base
+	$(MAKE) -C fpcsrc zipinstallother
 
 singlezipinstall: $(BUILDSTAMP)
-        $(MAKE) fpc_zipinstall ZIPTARGET=install ZIPNAME=fpc-$(PACKAGE_VERSION)
+	$(MAKE) fpc_zipinstall ZIPTARGET=install ZIPNAME=fpc-$(PACKAGE_VERSION)
 
 crosszipinstall: $(BUILDSTAMP)
-        $(MAKE) fpc_zipinstall CROSSINSTALL=1 ZIPTARGET=installbase ZIPNAME=base
-        $(MAKE) -C fpcsrc zipinstallother CROSSINSTALL=1
+	$(MAKE) fpc_zipinstall CROSSINSTALL=1 ZIPTARGET=installbase ZIPNAME=base
+	$(MAKE) -C fpcsrc zipinstallother CROSSINSTALL=1
 
 ##########################################################################
 # Docs
@@ -236,19 +236,19 @@ crosszipinstall: $(BUILDSTAMP)
 DOCSOURCEDIR=$(INSTALL_SOURCEDIR)/../docs
 
 docspdf:
-        $(MAKE) -C fpcdocs pdfinstall DOCINSTALLDIR=$(PACKDIR)
+	$(MAKE) -C fpcdocs pdfinstall DOCINSTALLDIR=$(PACKDIR)
 
 # Used by makepack to generate unix installation .tar
 makepackdocs:
-        $(MAKE) fpc_zipinstall ZIPTARGET=docspdf FULLZIPNAME=docs
+	$(MAKE) fpc_zipinstall ZIPTARGET=docspdf FULLZIPNAME=docs
 
 docsrcinstall:
-        $(MAKE) -C fpcdocs distclean
-        $(MKDIR) $(DOCSOURCEDIR)
-        $(COPYTREE) fpcdocs/* $(DOCSOURCEDIR)
+	$(MAKE) -C fpcdocs distclean
+	$(MKDIR) $(DOCSOURCEDIR)
+	$(COPYTREE) fpcdocs/* $(DOCSOURCEDIR)
 
 docsrc:
-        $(MAKE) fpc_zipinstall ZIPTARGET=docsrcinstall FULLZIPNAME=docsrc
+	$(MAKE) fpc_zipinstall ZIPTARGET=docsrcinstall FULLZIPNAME=docsrc
 
 
 ##########################################################################
@@ -269,12 +269,12 @@ DEMOSOURCEDIR=$(PACKDIR)
 endif
 
 demosrcinstall:
-        $(MAKE) -C demo clean
-        $(MKDIR) $(DEMOSOURCEDIR)
-        $(COPYTREE) demo/* $(DEMOSOURCEDIR)
+	$(MAKE) -C demo clean
+	$(MKDIR) $(DEMOSOURCEDIR)
+	$(COPYTREE) demo/* $(DEMOSOURCEDIR)
 
 demozip:
-        $(MAKE) fpc_zipinstall ZIPTARGET=demosrcinstall FULLZIPNAME=demo
+	$(MAKE) fpc_zipinstall ZIPTARGET=demosrcinstall FULLZIPNAME=demo
 
 
 ##########################################################################
@@ -288,22 +288,22 @@ INSTALL_BASESOURCEDIR=$(INSTALL_SOURCEDIR)/..
 
 sourcebase:
 # base Makefiles needed for sources
-        $(MKDIR) $(INSTALL_BASESOURCEDIR)
-        $(MKDIR) $(INSTALL_BASESOURCEDIR)/packages
-        $(COPY) fpcsrc/Makefile*  $(INSTALL_BASESOURCEDIR)
-        $(COPY) fpcsrc/packages/Makefile* $(INSTALL_BASESOURCEDIR)/packages
-        $(COPY) fpcsrc/packages/fpmake.pp $(INSTALL_BASESOURCEDIR)/packages
-        $(COPY) fpcsrc/packages/fpmake_add.inc $(INSTALL_BASESOURCEDIR)/packages
-        $(COPY) fpcsrc/packages/fpmake_proc.inc $(INSTALL_BASESOURCEDIR)/packages
+	$(MKDIR) $(INSTALL_BASESOURCEDIR)
+	$(MKDIR) $(INSTALL_BASESOURCEDIR)/packages
+	$(COPY) fpcsrc/Makefile*  $(INSTALL_BASESOURCEDIR)
+	$(COPY) fpcsrc/packages/Makefile* $(INSTALL_BASESOURCEDIR)/packages
+	$(COPY) fpcsrc/packages/fpmake.pp $(INSTALL_BASESOURCEDIR)/packages
+	$(COPY) fpcsrc/packages/fpmake_add.inc $(INSTALL_BASESOURCEDIR)/packages
+	$(COPY) fpcsrc/packages/fpmake_proc.inc $(INSTALL_BASESOURCEDIR)/packages
 
 sourcezip:
-        $(MAKE) fpc_zipinstall ZIPTARGET=sourcebase ZIPNAME=base ZIPSUFFIX=$(ZIPSOURCESUFFIX)
-        $(MAKE) -C fpcsrc compiler_zipsourceinstall
-        $(MAKE) -C fpcsrc rtl_zipsourceinstall
-        $(MAKE) -C fpcsrc packages_zipsourceinstall ZIPPREFIX=$(PKGUNITSPRE)
-        $(MAKE) -C fpcsrc utils_zipsourceinstall
-        $(MAKE) -C fpcsrc ide_zipsourceinstall
-        $(MAKE) -C fpcsrc installer_zipsourceinstall
+	$(MAKE) fpc_zipinstall ZIPTARGET=sourcebase ZIPNAME=base ZIPSUFFIX=$(ZIPSOURCESUFFIX)
+	$(MAKE) -C fpcsrc compiler_zipsourceinstall
+	$(MAKE) -C fpcsrc rtl_zipsourceinstall
+	$(MAKE) -C fpcsrc packages_zipsourceinstall ZIPPREFIX=$(PKGUNITSPRE)
+	$(MAKE) -C fpcsrc utils_zipsourceinstall
+	$(MAKE) -C fpcsrc ide_zipsourceinstall
+	$(MAKE) -C fpcsrc installer_zipsourceinstall
 
 
 ##########################################################################
@@ -315,16 +315,16 @@ BUILDTARGETS=go32v2 win32 linux freebsd netbsd openbsd os2 emx sunos qnx beos wi
 .PHONY: go32v2 win32 win64 wince linux freebsd os2 emx netbsd openbsd go32v2zip win32zip linuxzip freebsdzip os2zip emxzip netbsdzip openbsdzip
 
 $(BUILDTARGETS): checkfpcdir
-        $(MAKE) install OS_TARGET=$@
+	$(MAKE) install OS_TARGET=$@
 
 $(addsuffix zip,$(filter-out beos sunos,$(BUILDTARGETS))): checkfpcdir
-        $(MAKE) zipinstall OS_TARGET=$(subst zip,,$@)
+	$(MAKE) zipinstall OS_TARGET=$(subst zip,,$@)
 
 beoszip : checkfpcdir
-        $(MAKE) zipinstall OS_TARGET=beos USEZIP=1
+	$(MAKE) zipinstall OS_TARGET=beos USEZIP=1
 
 sunoszip: checkfpcdir
-        $(MAKE) zipinstall OS_TARGET=sunos TARPROG=gtar
+	$(MAKE) zipinstall OS_TARGET=sunos TARPROG=gtar
 
 
 ##########################################################################
@@ -335,86 +335,86 @@ sunoszip: checkfpcdir
 
 renametoshort:
 # Compiler parts
-        -mv $(PKGPRE)base$(ZIPSUFFIX).zip base$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)compiler$(ZIPSUFFIX).zip comp$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)utils$(ZIPSUFFIX).zip utils$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)installer$(ZIPSUFFIX).zip inst$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)base$(ZIPSUFFIX).zip base$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)compiler$(ZIPSUFFIX).zip comp$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils$(ZIPSUFFIX).zip utils$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)installer$(ZIPSUFFIX).zip inst$(ZIPSUFFIXSHORT).zip
 # Utilities parts
-        -mv $(PKGPRE)asld$(ZIPSUFFIX).zip asld$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)make$(ZIPSUFFIX).zip make$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)gdb$(ZIPSUFFIX).zip gdb$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)asld$(ZIPSUFFIX).zip asld$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)make$(ZIPSUFFIX).zip make$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)gdb$(ZIPSUFFIX).zip gdb$(ZIPSUFFIXSHORT).zip
 # Packages
-        -mv $(PKGPRE)$(PKGUNITSPRE)gdbint$(ZIPSUFFIX).zip ugdb$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)regexpr$(ZIPSUFFIX).zip ureg$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)paszlib$(ZIPSUFFIX).zip upzl$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)unzip$(ZIPSUFFIX).zip uzip$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)ftpapi$(ZIPSUFFIX).zip uftp$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)hwvideo$(ZIPSUFFIX).zip uhwv$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)clkdll$(ZIPSUFFIX).zip uclk$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)pasjpeg$(ZIPSUFFIX).zip upjp$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fv$(ZIPSUFFIX).zip ufv$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)rexx$(ZIPSUFFIX).zip urexx$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)zlib$(ZIPSUFFIX).zip uzlib$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)mmtk$(ZIPSUFFIX).zip ummtk$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)lvm$(ZIPSUFFIX).zip ulvm$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)imlib$(ZIPSUFFIX).zip uimlb$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)libpng$(ZIPSUFFIX).zip ulpng$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)opengl$(ZIPSUFFIX).zip uogl$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)graph$(ZIPSUFFIX).zip ugrph$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)sqlite$(ZIPSUFFIX).zip usqlt$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)cdrom$(ZIPSUFFIX).zip ucdr$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fpgtk$(ZIPSUFFIX).zip ufpgt$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)ibase$(ZIPSUFFIX).zip uibas$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)mysql$(ZIPSUFFIX).zip umysq$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)oracle$(ZIPSUFFIX).zip uora$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)postgres$(ZIPSUFFIX).zip upgr$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)winunits$(ZIPSUFFIX).zip uwin$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-async$(ZIPSUFFIX).zip ufcla$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-base$(ZIPSUFFIX).zip ufclb$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-db$(ZIPSUFFIX).zip ufcld$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-fpcunit$(ZIPSUFFIX).zip ufclu$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-image$(ZIPSUFFIX).zip ufcli$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-net$(ZIPSUFFIX).zip ufcln$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-passrc$(ZIPSUFFIX).zip ufcls$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-process$(ZIPSUFFIX).zip ufclp$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-registry$(ZIPSUFFIX).zip ufclr$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-sound$(ZIPSUFFIX).zip ufsnd$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-web$(ZIPSUFFIX).zip ufclw$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-xml$(ZIPSUFFIX).zip ufclx$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-json$(ZIPSUFFIX).zip ufclj$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)httpd1.3$(ZIPSUFFIX).zip uhd13$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)httpd2.0$(ZIPSUFFIX).zip uhd20$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)httpd2.2$(ZIPSUFFIX).zip uhd22$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)oggvorbis$(ZIPSUFFIX).zip uoggv$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)openal$(ZIPSUFFIX).zip uoal$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)openssl$(ZIPSUFFIX).zip uossl$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fpmkunit$(ZIPSUFFIX).zip ufpmk$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)os2units$(ZIPSUFFIX).zip uos2$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)libgd$(ZIPSUFFIX).zip ulgd$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)symbolic$(ZIPSUFFIX).zip usymb$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-res$(ZIPSUFFIX).zip ufcle$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)chm$(ZIPSUFFIX).zip uchm$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)hash$(ZIPSUFFIX).zip uhash$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)bzip2$(ZIPSUFFIX).zip ubz2$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)hermes$(ZIPSUFFIX).zip uherm$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-js$(ZIPSUFFIX).zip ufcjs$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fppkg$(ZIPSUFFIX).zip ufppk$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-sdo$(ZIPSUFFIX).zip ufcsd$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)fcl-stl$(ZIPSUFFIX).zip ufcst$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)libtar$(ZIPSUFFIX).zip ultar$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)rtl-console$(ZIPSUFFIX).zip urtlc$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)rtl-extra$(ZIPSUFFIX).zip urtle$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)rtl-objpas$(ZIPSUFFIX).zip urtlo$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)$(PKGUNITSPRE)rtl-unicode$(ZIPSUFFIX).zip urtlu$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)gdbint$(ZIPSUFFIX).zip ugdb$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)regexpr$(ZIPSUFFIX).zip ureg$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)paszlib$(ZIPSUFFIX).zip upzl$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)unzip$(ZIPSUFFIX).zip uzip$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)ftpapi$(ZIPSUFFIX).zip uftp$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)hwvideo$(ZIPSUFFIX).zip uhwv$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)clkdll$(ZIPSUFFIX).zip uclk$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)pasjpeg$(ZIPSUFFIX).zip upjp$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fv$(ZIPSUFFIX).zip ufv$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)rexx$(ZIPSUFFIX).zip urexx$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)zlib$(ZIPSUFFIX).zip uzlib$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)mmtk$(ZIPSUFFIX).zip ummtk$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)lvm$(ZIPSUFFIX).zip ulvm$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)imlib$(ZIPSUFFIX).zip uimlb$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)libpng$(ZIPSUFFIX).zip ulpng$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)opengl$(ZIPSUFFIX).zip uogl$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)graph$(ZIPSUFFIX).zip ugrph$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)sqlite$(ZIPSUFFIX).zip usqlt$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)cdrom$(ZIPSUFFIX).zip ucdr$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fpgtk$(ZIPSUFFIX).zip ufpgt$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)ibase$(ZIPSUFFIX).zip uibas$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)mysql$(ZIPSUFFIX).zip umysq$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)oracle$(ZIPSUFFIX).zip uora$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)postgres$(ZIPSUFFIX).zip upgr$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)winunits$(ZIPSUFFIX).zip uwin$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-async$(ZIPSUFFIX).zip ufcla$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-base$(ZIPSUFFIX).zip ufclb$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-db$(ZIPSUFFIX).zip ufcld$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-fpcunit$(ZIPSUFFIX).zip ufclu$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-image$(ZIPSUFFIX).zip ufcli$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-net$(ZIPSUFFIX).zip ufcln$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-passrc$(ZIPSUFFIX).zip ufcls$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-process$(ZIPSUFFIX).zip ufclp$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-registry$(ZIPSUFFIX).zip ufclr$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-sound$(ZIPSUFFIX).zip ufsnd$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-web$(ZIPSUFFIX).zip ufclw$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-xml$(ZIPSUFFIX).zip ufclx$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-json$(ZIPSUFFIX).zip ufclj$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)httpd1.3$(ZIPSUFFIX).zip uhd13$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)httpd2.0$(ZIPSUFFIX).zip uhd20$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)httpd2.2$(ZIPSUFFIX).zip uhd22$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)oggvorbis$(ZIPSUFFIX).zip uoggv$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)openal$(ZIPSUFFIX).zip uoal$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)openssl$(ZIPSUFFIX).zip uossl$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fpmkunit$(ZIPSUFFIX).zip ufpmk$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)os2units$(ZIPSUFFIX).zip uos2$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)libgd$(ZIPSUFFIX).zip ulgd$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)symbolic$(ZIPSUFFIX).zip usymb$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-res$(ZIPSUFFIX).zip ufcle$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)chm$(ZIPSUFFIX).zip uchm$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)hash$(ZIPSUFFIX).zip uhash$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)bzip2$(ZIPSUFFIX).zip ubz2$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)hermes$(ZIPSUFFIX).zip uherm$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-js$(ZIPSUFFIX).zip ufcjs$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fppkg$(ZIPSUFFIX).zip ufppk$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-sdo$(ZIPSUFFIX).zip ufcsd$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-stl$(ZIPSUFFIX).zip ufcst$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)libtar$(ZIPSUFFIX).zip ultar$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-console$(ZIPSUFFIX).zip urtlc$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-extra$(ZIPSUFFIX).zip urtle$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-objpas$(ZIPSUFFIX).zip urtlo$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-unicode$(ZIPSUFFIX).zip urtlu$(ZIPSUFFIXSHORT).zip
 # Sources only
-        -mv $(PKGPRE)rtl$(ZIPSUFFIX).zip rtl$(ZIPSUFFIXSHORT).zip
-        -mv $(PKGPRE)ide$(ZIPSUFFIX).zip ide$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)rtl$(ZIPSUFFIX).zip rtl$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)ide$(ZIPSUFFIX).zip ide$(ZIPSUFFIXSHORT).zip
 
 shortsrc:
-        $(MAKE) renametoshort ZIPSUFFIX=$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
+	$(MAKE) renametoshort ZIPSUFFIX=$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
 
 shortbin:
-        $(MAKE) renametoshort ZIPSUFFIXSHORT=$(SHORTSUFFIX)
+	$(MAKE) renametoshort ZIPSUFFIXSHORT=$(SHORTSUFFIX)
 
 shortnames: shortsrc shortbin
 
@@ -521,11 +521,11 @@ utilities:
 .PHONY: dist
 
 dist:
-        $(MAKE) sourcezip
-        $(MAKE) demozip
-        $(MAKE) zipinstall
+	$(MAKE) sourcezip
+	$(MAKE) demozip
+	$(MAKE) zipinstall
 ifneq ($(findstring $(OS_TARGET),$(LIMIT83fs)),)
-        $(MAKE) shortnames
+	$(MAKE) shortnames
 endif
 
 ##########################################################################
@@ -691,56 +691,56 @@ RPMSPECFILE:=$(RPMDIR)/SPECS/fpc-$(PACKAGE_VERSION).spec
 RPMSOURCEFILE:=$(RPMDIR)/SOURCES/fpc-$(PACKAGE_VERSION)-src.tar.gz
 RPMSRCDIR:=$(RPMDIR)/SOURCES/fpc
 RPMDEFINES=--define "_topdir $(RPMDIR)" \
-           --define "_sourcedir $(RPMDIR)/SOURCES" \
-           --define "_builddir $(RPMDIR)/BUILD" \
-           --define "_rpmdir $(RPMDIR)/RPMS" \
-           --define "_srcrpmdir $(RPMDIR)/SRPMS"
+	   --define "_sourcedir $(RPMDIR)/SOURCES" \
+	   --define "_builddir $(RPMDIR)/BUILD" \
+	   --define "_rpmdir $(RPMDIR)/RPMS" \
+	   --define "_srcrpmdir $(RPMDIR)/SRPMS"
 rpmcopy: distclean
-        # false || is needed to workaround fpcmake sections
-        false || [ -d $(RPMDIR) ] || install -d $(RPMDIR)
-        false || [ -d $(RPMDIR)/BUILD ] || install -d $(RPMDIR)/BUILD
-        false || [ -d $(RPMDIR)/SOURCES ] || install -d $(RPMDIR)/SOURCES
-        false || [ -d $(RPMDIR)/SPECS ] || install -d $(RPMDIR)/SPECS
-        false || [ -d $(RPMDIR)/RPMS ] || install -d $(RPMDIR)/RPMS
-        false || [ -d $(RPMDIR)/SRPMS ] || install -d $(RPMDIR)/SRPMS
-        rm -rf $(RPMSRCDIR)
-        sed -e "s+%FPCVERSION%+$(MAIN_VERSION)+" -e "s+%MINOR_PATCH%+$(MINOR_PATCH)+" -e "s+%RELEASE%+$(RELEASE)+" $(CVSINSTALL)/fpc.spec > $(RPMSPECFILE)
+	# false || is needed to workaround fpcmake sections
+	false || [ -d $(RPMDIR) ] || install -d $(RPMDIR)
+	false || [ -d $(RPMDIR)/BUILD ] || install -d $(RPMDIR)/BUILD
+	false || [ -d $(RPMDIR)/SOURCES ] || install -d $(RPMDIR)/SOURCES
+	false || [ -d $(RPMDIR)/SPECS ] || install -d $(RPMDIR)/SPECS
+	false || [ -d $(RPMDIR)/RPMS ] || install -d $(RPMDIR)/RPMS
+	false || [ -d $(RPMDIR)/SRPMS ] || install -d $(RPMDIR)/SRPMS
+	rm -rf $(RPMSRCDIR)
+	sed -e "s+%FPCVERSION%+$(MAIN_VERSION)+" -e "s+%MINOR_PATCH%+$(MINOR_PATCH)+" -e "s+%RELEASE%+$(RELEASE)+" $(CVSINSTALL)/fpc.spec > $(RPMSPECFILE)
 ifndef NODOCS
-        cat $(CVSINSTALL)/fpcdoc.spec >> $(RPMSPECFILE)
+	cat $(CVSINSTALL)/fpcdoc.spec >> $(RPMSPECFILE)
 endif
-        # Install files
-        install -d $(RPMSRCDIR)
-        $(LINKTREE) fpcsrc/compiler $(RPMSRCDIR)
-        $(LINKTREE) fpcsrc/rtl $(RPMSRCDIR)
-        $(LINKTREE) fpcsrc/ide $(RPMSRCDIR)
-        $(LINKTREE) fpcsrc/packages $(RPMSRCDIR)
-        $(LINKTREE) fpcsrc/utils $(RPMSRCDIR)
+	# Install files
+	install -d $(RPMSRCDIR)
+	$(LINKTREE) fpcsrc/compiler $(RPMSRCDIR)
+	$(LINKTREE) fpcsrc/rtl $(RPMSRCDIR)
+	$(LINKTREE) fpcsrc/ide $(RPMSRCDIR)
+	$(LINKTREE) fpcsrc/packages $(RPMSRCDIR)
+	$(LINKTREE) fpcsrc/utils $(RPMSRCDIR)
 ifneq (${LIBGDBDIR},)
-        $(LINKTREE) $(LIBGDBDIR) $(RPMSRCDIR)
+	$(LINKTREE) $(LIBGDBDIR) $(RPMSRCDIR)
 endif
-        $(LINKTREE) demo $(RPMSRCDIR)
-#        $(LINKTREE) logs $(RPMSRCDIR)
-        $(LINKTREE) fpcsrc/Makefile* $(RPMSRCDIR)
-        $(LINKTREE) $(CVSINSTALL)/man $(RPMSRCDIR)
-        $(LINKTREE) $(CVSINSTALL)/doc $(RPMSRCDIR)
-        $(COPY) $(CVSINSTALL)/smart_strip.sh $(RPMSRCDIR)
-        chmod +x $(RPMSRCDIR)/smart_strip.sh
+	$(LINKTREE) demo $(RPMSRCDIR)
+#	$(LINKTREE) logs $(RPMSRCDIR)
+	$(LINKTREE) fpcsrc/Makefile* $(RPMSRCDIR)
+	$(LINKTREE) $(CVSINSTALL)/man $(RPMSRCDIR)
+	$(LINKTREE) $(CVSINSTALL)/doc $(RPMSRCDIR)
+	$(COPY) $(CVSINSTALL)/smart_strip.sh $(RPMSRCDIR)
+	chmod +x $(RPMSRCDIR)/smart_strip.sh
 ifndef NODOCS
-        $(LINKTREE) fpcdocs $(RPMSRCDIR)
+	$(LINKTREE) fpcdocs $(RPMSRCDIR)
 endif
-        find $(RPMSRCDIR) -name 'CVS*' | xargs -n1 rm -rf
-        find $(RPMSRCDIR) -name '.svn' | xargs -n1 rm -rf
-        cd $(RPMSRCDIR) ; tar cfvz $(RPMSOURCEFILE) *
-        rm -rf $(RPMSRCDIR)
+	find $(RPMSRCDIR) -name 'CVS*' | xargs -n1 rm -rf
+	find $(RPMSRCDIR) -name '.svn' | xargs -n1 rm -rf
+	cd $(RPMSRCDIR) ; tar cfvz $(RPMSOURCEFILE) *
+	rm -rf $(RPMSRCDIR)
 
 rpmbuild: checkfpcdir
-        $(RPMBUILD) $(RPMDEFINES) --nodeps -ba $(RPMSPECFILE)
-        mv `find $(RPMDIR)/RPMS/ -name '*.rpm'` .
-        mv `find $(RPMDIR)/SRPMS/ -name '*.rpm'` .
+	$(RPMBUILD) $(RPMDEFINES) --nodeps -ba $(RPMSPECFILE)
+	mv `find $(RPMDIR)/RPMS/ -name '*.rpm'` .
+	mv `find $(RPMDIR)/SRPMS/ -name '*.rpm'` .
 
 rpmclean:
-        rm -rf $(RPMDIR)
-        -rmdir $(BUILDDIR)
+	rm -rf $(RPMDIR)
+	-rmdir $(BUILDDIR)
 
 rpm: checkfpcdir rpmcopy rpmbuild rpmclean
 
@@ -843,134 +843,168 @@ innocheck:
 ifndef NODOCS
 # Check for doc-pdf.zip
 ifeq ($(wildcard doc-pdf.zip),)
-        @$(ECHO) "No documentation available. Please copy the file doc-pdf.zip to this directory."
-        @exit 1
+	@$(ECHO) "No documentation available. Please copy the file doc-pdf.zip to this directory."
+	@exit 1
 endif
 endif
 ifndef NOGDB
 # Check for libgdb
 ifeq ($(wildcard fpcsrc/libgdb/win32/libgdb.a),)
 ifeq ($(wildcard fpcsrc/libgdb/win32/i386/libgdb.a),)
-        @$(ECHO) "Libgdb not available. Please get and unzip libgdb-*.i386-win32.zip in fpcsrc/."
-        @exit 1
+	@$(ECHO) "Libgdb not available. Please get and unzip libgdb-*.i386-win32.zip in fpcsrc/."
+	@exit 1
 endif
 endif
 endif
 
 innobuild: innocheck build
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        $(DELTREE) $(INNODIR)
-        $(MKDIR) $(INNODIR)
-        $(COPYTREE) demo $(INNODIR)
-        $(COPYTREE) install/unicode $(INNODIR)
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	$(DELTREE) $(INNODIR)
+	$(MKDIR) $(INNODIR)
+	$(COPYTREE) demo $(INNODIR)
+	$(COPYTREE) install/unicode $(INNODIR)
 ifndef NODOCS
-        unzip -d $(INNODIR) doc-pdf.zip
+	unzip -d $(INNODIR) doc-pdf.zip
 endif
-        $(MAKE) install INSTALL_PREFIX=$(INNODIR)
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        fpcmkcfg -t install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
-        $(INNOCMD_ISCC)
-        $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
+	$(MAKE) install INSTALL_PREFIX=$(INNODIR)
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	fpcmkcfg -t install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+	$(INNOCMD_ISCC)
+	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
 
 innocebuild: innocheck buildce
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        $(DELTREE) $(INNODIR)
-        $(MKDIR) $(INNODIR)
-        $(COPYTREE) demo $(INNODIR)
-        $(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=wince CPU_TARGET=arm
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        fpcmkcfg -t install/fpcce.ist -o $(INNODIR)/fpcce.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
-        "$(ISCCPROG)" $(INNODIR)/fpcce.iss
-        $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	$(DELTREE) $(INNODIR)
+	$(MKDIR) $(INNODIR)
+	$(COPYTREE) demo $(INNODIR)
+	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=wince CPU_TARGET=arm
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	fpcmkcfg -t install/fpcce.ist -o $(INNODIR)/fpcce.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+	"$(ISCCPROG)" $(INNODIR)/fpcce.iss
+	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
 
 innox64build: innocheck buildx64
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        $(DELTREE) $(INNODIR)
-        $(MKDIR) $(INNODIR)
-        $(COPYTREE) demo $(INNODIR)
-        $(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=win64 CPU_TARGET=x86_64
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        fpcmkcfg -t install/fpcx64.ist -o $(INNODIR)/fpcx64.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
-        "$(ISCCPROG)" $(INNODIR)/fpcx64.iss
-        $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	$(DELTREE) $(INNODIR)
+	$(MKDIR) $(INNODIR)
+	$(COPYTREE) demo $(INNODIR)
+	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=win64 CPU_TARGET=x86_64
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	fpcmkcfg -t install/fpcx64.ist -o $(INNODIR)/fpcx64.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+	"$(ISCCPROG)" $(INNODIR)/fpcx64.iss
+	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
 		
 innojvmbuild: innocheck buildjvm
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        $(DELTREE) $(INNODIR)
-        $(MKDIR) $(INNODIR)
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	$(DELTREE) $(INNODIR)
+	$(MKDIR) $(INNODIR)
 # currently, jvm supports only buildbase, so we have to use installbase here		
-        $(MAKE) installbase INSTALL_PREFIX=$(INNODIR) OS_TARGET=java CPU_TARGET=jvm
-        $(MAKE) installbase INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=jvm
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        fpcmkcfg -t install/fpcjvm.ist -o $(INNODIR)/fpcjvm.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
-        "$(ISCCPROG)" $(INNODIR)/fpcjvm.iss
-        $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(CPU_TARGET).exe
+	$(MAKE) installbase INSTALL_PREFIX=$(INNODIR) OS_TARGET=java CPU_TARGET=jvm
+	$(MAKE) installbase INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=jvm
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	fpcmkcfg -t install/fpcjvm.ist -o $(INNODIR)/fpcjvm.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+	"$(ISCCPROG)" $(INNODIR)/fpcjvm.iss
+	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(CPU_TARGET).exe
 
 buildmsdos_subarch_mm:
-        $(MAKE) -C fpcsrc clean buildbase OS_SOURCE=win32 CPU_SOURCE=i386 OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
-        $(MAKE) install CROSSINSTALL=1 INSTALL_PREFIX=$(INNODIR) OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
-		$(MOVE) $(INNODIR)/units/msdos $(INNODIR)/units/msdos_/$(SUBARCH)-$(MEMORY_MODEL)
+	$(MAKE) -C fpcsrc clean buildbase OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+	$(MAKE) install CROSSINSTALL=1 OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+	$(MOVE) $(INSTALL_BASEDIR)/units/msdos $(INSTALL_BASEDIR)/units/msdos_/$(SUBARCH)-$(MEMORY_MODEL)
 
 buildmsdos_subarch:
-        $(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=tiny
-        $(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=small
-        $(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=medium
-        $(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=compact
-        $(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=large
+	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=tiny
+	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=small
+	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=medium
+	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=compact
+	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=large
+ifeq ($(findstring 3.0.,$(FPC_VERSION)),)
+	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=huge
+endif
+
+build_msdos:
+	$(MKDIR) $(INSTALL_BASEDIR)/units/msdos_
+	$(MAKE) buildmsdos_subarch SUBARCH=8086
+	$(MAKE) buildmsdos_subarch SUBARCH=80186
+	$(MAKE) buildmsdos_subarch SUBARCH=80286
+	$(MAKE) buildmsdos_subarch SUBARCH=80386
+	$(MOVE) $(INSTALL_PREFIX)/units/msdos_ $(INSTALL_PREFIX)/units/msdos
+
+buildmsdos_rtl_subarch_mm:
+	$(MAKE) -C fpcsrc/rtl/msdos info clean all FPC=ppc8086 CPU_TARGET=i8086 OS_TARGET=msdos OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+	$(MAKE) -C fpcsrc/rtl/msdos install FPC=ppc8086 CPU_TARGET=i8086 OS_TARGET=msdos CROSSINSTALL=1 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+	$(MOVE) $(INSTALL_BASEDIR)/units/msdos $(INSTALL_BASEDIR)/units/msdos_/$(SUBARCH)-$(MEMORY_MODEL)
+
+buildmsdos_rtl_subarch:
+	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=tiny CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
+	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=small CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
+	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=medium CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
+	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=compact CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
+	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=large CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
+ifeq ($(findstring 3.0.,$(FPC_VERSION)),)
+	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=huge CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
+endif
+
+buildmsdos_rtl:
+	$(MKDIR) $(INSTALL_BASEDIR)/units/msdos_
+	$(MAKE) buildmsdos_rtl_subarch SUBARCH=8086 CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
+	$(MAKE) buildmsdos_rtl_subarch SUBARCH=80186 CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
+	$(MAKE) buildmsdos_rtl_subarch SUBARCH=80286 CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
+	$(MAKE) buildmsdos_rtl_subarch SUBARCH=80386 CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
+	$(MOVE) $(INSTALL_BASEDIR)/units/msdos_ $(INSTALL_BASEDIR)/units/msdos
 
 innomsdosbuild: innocheck
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        $(DELTREE) $(INNODIR)
-        $(MKDIR) $(INNODIR)
-        $(COPYTREE) demo $(INNODIR)
-        $(MKDIR) $(INNODIR)/units/msdos_
-        $(MAKE) buildmsdos_subarch SUBARCH=8086
-        $(MAKE) buildmsdos_subarch SUBARCH=80186
-        $(MAKE) buildmsdos_subarch SUBARCH=80286
-		$(MOVE) $(INNODIR)/units/msdos_ $(INNODIR)/units/msdos
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        fpcsubst -i install/fpcmsdos.ist -o $(INNODIR)/fpcmsdos.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
-        "$(ISCCPROG)" $(INNODIR)/fpcmsdos.iss
-        $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	$(DELTREE) $(INNODIR)
+	$(MKDIR) $(INNODIR)
+	$(COPYTREE) demo $(INNODIR)
+	$(MKDIR) $(INNODIR)/units/msdos_
+	$(MAKE) buildmsdos_subarch SUBARCH=8086 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR) 
+	$(MAKE) buildmsdos_subarch SUBARCH=80186 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR) 
+	$(MAKE) buildmsdos_subarch SUBARCH=80286 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR) 
+	$(MOVE) $(INNODIR)/units/msdos_ $(INNODIR)/units/msdos
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	fpcsubst -i install/fpcmsdos.ist -o $(INNODIR)/fpcmsdos.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+	"$(ISCCPROG)" $(INNODIR)/fpcmsdos.iss
+	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
 
 innoandroidbuild:
-        $(MAKE) build_android_arm OS_TARGET=android CPU_TARGET=arm
-        $(MAKE) build_android_i386 OS_TARGET=android CPU_TARGET=i386
-        $(MAKE) build_android_mipsel OS_TARGET=android CPU_TARGET=mipsel
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        $(DELTREE) $(INNODIR)
-        $(MKDIR) $(INNODIR)
-        $(COPYTREE) demo $(INNODIR)
-        $(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=arm
-        $(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=i386
-        $(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=mipsel
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        fpcmkcfg -t install/fpcandroid.ist -o $(INNODIR)/fpcandroid.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
-        "$(ISCCPROG)" $(INNODIR)/fpcandroid.iss
-        $(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.android.exe
+	$(MAKE) build_android_arm OS_TARGET=android CPU_TARGET=arm
+	$(MAKE) build_android_i386 OS_TARGET=android CPU_TARGET=i386
+	$(MAKE) build_android_mipsel OS_TARGET=android CPU_TARGET=mipsel
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	$(DELTREE) $(INNODIR)
+	$(MKDIR) $(INNODIR)
+	$(COPYTREE) demo $(INNODIR)
+	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=arm
+	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=i386
+	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=mipsel
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	fpcmkcfg -t install/fpcandroid.ist -o $(INNODIR)/fpcandroid.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+	"$(ISCCPROG)" $(INNODIR)/fpcandroid.iss
+	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.android.exe
 
 innoclean:
-        rmcvsdir$(EXEEXT) $(INNODIR)
-        $(DELTREE) $(INNODIR)
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	$(DELTREE) $(INNODIR)
 
 innoce : checkfpcdir
-		$(MAKE) OS_TARGET=wince CPU_TARGET=arm innocebuild NOGDB=1
-		$(MAKE) innoclean	
+	$(MAKE) OS_TARGET=wince CPU_TARGET=arm innocebuild NOGDB=1
+	$(MAKE) innoclean	
 
 innox64 : checkfpcdir
-		$(MAKE) OS_TARGET=win64 CPU_TARGET=x86_64 innox64build NOGDB=1
-        $(MAKE) innoclean	
+	$(MAKE) OS_TARGET=win64 CPU_TARGET=x86_64 innox64build NOGDB=1
+	$(MAKE) innoclean	
 
 innojvm : checkfpcdir
-		$(MAKE) OS_TARGET=java CPU_TARGET=jvm innojvmbuild NOGDB=1
-		$(MAKE) innoclean	
+	$(MAKE) OS_TARGET=java CPU_TARGET=jvm innojvmbuild NOGDB=1
+	$(MAKE) innoclean	
 
 innomsdos : checkfpcdir
 	$(MAKE) OS_TARGET=msdos CPU_TARGET=i8086 innomsdosbuild NOGDB=1 CROSSBINDIR=$(BASEDIR)/install/crossbinmsdos
-        $(MAKE) innoclean	
+	$(MAKE) innoclean	
 
 innoandroid : checkfpcdir
-		$(MAKE) OS_TARGET=android CPU_TARGET=arm innoandroidbuild NOGDB=1
-		$(MAKE) innoclean
+	$(MAKE) OS_TARGET=android CPU_TARGET=arm innoandroidbuild NOGDB=1
+	$(MAKE) innoclean
 
 inno: checkfpcdir innobuild innoclean
