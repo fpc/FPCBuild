@@ -143,6 +143,10 @@ build_android_mipsel: fpcsrc/build-stamp.mipsel-android
 fpcsrc/build-stamp.mipsel-android:
 	$(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=mipsel CROSSBINDIR=$(ANDROID_MIPS_BINUTILS) BINUTILSPREFIX=mipsel-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-mips/usr/lib"
 
+fpcsrc/build-stamp.cross-msdos:
+	$(MAKE) -C fpcsrc clean buildbase OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+	$(ECHO) $(DATE) > fpcsrc/build-stamp.cross-msdos
+
 clean: $(addsuffix _distclean,$(TARGET_DIRS))
 	-rm -f fpcsrc/build-stamp.*
 
@@ -906,9 +910,9 @@ innojvmbuild: innocheck buildjvm
 	"$(ISCCPROG)" $(INNODIR)/fpcjvm.iss
 	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(CPU_TARGET).exe
 
-buildmsdos_subarch_mm:
-	$(MAKE) -C fpcsrc clean buildbase OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
-	$(MAKE) install CROSSINSTALL=1 OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+buildmsdos_subarch_mm: fpcsrc/build-stamp.cross-msdos
+	$(MAKE) -C fpcsrc/rtl clean install OS_TARGET=msdos FPC=ppc8086 CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+	$(MAKE) -C fpcsrc/packages clean install OS_TARGET=msdos FPC=ppc8086 CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)" FPCFPMAKE=$(BASEDIR)/fpcsrc/compiler/ppc
 	$(MOVE) $(INSTALL_BASEDIR)/units/msdos $(INSTALL_BASEDIR)/units/msdos_/$(SUBARCH)-$(MEMORY_MODEL)
 
 buildmsdos_subarch:
@@ -922,16 +926,17 @@ ifeq ($(findstring 3.0.,$(FPC_VERSION)),)
 endif
 
 build_msdos:
+	$(DELTREE) $(INSTALL_BASEDIR)/units/msdos_
 	$(MKDIR) $(INSTALL_BASEDIR)/units/msdos_
 	$(MAKE) buildmsdos_subarch SUBARCH=8086
 	$(MAKE) buildmsdos_subarch SUBARCH=80186
 	$(MAKE) buildmsdos_subarch SUBARCH=80286
 	$(MAKE) buildmsdos_subarch SUBARCH=80386
-	$(MOVE) $(INSTALL_PREFIX)/units/msdos_ $(INSTALL_PREFIX)/units/msdos
+	$(MOVE) $(INSTALL_BASEDIR)/units/msdos_ $(INSTALL_BASEDIR)/units/msdos
 
 buildmsdos_rtl_subarch_mm:
-	$(MAKE) -C fpcsrc/rtl/msdos info clean all FPC=ppc8086 CPU_TARGET=i8086 OS_TARGET=msdos OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
-	$(MAKE) -C fpcsrc/rtl/msdos install FPC=ppc8086 CPU_TARGET=i8086 OS_TARGET=msdos CROSSINSTALL=1 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+	$(MAKE) -C fpcsrc/rtl/msdos info clean all FPC=ppc8086 CPU_TARGET=i8086 OS_TARGET=msdos OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+	$(MAKE) -C fpcsrc/rtl/msdos install FPC=ppc8086 CPU_TARGET=i8086 OS_TARGET=msdos CROSSINSTALL=1 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
 	$(MOVE) $(INSTALL_BASEDIR)/units/msdos $(INSTALL_BASEDIR)/units/msdos_/$(SUBARCH)-$(MEMORY_MODEL)
 
 buildmsdos_rtl_subarch:
@@ -944,7 +949,8 @@ ifeq ($(findstring 3.0.,$(FPC_VERSION)),)
 	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=huge CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
 endif
 
-buildmsdos_rtl:
+buildmsdos_rtl: fpcsrc/build-stamp.cross-msdos
+	$(DELTREE) $(INSTALL_BASEDIR)/units/msdos_
 	$(MKDIR) $(INSTALL_BASEDIR)/units/msdos_
 	$(MAKE) buildmsdos_rtl_subarch SUBARCH=8086 CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
 	$(MAKE) buildmsdos_rtl_subarch SUBARCH=80186 CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
