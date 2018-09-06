@@ -39,7 +39,25 @@ yesno ()
 #
 #
 CMDTAR="tar"
-TAR="$CMDTAR --no-same-owner"
+
+tar_version=`$CMDTAR --version 2> /dev/null `
+tar_version_res=$?
+if [ $tar_version_res -ne 0 ] ; then
+  echo "Installed tar command does not support --version"
+  tar_version=""
+fi
+
+if [ "${tar_version//GNU/}" != "${tar_version}" ] ; then
+  is_gnu_tar=1
+  no_same_owner_tar_opt=--no-same-owner
+  strip_tar_opt="--strip 1"
+else
+  is_gnu_tar=0
+  no_same_owner_tar_opt=
+  strip_tar_opt=
+fi
+
+TAR="$CMDTAR $no_same_owner_tar_opt"
 # Untar files ($3,optional) from  file ($1) to the given directory ($2)
 unztar ()
 {
@@ -347,7 +365,7 @@ if [ -f doc-pdf.tar.gz ]; then
   if yesno "Install documentation"; then
     echo Installing documentation in "$DOCDIR" ...
     makedirhierarch "$DOCDIR"
-    unztar doc-pdf.tar.gz "$DOCDIR" "--strip 1"
+    unztar doc-pdf.tar.gz "$DOCDIR" "$strip_tar_opt"
     echo Done.
   fi
 fi
@@ -365,9 +383,48 @@ if [ -f demo.tar.gz ]; then
 fi
 echo
 
+# Post substitution of FPC_VERSION to $fpc_version in cfg scripts
+subst_pattern=ask
+
+function substitute_version_string ()
+{
+  file=$1
+  has_version=`grep $VERSION $file`
+  if [ ! -z "$has_version" ] ; then
+    if [ "$subst_pattern" == "ask" ] ; then
+      if yesno "Subtitute $VERSION by \$fpcversion in config files"; then
+        subst_pattern=yes
+      else
+        subst_pattern=no
+      fi
+    fi
+    if [ "$subst_pattern" == "yes" ] ; then
+      echo "File $file contains string \"$VERSION\", trying to subtitute with \$fpcversion"
+      sed "s:$VERSION:\$fpcversion:g" $file > $file.tmp
+      sed_res=$?
+      if [ $sed_res -eq 0 ] ; then
+        mv -f $file.tmp $file
+      else
+        echo "sed failed, res=$sed_res"
+      fi
+    fi
+  else
+    echo "Pattern $VERSION not found in $file"
+  fi
+}
+
 # Install /etc/fpc.cfg, this is done using the samplecfg script
 if [ "$cross" = "" ]; then
-  "$LIBDIR/samplecfg" "$LIBDIR"
+  "$LIBDIR/samplecfg" "$LIBDIR" | tee samplecfg.log
+  file_list=`sed -n 's:.*Writing sample configuration file to ::p' samplecfg.log`
+  if [ ! -z "$file_list" ] ; then
+    for file in $file_list ; do
+      if [ -w $file ] ; then
+        substitute_version_string $file
+      fi
+    done
+  fi
+  rm samplecfg.log
 else
   echo "No fpc.cfg created because a cross installation has been done."
 fi
