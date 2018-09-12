@@ -40,7 +40,6 @@ $SVN copy $SVNURL/fpcbuild/$OLDSVNTAG $SVNURL/fpcbuild/$NEWSVNTAG -m "$COMMITMSG
 cat << EXTERNALEOF > external.lst
 ../../../fpc/$NEWSVNTAG fpcsrc
 ../../../fpcdocs/trunk fpcdocs
-../../../logs logs
 EXTERNALEOF
 echo
 echo "External list:"
