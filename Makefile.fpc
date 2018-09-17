@@ -14,7 +14,13 @@ dirs=fpcsrc fpcdocs
 nortl=y
 
 [install]
-fpcpackage=y
+# This is NOT a fpc package
+# the removal of
+# fpcpackage=y
+# leads to a correct version
+# in generated zip files even
+# when using another compiler version
+# as starting compiler
 
 [default]
 fpcdir=.

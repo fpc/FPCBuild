@@ -607,7 +607,6 @@ endif
 ifeq ($(FULL_TARGET),sparc64-linux)
 override TARGET_DIRS+=fpcsrc fpcdocs
 endif
-override INSTALL_FPCPACKAGE=y
 ifdef REQUIRE_UNITSDIR
 override UNITSDIR+=$(REQUIRE_UNITSDIR)
 endif
@@ -982,6 +981,7 @@ endif
 ifeq ($(OS_TARGET),aix)
 BATCHEXT=.sh
 EXEEXT=
+SHAREDLIBEXT=.a
 SHORTSUFFIX=aix
 endif
 ifeq ($(OS_TARGET),java)
