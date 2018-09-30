@@ -355,7 +355,7 @@ ifeq ($(FULL_TARGET),i386-haiku)
 override TARGET_DIRS+=text
 endif
 ifeq ($(FULL_TARGET),i386-netbsd)
-override TARGET_DIRS+=text
+override TARGET_DIRS+=text  unix graph lister
 endif
 ifeq ($(FULL_TARGET),i386-solaris)
 override TARGET_DIRS+=text
@@ -364,7 +364,7 @@ ifeq ($(FULL_TARGET),i386-netware)
 override TARGET_DIRS+=text  netware
 endif
 ifeq ($(FULL_TARGET),i386-openbsd)
-override TARGET_DIRS+=text
+override TARGET_DIRS+=text  unix graph lister
 endif
 ifeq ($(FULL_TARGET),i386-wdosx)
 override TARGET_DIRS+=text
@@ -406,7 +406,7 @@ ifeq ($(FULL_TARGET),m68k-linux)
 override TARGET_DIRS+=text  linux unix graph lister
 endif
 ifeq ($(FULL_TARGET),m68k-netbsd)
-override TARGET_DIRS+=text
+override TARGET_DIRS+=text  unix graph lister
 endif
 ifeq ($(FULL_TARGET),m68k-amiga)
 override TARGET_DIRS+=text
@@ -427,7 +427,7 @@ ifeq ($(FULL_TARGET),powerpc-linux)
 override TARGET_DIRS+=text  linux unix graph lister
 endif
 ifeq ($(FULL_TARGET),powerpc-netbsd)
-override TARGET_DIRS+=text
+override TARGET_DIRS+=text  unix graph lister
 endif
 ifeq ($(FULL_TARGET),powerpc-amiga)
 override TARGET_DIRS+=text
@@ -454,7 +454,7 @@ ifeq ($(FULL_TARGET),sparc-linux)
 override TARGET_DIRS+=text  linux unix graph lister
 endif
 ifeq ($(FULL_TARGET),sparc-netbsd)
-override TARGET_DIRS+=text
+override TARGET_DIRS+=text  unix graph lister
 endif
 ifeq ($(FULL_TARGET),sparc-solaris)
 override TARGET_DIRS+=text
@@ -469,13 +469,13 @@ ifeq ($(FULL_TARGET),x86_64-freebsd)
 override TARGET_DIRS+=text  freebsd unix graph lister
 endif
 ifeq ($(FULL_TARGET),x86_64-netbsd)
-override TARGET_DIRS+=text
+override TARGET_DIRS+=text  unix graph lister
 endif
 ifeq ($(FULL_TARGET),x86_64-solaris)
 override TARGET_DIRS+=text
 endif
 ifeq ($(FULL_TARGET),x86_64-openbsd)
-override TARGET_DIRS+=text
+override TARGET_DIRS+=text  unix graph lister
 endif
 ifeq ($(FULL_TARGET),x86_64-darwin)
 override TARGET_DIRS+=text
@@ -499,7 +499,7 @@ ifeq ($(FULL_TARGET),arm-linux)
 override TARGET_DIRS+=text  linux unix graph lister
 endif
 ifeq ($(FULL_TARGET),arm-netbsd)
-override TARGET_DIRS+=text
+override TARGET_DIRS+=text  unix graph lister
 endif
 ifeq ($(FULL_TARGET),arm-palmos)
 override TARGET_DIRS+=text
@@ -963,6 +963,7 @@ endif
 ifeq ($(OS_TARGET),aix)
 BATCHEXT=.sh
 EXEEXT=
+SHAREDLIBEXT=.a
 SHORTSUFFIX=aix
 endif
 ifeq ($(OS_TARGET),java)
@@ -1806,6 +1807,9 @@ TARGET_DIRS_TEXT=1
 endif
 ifeq ($(FULL_TARGET),i386-netbsd)
 TARGET_DIRS_TEXT=1
+TARGET_DIRS_UNIX=1
+TARGET_DIRS_GRAPH=1
+TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),i386-solaris)
 TARGET_DIRS_TEXT=1
@@ -1816,6 +1820,9 @@ TARGET_DIRS_NETWARE=1
 endif
 ifeq ($(FULL_TARGET),i386-openbsd)
 TARGET_DIRS_TEXT=1
+TARGET_DIRS_UNIX=1
+TARGET_DIRS_GRAPH=1
+TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),i386-wdosx)
 TARGET_DIRS_TEXT=1
@@ -1863,6 +1870,9 @@ TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),m68k-netbsd)
 TARGET_DIRS_TEXT=1
+TARGET_DIRS_UNIX=1
+TARGET_DIRS_GRAPH=1
+TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),m68k-amiga)
 TARGET_DIRS_TEXT=1
@@ -1888,6 +1898,9 @@ TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),powerpc-netbsd)
 TARGET_DIRS_TEXT=1
+TARGET_DIRS_UNIX=1
+TARGET_DIRS_GRAPH=1
+TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),powerpc-amiga)
 TARGET_DIRS_TEXT=1
@@ -1920,6 +1933,9 @@ TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),sparc-netbsd)
 TARGET_DIRS_TEXT=1
+TARGET_DIRS_UNIX=1
+TARGET_DIRS_GRAPH=1
+TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),sparc-solaris)
 TARGET_DIRS_TEXT=1
@@ -1943,12 +1959,18 @@ TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),x86_64-netbsd)
 TARGET_DIRS_TEXT=1
+TARGET_DIRS_UNIX=1
+TARGET_DIRS_GRAPH=1
+TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),x86_64-solaris)
 TARGET_DIRS_TEXT=1
 endif
 ifeq ($(FULL_TARGET),x86_64-openbsd)
 TARGET_DIRS_TEXT=1
+TARGET_DIRS_UNIX=1
+TARGET_DIRS_GRAPH=1
+TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),x86_64-darwin)
 TARGET_DIRS_TEXT=1
@@ -1980,6 +2002,9 @@ TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),arm-netbsd)
 TARGET_DIRS_TEXT=1
+TARGET_DIRS_UNIX=1
+TARGET_DIRS_GRAPH=1
+TARGET_DIRS_LISTER=1
 endif
 ifeq ($(FULL_TARGET),arm-palmos)
 TARGET_DIRS_TEXT=1
