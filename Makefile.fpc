@@ -453,7 +453,9 @@ BUILDDIR=$(BASEDIR)/build
 endif
 
 # Use of GDBMI for text mode IDE, starting with version 3.1.1
-ifeq ($(findstring 3.0.,$(FPC_VERSION)),)
+# Use PACKAGE_VERSION here instead of FPC_VERSION
+# to avoid checking for GDB if starting compiler is 3.0.4 release
+ifeq ($(findstring 3.0.,$(PACKAGE_VERSION)),)
 ifndef NOGDB
 #  Determine if we should use GDBMI for Text Mode IDE compilation
 ifndef NOGDBMI
