@@ -331,6 +331,8 @@ endif
 endif
 override PACKAGE_NAME=fpc
 override PACKAGE_VERSION=3.3.1
+BS_FPC_VERSION:=$(FPC_VERSION)
+FPC_VERSION:=$(PACKAGE_VERSION)
 ifneq ($(wildcard install),)
 CVSINSTALL=install
 else
@@ -623,6 +625,7 @@ endif
 ifeq ($(FULL_TARGET),riscv64-embedded)
 override TARGET_DIRS+=fpcsrc fpcdocs
 endif
+override INSTALL_FPCPACKAGE=y
 ifdef REQUIRE_UNITSDIR
 override UNITSDIR+=$(REQUIRE_UNITSDIR)
 endif
@@ -2275,6 +2278,7 @@ makefiles: fpc_makefiles
 ifneq ($(wildcard fpcmake.loc),)
 include fpcmake.loc
 endif
+FPC_VERSION:=$(BS_FPC_VERSION)
 .PHONY: help checkfpcdir
 help:
 	@$(ECHO)
@@ -2387,7 +2391,7 @@ ifeq ($(CPU_TARGET),jvm)
 endif
 endif
 endif
-	$(MAKE) -C fpcsrc installbase
+	$(MAKE) -C fpcsrc installbase INSTALL_BASEDIR=$(INSTALL_BASEDIR)
 install: $(BUILDSTAMP)
 	$(MAKE) installbase
 	$(MAKE) -C fpcsrc installother
