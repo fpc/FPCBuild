@@ -38,14 +38,12 @@ CreateUninstallRegKey=no
 UpdateUninstallLogAppName=no
 
 [Files]
-; Base package
+; Cross compilers
 Source: bin\i386-win32\ppcrossarm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\ppcrossa64.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\ppcross386.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\ppcrossx64.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
 Source: bin\i386-win32\ppcrossmipsel.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
-
-Source: units\arm-android\rtl\*.*; DestDir: {app}\units\arm-android\rtl; Components: base
-Source: units\i386-android\rtl\*.*; DestDir: {app}\units\i386-android\rtl; Components: base
-Source: units\mipsel-android\rtl\*.*; DestDir: {app}\units\mipsel-android\rtl; Components: base
 
 ; Include license and readme files, so they are available even if somebody installs this package alone though
 ; it will not result in a working fpc installation
@@ -62,18 +60,38 @@ Source: doc\fpc\licensez.ip; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; C
 Source: doc\fpc\readme.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist isreadme; Components: base
 Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
 
-; Units
-Source: units\arm-android\*.*; DestDir: {app}\units\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm
-Source: fpmkinst\arm-android\*.*; DestDir: {app}\fpmkinst\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm
+; arm
+Source: units\armv5t-android\*.*; DestDir: {app}\units\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm\arm
+Source: fpmkinst\armv5t-android\*.*; DestDir: {app}\fpmkinst\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm\arm
+
+; arm-v7a
+Source: units\armv7a-android\*.*; DestDir: {app}\units\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm\armv7a
+Source: fpmkinst\armv7a-android\*.*; DestDir: {app}\fpmkinst\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm\armv7a
+
+; aarch64
+Source: units\aarch64-android\*.*; DestDir: {app}\units\aarch64-android; Flags: ignoreversion recursesubdirs; Components: units_aarch64
+Source: fpmkinst\aarch64-android\*.*; DestDir: {app}\fpmkinst\aarch64-android; Flags: ignoreversion recursesubdirs; Components: units_aarch64
+
+; i386
 Source: units\i386-android\*.*; DestDir: {app}\units\i386-android; Flags: ignoreversion recursesubdirs; Components: units_x86
 Source: fpmkinst\i386-android\*.*; DestDir: {app}\fpmkinst\i386-android; Flags: ignoreversion recursesubdirs; Components: units_x86
+
+; x86_64
+Source: units\x86_64-android\*.*; DestDir: {app}\units\x86_64-android; Flags: ignoreversion recursesubdirs; Components: units_x86_64
+Source: fpmkinst\x86_64-android\*.*; DestDir: {app}\fpmkinst\x86_64-android; Flags: ignoreversion recursesubdirs; Components: units_x86_64
+
+; mipsel
 Source: units\mipsel-android\*.*; DestDir: {app}\units\mipsel-android; Flags: ignoreversion recursesubdirs; Components: units_mips
 Source: fpmkinst\mipsel-android\*.*; DestDir: {app}\fpmkinst\mipsel-android; Flags: ignoreversion recursesubdirs; Components: units_mips
 
 [Components]
-Name: base; Description: "Free Pascal cross compiler for Android"; Flags: fixed; Types: Custom Minimum Full
+Name: base; Description: "Free Pascal cross compilers for Android"; Flags: fixed; Types: Custom Minimum Full
 Name: units_arm; Description: "Units for ARM CPU"; Types: Full Custom
+Name: units_arm\arm; Description: "ARMv5 with FPU emulation"; Flags: exclusive; Types: Custom
+Name: units_arm\armv7a; Description: "ARMv7a with VFPv3 FPU"; Flags: exclusive; Types: Full Custom
+Name: units_aarch64; Description: "Units for ARM64 CPU"; Types: Full Custom
 Name: units_x86; Description: "Units for x86 CPU"; Types: Full Custom
+Name: units_x86_64; Description: "Units for x86_64 CPU"; Types: Full Custom
 Name: units_mips; Description: "Units for MIPS CPU"; Types: Full Custom
 
 [Types]
@@ -86,7 +104,7 @@ Name: Custom; Description: Custom installation; Flags: iscustom
 var
   NdkPathPage: TInputDirWizardPage;
   NdkPath: string;
-  NdkLib, NdkBinARM, NdkBin86, NdkBinMIPS: string;
+  NdkLib, NdkBinARM, NdkBinAARCH64, NdkBinI386, NdkBinX86_64, NdkBinMIPS: string;
 
 procedure InitializeWizard;
 begin
@@ -107,11 +125,11 @@ begin
   while res do begin
     if sr.Attributes and FILE_ATTRIBUTE_DIRECTORY <> 0 then begin
       Result:=dir + sr.Name + '\prebuilt\windows\bin';
-      if FileExists(Result + '\' + UtilPrefix + '-as.exe') then
+      if FileExists(Result + '\' + UtilPrefix + '-ld.bfd.exe') then
         exit;
       if IsWin64 then begin
         Result:=dir + sr.Name + '\prebuilt\windows-x86_64\bin';
-        if FileExists(Result + '\' + UtilPrefix + '-as.exe') then
+        if FileExists(Result + '\' + UtilPrefix + '-ld.bfd.exe') then
           exit;
       end;
     end;
@@ -135,8 +153,8 @@ begin
     end;
     Result:=False;
     // Find libs
-    NdkLib:=NdkPath + 'platforms\android-9\';
-    if not FileExists(NdkLib + 'arch-x86\usr\lib\crtbegin_so.o') then begin
+    NdkLib:=NdkPath + 'platforms\android-21\';
+    if not FileExists(NdkLib + 'arch-arm64\usr\lib\crtbegin_so.o') then begin
       MsgBox('Unable to find NDK library files.', mbError, MB_OK);
       exit;
     end;
@@ -144,8 +162,14 @@ begin
     NdkBinARM:=FindBinUtils('arm-linux-androideabi', 'arm-linux-androideabi');
     if NdkBinARM = '' then
       exit;
-    NdkBin86:=FindBinUtils('x86', 'i686-linux-android');
-    if NdkBin86 = '' then
+    NdkBinAARCH64:=FindBinUtils('aarch64-linux-android', 'aarch64-linux-android');
+    if NdkBinAARCH64 = '' then
+      exit;
+    NdkBinI386:=FindBinUtils('x86', 'i686-linux-android');
+    if NdkBinI386 = '' then
+      exit;
+    NdkBinX86_64:=FindBinUtils('x86_64', 'x86_64-linux-android');
+    if NdkBinX86_64 = '' then
       exit;
     NdkBinMIPS:=FindBinUtils('mipsel-linux-android', 'mipsel-linux-android');
     if NdkBinMIPS = '' then
@@ -203,12 +227,25 @@ begin
     nconf.Add('');
     nconf.Add('#ifdef android');
     nconf.Add('  #ifdef cpuarm');
+    if IsComponentSelected('units_arm\armv7a') then begin
+      nconf.Add('    # Use CPU armv7a and FPU vfpv3 since corresponding units are installed');
+      nconf.Add('    -Cparmv7a');
+      nconf.Add('    -Cfvfpv3');
+    end;
     nconf.Add('    -Fl' + NdkLib + 'arch-arm\usr\lib');
     nconf.Add('    -FD' + NdkBinARM);
     nconf.Add('  #endif');
-    nconf.Add('  #ifdef cpu386');
+    nconf.Add('  #ifdef cpuaarch64');
+    nconf.Add('    -Fl' + NdkLib + 'arch-arm64\usr\lib');
+    nconf.Add('    -FD' + NdkBinAARCH64);
+    nconf.Add('  #endif');
+    nconf.Add('  #ifdef cpui386');
     nconf.Add('    -Fl' + NdkLib + 'arch-x86\usr\lib');
-    nconf.Add('    -FD' + NdkBin86);
+    nconf.Add('    -FD' + NdkBinI386);
+    nconf.Add('  #endif');
+    nconf.Add('  #ifdef cpux86_64');
+    nconf.Add('    -Fl' + NdkLib + 'arch-x86_64\usr\lib64');
+    nconf.Add('    -FD' + NdkBinX86_64);
     nconf.Add('  #endif');
     nconf.Add('  #ifdef cpumips32');
     nconf.Add('    -Fl' + NdkLib + 'arch-mips\usr\lib');
