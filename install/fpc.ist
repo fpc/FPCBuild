@@ -101,7 +101,7 @@ Source: bin\i386-win32\unit.pt; DestDir: {app}\bin\i386-win32; Flags: ignorevers
 Source: bin\i386-win32\program.pt; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: ide
 Source: bin\i386-win32\tpgrep.tdf; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: ide
 Source: bin\i386-win32\grep.tdf; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: ide
-Source: docs\ide\readme.ide; DestDir: {app}\doc\ide; Flags: ignoreversion; Components: ide
+Source: doc\ide\readme.ide; DestDir: {app}\doc\ide; Flags: ignoreversion; Components: ide
 ; Make tools
 Source: bin\i386-win32\gdate.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
 Source: bin\i386-win32\gecho.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
