@@ -407,8 +407,6 @@ renametoshort:
 	-mv $(PKGPRE)$(PKGUNITSPRE)libgd$(ZIPSUFFIX).zip ulgd$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)libpng$(ZIPSUFFIX).zip ulpng$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)libtar$(ZIPSUFFIX).zip ultar$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)lvm$(ZIPSUFFIX).zip ulvm$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)mmtk$(ZIPSUFFIX).zip ummtk$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)mysql$(ZIPSUFFIX).zip umysq$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)oggvorbis$(ZIPSUFFIX).zip uoggv$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)openal$(ZIPSUFFIX).zip uoal$(ZIPSUFFIXSHORT).zip
@@ -430,7 +428,8 @@ renametoshort:
 	-mv $(PKGPRE)$(PKGUNITSPRE)sqlite$(ZIPSUFFIX).zip usqlt$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)symbolic$(ZIPSUFFIX).zip usymb$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)unzip$(ZIPSUFFIX).zip uzip$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)winunits$(ZIPSUFFIX).zip uwin$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)winunits-base$(ZIPSUFFIX).zip uwib$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)winunits-jedi$(ZIPSUFFIX).zip uwij$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)webidl$(ZIPSUFFIX).zip uwidl$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)zlib$(ZIPSUFFIX).zip uzlib$(ZIPSUFFIXSHORT).zip
 # Utils packages
