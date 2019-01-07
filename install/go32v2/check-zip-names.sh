@@ -9,6 +9,18 @@
 
 ziplist=`(cd go32v2-zips; ls *.zip)`
 
+cat go32v2-zips/install.dat | gawk '
+BEGIN {
+ do_print=0
+}
+/Source packages/ {do_print=1;}
+/targetname=go32v2/ {do_print=1;}
+/targetname=i386-win32/ {do_print=0;}
+/targetname=i386-os2/ {do_print=0;}
+/targetname=emx/ {do_print=0;}
+/defaultcfg=/ {do_print=0;}
+/.*/ { if (do_print == 1) print $0; } ' > go32v2-zips/install-go32v2.dat
+
 function check ()
 {
   file=$1
