@@ -2842,7 +2842,10 @@ override NDK:=$(subst $(PATHSEP),/,$(NDK))
 ifeq ($(wildcard $(NDK)),)
   $(error NDK path does not exist: $(NDK))
 endif
-NDKARCH:=windows
+NDKARCH:=$(notdir $(firstword $(wildcard $(NDK)/prebuilt/$(OS_SOURCE)-$(CPU_SOURCE))))
+ifeq ($(NDKARCH),)
+  NDKARCH:=windows
+endif
 gettoolchain=$(dir $(firstword $(foreach d, $(wildcard $(NDK)/toolchains/$(1)-*.*), $(wildcard $(d)/prebuilt/$(NDKARCH)/bin/$(2)-ld.bfd$(SRCEXEEXT)))))
 ANDROID_ARM_BINUTILS:=$(call gettoolchain,arm-linux-androideabi,arm-linux-androideabi)
 ifeq ($(ANDROID_ARM_BINUTILS),)
@@ -2855,24 +2858,44 @@ ifeq ($(ANDROID_ARM_BINUTILS),)
     ANDROID_ARM_BINUTILS:=$(call gettoolchain,arm-linux-androideabi,arm-linux-androideabi)
   endif
   ifeq ($(ANDROID_ARM_BINUTILS),)
-    $(error Unable to find binutils for arm-android)
+    ANDROID_ARM_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /arm-linux-androideabi-as$(SRCEXEEXT),$(SEARCHPATH)))))
+    ifeq ($(ANDROID_ARM_BINUTILS),)
+      $(error Unable to find binutils for arm-android)
+    else
+      $(info "ANDROID_ARM_BINUTILS is $(ANDROID_ARM_BINUTILS)")
+    endif
   endif
 endif
 ANDROID_AARCH64_BINUTILS:=$(call gettoolchain,aarch64,aarch64-linux-android)
 ifeq ($(ANDROID_AARCH64_BINUTILS),)
-  $(error Unable to find binutils for aarch64-android)
+  ANDROID_AARCH64_BINUTILS:=$(call gettoolchain,arm64,arm64-linux-android)
+  ifeq ($(ANDROID_AARCH64_BINUTILS),)
+    ANDROID_AARCH64_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /aarch64-linux-android-as$(SRCEXEEXT),$(SEARCHPATH)))))
+    ifeq ($(ANDROID_AARCH64_BINUTILS),)
+      $(error Unable to find binutils for aarch64-android)
+    endif
+  endif
 endif
 ANDROID_X86_BINUTILS:=$(call gettoolchain,x86,i686-linux-android)
 ifeq ($(ANDROID_X86_BINUTILS),)
-  $(error Unable to find binutils for i386-android)
+  ANDROID_X86_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /i686-linux-android-as$(SRCEXEEXT),$(SEARCHPATH)))))
+  ifeq ($(ANDROID_X86_BINUTILS),)
+    $(error Unable to find binutils for i386-android)
+  endif
 endif
 ANDROID_X86_64_BINUTILS:=$(call gettoolchain,x86_64,x86_64-linux-android)
 ifeq ($(ANDROID_X86_64_BINUTILS),)
-  $(error Unable to find binutils for x86_64-android)
+  ANDROID_X86_64_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /x86_64-linux-android-as$(SRCEXEEXT),$(SEARCHPATH)))))
+  ifeq ($(ANDROID_X86_64_BINUTILS),)
+    $(error Unable to find binutils for x86_64-android)
+  endif
 endif
 ANDROID_MIPS_BINUTILS:=$(call gettoolchain,mipsel-linux-android,mipsel-linux-android)
 ifeq ($(ANDROID_MIPS_BINUTILS),)
-  $(error Unable to find binutils for mipsel-android)
+  ANDROID_MIPS_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /mipsel-linux-android-as$(SRCEXEEXT),$(SEARCHPATH)))))
+  ifeq ($(ANDROID_MIPS_BINUTILS),)
+    $(error Unable to find binutils for mipsel-android)
+  endif
 endif
 NDK_LIB:=$(NDK)/platforms/android-21
 ifeq ($(wildcard $(NDK_LIB)/arch-arm64/usr/lib/crtbegin_so.o),)
