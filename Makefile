@@ -2436,7 +2436,6 @@ sourcezip:
 	$(MAKE) -C fpcsrc rtl_zipsourceinstall
 	$(MAKE) -C fpcsrc packages_zipsourceinstall ZIPPREFIX=$(PKGUNITSPRE)
 	$(MAKE) -C fpcsrc utils_zipsourceinstall
-	$(MAKE) -C fpcsrc ide_zipsourceinstall
 	$(MAKE) -C fpcsrc installer_zipsourceinstall
 BUILDTARGETS=go32v2 win32 linux freebsd netbsd openbsd os2 emx sunos qnx beos win64 wince
 .PHONY: go32v2 win32 win64 wince linux freebsd os2 emx netbsd openbsd go32v2zip win32zip linuxzip freebsdzip os2zip emxzip netbsdzip openbsdzip
@@ -2984,9 +2983,9 @@ innomsdosbuild: innocheck
 	$(MKDIR) $(INNODIR)
 	$(COPYTREE) demo $(INNODIR)
 	$(MKDIR) $(INNODIR)/units/msdos_
-	$(MAKE) buildmsdos_subarch SUBARCH=8086 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR) 
-	$(MAKE) buildmsdos_subarch SUBARCH=80186 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR) 
-	$(MAKE) buildmsdos_subarch SUBARCH=80286 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR) 
+	$(MAKE) buildmsdos_subarch SUBARCH=8086 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR)
+	$(MAKE) buildmsdos_subarch SUBARCH=80186 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR)
+	$(MAKE) buildmsdos_subarch SUBARCH=80286 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR)
 	$(MOVE) $(INNODIR)/units/msdos_ $(INNODIR)/units/msdos
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	fpcsubst -i install/fpcmsdos.ist -o $(INNODIR)/fpcmsdos.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
