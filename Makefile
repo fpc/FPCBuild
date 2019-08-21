@@ -2451,79 +2451,95 @@ sunoszip: checkfpcdir
 renametoshort:
 	-mv $(PKGPRE)base$(ZIPSUFFIX).zip base$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)compiler$(ZIPSUFFIX).zip comp$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)utils$(ZIPSUFFIX).zip utils$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)installer$(ZIPSUFFIX).zip inst$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)asld$(ZIPSUFFIX).zip asld$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)make$(ZIPSUFFIX).zip make$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)gdb$(ZIPSUFFIX).zip gdb$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)gdbint$(ZIPSUFFIX).zip ugdb$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)regexpr$(ZIPSUFFIX).zip ureg$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)paszlib$(ZIPSUFFIX).zip upzl$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)unzip$(ZIPSUFFIX).zip uzip$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)ftpapi$(ZIPSUFFIX).zip uftp$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)hwvideo$(ZIPSUFFIX).zip uhwv$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)clkdll$(ZIPSUFFIX).zip uclk$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)pasjpeg$(ZIPSUFFIX).zip upjp$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)fv$(ZIPSUFFIX).zip ufv$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)rexx$(ZIPSUFFIX).zip urexx$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)zlib$(ZIPSUFFIX).zip uzlib$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)mmtk$(ZIPSUFFIX).zip ummtk$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)lvm$(ZIPSUFFIX).zip ulvm$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)imlib$(ZIPSUFFIX).zip uimlb$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)libpng$(ZIPSUFFIX).zip ulpng$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)opengl$(ZIPSUFFIX).zip uogl$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)graph$(ZIPSUFFIX).zip ugrph$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)sqlite$(ZIPSUFFIX).zip usqlt$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)bzip2$(ZIPSUFFIX).zip ubz2$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)cdrom$(ZIPSUFFIX).zip ucdr$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)fpgtk$(ZIPSUFFIX).zip ufpgt$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)ibase$(ZIPSUFFIX).zip uibas$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)mysql$(ZIPSUFFIX).zip umysq$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)oracle$(ZIPSUFFIX).zip uora$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)postgres$(ZIPSUFFIX).zip upgr$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)winunits$(ZIPSUFFIX).zip uwin$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)chm$(ZIPSUFFIX).zip uchm$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)clkdll$(ZIPSUFFIX).zip uclk$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-async$(ZIPSUFFIX).zip ufcla$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-base$(ZIPSUFFIX).zip ufclb$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-db$(ZIPSUFFIX).zip ufcld$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-fpcunit$(ZIPSUFFIX).zip ufclu$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-image$(ZIPSUFFIX).zip ufcli$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-js$(ZIPSUFFIX).zip ufcjs$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-json$(ZIPSUFFIX).zip ufclj$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-net$(ZIPSUFFIX).zip ufcln$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-passrc$(ZIPSUFFIX).zip ufcls$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-pdf$(ZIPSUFFIX).zip ufcpd$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-process$(ZIPSUFFIX).zip ufclp$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-registry$(ZIPSUFFIX).zip ufclr$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-res$(ZIPSUFFIX).zip ufcle$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-sdo$(ZIPSUFFIX).zip ufcsd$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-sound$(ZIPSUFFIX).zip ufsnd$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-stl$(ZIPSUFFIX).zip ufcst$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-web$(ZIPSUFFIX).zip ufclw$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-xml$(ZIPSUFFIX).zip ufclx$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-json$(ZIPSUFFIX).zip ufclj$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fpgtk$(ZIPSUFFIX).zip ufpgt$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fpmkunit$(ZIPSUFFIX).zip ufpmk$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fppkg$(ZIPSUFFIX).zip ufppk$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)ftpapi$(ZIPSUFFIX).zip uftp$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)fv$(ZIPSUFFIX).zip ufv$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)gdbint$(ZIPSUFFIX).zip ugdb$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)graph$(ZIPSUFFIX).zip ugrph$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)hash$(ZIPSUFFIX).zip uhash$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)hermes$(ZIPSUFFIX).zip uherm$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)httpd1.3$(ZIPSUFFIX).zip uhd13$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)httpd2.0$(ZIPSUFFIX).zip uhd20$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)httpd2.2$(ZIPSUFFIX).zip uhd22$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)hwvideo$(ZIPSUFFIX).zip uhwv$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)ibase$(ZIPSUFFIX).zip uibas$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)ide$(ZIPSUFFIX).zip ide$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)imlib$(ZIPSUFFIX).zip uimlb$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)libgd$(ZIPSUFFIX).zip ulgd$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)libpng$(ZIPSUFFIX).zip ulpng$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)libtar$(ZIPSUFFIX).zip ultar$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)mysql$(ZIPSUFFIX).zip umysq$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)oggvorbis$(ZIPSUFFIX).zip uoggv$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)openal$(ZIPSUFFIX).zip uoal$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)opengl$(ZIPSUFFIX).zip uogl$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)openssl$(ZIPSUFFIX).zip uossl$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)fpmkunit$(ZIPSUFFIX).zip ufpmk$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)oracle$(ZIPSUFFIX).zip uora$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)os2units$(ZIPSUFFIX).zip uos2$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)libgd$(ZIPSUFFIX).zip ulgd$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)symbolic$(ZIPSUFFIX).zip usymb$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-res$(ZIPSUFFIX).zip ufcle$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)chm$(ZIPSUFFIX).zip uchm$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)hash$(ZIPSUFFIX).zip uhash$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)bzip2$(ZIPSUFFIX).zip ubz2$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)hermes$(ZIPSUFFIX).zip uherm$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-js$(ZIPSUFFIX).zip ufcjs$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)fppkg$(ZIPSUFFIX).zip ufppk$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-sdo$(ZIPSUFFIX).zip ufcsd$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)fcl-stl$(ZIPSUFFIX).zip ufcst$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)libtar$(ZIPSUFFIX).zip ultar$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)pasjpeg$(ZIPSUFFIX).zip upjp$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)paszlib$(ZIPSUFFIX).zip upzl$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)postgres$(ZIPSUFFIX).zip upgr$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)ptc$(ZIPSUFFIX).zip uptc$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)regexpr$(ZIPSUFFIX).zip ureg$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)rexx$(ZIPSUFFIX).zip urexx$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-console$(ZIPSUFFIX).zip urtlc$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-extra$(ZIPSUFFIX).zip urtle$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-generics$(ZIPSUFFIX).zip urtlg$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-objpas$(ZIPSUFFIX).zip urtlo$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)rtl-unicode$(ZIPSUFFIX).zip urtlu$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)sqlite$(ZIPSUFFIX).zip usqlt$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)symbolic$(ZIPSUFFIX).zip usymb$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)unzip$(ZIPSUFFIX).zip uzip$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)winunits-base$(ZIPSUFFIX).zip uwib$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)winunits-jedi$(ZIPSUFFIX).zip uwij$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)webidl$(ZIPSUFFIX).zip uwidl$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)zlib$(ZIPSUFFIX).zip uzlib$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils$(ZIPSUFFIX).zip utils$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-dxegen$(ZIPSUFFIX).zip udxeg$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-fpcm$(ZIPSUFFIX).zip ufpcm$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-fpcmkcfg$(ZIPSUFFIX).zip ufpck$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-fprcp$(ZIPSUFFIX).zip ufprc$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-h2pas$(ZIPSUFFIX).zip uh2pa$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-json2pas$(ZIPSUFFIX).zip ujs2p$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-lexyacc$(ZIPSUFFIX).zip ulexy$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-pas2fpm$(ZIPSUFFIX).zip up2fp$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-pas2ut$(ZIPSUFFIX).zip up2ut$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-rmwait$(ZIPSUFFIX).zip urmw$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)rtl$(ZIPSUFFIX).zip rtl$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)ide$(ZIPSUFFIX).zip ide$(ZIPSUFFIXSHORT).zip
 shortsrc:
 	$(MAKE) renametoshort ZIPSUFFIX=$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
+	$(MAKE) renametoshort ZIPSUFFIX=-$(FPC_VERSION)$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
 shortbin:
 	$(MAKE) renametoshort ZIPSUFFIXSHORT=$(SHORTSUFFIX)
+	$(MAKE) renametoshort ZIPSUFFIX=$(SHORTSUFFIX) ZIPSUFFIXSHORT=$(SHORTSUFFIX)
+	$(MAKE) renametoshort PKGPRE=$(OS_TARGET)- ZIPSUFFIXSHORT=$(SHORTSUFFIX)
 shortnames: shortsrc shortbin
 ifndef BUILDDIR
 BUILDDIR=$(BASEDIR)/build
