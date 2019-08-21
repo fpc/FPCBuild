@@ -24,7 +24,8 @@ rule=help
 # using the package version instead of the starting compiler version.
 # Save the original FPC_VERSION in order to restore it later.
 BS_FPC_VERSION:=$(FPC_VERSION)
-FPC_VERSION:=$(PACKAGE_VERSION)
+# Be sure to remove all suffixes like -beta from PACKAGE_VERSION
+FPC_VERSION:=$(firstword $(subst -, ,$(PACKAGE_VERSION)))
 
 # Check if install/ subdir is available
 ifneq ($(wildcard install),)

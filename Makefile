@@ -332,7 +332,7 @@ endif
 override PACKAGE_NAME=fpc
 override PACKAGE_VERSION=3.2.0-beta
 BS_FPC_VERSION:=$(FPC_VERSION)
-FPC_VERSION:=$(PACKAGE_VERSION)
+FPC_VERSION:=$(firstword $(subst -, ,$(PACKAGE_VERSION)))
 ifneq ($(wildcard install),)
 CVSINSTALL=install
 else
