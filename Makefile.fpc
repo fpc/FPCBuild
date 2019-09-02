@@ -429,7 +429,7 @@ renametoshort:
 	-mv $(PKGPRE)$(PKGUNITSPRE)httpd24$(ZIPSUFFIX).zip uhd24$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)ibase$(ZIPSUFFIX).zip uibas$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)iconvenc$(ZIPSUFFIX).zip uicve$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)$(PKGUNITSPRE)ide$(ZIPSUFFIX).zip ide$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)ide$(ZIPSUFFIX).zip uide$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)imagemagick$(ZIPSUFFIX).zip uimgm$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)imlib$(ZIPSUFFIX).zip uimlb$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)iosxlocale$(ZIPSUFFIX).zip uiosl$(ZIPSUFFIXSHORT).zip
