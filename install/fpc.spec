@@ -69,7 +69,6 @@ NEWPP=`pwd`/compiler/%{ppcname}
 	make compiler_cycle
 	make rtl_clean rtl_smart FPC=${NEWPP}
         make packages_smart FPC=${NEWPP}
-	make ide_all FPC=${NEWPP}
 	make utils_all FPC=${NEWPP}
 if [ -z ${NODOCS} ]; then
 	make -C fpcdocs pdf FPC=${NEWPP}
@@ -86,7 +85,6 @@ INSTALLOPTS="FPC=${NEWPP} INSTALL_PREFIX=%{buildroot}/usr INSTALL_LIBDIR=%{build
 	make compiler_distinstall ${INSTALLOPTS}
 	make rtl_distinstall ${INSTALLOPTS}
 	make packages_distinstall ${INSTALLOPTS}
-	make ide_distinstall ${INSTALLOPTS}
 	make utils_distinstall ${INSTALLOPTS}
 
 	make -C demo sourceinstall ${INSTALLOPTS} INSTALL_SOURCEDIR=%{buildexampledir}

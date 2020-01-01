@@ -2799,7 +2799,6 @@ ifdef DEBUSESVN
 	$(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/compiler $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/rtl $(DEBSRCDIR)/fpcsrc
-	$(LINKTREE) fpcsrc/ide $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/installer $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/packages $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/tests $(DEBSRCDIR)/fpcsrc
@@ -2899,7 +2898,6 @@ endif
 	install -d $(RPMSRCDIR)
 	$(LINKTREE) fpcsrc/compiler $(RPMSRCDIR)
 	$(LINKTREE) fpcsrc/rtl $(RPMSRCDIR)
-	$(LINKTREE) fpcsrc/ide $(RPMSRCDIR)
 	$(LINKTREE) fpcsrc/packages $(RPMSRCDIR)
 	$(LINKTREE) fpcsrc/utils $(RPMSRCDIR)
 ifneq (${LIBGDBDIR},)
