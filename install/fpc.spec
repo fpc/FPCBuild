@@ -21,6 +21,8 @@ BuildRequires: fpc
 %define exampledir %{docdir}/examples
 %global debug_package %{nil}
 
+%define fpcopt -k"--build-id"
+
 %ifarch ppc
 %define ppcname ppcppc
 %else
@@ -66,10 +68,10 @@ utils. Provided units are the runtime library (RTL), free component library
 %build
 FPCDIR=
 NEWPP=`pwd`/compiler/%{ppcname}
-	make compiler_cycle
-	make rtl_clean rtl_smart FPC=${NEWPP}
-        make packages_smart FPC=${NEWPP}
-	make utils_all FPC=${NEWPP}
+	make compiler_cycle OPT='%{fpcopt}'
+	make rtl_clean rtl_smart FPC=${NEWPP} OPT='%{fpcopt}'
+	make packages_smart FPC=${NEWPP} OPT='%{fpcopt}'
+	make utils_all FPC=${NEWPP} OPT='%{fpcopt}'
 if [ -z ${NODOCS} ]; then
 	make -C fpcdocs pdf FPC=${NEWPP}
 fi
