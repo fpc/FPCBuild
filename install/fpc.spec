@@ -121,6 +121,7 @@ rm -rf %{buildroot}
 %defattr(-, root, root,-)
 %{_bindir}/*
 %{_libdir}/fpc
+%{_libdir}/libpas2jslib.so
 %dir %{docdir}
 %doc %{docdir}/NEWS
 %doc %{docdir}/README
