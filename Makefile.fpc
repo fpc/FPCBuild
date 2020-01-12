@@ -53,7 +53,7 @@ ifndef DIST_DESTDIR
 export DIST_DESTDIR:=$(BASEDIR)
 endif
 
-# This list should be the same as in fpcsrc/Makefile.fpc and in fpcsrc/ide/Makefile.fpc
+# This list should be the same as in fpcsrc/Makefile.fpc and in fpcsrc/packages/ide/Makefile.fpc
 GDBMI_DEFAULT_OS_LIST=aix darwin freebsd haiku linux netbsd openbsd solaris win32 win64
 
 
@@ -593,7 +593,7 @@ endif #NOGDB
 endif #GDBMI
 
 #
-# Automatic detection if libgdb.a is present (logic copied from ide/Makefile.fpc)
+# Automatic detection if libgdb.a is present (logic copied from packages/ide/Makefile.fpc)
 #
 ifeq ($(LOOKFORLIBGDBDIR),1)
 # Try to find GDB library
@@ -733,7 +733,6 @@ ifdef DEBUSESVN
 	$(LINKTREE) fpcsrc/Makefile* $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/compiler $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/rtl $(DEBSRCDIR)/fpcsrc
-	$(LINKTREE) fpcsrc/ide $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/installer $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/packages $(DEBSRCDIR)/fpcsrc
 	$(LINKTREE) fpcsrc/tests $(DEBSRCDIR)/fpcsrc
@@ -856,7 +855,6 @@ endif
 	install -d $(RPMSRCDIR)
 	$(LINKTREE) fpcsrc/compiler $(RPMSRCDIR)
 	$(LINKTREE) fpcsrc/rtl $(RPMSRCDIR)
-	$(LINKTREE) fpcsrc/ide $(RPMSRCDIR)
 	$(LINKTREE) fpcsrc/packages $(RPMSRCDIR)
 	$(LINKTREE) fpcsrc/utils $(RPMSRCDIR)
 ifneq (${LIBGDBDIR},)
