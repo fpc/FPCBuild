@@ -69,8 +69,8 @@ Source: units\armv7a-android\*.*; DestDir: {app}\units\arm-android; Flags: ignor
 Source: fpmkinst\armv7a-android\*.*; DestDir: {app}\fpmkinst\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm\armv7a
 
 ; aarch64
-Source: units\aarch64-android\*.*; DestDir: {app}\units\aarch64-android; Flags: ignoreversion recursesubdirs; Components: units_aarch64
-Source: fpmkinst\aarch64-android\*.*; DestDir: {app}\fpmkinst\aarch64-android; Flags: ignoreversion recursesubdirs; Components: units_aarch64
+Source: units\aarch64-android\*.*; DestDir: {app}\units\aarch64-android; Flags: ignoreversion recursesubdirs; Components: units_arm64
+Source: fpmkinst\aarch64-android\*.*; DestDir: {app}\fpmkinst\aarch64-android; Flags: ignoreversion recursesubdirs; Components: units_arm64
 
 ; i386
 Source: units\i386-android\*.*; DestDir: {app}\units\i386-android; Flags: ignoreversion recursesubdirs; Components: units_x86
@@ -87,24 +87,39 @@ Source: fpmkinst\mipsel-android\*.*; DestDir: {app}\fpmkinst\mipsel-android; Fla
 [Components]
 Name: base; Description: "Free Pascal cross compilers for Android"; Flags: fixed; Types: Custom Minimum Full
 Name: units_arm; Description: "Units for ARM CPU"; Types: Full Custom
-Name: units_arm\arm; Description: "ARMv5 with FPU emulation"; Flags: exclusive; Types: Custom
 Name: units_arm\armv7a; Description: "ARMv7a with VFPv3 FPU"; Flags: exclusive; Types: Full Custom
-Name: units_aarch64; Description: "Units for ARM64 CPU"; Types: Full Custom
+Name: units_arm\arm; Description: "ARMv5 with soft FPU (support for legacy Android devices)"; Flags: exclusive;
+Name: units_arm64; Description: "Units for ARM64 CPU"; Types: Full Custom
 Name: units_x86; Description: "Units for x86 CPU"; Types: Full Custom
 Name: units_x86_64; Description: "Units for x86_64 CPU"; Types: Full Custom
-Name: units_mips; Description: "Units for MIPS CPU"; Types: Full Custom
+Name: units_mips; Description: "Units for MIPS CPU"; Types: Full
 
 [Types]
+Name: Custom; Description: Custom installation; Flags: iscustom
 Name: Full; Description: Full installation
 Name: Minimum; Description: Minimum installation
-Name: Custom; Description: Custom installation; Flags: iscustom
 
 [Code]
+
+const
+  ArchCount = 5;
+
+type
+  TArchInfo = record
+    Arch: string;
+    CPUDef: string;
+    UtilsPrefix: string;
+    ToolchainDir: string;
+    LibBits: string;
+    UtilsPath: string;
+    LibPath: string;
+    ApiLevel: integer;
+  end;
 
 var
   NdkPathPage: TInputDirWizardPage;
   NdkPath: string;
-  NdkLib, NdkBinARM, NdkBinAARCH64, NdkBinI386, NdkBinX86_64, NdkBinMIPS: string;
+  Archs: array[1..5] of TArchInfo;
 
 procedure InitializeWizard;
 begin
@@ -112,32 +127,111 @@ begin
   NdkPathPage.Add('');
   NdkPath:=GetPreviousData('NdkPath', '');
   NdkPathPage.Values[0]:=NdkPath;
+
+  Archs[1].Arch:='arm';
+  Archs[1].CPUDef:='arm';
+  Archs[1].UtilsPrefix:='arm-linux-androideabi';
+  Archs[1].ToolchainDir:='arm-linux-androideabi';
+
+  Archs[2].Arch:='arm64';
+  Archs[2].CPUDef:='aarch64';
+  Archs[2].UtilsPrefix:='aarch64-linux-android';
+  Archs[2].ToolchainDir:='aarch64-linux-android';
+
+  Archs[3].Arch:='x86';
+  Archs[3].CPUDef:='i386';
+  Archs[3].UtilsPrefix:='i686-linux-android';
+  Archs[3].ToolchainDir:='x86';
+
+  Archs[4].Arch:='x86_64';
+  Archs[4].CPUDef:='x86_64';
+  Archs[4].UtilsPrefix:='x86_64-linux-android';
+  Archs[4].ToolchainDir:='x86_64';
+  Archs[4].LibBits:='64';
+
+  Archs[5].Arch:='mips';
+  Archs[5].CPUDef:='mips32';
+  Archs[5].UtilsPrefix:='mipsel-linux-android';
+  Archs[5].ToolchainDir:='mipsel-linux-android';
 end;
 
-function FindBinUtils(const FolderPrefix, UtilPrefix: string): string;
+function FindNdkBinUtils: boolean;
 var
   sr: TFindRec;
-  dir: string;
+  dir, p: string;
   res: boolean;
+  i: integer;
 begin
-  dir:=NdkPath + 'toolchains\';
-  res:=FindFirst(dir + FolderPrefix + '-*.*', sr);
+  for i:=1 to ArchCount do begin
+    Archs[i].UtilsPath:='';
+    dir:=NdkPath + 'toolchains\';
+    res:=FindFirst(dir + Archs[i].ToolchainDir + '-*.*', sr);
+    while res do begin
+      if sr.Attributes and FILE_ATTRIBUTE_DIRECTORY <> 0 then begin
+        p:=dir + sr.Name + '\prebuilt\windows\bin';
+        if FileExists(p + '\' + Archs[i].UtilsPrefix + '-ld.bfd.exe') then
+          Archs[i].UtilsPath:=p
+        else
+          if IsWin64 then begin
+            p:=dir + sr.Name + '\prebuilt\windows-x86_64\bin';
+            if FileExists(p + '\' + Archs[i].UtilsPrefix + '-ld.bfd.exe') then
+              Archs[i].UtilsPath:=p;
+          end;
+        if Archs[i].UtilsPath <> '' then
+          break;
+      end;
+      res:=FindNext(sr);
+    end;
+    FindClose(sr);
+
+    if (Archs[i].UtilsPath = '') and IsComponentSelected('units_' + Archs[i].Arch) then begin
+      MsgBox('Unable to find NDK binutils for "' + Archs[i].UtilsPrefix + '".', mbError, MB_OK);
+      Result:=False;
+      exit;
+    end;
+  end;
+  Result:=True;
+end;
+
+function FindNdkLibPath: boolean;
+var
+  sr: TFindRec;
+  dir, p: string;
+  res: boolean;
+  i, api: integer;
+begin
+  for i:=1 to ArchCount do begin
+    Archs[i].ApiLevel:=0;
+    Archs[i].LibPath:='';
+  end;
+
+  dir:=NdkPath + 'platforms\';
+  res:=FindFirst(dir + 'android-*', sr);
   while res do begin
     if sr.Attributes and FILE_ATTRIBUTE_DIRECTORY <> 0 then begin
-      Result:=dir + sr.Name + '\prebuilt\windows\bin';
-      if FileExists(Result + '\' + UtilPrefix + '-ld.bfd.exe') then
-        exit;
-      if IsWin64 then begin
-        Result:=dir + sr.Name + '\prebuilt\windows-x86_64\bin';
-        if FileExists(Result + '\' + UtilPrefix + '-ld.bfd.exe') then
-          exit;
+      api:=StrToIntDef(Copy(sr.Name, 9, 6), 0);
+      for i:=1 to ArchCount do begin
+        if api > Archs[i].ApiLevel then begin
+          p:=dir + sr.Name + '\arch-' + Archs[i].Arch + '\usr\lib' + Archs[i].LibBits;
+          if FileExists(p + '\crtbegin_so.o') then begin
+            Archs[i].LibPath:=p;
+            Archs[i].ApiLevel:=api;
+          end;
+        end;
       end;
     end;
     res:=FindNext(sr);
   end;
   FindClose(sr);
-  MsgBox('Unable to find NDK binutils for ' + UtilPrefix + '.', mbError, MB_OK);
-  Result:='';
+
+  for i:=1 to ArchCount do
+    if (Archs[i].LibPath = '') and IsComponentSelected('units_' + Archs[i].Arch) then begin
+      MsgBox('Unable to find NDK libraries for the "' + Archs[i].Arch + '" CPU target.', mbError, MB_OK);
+      Result:=False;
+      exit;
+    end;
+
+  Result:=True;
 end;
 
 function NextButtonClick(CurPage: Integer): Boolean;
@@ -152,27 +246,16 @@ begin
       exit;
     end;
     Result:=False;
-    // Find libs
-    NdkLib:=NdkPath + 'platforms\android-21\';
-    if not FileExists(NdkLib + 'arch-arm64\usr\lib\crtbegin_so.o') then begin
-      MsgBox('Unable to find NDK library files.', mbError, MB_OK);
+    // Quck check for NDK
+    if not DirExists(NdkPath + 'platforms') or not DirExists(NdkPath + 'toolchains') then begin
+      MsgBox('The selected path does not point to an Android NDK.', mbError, MB_OK);
       exit;
     end;
+    // Find libs
+    if not FindNdkLibPath then
+      exit;
     // Find binutils
-    NdkBinARM:=FindBinUtils('arm-linux-androideabi', 'arm-linux-androideabi');
-    if NdkBinARM = '' then
-      exit;
-    NdkBinAARCH64:=FindBinUtils('aarch64-linux-android', 'aarch64-linux-android');
-    if NdkBinAARCH64 = '' then
-      exit;
-    NdkBinI386:=FindBinUtils('x86', 'i686-linux-android');
-    if NdkBinI386 = '' then
-      exit;
-    NdkBinX86_64:=FindBinUtils('x86_64', 'x86_64-linux-android');
-    if NdkBinX86_64 = '' then
-      exit;
-    NdkBinMIPS:=FindBinUtils('mipsel-linux-android', 'mipsel-linux-android');
-    if NdkBinMIPS = '' then
+    if not FindNdkBinUtils then
       exit;
     Result:=True;
   end;
@@ -186,7 +269,7 @@ procedure WriteConfig;
 var
   conf, nconf: TStringList;
   fn: string;
-  i, j: integer;
+  i, j, idx: integer;
 begin
   fn:=ExpandConstant('{app}\bin\i386-win32\fpc.cfg');
   nconf:=nil;
@@ -194,7 +277,7 @@ begin
   try
     if FileExists(fn) then
       conf.LoadFromFile(fn);
-    
+
     i:=conf.IndexOf(strStartConf);
     j:=conf.IndexOf(strEndConf);
     if (i >= 0) and (j >= 0) and (i < j) then begin
@@ -212,58 +295,54 @@ begin
         end
         else
           i:=conf.Count;
-          
+
+    if Trim(conf.Text) = '' then
+      // Add path to units if the config is empty
+      conf.Add(ExpandConstant('-Fu{app}\units\$fpctarget\*'));
+
     if (i > 0) and (Trim(conf[i - 1]) <> '') then begin
       conf.Insert(i, '');
       i:=i + 1;
     end;
-    
-    if (i < conf.Count) and (Trim(conf[i + 1]) <> '') then
+
+    if (i < conf.Count) and (Trim(conf[i]) <> '') then
       conf.Insert(i, '');
+
+    idx:=i;
 
     // NDK config
     nconf:=TStringList.Create;
     nconf.Add(strStartConf);
     nconf.Add('');
     nconf.Add('#ifdef android');
-    nconf.Add('  #ifdef cpuarm');
-    if IsComponentSelected('units_arm\armv7a') then begin
-      nconf.Add('    # Use CPU armv7a and FPU vfpv3 since corresponding units are installed');
-      nconf.Add('    -Cparmv7a');
-      nconf.Add('    -Cfvfpv3');
+
+    for i:=1 to ArchCount do begin
+      if (Archs[i].UtilsPath = '') or (Archs[i].LibPath = '') then
+        continue;
+
+      nconf.Add('  #ifdef cpu' + Archs[i].CPUDef);
+      if (Archs[i].CPUDef = 'arm') and IsComponentSelected('units_arm\armv7a') then begin
+        nconf.Add('    # Use CPU armv7a and FPU vfpv3-d16 since corresponding units are installed');
+        nconf.Add('    -Cparmv7a');
+        nconf.Add('    -Cfvfpv3_d16');
+      end;
+      nconf.Add('    -Fl' + Archs[i].LibPath);
+      nconf.Add('    -FD' + Archs[i].UtilsPath);
+      nconf.Add('  #endif');
     end;
-    nconf.Add('    -Fl' + NdkLib + 'arch-arm\usr\lib');
-    nconf.Add('    -FD' + NdkBinARM);
-    nconf.Add('  #endif');
-    nconf.Add('  #ifdef cpuaarch64');
-    nconf.Add('    -Fl' + NdkLib + 'arch-arm64\usr\lib');
-    nconf.Add('    -FD' + NdkBinAARCH64);
-    nconf.Add('  #endif');
-    nconf.Add('  #ifdef cpui386');
-    nconf.Add('    -Fl' + NdkLib + 'arch-x86\usr\lib');
-    nconf.Add('    -FD' + NdkBinI386);
-    nconf.Add('  #endif');
-    nconf.Add('  #ifdef cpux86_64');
-    nconf.Add('    -Fl' + NdkLib + 'arch-x86_64\usr\lib64');
-    nconf.Add('    -FD' + NdkBinX86_64);
-    nconf.Add('  #endif');
-    nconf.Add('  #ifdef cpumips32');
-    nconf.Add('    -Fl' + NdkLib + 'arch-mips\usr\lib');
-    nconf.Add('    -FD' + NdkBinMIPS);
-    nconf.Add('  #endif');
     nconf.Add('#endif');
     nconf.Add('');
     nconf.Add(strEndConf);
 
     for j:=nconf.Count - 1 downto 0 do
-      conf.Insert(i, nconf[j]);
+      conf.Insert(idx, nconf[j]);
 
     conf.SaveToFile(fn);
   finally
     conf.Free;
     nconf.Free;
   end;
-  
+
   // Save NDK path
   if RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\FreePascal_is1') then
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\FreePascal_is1',
@@ -276,4 +355,3 @@ begin
     WriteConfig;
   end;
 end;
-
