@@ -212,7 +212,7 @@ begin
       api:=StrToIntDef(Copy(sr.Name, 9, 6), 0);
       for i:=1 to ArchCount do begin
         if api > Archs[i].ApiLevel then begin
-          p:=Format('%s%s\arch-%s\usr\lib%s' , [dir, sr.Name, Archs[i].Arch, Archs[i].LibBits]);
+          p:=dir + sr.Name + '\arch-' + Archs[i].Arch + '\usr\lib' + Archs[i].LibBits;
           if FileExists(p + '\crtbegin_so.o') then begin
             Archs[i].LibPath:=p;
             Archs[i].ApiLevel:=api;
