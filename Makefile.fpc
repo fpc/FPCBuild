@@ -142,27 +142,27 @@ fpcsrc/build-stamp.jvm-android:
 build_android_arm: fpcsrc/build-stamp.arm-android
 
 fpcsrc/build-stamp.arm-android:
-	$(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=arm CROSSBINDIR=$(ANDROID_ARM_BINUTILS) BINUTILSPREFIX=arm-linux-androideabi- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-arm/usr/lib"
+	$(MAKE) -C fpcsrc crossall OS_TARGET=android CPU_TARGET=arm CROSSBINDIR=$(ANDROID_ARM_BINUTILS) BINUTILSPREFIX=arm-linux-androideabi- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-arm/usr/lib"
 
 build_android_aarch64: fpcsrc/build-stamp.aarch64-android
 
 fpcsrc/build-stamp.aarch64-android:
-	$(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=aarch64 CROSSBINDIR=$(ANDROID_AARCH64_BINUTILS) BINUTILSPREFIX=aarch64-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-arm64/usr/lib"
+	$(MAKE) -C fpcsrc crossall OS_TARGET=android CPU_TARGET=aarch64 CROSSBINDIR=$(ANDROID_AARCH64_BINUTILS) BINUTILSPREFIX=aarch64-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-arm64/usr/lib"
 
 build_android_i386: fpcsrc/build-stamp.i386-android
 
 fpcsrc/build-stamp.i386-android:
-	$(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=i386 CROSSBINDIR=$(ANDROID_X86_BINUTILS) BINUTILSPREFIX=i686-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-x86/usr/lib"
+	$(MAKE) -C fpcsrc crossall OS_TARGET=android CPU_TARGET=i386 CROSSBINDIR=$(ANDROID_X86_BINUTILS) BINUTILSPREFIX=i686-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-x86/usr/lib"
 
 build_android_x86_64: fpcsrc/build-stamp.x86_64-android
 
 fpcsrc/build-stamp.x86_64-android:
-	$(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=x86_64 CROSSBINDIR=$(ANDROID_X86_64_BINUTILS) BINUTILSPREFIX=x86_64-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-x86_64/usr/lib64"
+	$(MAKE) -C fpcsrc crossall OS_TARGET=android CPU_TARGET=x86_64 CROSSBINDIR=$(ANDROID_X86_64_BINUTILS) BINUTILSPREFIX=x86_64-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-x86_64/usr/lib64"
 
 build_android_mipsel: fpcsrc/build-stamp.mipsel-android
 
 fpcsrc/build-stamp.mipsel-android:
-	$(MAKE) -C fpcsrc build OS_TARGET=android CPU_TARGET=mipsel CROSSBINDIR=$(ANDROID_MIPS_BINUTILS) BINUTILSPREFIX=mipsel-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-mips/usr/lib"
+	$(MAKE) -C fpcsrc crossall OS_TARGET=android CPU_TARGET=mipsel CROSSBINDIR=$(ANDROID_MIPS_BINUTILS) BINUTILSPREFIX=mipsel-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-mips/usr/lib"
 
 fpcsrc/build-stamp.cross-msdos:
 	$(MAKE) -C fpcsrc clean buildbase OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
@@ -1152,16 +1152,16 @@ innoandroidbuild:
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
 	$(MKDIR) $(INNODIR)
-	$(COPYTREE) demo $(INNODIR)
 # arm
+	$(MAKE) -C fpcsrc rtl_clean packages_clean OS_TARGET=android CPU_TARGET=arm
 	$(MAKE) build_android_arm OS_TARGET=android CPU_TARGET=arm
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=arm
 	$(MOVE) $(INNODIR)/units/arm-android $(INNODIR)/units/armv5t-android
 	$(MOVE) $(INNODIR)/fpmkinst/arm-android $(INNODIR)/fpmkinst/armv5t-android
 	$(DEL) fpcsrc/build-stamp.arm-android
 # arm-v7a
-	$(MAKE) -C fpcsrc clean OS_TARGET=android CPU_TARGET=arm
-	$(MAKE) build_android_arm OS_TARGET=android CPU_TARGET=arm CROSSOPT="-Cparmv7a -Cfvfpv3"
+	$(MAKE) -C fpcsrc rtl_clean packages_clean OS_TARGET=android CPU_TARGET=arm
+	$(MAKE) build_android_arm OS_TARGET=android CPU_TARGET=arm CROSSOPT="-Cparmv7a -Cfvfpv3_d16"
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=arm
 	$(MOVE) $(INNODIR)/units/arm-android $(INNODIR)/units/armv7a-android
 	$(MOVE) $(INNODIR)/fpmkinst/arm-android $(INNODIR)/fpmkinst/armv7a-android
@@ -1204,7 +1204,7 @@ innomsdos : checkfpcdir
 	$(MAKE) innoclean	
 
 innoandroid : checkfpcdir
-	$(MAKE) OS_TARGET=android CPU_TARGET=arm innoandroidbuild NOGDB=1
+	$(MAKE) innoandroidbuild NOGDB=1
 	$(MAKE) innoclean
 
 inno: checkfpcdir innobuild innoclean
