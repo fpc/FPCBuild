@@ -9,7 +9,7 @@ AutoReqProv: no
 ExclusiveArch: i386 i586 i686 ppc amd64 x86_64
 License: GPL and modified LGPL
 Group: Development/Languages
-Source: %{name}-%{version}%MINOR_PATCH%-src.tar.gz
+Source: %{name}-%{version}%VERSION_SUFFIX%-src.tar.gz
 Summary: Free Pascal Compiler
 Packager: Peter Vreman (peter@freepascal.org)
 URL: http://www.freepascal.org/
