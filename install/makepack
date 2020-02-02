@@ -118,7 +118,13 @@ if [ "$FULLTARGET" != "$FULLSOURCE" ]; then
 else
    CROSS=
    CROSSPREFIX=
-   export IDE=ide
+   # Starting with version 3.1.1, the IDE is not a separate part anymore, but part of utils
+   if [ "X${VERSION#3.0.}" != "X${VERSION}" ] ; then
+     # Version 3.0.x, add the IDE as separate part
+     export IDE=ide
+   else
+     export IDE=
+   fi
 fi
 
 
