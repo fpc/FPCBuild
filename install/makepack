@@ -76,11 +76,12 @@ fi
 GDBMI_DEFAULT_OS_LIST=`grep '^GDBMI_DEFAULT_OS_LIST *=' Makefile.fpc | sed 's+[^=]*= *\(.*\)+\1+'`
 
 # Use of GDBMI for text mode IDE, starting with version 3.1.1
-if  [ "X${VERSION%3.0.}" != "X${VERSION}" ] ; then
+if  [ "X${VERSION#3.0.}" == "X${VERSION}" ] ; then
   if  [ "X${NOGDB}" == "X" ] ; then
 #  Determine if we should use GDBMI for Text Mode IDE compilation
     if [ "X${NOGDBMI}" == "X" ]; then
-      if [ "X$,${GDBMI_DEFAULT_OS_LIST$%{TARGETOS}}" != "X${GDBMI_DEFAULT_LIST}" ] ; then
+      if [ "X${GDBMI_DEFAULT_OS_LIST/%{TARGETOS}}" != "X${GDBMI_DEFAULT_LIST}" ] ; then
+        echo "Use GDBMI"
         export GDBMI=1
       fi
     fi
