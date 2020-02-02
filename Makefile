@@ -2828,12 +2828,13 @@ RPM:=$(strip $(wildcard $(addsuffix /rpm$(SRCEXEEXT),$(SEARCHPATH))))
 ifneq ($(RPM),)
 ifneq ($(wildcard $(CVSINSTALL)/fpc.spec),)
 .PHONY: rpmcopy rpm
-MINOR_PATCH:=$(shell echo $(PACKAGE_VERSION) | awk -F '.' '{ print substr($$3,2) }')
-MAIN_VERSION:=$(shell echo $(PACKAGE_VERSION) | awk {'sub("[A-Z,a-z].*", ""); print'})
-ifeq ($(MINOR_PATCH),)
+VERSION_SUFFIX:=$(shell echo $(PACKAGE_VERSION) | awk -F '.' '{ print substr($$3,2) }')
+MINOR_PATCH_VERSION:=$(shell echo $(VERSION_SUFFIX) | awk {'sub("^[-]", ""); print'})
+MAIN_VERSION:=$(shell echo $(PACKAGE_VERSION) | awk {'sub("[A-Z,a-z,-].*", ""); print'})
+ifeq ($(MINOR_PATCH_VERSION),)
 RELEASE=1
 else
-RELEASE=0.$(MINOR_PATCH)
+RELEASE=0.$(MINOR_PATCH_VERSION)
 endif
 RPMBUILD=$(firstword $(strip $(wildcard $(addsuffix /rpmbuild,$(SEARCHPATH)))))
 ifeq ($(RPMBUILD),)
@@ -2856,7 +2857,7 @@ rpmcopy: distclean
 	false || [ -d $(RPMDIR)/RPMS ] || install -d $(RPMDIR)/RPMS
 	false || [ -d $(RPMDIR)/SRPMS ] || install -d $(RPMDIR)/SRPMS
 	rm -rf $(RPMSRCDIR)
-	sed -e "s+%FPCVERSION%+$(MAIN_VERSION)+" -e "s+%MINOR_PATCH%+$(MINOR_PATCH)+" -e "s+%RELEASE%+$(RELEASE)+" $(CVSINSTALL)/fpc.spec > $(RPMSPECFILE)
+	sed -e "s+%FPCVERSION%+$(MAIN_VERSION)+" -e "s+%VERSION_SUFFIX%+$(VERSION_SUFFIX)+" -e "s+%RELEASE%+$(RELEASE)+" $(CVSINSTALL)/fpc.spec > $(RPMSPECFILE)
 ifndef NODOCS
 	cat $(CVSINSTALL)/fpcdoc.spec >> $(RPMSPECFILE)
 endif
