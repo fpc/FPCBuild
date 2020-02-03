@@ -2301,8 +2301,13 @@ help:
 	@$(ECHO)    all         Alias for build
 	@$(ECHO)    build       Build a new compiler and all packages
 	@$(ECHO)    install     Install newly build files
-	@$(ECHO)    zipinstall  Create zip/tar of installed files
-	@$(ECHO)    singlezipinstall  Alias for zipinstall
+	@$(ECHO)    zipinstall  Create a zip/tar archive for every package
+	@$(ECHO)    singlezipinstall
+	@$(ECHO)                Create a single zip/tar archive
+	@$(ECHO)    crosszipinstall
+	@$(ECHO)                Build a cross compiler and create zip/tar for every package
+	@$(ECHO)    crosssinglezipinstall
+	@$(ECHO)                Build a cross compiler and a create single zip/tar archive
 	@$(ECHO)
 	@$(ECHO) Distribution Targets:
 	@$(ECHO)    rpm         Build linux .rpm packages
@@ -2330,7 +2335,7 @@ LINKTREE:=$(CPPROG) -Rfpl
 endif
 endif
 BUILDSTAMP=fpcsrc/build-stamp.$(FULL_TARGET)
-.PHONY: all clean distclean build install installbase zipinstall singlezipinstall
+.PHONY: all clean distclean build install installbase zipinstall singlezipinstall crosssinglezipinstall
 all: build
 build: $(BUILDSTAMP)
 $(BUILDSTAMP):
@@ -2408,10 +2413,12 @@ zipinstall: $(BUILDSTAMP)
 	$(MAKE) fpc_zipinstall ZIPTARGET=installbase ZIPNAME=base
 	$(MAKE) -C fpcsrc zipinstallother
 singlezipinstall: $(BUILDSTAMP)
-	$(MAKE) fpc_zipinstall ZIPTARGET=install ZIPNAME=fpc-$(PACKAGE_VERSION)
+	$(MAKE) fpc_zipinstall ZIPTARGET=install FULLZIPNAME=fpc-$(PACKAGE_VERSION).$(FULL_TARGET)
 crosszipinstall: $(BUILDSTAMP)
 	$(MAKE) fpc_zipinstall CROSSINSTALL=1 ZIPTARGET=installbase ZIPNAME=base
 	$(MAKE) -C fpcsrc zipinstallother CROSSINSTALL=1
+crosssinglezipinstall: $(BUILDSTAMP)
+	$(MAKE) fpc_zipinstall ZIPTARGET=install FULLZIPNAME=fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET) CROSSINSTALL=1
 .PHONY: docspdf makepackdocs docsrcinstall docsrc
 DOCSOURCEDIR=$(INSTALL_SOURCEDIR)/../docs
 docspdf:
