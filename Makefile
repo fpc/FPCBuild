@@ -2949,11 +2949,13 @@ ifeq ($(ANDROID_AARCH64_BINUTILS),)
   endif
   ifeq ($(WINARCH),AMD64)
     NDKARCH:=windows-x86_64
-    ANDROID_ARM_BINUTILS:=$(call gettoolchain,arm-linux-androideabi,arm-linux-androideabi)
+    ANDROID_AARCH64_BINUTILS:=$(call gettoolchain,aarch64,aarch64-linux-android)
   endif
-  ANDROID_AARCH64_BINUTILS:=$(call gettoolchain,arm64,arm64-linux-android)
   ifeq ($(ANDROID_AARCH64_BINUTILS),)
-    ANDROID_AARCH64_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /aarch64-linux-android-as$(SRCEXEEXT),$(SEARCHPATH)))))
+    ANDROID_AARCH64_BINUTILS:=$(call gettoolchain,arm64,arm64-linux-android)
+    ifeq ($(ANDROID_AARCH64_BINUTILS),)
+      ANDROID_AARCH64_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /aarch64-linux-android-as$(SRCEXEEXT),$(SEARCHPATH)))))
+    endif
   endif
 endif
 ANDROID_ARM_BINUTILS:=$(call gettoolchain,arm-linux-androideabi,arm-linux-androideabi)
