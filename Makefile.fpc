@@ -139,31 +139,6 @@ fpcsrc/build-stamp.jvm-android:
 # currently, jvm supports only build base, so we have to use make all here		
 	$(MAKE) -C fpcsrc all OS_TARGET=android CPU_TARGET=jvm
 
-build_android_arm: fpcsrc/build-stamp.arm-android
-
-fpcsrc/build-stamp.arm-android:
-	$(MAKE) -C fpcsrc crossall OS_TARGET=android CPU_TARGET=arm CROSSBINDIR=$(ANDROID_ARM_BINUTILS) BINUTILSPREFIX=arm-linux-androideabi- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-arm/usr/lib"
-
-build_android_aarch64: fpcsrc/build-stamp.aarch64-android
-
-fpcsrc/build-stamp.aarch64-android:
-	$(MAKE) -C fpcsrc crossall OS_TARGET=android CPU_TARGET=aarch64 CROSSBINDIR=$(ANDROID_AARCH64_BINUTILS) BINUTILSPREFIX=aarch64-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-arm64/usr/lib"
-
-build_android_i386: fpcsrc/build-stamp.i386-android
-
-fpcsrc/build-stamp.i386-android:
-	$(MAKE) -C fpcsrc crossall OS_TARGET=android CPU_TARGET=i386 CROSSBINDIR=$(ANDROID_X86_BINUTILS) BINUTILSPREFIX=i686-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-x86/usr/lib"
-
-build_android_x86_64: fpcsrc/build-stamp.x86_64-android
-
-fpcsrc/build-stamp.x86_64-android:
-	$(MAKE) -C fpcsrc crossall OS_TARGET=android CPU_TARGET=x86_64 CROSSBINDIR=$(ANDROID_X86_64_BINUTILS) BINUTILSPREFIX=x86_64-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-x86_64/usr/lib64"
-
-build_android_mipsel: fpcsrc/build-stamp.mipsel-android
-
-fpcsrc/build-stamp.mipsel-android:
-	$(MAKE) -C fpcsrc crossall OS_TARGET=android CPU_TARGET=mipsel CROSSBINDIR=$(ANDROID_MIPS_BINUTILS) BINUTILSPREFIX=mipsel-linux-android- CROSSOPT="$(CROSSOPT) -Fl$(NDK_LIB)/arch-mips/usr/lib"
-
 fpcsrc/build-stamp.cross-msdos:
 	$(MAKE) -C fpcsrc clean buildbase OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="-Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
 	$(ECHO) $(DATE) > fpcsrc/build-stamp.cross-msdos
@@ -917,6 +892,7 @@ endif
 
 ifeq ($(OS_TARGET),android)
 ifneq ($(CPU_TARGET),jvm)
+ifdef CROSSCOMPILE
 
 ifeq ($(NDK),)
   $(error It is needed to set the Android NDK path using NDK=<path>)
@@ -928,6 +904,11 @@ ifeq ($(wildcard $(NDK)),)
   $(error NDK path does not exist: $(NDK))
 endif
 
+NDK_LIB:=$(NDK)/platforms/android-21
+ifeq ($(wildcard $(NDK_LIB)/arch-arm64/usr/lib/crtbegin_so.o),)
+  $(error Unable to find NDK library files in $(NDK_LIB))
+endif
+
 NDKARCH:=$(notdir $(firstword $(wildcard $(NDK)/prebuilt/$(OS_SOURCE)-$(CPU_SOURCE))))
 
 ifeq ($(NDKARCH),)
@@ -936,8 +917,8 @@ endif
 
 gettoolchain=$(dir $(firstword $(foreach d, $(wildcard $(NDK)/toolchains/$(1)-*.*), $(wildcard $(d)/prebuilt/$(NDKARCH)/bin/$(2)-ld.bfd$(SRCEXEEXT)))))
 
-ANDROID_ARM_BINUTILS:=$(call gettoolchain,arm-linux-androideabi,arm-linux-androideabi)
-ifeq ($(ANDROID_ARM_BINUTILS),)
+ANDROID_AARCH64_BINUTILS:=$(call gettoolchain,aarch64,aarch64-linux-android)
+ifeq ($(ANDROID_AARCH64_BINUTILS),)
   WINARCH:=$(PROCESSOR_ARCHITEW6432)
   ifeq ($(WINARCH),)
     WINARCH:=$(PROCESSOR_ARCHITECTURE)
@@ -946,23 +927,18 @@ ifeq ($(ANDROID_ARM_BINUTILS),)
     NDKARCH:=windows-x86_64
     ANDROID_ARM_BINUTILS:=$(call gettoolchain,arm-linux-androideabi,arm-linux-androideabi)
   endif
-  ifeq ($(ANDROID_ARM_BINUTILS),)
-    ANDROID_ARM_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /arm-linux-androideabi-as$(SRCEXEEXT),$(SEARCHPATH)))))
-    ifeq ($(ANDROID_ARM_BINUTILS),)
-      $(error Unable to find binutils for arm-android)
-    else
-      $(info "ANDROID_ARM_BINUTILS is $(ANDROID_ARM_BINUTILS)")
-    endif
-  endif
-endif
-
-ANDROID_AARCH64_BINUTILS:=$(call gettoolchain,aarch64,aarch64-linux-android)
-ifeq ($(ANDROID_AARCH64_BINUTILS),)
   ANDROID_AARCH64_BINUTILS:=$(call gettoolchain,arm64,arm64-linux-android)
   ifeq ($(ANDROID_AARCH64_BINUTILS),)
     ANDROID_AARCH64_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /aarch64-linux-android-as$(SRCEXEEXT),$(SEARCHPATH)))))
-    ifeq ($(ANDROID_AARCH64_BINUTILS),)
-      $(error Unable to find binutils for aarch64-android)
+  endif
+endif
+
+ANDROID_ARM_BINUTILS:=$(call gettoolchain,arm-linux-androideabi,arm-linux-androideabi)
+ifeq ($(ANDROID_ARM_BINUTILS),)
+  ifeq ($(ANDROID_ARM_BINUTILS),)
+    ANDROID_ARM_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /arm-linux-androideabi-as$(SRCEXEEXT),$(SEARCHPATH)))))
+    ifneq ($(ANDROID_ARM_BINUTILS),)
+      $(info "ANDROID_ARM_BINUTILS is $(ANDROID_ARM_BINUTILS)")
     endif
   endif
 endif
@@ -970,34 +946,65 @@ endif
 ANDROID_X86_BINUTILS:=$(call gettoolchain,x86,i686-linux-android)
 ifeq ($(ANDROID_X86_BINUTILS),)
   ANDROID_X86_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /i686-linux-android-as$(SRCEXEEXT),$(SEARCHPATH)))))
-  ifeq ($(ANDROID_X86_BINUTILS),)
-    $(error Unable to find binutils for i386-android)
-  endif
 endif
 
 ANDROID_X86_64_BINUTILS:=$(call gettoolchain,x86_64,x86_64-linux-android)
 ifeq ($(ANDROID_X86_64_BINUTILS),)
   ANDROID_X86_64_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /x86_64-linux-android-as$(SRCEXEEXT),$(SEARCHPATH)))))
-  ifeq ($(ANDROID_X86_64_BINUTILS),)
-    $(error Unable to find binutils for x86_64-android)
-  endif
 endif
 
 ANDROID_MIPS_BINUTILS:=$(call gettoolchain,mipsel-linux-android,mipsel-linux-android)
 ifeq ($(ANDROID_MIPS_BINUTILS),)
   ANDROID_MIPS_BINUTILS:=$(dir $(firstword $(wildcard $(addsuffix /mipsel-linux-android-as$(SRCEXEEXT),$(SEARCHPATH)))))
-  ifeq ($(ANDROID_MIPS_BINUTILS),)
-    $(error Unable to find binutils for mipsel-android)
-  endif
-endif
-
-NDK_LIB:=$(NDK)/platforms/android-21
-ifeq ($(wildcard $(NDK_LIB)/arch-arm64/usr/lib/crtbegin_so.o),)
-  $(error Unable to find NDK library files in $(NDK_LIB))
 endif
 
 unexport BUILDFULLNATIVE
 
+ifeq ($(CPU_TARGET),arm)
+  ifeq ($(ANDROID_ARM_BINUTILS),)
+    $(error Unable to find binutils for arm-android)
+  endif
+  CROSSBINDIR=$(ANDROID_ARM_BINUTILS)
+  override LIBDIR+=$(NDK_LIB)/arch-arm/usr/lib
+endif
+
+ifeq ($(CPU_TARGET),aarch64)
+  ifeq ($(ANDROID_AARCH64_BINUTILS),)
+    $(error Unable to find binutils for aarch64-android)
+  endif
+  CROSSBINDIR=$(ANDROID_AARCH64_BINUTILS)
+  override LIBDIR+=$(NDK_LIB)/arch-arm64/usr/lib
+endif
+
+ifeq ($(CPU_TARGET),i386)
+  ifeq ($(ANDROID_X86_BINUTILS),)
+    $(error Unable to find binutils for i386-android)
+  endif
+  CROSSBINDIR=$(ANDROID_X86_BINUTILS)
+  override LIBDIR+=$(NDK_LIB)/arch-x86/usr/lib
+endif
+
+ifeq ($(CPU_TARGET),x86_64)
+  ifeq ($(ANDROID_X86_64_BINUTILS),)
+    $(error Unable to find binutils for x86_64-android)
+  endif
+  CROSSBINDIR=$(ANDROID_X86_64_BINUTILS)
+  override LIBDIR+=$(NDK_LIB)/arch-x86_64/usr/lib64
+endif
+
+ifeq ($(CPU_TARGET),mipsel)
+  ifeq ($(ANDROID_MIPS_BINUTILS),)
+    $(error Unable to find binutils for mipsel-android)
+  endif
+  CROSSBINDIR=$(ANDROID_MIPS_BINUTILS)
+  override LIBDIR+=$(NDK_LIB)/arch-mips/usr/lib
+endif
+
+export CROSSBINDIR
+export BINUTILSPREFIX
+export LIBDIR
+
+endif
 endif
 endif
 
@@ -1158,29 +1165,29 @@ innoandroidbuild:
 	$(MKDIR) $(INNODIR)
 # arm
 	$(MAKE) -C fpcsrc rtl_clean packages_clean OS_TARGET=android CPU_TARGET=arm
-	$(MAKE) build_android_arm OS_TARGET=android CPU_TARGET=arm
+	$(MAKE) build OS_TARGET=android CPU_TARGET=arm CROSSINSTALL=1
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=arm
 	$(MOVE) $(INNODIR)/units/arm-android $(INNODIR)/units/armv5t-android
 	$(MOVE) $(INNODIR)/fpmkinst/arm-android $(INNODIR)/fpmkinst/armv5t-android
 	$(DEL) fpcsrc/build-stamp.arm-android
 # arm-v7a
 	$(MAKE) -C fpcsrc rtl_clean packages_clean OS_TARGET=android CPU_TARGET=arm
-	$(MAKE) build_android_arm OS_TARGET=android CPU_TARGET=arm CROSSOPT="-Cparmv7a -Cfvfpv3_d16"
+	$(MAKE) build OS_TARGET=android CPU_TARGET=arm CROSSOPT="-Cparmv7a -Cfvfpv3_d16" CROSSINSTALL=1
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=arm
 	$(MOVE) $(INNODIR)/units/arm-android $(INNODIR)/units/armv7a-android
 	$(MOVE) $(INNODIR)/fpmkinst/arm-android $(INNODIR)/fpmkinst/armv7a-android
 	$(DEL) fpcsrc/build-stamp.arm-android
 # aarch64
-	$(MAKE) build_android_aarch64 OS_TARGET=android CPU_TARGET=aarch64
+	$(MAKE) build OS_TARGET=android CPU_TARGET=aarch64 CROSSINSTALL=1
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=aarch64
 # i386
-	$(MAKE) build_android_i386 OS_TARGET=android CPU_TARGET=i386
+	$(MAKE) build OS_TARGET=android CPU_TARGET=i386 CROSSINSTALL=1
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=i386
 # x86_64
-	$(MAKE) build_android_x86_64 OS_TARGET=android CPU_TARGET=x86_64
+	$(MAKE) build OS_TARGET=android CPU_TARGET=x86_64 CROSSINSTALL=1
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=x86_64
 # mipsel
-	$(MAKE) build_android_mipsel OS_TARGET=android CPU_TARGET=mipsel
+	$(MAKE) build OS_TARGET=android CPU_TARGET=mipsel CROSSINSTALL=1
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=android CPU_TARGET=mipsel
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	fpcmkcfg -t install/fpcandroid.ist -o $(INNODIR)/fpcandroid.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
