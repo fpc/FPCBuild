@@ -2413,7 +2413,7 @@ zipinstall: $(BUILDSTAMP)
 	$(MAKE) fpc_zipinstall ZIPTARGET=installbase ZIPNAME=base
 	$(MAKE) -C fpcsrc zipinstallother
 singlezipinstall: $(BUILDSTAMP)
-ifeq($(FULL_SOURCE),$(FULL_TARGET))
+ifeq ($(FULL_SOURCE),$(FULL_TARGET))
 	$(MAKE) fpc_zipinstall ZIPTARGET=install FULLZIPNAME=fpc-$(PACKAGE_VERSION).$(TARGETSUFFIX)
 else
 	$(MAKE) fpc_zipinstall ZIPTARGET=install FULLZIPNAME=fpc-$(PACKAGE_VERSION).$(TARGETSUFFIX).built.on.$(SOURCESUFFIX)
