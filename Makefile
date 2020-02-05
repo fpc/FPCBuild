@@ -2413,12 +2413,16 @@ zipinstall: $(BUILDSTAMP)
 	$(MAKE) fpc_zipinstall ZIPTARGET=installbase ZIPNAME=base
 	$(MAKE) -C fpcsrc zipinstallother
 singlezipinstall: $(BUILDSTAMP)
-	$(MAKE) fpc_zipinstall ZIPTARGET=install FULLZIPNAME=fpc-$(PACKAGE_VERSION).$(FULL_TARGET)
+ifeq($(FULL_SOURCE),$(FULL_TARGET))
+	$(MAKE) fpc_zipinstall ZIPTARGET=install FULLZIPNAME=fpc-$(PACKAGE_VERSION).$(TARGETSUFFIX)
+else
+	$(MAKE) fpc_zipinstall ZIPTARGET=install FULLZIPNAME=fpc-$(PACKAGE_VERSION).$(TARGETSUFFIX).built.on.$(SOURCESUFFIX)
+endif
 crosszipinstall: $(BUILDSTAMP)
 	$(MAKE) fpc_zipinstall CROSSINSTALL=1 ZIPTARGET=installbase ZIPNAME=base
 	$(MAKE) -C fpcsrc zipinstallother CROSSINSTALL=1
 crosssinglezipinstall: $(BUILDSTAMP)
-	$(MAKE) fpc_zipinstall ZIPTARGET=install FULLZIPNAME=fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET) CROSSINSTALL=1
+	$(MAKE) fpc_zipinstall ZIPTARGET=install FULLZIPNAME=fpc-$(PACKAGE_VERSION).$(SOURCESUFFIX).cross.$(TARGETSUFFIX) CROSSINSTALL=1
 .PHONY: docspdf makepackdocs docsrcinstall docsrc
 DOCSOURCEDIR=$(INSTALL_SOURCEDIR)/../docs
 docspdf:
