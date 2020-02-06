@@ -61,28 +61,28 @@ Source: doc\fpc\readme.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist isr
 Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: base
 
 ; arm
-Source: units\armv5t-android\*.*; DestDir: {app}\units\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm\arm
-Source: fpmkinst\armv5t-android\*.*; DestDir: {app}\fpmkinst\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm\arm
+Source: units\armv5t-android\*.*; DestDir: {app}\units\arm-android; Flags: ignoreversion recursesubdirs sortfilesbyextension solidbreak; Components: units_arm\arm
+Source: fpmkinst\armv5t-android\*.*; DestDir: {app}\fpmkinst\arm-android; Flags: ignoreversion recursesubdirs solidbreak; Components: units_arm\arm
 
 ; arm-v7a
-Source: units\armv7a-android\*.*; DestDir: {app}\units\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm\armv7a
-Source: fpmkinst\armv7a-android\*.*; DestDir: {app}\fpmkinst\arm-android; Flags: ignoreversion recursesubdirs; Components: units_arm\armv7a
+Source: units\armv7a-android\*.*; DestDir: {app}\units\arm-android; Flags: ignoreversion recursesubdirs sortfilesbyextension solidbreak; Components: units_arm\armv7a
+Source: fpmkinst\armv7a-android\*.*; DestDir: {app}\fpmkinst\arm-android; Flags: ignoreversion recursesubdirs solidbreak; Components: units_arm\armv7a
 
 ; aarch64
-Source: units\aarch64-android\*.*; DestDir: {app}\units\aarch64-android; Flags: ignoreversion recursesubdirs; Components: units_arm64
-Source: fpmkinst\aarch64-android\*.*; DestDir: {app}\fpmkinst\aarch64-android; Flags: ignoreversion recursesubdirs; Components: units_arm64
+Source: units\aarch64-android\*.*; DestDir: {app}\units\aarch64-android; Flags: ignoreversion recursesubdirs sortfilesbyextension solidbreak; Components: units_arm64
+Source: fpmkinst\aarch64-android\*.*; DestDir: {app}\fpmkinst\aarch64-android; Flags: ignoreversion recursesubdirs solidbreak; Components: units_arm64
 
 ; i386
-Source: units\i386-android\*.*; DestDir: {app}\units\i386-android; Flags: ignoreversion recursesubdirs; Components: units_x86
-Source: fpmkinst\i386-android\*.*; DestDir: {app}\fpmkinst\i386-android; Flags: ignoreversion recursesubdirs; Components: units_x86
+Source: units\i386-android\*.*; DestDir: {app}\units\i386-android; Flags: ignoreversion recursesubdirs sortfilesbyextension solidbreak; Components: units_x86
+Source: fpmkinst\i386-android\*.*; DestDir: {app}\fpmkinst\i386-android; Flags: ignoreversion recursesubdirs solidbreak; Components: units_x86
 
 ; x86_64
-Source: units\x86_64-android\*.*; DestDir: {app}\units\x86_64-android; Flags: ignoreversion recursesubdirs; Components: units_x86_64
-Source: fpmkinst\x86_64-android\*.*; DestDir: {app}\fpmkinst\x86_64-android; Flags: ignoreversion recursesubdirs; Components: units_x86_64
+Source: units\x86_64-android\*.*; DestDir: {app}\units\x86_64-android; Flags: ignoreversion recursesubdirs sortfilesbyextension solidbreak; Components: units_x86_64
+Source: fpmkinst\x86_64-android\*.*; DestDir: {app}\fpmkinst\x86_64-android; Flags: ignoreversion recursesubdirs solidbreak; Components: units_x86_64
 
 ; mipsel
-Source: units\mipsel-android\*.*; DestDir: {app}\units\mipsel-android; Flags: ignoreversion recursesubdirs; Components: units_mips
-Source: fpmkinst\mipsel-android\*.*; DestDir: {app}\fpmkinst\mipsel-android; Flags: ignoreversion recursesubdirs; Components: units_mips
+Source: units\mipsel-android\*.*; DestDir: {app}\units\mipsel-android; Flags: ignoreversion recursesubdirs sortfilesbyextension solidbreak; Components: units_mips
+Source: fpmkinst\mipsel-android\*.*; DestDir: {app}\fpmkinst\mipsel-android; Flags: ignoreversion recursesubdirs solidbreak; Components: units_mips
 
 [Components]
 Name: base; Description: "Free Pascal cross compilers for Android"; Flags: fixed; Types: Custom Minimum Full
