@@ -3054,7 +3054,7 @@ ifeq ($(wildcard doc-pdf.zip),)
 	@exit 1
 endif
 endif
-ifndef NOGDB
+ifeq ($(LOOKFORLIBGDBDIR),1)
 ifeq ($(wildcard fpcsrc/libgdb/win32/libgdb.a),)
 ifeq ($(wildcard fpcsrc/libgdb/win32/i386/libgdb.a),)
 	@$(ECHO) "Libgdb not available. Please get and unzip libgdb-*.i386-win32.zip in fpcsrc/."
