@@ -1038,7 +1038,7 @@ ifeq ($(wildcard doc-pdf.zip),)
 	@exit 1
 endif
 endif
-ifndef NOGDB
+ifeq ($(LOOKFORLIBGDBDIR),1)
 # Check for libgdb
 ifeq ($(wildcard fpcsrc/libgdb/win32/libgdb.a),)
 ifeq ($(wildcard fpcsrc/libgdb/win32/i386/libgdb.a),)
