@@ -399,17 +399,28 @@ function substitute_version_string ()
       fi
     fi
     if [ "$subst_pattern" == "yes" ] ; then
-      echo "File $file contains string \"$VERSION\", trying to subtitute with \$fpcversion"
-      sed "s:$VERSION:\$fpcversion:g" $file > $file.tmp
-      sed_res=$?
-      if [ $sed_res -eq 0 ] ; then
-        mv -f $file.tmp $file
-      else
-        echo "sed failed, res=$sed_res"
+      has_dollar_fpcversion=`grep '\$fpcversion' $file`
+      has_CompilerVersion=`grep '\{CompilerVersion\}' $file`
+      if [ -n "$has_dollar_fpcversion" ] ; then
+        echo "File $file contains string \"$VERSION\", trying to subtitute with \"\$fpcversion\""
+        sed "s:$VERSION:\$fpcversion:g" $file > $file.tmp
+        sed_res=$?
+        if [ $sed_res -eq 0 ] ; then
+          mv -f $file.tmp $file
+        else
+          echo "sed failed, res=$sed_res"
+        fi
+      elif [ -n "$has_CompilerVersion" ] ; then
+        echo "File $file contains string \"$VERSION\", trying to subtitute with \"{CompilerVersion}\""
+        sed "s:$VERSION:\{CompilerVersion\}:g" $file > $file.tmp
+        sed_res=$?
+        if [ $sed_res -eq 0 ] ; then
+          mv -f $file.tmp $file
+        else
+          echo "sed failed, res=$sed_res"
+        fi
       fi
     fi
-  else
-    echo "Pattern $VERSION not found in $file"
   fi
 }
 
