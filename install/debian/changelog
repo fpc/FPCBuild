@@ -1,4 +1,10 @@
 
+fpc (3.2.0rc1-0) unstable; urgency=low
+
+RC1 for next major version.
+
+ -- Marco van de Voort <marco@freepascal.org>  Wed, 23 Feb 2020 13:06:05 +0100
+
 fpc (3.3.1-0) unstable; urgency=low
 
   * Daily snapshots build.
