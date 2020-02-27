@@ -484,6 +484,7 @@ renametoshort:
 	-mv $(PKGPRE)$(PKGUNITSPRE)users$(ZIPSUFFIX).zip uuser$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)utmp$(ZIPSUFFIX).zip uutmp$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)uuid$(ZIPSUFFIX).zip uuuid$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)vcl-compat$(ZIPSUFFIX).zip uvcl$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)webidl$(ZIPSUFFIX).zip uwidl$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)winceunits$(ZIPSUFFIX).zip uwice$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)winunits-base$(ZIPSUFFIX).zip uwib$(ZIPSUFFIXSHORT).zip
