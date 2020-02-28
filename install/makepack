@@ -179,11 +179,17 @@ if [ ! "$CROSS" = "" ]; then
   fi
 fi
 
+if [ -n "${FPCCPUOPT:-}" ] ; then
+  MAKE_EXTRA="${MAKE_EXTRA:-} FPCCPUOPT=\"$FPCCPUOPT\""
+elif [ -z "${MAKE_EXTRA:-}" ] ; then
+  MAKE_EXTRA=""
+fi
+
 # Build everything using the makefiles
 echo "Starting ${MAKE} distclean CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS"
 ${MAKE} distclean CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS
-echo "Starting ${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" FPC_VERSION=$VERSION"
-${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" FPC_VERSION=$VERSION
+echo "Starting ${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" FPC_VERSION=$VERSION $MAKE_EXTRA"
+${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" FPC_VERSION=$VERSION $MAKE_EXTRA
 if [ $? != 0 ]; then
   echo "Failed to make distribution archive."
   exit 1
