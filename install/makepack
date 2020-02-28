@@ -26,6 +26,14 @@ if [ -z "$FPC" ] ; then
   FPC=fpc
 fi
 
+FULL_DIR_FPC=`which $FPC`
+if [ -z "$FULL_DIR_FPC" ] ; then
+  echo "Compiler $FPC not found"
+  exit 1
+else
+  FPC="$FULL_DIR_FPC"
+fi
+
 # Retrieve current system info by calling FPC. We need
 # to use the | head -n1 to fix a bug in fpc 1.9.4 and earlier
 # that uses exitcode 1 also when printing info resulting in
@@ -163,11 +171,33 @@ if [ "$CROSS" = "" ]; then
       fi
     fi
   fi
-  echo "Starting ${MAKE}  demozip CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS FPC_VERSION=$VERSION MAKEPACK=1"
-  ${MAKE}  demozip CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS FPC_VERSION=$VERSION MAKEPACK=1
+  echo "Starting ${MAKE} demozip CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS FPC_VERSION=$VERSION MAKEPACK=1 FPC=$FPC"
+  ${MAKE} demozip CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS FPC_VERSION=$VERSION MAKEPACK=1 FPC=$FPC
   if [ $? != 0 ]; then
     echo "Failed to make demo source archive."
     exit 1
+  fi
+fi
+
+# Special code for 32-bit linux powerpc
+if [[ ( "$FULLSOURCE" == "powerpc-linux" ) && ( -z "$CROSS" ) ]]; then
+  export TEST_BINUTILSPREFIX=powerpc-linux-
+  export BINUTILSPREFIX=powerpc-linux-
+  GCC_EXTRA_OPTS="$GCC_EXTRA_OPTS -m32"
+  export EXTRAOPT="${EXTRAOPT} -Xd -Fl/usr/lib -Fl/lib -Fd"
+  export FPMAKE_SKIP_CONFIG="-n -XPpowerpc-linux-"
+fi
+
+if [ -z "$GCC" ] ; then
+  GCC=`which gcc`
+fi
+
+if [ -n "$GCC" ] ; then
+  LIBGCC_FILENAME=`gcc -print-libgcc-file-name $GCC_EXTRA_OPTS`
+  LIBGCC_DIR=`dirname $LIBGCC_FILENAME`
+  if [ -d "$LIBGCC_DIR" ] ; then
+    echo "Adding $LIBGCC_DIR directory to library directory list"
+    export EXTRAOPT="${EXTRAOPT} -Fl$LIBGCC_DIR"
   fi
 fi
 
@@ -186,10 +216,10 @@ elif [ -z "${MAKE_EXTRA:-}" ] ; then
 fi
 
 # Build everything using the makefiles
-echo "Starting ${MAKE} distclean CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS"
-${MAKE} distclean CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS
-echo "Starting ${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" FPC_VERSION=$VERSION $MAKE_EXTRA"
-${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" FPC_VERSION=$VERSION $MAKE_EXTRA
+echo "Starting ${MAKE} distclean CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS FPC=$FPC"
+${MAKE} distclean CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS FPC=$FPC
+echo "Starting ${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" FPC_VERSION=$VERSION FPC=$FPC $MAKE_EXTRA"
+${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" FPC_VERSION=$VERSION FPC=$FPC $MAKE_EXTRA
 if [ $? != 0 ]; then
   echo "Failed to make distribution archive."
   exit 1
