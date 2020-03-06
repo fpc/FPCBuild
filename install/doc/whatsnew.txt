@@ -1,6 +1,69 @@
 
                             Free Pascal Compiler
 
+                                Version 3.2.0.rc1
+
+******************************************************************************
+
+No details yet.
+
+******************************************************************************
+
+
+                            Free Pascal Compiler
+
+                                 Version 3.0.4
+
+ ******************************************************************************
+                               What's New in 3.0.4
+ ******************************************************************************
+
+ Free Pascal 3.0.4 is a point release of the 3.0.x fixes branch.
+
+ Please also see http://wiki.freepascal.org/User_Changes_3.0.4 for a list
+ of changes that may affect the behaviour of previously working code, and
+ how to cope with these changes.
+
+ Some highlights are:
+
+ Packages:
+   * fcl-pdf updates
+   * fcl-passrc updates.
+   * fix traceback on ELF based systems
+
+ See http://bugs.freepascal.org/changelog_page.php for the list of reported
+ bugs which have been fixed in this release.
+
+                             Free Pascal Compiler
+
+                                Version 3.0.2
+
+******************************************************************************
+                              What's New in 3.0.2
+******************************************************************************
+
+Free Pascal 3.0.2 is a point release of the 3.0.x fixes branch.
+
+Please also see http://wiki.freepascal.org/User_Changes_3.0.2 for a list
+of changes that may affect the behaviour of previously working code, and
+how to cope with these changes.
+
+Some highlights are:
+
+Rtl:
+  * TRect, TPoint and similar types are now type compatible between
+    Types and Windows unit, and are now advanced records. 
+
+Packages:
+  * googleapi and fcl-pdf packages.
+  * fcl-db and web packages synchronized 
+  * unicode tables updated.
+
+See http://bugs.freepascal.org/changelog_page.php for the list of reported
+bugs which have been fixed in this release.
+
+                            Free Pascal Compiler
+
                                 Version 3.0.0
 
 ******************************************************************************
