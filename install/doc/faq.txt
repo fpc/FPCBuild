@@ -131,7 +131,7 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
           ☆ 03/2014: 2.6.4 released
           ☆ 01/2015: 3.0.0 released
           ☆ 02/2017: 3.0.2 released 
-          ☆ 09/2017: 3.0.4 released
+          ☆ 11/2017: 3.0.4 released
           ☆ 04/2020: 3.2.0 released
      2. Which versions exist, and which one should I use?
 
