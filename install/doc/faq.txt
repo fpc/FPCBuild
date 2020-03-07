@@ -200,7 +200,7 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
             on as many platforms as possible. GNU Pascal tries to implement a
             portable pascal compiler based on POSIX.
         Version:
-            Currently, Free Pascal is at version 3.0.0 (November 2015). GNU
+            Currently, Free Pascal is at version 3.2.0 (April 2020). GNU
             Pascal is stopped version 2.1 (from 2002, which can be built with
             several different GCC's as backend; their Mac OS X version is an
             exception though, as it follows the GCC version number).
@@ -234,7 +234,7 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
         Extensions:
             Free Pascal implements method, function and operator overloading
             (later Delphi versions have also added these, so strictly they are
-            not extensions anymore) GNU Pascal implements operator overloading.
+            not extensions anymore). GNU Pascal implements operator overloading.
         License:
             Both compilers come under the GNU GPL.
         Author:
