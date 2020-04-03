@@ -3,6 +3,3 @@
 export PATH=/usr/local/bin:$PATH
 version=`"$2"usr/local/bin/fpc -iV`
 "$2"usr/local/lib/fpc/"$version"/samplecfg "$2"usr/local/lib/fpc/"$version" "$4"/etc
-
-# remove wrongly named doc file
-rm -f "/Developer/Documentation/Free Pascal Compiler/Code Documented.pdf"
