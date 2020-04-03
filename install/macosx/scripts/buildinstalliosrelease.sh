@@ -14,7 +14,7 @@
 # Configuration
 ###################################
 
-SDKx64=${SDKx64-/Volumes/imac/Data/dev/osxsdk/MacOSX10.5.sdk}
+SDKx64=${SDKx64-/Volumes/Data/dev/osxsdk/MacOSX10.5.sdk}
 # separate for 32 and 64 bit since latest SDKs no longer include 32 bit support
 SDKARM=${SDKARM-/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk}
 SDKAARCH64=${SDKAARCH64-/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk}
@@ -24,7 +24,10 @@ SDKIPHONESIM64=${SDKIPHONESIM64-/Applications/Xcode.app/Contents/Developer/Platf
 BINUTILSDIR=${BINUTILSIDR-/Volumes/imac/Applications/Xcode5.0.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/}
 # Create custom i386/x86-64 compiler binaries to target the iPhoneSim platform
 # (define to 0 to disable) (also fpc, fpcmake, fpcres)
-CREATECUSTOMX86COMPILERBINARIES=${CREATECUSTOMX86COMPILERBINARIES-1}
+CREATECUSTOMX86COMPILERBINARIES=${CREATECUSTOMX86COMPILERBINARIES-0}
+if [ x${NCPU} = x ]; then
+  NCPU=`sysctl -n machdep.cpu.core_count`
+fi
 
 usage()
 {
@@ -65,7 +68,7 @@ ln -sf ../lib/fpc/$VERSION/ppcarm
 cd "$FPCBUILD"/fpcsrc
 make FPC="$1/ppcx64" OPT="$BASEOPT" distclean -j $NCPU
 make FPC="$1/ppcx64" OPT="$BASEOPT" CROSSOPT="-WP7.0 -XR${SDKAARCH64}" CPU_TARGET=aarch64 all -j $NCPU CPU_SOURCE=x86_64 FPMAKEOPT="-T $NCPU --target=aarch64-darwin"
-VERSION=`./compiler/ppcrossarm -iV`
+VERSION=`./compiler/ppcrossa64 -iV`
 make FPC="$1/ppcx64" OPT="$BASEOPT" CROSSOPT="-WP7.0 -XR${SDKAARCH64}" INSTALL_PREFIX="$InstallDirIOS" CPU_TARGET=aarch64 CROSSINSTALL=1 install
 cd "$InstallDirIOS"/bin
 mv ../lib/fpc/$VERSION/ppcrossa64 ../lib/fpc/$VERSION/ppca64
@@ -73,8 +76,8 @@ ln -sf ../lib/fpc/$VERSION/ppca64
 
 # Build iphonsim 32 bit cross-compiler
 cd "$FPCBUILD"/fpcsrc
-make FPC="$1/ppcx64" OPT="$BASEOPT" CROSSOPT="-WP6.0 -XR${SDKIPHONESIM32}" CPU_TARGET=i386 OS_TARGET=iphonesim all -j $NCPU CPU_SOURCE=x86_64 FPMAKEOPT="-T $NCPU --target=i386-iphonesim"
-make FPC="$1/ppcx64" OPT="$BASEOPT" CROSSOPT="-WP6.0 -XR${SDKIPHONESIM32}" INSTALL_PREFIX="$InstallDirIOS" CPU_TARGET=i386 OS_TARGET=iphonesim CROSSINSTALL=1 install
+make FPC="$1/ppcx64" OPT="$BASEOPT" CROSSOPT="-WP8.1 -XR${SDKIPHONESIM32}" CPU_TARGET=i386 OS_TARGET=iphonesim all -j $NCPU CPU_SOURCE=x86_64 FPMAKEOPT="-T $NCPU --target=i386-iphonesim"
+make FPC="$1/ppcx64" OPT="$BASEOPT" CROSSOPT="-WP8.1 -XR${SDKIPHONESIM32}" INSTALL_PREFIX="$InstallDirIOS" CPU_TARGET=i386 OS_TARGET=iphonesim CROSSINSTALL=1 install
 cd "$InstallDirIOS"/bin
 if [ $CREATECUSTOMX86COMPILERBINARIES -eq 1 ]; then
   mv ../lib/fpc/$VERSION/ppcross386 ../lib/fpc/$VERSION/ppc386
@@ -85,8 +88,8 @@ fi
 
 # Build iphonesim 64 bit cross-compiler
 cd "$FPCBUILD"/fpcsrc
-make FPC="$1/ppcx64" OPT="$BASEOPT" CROSSOPT="-WP6.0 -XR${SDKIPHONESIM64}" CPU_TARGET=x86_64 OS_TARGET=iphonesim all -j $NCPU CPU_SOURCE=x86_64 FPMAKEOPT="-T $NCPU --target=x86_64-iphonesim"
-make FPC="$1/ppcx64" OPT="$BASEOPT" CROSSOPT="-WP6.0 -XR${SDKIPHONESIM64}" INSTALL_PREFIX="$InstallDirIOS" CPU_TARGET=x86_64 OS_TARGET=iphonesim CROSSINSTALL=1 install
+make FPC="$1/ppcx64" OPT="$BASEOPT" CROSSOPT="-WP8.1 -XR${SDKIPHONESIM64}" CPU_TARGET=x86_64 OS_TARGET=iphonesim all -j $NCPU CPU_SOURCE=x86_64 FPMAKEOPT="-T $NCPU --target=x86_64-iphonesim"
+make FPC="$1/ppcx64" OPT="$BASEOPT" CROSSOPT="-WP8.1 -XR${SDKIPHONESIM64}" INSTALL_PREFIX="$InstallDirIOS" CPU_TARGET=x86_64 OS_TARGET=iphonesim CROSSINSTALL=1 install
 cd "$InstallDirIOS"/bin
 if [ $CREATECUSTOMX86COMPILERBINARIES -eq 1 ]; then
   mv ../lib/fpc/$VERSION/ppcrossx64 ../lib/fpc/$VERSION/ppcx64
@@ -109,10 +112,10 @@ if [ $CREATECUSTOMX86COMPILERBINARIES -eq 1 ]; then
   # build complete native version to get the fpc, fpcres and fpcmake binaries with AArch64 support
   cd "$FPCBUILD"/fpcsrc
   make FPC="$1/ppcx64" CPU_SOURCE=x86_64 OPT="$BASEOPT -FD${BINUTILSDIR} -WM10.5 -XR${SDKx64}" all -j $NCPU FPMAKEOPT="-T $NCPU --target=x86_64-darwin" OVERRIDEVERSIONCHECK=1
+  mv compiler/utils/fpc "$InstallDirIOS"/bin
+  mv utils/fpcres/bin/x86_64-darwin/fpcres "$InstallDirIOS"/bin
+  mv utils/fpcm/bin/x86_64-darwin/fpcmake "$InstallDirIOS"/bin
 fi
-mv compiler/utils/fpc "$InstallDirIOS"/bin
-mv utils/fpcres/bin/x86_64-darwin/fpcres "$InstallDirIOS"/bin
-mv utils/fpcm/bin/x86_64-darwin/fpcmake "$InstallDirIOS"/bin
 
 # properly strip all binaries
 strip "$InstallDirIOS"/bin/*
