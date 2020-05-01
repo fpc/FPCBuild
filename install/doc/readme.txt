@@ -46,7 +46,7 @@ Free Pascal 3.2.0rc1 is currently available for the following platforms:
 - Nintendo Wii-powerpc (cross compile from win32-i386)
 - AIX 5.3 and later for PowerPC (32 and 64 bit)
 - Java JVM (1.5 and later) and Android Dalvik (Android 4.0 and later)
-- Android (ARM, i386, MIPS) via cross-compiling.
+- Android (AArch64, x86_64, ARM, i386, MIPS) via cross-compiling.
 - MSDos-i8086 (cross compiled from win32-i386 or Linux) 
 - Amiga, MorphOS and AROS
 
