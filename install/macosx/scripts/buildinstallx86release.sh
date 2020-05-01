@@ -107,7 +107,7 @@ ln -sf ../lib/fpc/$VERSION/ppcx64
 
 # install manual pages
 cd "$FPCBUILD"/install/man
-make FPC="$InstalledCompilerDir"/ppc386  INSTALL_PREFIX="$InstallDirX86/share" installman
+make FPC="$InstalledCompilerDir"/ppc386  INSTALL_PREFIX="$InstallDirX86/share" installman NOIDE=1
 
 # install demos
 cd "$FPCBUILD"/demo
