@@ -959,7 +959,7 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
 
         This error typically looks like this:
 
-                         Free Pascal Compiler version 3.0.x [xxxx/yy/zz] for i386
+                         Free Pascal Compiler version 3.2.x [xxxx/yy/zz] for i386
                          Copyright (c) 1993-2008 by Florian Klaempfl
                          Target OS: Linux for i386
                          Compiling test.pp
