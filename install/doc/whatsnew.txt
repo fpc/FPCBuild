@@ -20,15 +20,17 @@ Platforms:
   * New platform: Javascript engines
 
 New features are:
-------------------------------------
+-----------------
 * Attribute support
-* pas2js compiler
-* PDF support
-* GUI-independent reporting engine
 * Better character encoding support in base classes and DB components.
+* pas2js compiler
+* TTF and PDF rendering support
+* GUI-independent reporting engine
 * Improved JSON-RPC support
+* Additional HTTP services, SSL support.
 * REST server components.
-* numerous fixes
+* numerous fixes across all libraries and units.
+* Packager & repository management in fppkg.
 
 Some incompatible changes compared to 3.0.x releases:
 -----------------------------------------------------
