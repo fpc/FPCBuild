@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                                Version 3.2.0.rc1
+                                Version 3.2.0
 
 ******************************************************************************
 
@@ -16,21 +16,38 @@ Some highlights are:
 
 Platforms:
   * New platform: Android/AArch64
+  * New platform: i8086-win16 (16-bit Windows)
   * New platform: Android/x86_64
   * New platform: Javascript engines
+  * New platform: Linux/ppc64le
 
 New features are:
 -----------------
 * Attribute support
+* Default Unit Scopes
+* Extended Dynamic Array support
+    * support insert/delete/concat/+ operator
+    * Dynamic array constructor
+    * Enhcance dynamic array constant support
+* Generic methods/procedures.
+* Management operators, Initialize, Finalize, Copy and AddRef operators for records
+* IsManagedType intrinsic
 * Better character encoding support in base classes and DB components.
+* generics.* delphi compatible collections units
 * pas2js compiler
 * TTF and PDF rendering support
+* CHM index support rewritten.
+* Many changes and enhancements to TProcess.
 * GUI-independent reporting engine
 * Improved JSON-RPC support
 * Additional HTTP services, SSL support.
 * REST server components.
 * numerous fixes across all libraries and units.
 * Packager & repository management in fppkg.
+* 16-bit msdos target enhancements:
+  * internalink assembler/linker
+  * huge memory model
+  * near/far procedure types.
 
 Some incompatible changes compared to 3.0.x releases:
 -----------------------------------------------------
