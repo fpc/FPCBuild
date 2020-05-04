@@ -3,13 +3,7 @@
 
                             Free Pascal Compiler
 
-                               Version 3.2.0rc1
-
-****************************************************************************
-
-- no details yet.
-
-
+                               Version 3.2.0
 
 ****************************************************************************
 * Introduction
@@ -72,7 +66,7 @@ e-mail addresses are listed below.
   - exception support
   - RTTI support
   - procedure overloading
-  - generics (experimental)
+  - generics
   - operator overloading
   - COM, CORBA and raw interfaces support
   - dynamic array support
