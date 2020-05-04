@@ -49,91 +49,15 @@ New features are:
   * huge memory model
   * near/far procedure types.
 
-Some incompatible changes compared to 3.0.x releases:
+Some important incompatible changes compared to 3.0.x releases:
 -----------------------------------------------------
-* Usage changes
-  * Library search directories and custom sysroots change on MaxOS changed
-      from relative to absolute.
-* Implementation Changes
-  * Dynamic array parameters are now passed like pointers
-  * VMT Interface table uses private variable FPC_EMPTYINTF
-  * Modeswitch TypeHelpers in Delphi modes enables type helper-syntax
-  * Class references in a class VMT's field table changed.
-* Language Changes
-  * Visibility of generic type parameter: Type parameters now have strict private visibility
-  * Parsing of specialize has been changed: the specialize keyword is now
-    considered part of the type.
-  * Operator overload + no longer allowed for dynamic arrays
-  * Generic type parameters need to match between declaration and definition.
-  * Visibility of methods implementing interface methods changed: 
-    now only the current class is searched.
-  * Methods implementing interface methods and overloads: 
-    searching for a  method stops when a matching name without overload keyword is found 
-  * Objective-C "Related Result Type": 
-    Type checking system now takes into account the "related result type" rule from Objective-C
-* RTTI Changed
-  * RTTI for Interfaces (published property count):
-    Before the property RTTI data is now a Word count field that specifies the amount of properties.
-  * RTTI for COM Interfaces (IID String) 
-    An undocumented field was removed.
-  * RTTI Binary format change: References to other types are designated by PPTypeInfo.
-    (Delphi compatible change, needed for packages support)
-  * RTTI for Corba Interfaces (IID String)  IIDStr is now a property of TTypeData.
-  * RTTI: Reference to Record Init Information
-  * RTTI: TOrdType extended, support for 64-bit widths.
-  * RTTI: New OrdType field for tkInt64 and tkQWord
-  * RTTI: First field of TProcedureParam changed
-  * RTTI: TParamFlag extended for constref: pfConstRef flag.
-  * Ranges of Boolean types adjusted: ByteBool, WordBool and LongBool now have a range of Low(LongInt) to High(LongInt).
-  * OrdType of Boolean64 and QWordBool adjusted: Boolean64 now has OrdType otUQWord
-  * All Boolean types have TypeKind tkBool:  
-    Boolean, Boolean16, Boolean32, Boolean64, ByteBool, WordBool, LongBool and QWordBool have TypeKind tkBool.
-  * TParamFlag extended for hidden parameters: TParamFlag has a new entry pfHidden for hidden parameters in general 
-  * Parameters of method pointer variables contain hidden parameters.
-  * Parameters of procedure variables contain hidden parameters
-* Unit changes:
-  * SysUtils:
-    * faSymlink numerical value changed to $400.   
-  * Classes:
-    *  TList auto-growth mechanism changed.
-    *  Types IStream interface and Classes TStreamAdapter: out parameter now  uses QWord
-    *  TStrings.LoadFromStream/File encoding is now observed.
-    * TStringStream now observes system encoding.
-  * Math:
-    * Min/Max now have a QWord overload.
-  * StrUtils 
-     AnsiStartsText/AnsiEndsText : now return True for empty substring.  
-  * Baseunix (Linux only)
-    * stat record changed.
-  * DB:
-    * TParam.LoadFromFile sets share mode to fmShareDenyWrite
-    * CodePage aware TStringField and TMemoField.
-    * ODBC headers on Unix platforms defaults to 3.52 version
-    * TBlobData opaque type reworked to TBytes
-  * FGL
-    * Declaration of type TTypeList changed to PT (pointer)
-  * objcbase
-    objcbase.BOOL is now objcbase.ObjCBOOL : no longer a pascal boolean.
-  * SimpleIPC
-    * ReadMessage changed from procedure to a function, returning a boolean, telling you whether a message was actually read.
-  * Process Runcommand
-    Runcommand now defaults to no sleep() calls unless poRunIdle is passed.
+* RTTI format changed
 * Linux/Android platforms
   * GNU Binutils 2.19.1 or later are required by default
 * Stack alignment on Linux/i386
   * Now aligned to 16 bytes.
-* i386 platforms
-  * -Ooasmcse/{$optimization asmcse} has been removed
-* i8086 platforms
-  * the codepointer type has been changed in the small and compact memory models
-
-* Darwin/macOS platforms
-  * Default Target macOS version: 
-    The default target macOS version for both the i386 (Intel 32 bits) and x86-64 (Intel 64 bits) platforms is now Mountain Lion 10.8.
-  * Darwin/i386 and calling conventions whereby the callee removes stack parameters now handled correctly.
 * Windows platforms
   * GNU Binutils 2.25 or later are required by default
-
 
 ******************************************************************************
 
