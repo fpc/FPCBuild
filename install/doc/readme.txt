@@ -1,15 +1,7 @@
 
-
-
                             Free Pascal Compiler
 
-                               Version 3.2.0rc1
-
-****************************************************************************
-
-- no details yet.
-
-
+                               Version 3.2.0
 
 ****************************************************************************
 * Introduction
@@ -24,7 +16,7 @@ also partial support for the Macintosh pascal dialect.
 
 News and changes related to this release are described in whatsnew.txt.
 
-Free Pascal 3.2.0rc1 is currently available for the following platforms:
+Free Pascal 3.2.0 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-powerpc
@@ -72,7 +64,7 @@ e-mail addresses are listed below.
   - exception support
   - RTTI support
   - procedure overloading
-  - generics (experimental)
+  - generics
   - operator overloading
   - COM, CORBA and raw interfaces support
   - dynamic array support
@@ -142,7 +134,7 @@ Mac OS X:
 * Quick start - Win32
 ****************************************************************************
 
-Download the distribution package (fpc-3.2.0rc1.i386-win32.exe) and run it
+Download the distribution package (fpc-3.2.0.i386-win32.exe) and run it
 - it is a self-extracting installer, so just follow the instructions
 to install it. The installer should set the PATH environment variable as
 appropriate.
@@ -157,7 +149,7 @@ and type on the command line:
 * Quick start - DOS
 ****************************************************************************
 
-Download distribution archive (dos320rc1.zip for GO32v2) and unzip it into
+Download distribution archive (dos320.zip for GO32v2) and unzip it into
 a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -180,7 +172,7 @@ and type
 * Quick start - OS/2 / eComStation / ArcaOS
 ****************************************************************************
 
-Download distribution archive (os2320rc1full.zip or os2320rc1.zip for OS/2,
+Download distribution archive (os2320full.zip or os2320.zip for OS/2,
 eComStation or ArcaOS) and unzip it into a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -205,7 +197,7 @@ and type
 * Quick start - Linux/FreeBSD
 ****************************************************************************
 
-Download fpc-3.2.0rc1.<cpu>-<os>.tar and untar into a temporary directory.
+Download fpc-3.2.0.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
