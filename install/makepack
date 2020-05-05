@@ -86,31 +86,29 @@ fi
 # Retrieve GDBMI_DEFAULT_OS_LIST from Makefile.fpc
 GDBMI_DEFAULT_OS_LIST=`grep '^GDBMI_DEFAULT_OS_LIST *=' Makefile.fpc | sed 's+[^=]*= *\(.*\)+\1+'`
 
-# Use of GDBMI for text mode IDE, starting with version 3.1.1
-if  [ "X${VERSION#3.0.}" == "X${VERSION}" ] ; then
-  if  [ "X${NOGDB}" == "X" ] ; then
-#  Determine if we should use GDBMI for Text Mode IDE compilation
-    if [ "X${NOGDBMI}" == "X" ]; then
-      if [ "X${GDBMI_DEFAULT_OS_LIST/%{TARGETOS}}" != "X${GDBMI_DEFAULT_LIST}" ] ; then
-        echo "Use GDBMI"
-        export GDBMI=1
-      fi
+# Use of GDBMI for text mode IDE, if in GDBMI_DEFAULT_OS_LIST
+if  [ "X${NOGDB}" == "X" ] ; then
+  #  Determine if we should use GDBMI for Text Mode IDE compilation
+  if [ "X${NOGDBMI}" == "X" ]; then
+    if [ "X${GDBMI_DEFAULT_OS_LIST/%{TARGETOS}}" != "X${GDBMI_DEFAULT_LIST}" ] ; then
+      echo "Building text mode IDE using GDBMI"
+      export GDBMI=1
     fi
-  fi #NOGDB
-fi #Not 3.0.X version
+  fi
+fi #NOGDB
 
 if [ "X${GDBMI}" != "X" ] ; then
-if [ "X${GDBMI}" == "X0" ] ; then
-if [ "$CHECKLIBGDB" = "" ]; then
-  CHECKLIBGDB=yes
-fi
+  if [ "X${GDBMI}" == "X0" ] ; then
+    if [ "$CHECKLIBGDB" = "" ]; then
+      CHECKLIBGDB=yes
+    fi
+  else
+    CHECKLIBGDB=no
+  fi
 else
-CHECKLIBGDB=no
-fi
-else
-if [ "$CHECKLIBGDB" = "" ]; then
-  CHECKLIBGDB=yes
-fi
+  if [ "$CHECKLIBGDB" = "" ]; then
+    CHECKLIBGDB=yes
+  fi
 fi
 
 FULLTARGET=$TARGETCPU-$TARGETOS
@@ -121,28 +119,22 @@ echo "FPC Target: $FULLTARGET"
 
 # Cross building
 #  - add prefix
-#  - no IDE
-if [ "$FULLTARGET" != "$FULLSOURCE" ]; then
-   CROSS="cross"
-   CROSSPREFIX=$FULLTARGET-
-   IDE=
+if [ "X$MAKEPACK_BUILDNATIVE" == "X1" ] ; then
+  CROSS=
+  CROSSPREFIX=
+elif [ "$FULLTARGET" != "$FULLSOURCE" ]; then
+  CROSS="cross"
+  CROSSPREFIX=$FULLTARGET-
 else
-   CROSS=
-   CROSSPREFIX=
-   # Starting with version 3.1.1, the IDE is not a separate part anymore, but part of utils
-   if [ "X${VERSION#3.0.}" != "X${VERSION}" ] ; then
-     # Version 3.0.x, add the IDE as separate part
-     export IDE=ide
-   else
-     export IDE=
-   fi
+  CROSS=
+  CROSSPREFIX=
 fi
 
 
 # Check for libgdb.a
-if [ "$CROSS" = "" ]; then
-  if [ "$CHECKLIBGDB" = "yes" ]; then
-    if [ "$GDBLIBDIR" = "" ]; then
+if [ "$XCROSS" == "X" ]; then
+  if [ "X$CHECKLIBGDB" == "Xyes" ]; then
+    if [ "X$GDBLIBDIR" == "X" ]; then
       GDBLIBDIR=fpcsrc/libgdb/$TARGETOS/$TARGETCPU
     fi
     if [ ! -e "$GDBLIBDIR/libgdb.a" ]; then
@@ -157,7 +149,7 @@ if [ "$CROSS" = "" ]; then
 fi
 
 # First check for doc-pdf.tar.gz before building anything
-if [ "$CROSS" = "" ]; then
+if [ "X$CROSS" == "X" ]; then
   if [ ! -f doc-pdf.tar.gz ]; then
     if [ "$MAKEDOCS" != "yes" ]; then
       echo "No documentation available. Please copy the file doc-pdf.tar.gz to this directory."
@@ -202,7 +194,7 @@ if [ -n "$GCC" ] ; then
 fi
 
 # check existence of binutils if cross packing
-if [ ! "$CROSS" = "" ]; then
+if [ "X$CROSS" != "X" ]; then
   if [ ! -f binutils-${CROSSPREFIX}$FULLSOURCE.tar.gz ]; then
     echo "No cross binutils available: binutils-${CROSSPREFIX}$FULLSOURCE.tar.gz missing."
     exit 1
@@ -229,7 +221,7 @@ fi
 RELFILES="install.sh"
 
 # install.sh
-echo "Copying install.sh"
+echo "Copying install.sh, substituting version strings"
 sed -e s+%version%+$VERSION+ -e s+%fullversion%+$FULLVERSION+ install/install.sh > install.sh
 chmod 755 install.sh
 
@@ -240,7 +232,7 @@ chmod 644 readme.txt
 # binary.*.tar
 BINARYTAR=${CROSSPREFIX}binary.$FULLSOURCE.tar
 echo "Creating $BINARYTAR"
-BINPACKAGES="base $IDE units utils"
+BINPACKAGES="base units utils"
 BINFILES=
 for p in $BINPACKAGES; do
   BINFILES="$BINFILES ${CROSSPREFIX}$p*.$FULLSOURCE.tar.gz"
