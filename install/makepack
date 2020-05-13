@@ -48,25 +48,47 @@ MAKE=make
 TAR=tar
 
 case "$HOSTOS" in
- *freebsd*) MAKE=gmake
-	EXTRAOPT+=" -Fl/usr/local/lib -Fl/usr/X11R6/lib  -dFREEBSD5"
+  *freebsd*) MAKE=gmake
+    if [ -d /usr/local/lib ] ; then
+      EXTRAOPT+=" -Fl/usr/local/lib"
+    fi
+    if [ -d /usr/X11R6/lib ] ; then
+      EXTRAOPT+=" -Fl/usr/X11R6/lib"
+    fi
+    EXTRAOPT+=" -dFREEBSD5"
   ;;
- *netbsd*) MAKE=gmake
-	EXTRAOPT+=" -Fl/usr/pkg/lib"
+  *netbsd*) MAKE=gmake
+    if [ -d /usr/pkg/lib ] ; then
+      EXTRAOPT+=" -Fl/usr/pkg/lib"
+    fi
   ;;
 
- *sunos*) MAKE=gmake
-     # Use system linker if on solaris machine
-     if [ "$SOURCEOS" == "solaris" ]; then
-       EXTRAOPT+=" -Xn"
-     fi
-     # Use GNU tar if present
-     if [ "`which gtar`" != "" ]; then
-       TAR=`which gtar`
-     fi
- ;;
- *openbsd*) MAKE=gmake
-	EXTRAOPT+=" -Fl/usr/local/lib"
+  *linux*) 
+    if [ "$SOURCECPU" = "i386" ] ; then
+      if [ -d /lib32 ] ; then
+        EXTRAOPT+=" -Fl/lib32"
+      fi
+      if [ -d /usr/lib32 ] ; then
+        EXTRAOPT+=" -Fl/usr/lib32"
+      fi
+    fi 
+  ;;
+  *sunos*)
+    MAKE=gmake
+    # Use system linker if on solaris machine
+    if [ "$SOURCEOS" == "solaris" ]; then
+      EXTRAOPT+=" -Xn"
+    fi
+    # Use GNU tar if present
+    if [ "`which gtar`" != "" ]; then
+      TAR=`which gtar`
+    fi
+  ;;
+  *openbsd*)
+    MAKE=gmake
+    if [ -d /usr/local/lib ] ; then
+      EXTRAOPT+=" -Fl/usr/local/lib"
+    fi
   ;;
 esac
 
