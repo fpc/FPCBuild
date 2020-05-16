@@ -14,12 +14,15 @@ set -vx
 ###################################
 
 # defaults for (old) SDK locations
-SDKi386=${SDKi386-/Volumes/imac/Data/dev/osxsdk/MacOSX10.4u.sdk}
-SDKx64=${SDKx64-/Volumes/imac/Data/dev/osxsdk/MacOSX10.5.sdk}
+SDKi386=${SDKi386-/Volumes/Data/dev/osxsdk/MacOSX10.4u.sdk}
+SDKx64=${SDKx64-/Volumes/Data/dev/osxsdk/MacOSX10.5.sdk}
 SDKppc=${SDKppc-$SDKi386}
 SDKppc64=${SDKppc64-$SDKppc}
-BINUTILSDIR=${BINUTILSIDR-/Volumes/imac/Applications/Xcode5.0.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/}
-BINUTILSDIRppc=${BINUTILSDIRppc-/Volumes/imac/Data/dev/osxsdk/oldcctools/usr/bin}
+BINUTILSDIR=${BINUTILSIDR-/Volumes/Data/dev/osxsdk/Xcode502toolchain/usr/bin}
+BINUTILSDIRppc=${BINUTILSDIRppc-/Volumes/Data/dev/osxsdk/oldcctools/usr/bin}
+if [ x${NCPU} = x ]; then
+  NCPU=`sysctl -n machdep.cpu.core_count`
+fi
 
 usage()
 {
@@ -104,7 +107,7 @@ ln -sf ../lib/fpc/$VERSION/ppcx64
 
 # install manual pages
 cd "$FPCBUILD"/install/man
-make FPC="$InstalledCompilerDir"/ppc386  INSTALL_PREFIX="$InstallDirX86" installman
+make FPC="$InstalledCompilerDir"/ppc386  INSTALL_PREFIX="$InstallDirX86/share" installman NOIDE=1
 
 # install demos
 cd "$FPCBUILD"/demo

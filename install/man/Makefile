@@ -33,3 +33,6 @@ installman:
 	$(GINSTALL) -c -m 644 man5/*.5 $(INSTALL_MANDIR)/man5
 	find man1/*.1 -exec gzip -9f $(INSTALL_MANDIR)/'{}' \;
 	find man5/*.5 -exec gzip -9f $(INSTALL_MANDIR)/'{}' \;
+ifdef NOIDE
+	rm $(INSTALL_MANDIR)/man1/fp.*
+endif
