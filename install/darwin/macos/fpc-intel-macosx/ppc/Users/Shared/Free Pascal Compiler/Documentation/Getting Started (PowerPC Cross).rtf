@@ -1,0 +1,80 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+\cocoascreenfonts1{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;\f2\fswiss\fcharset0 Helvetica-BoldOblique;
+\f3\fswiss\fcharset0 Helvetica-Oblique;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww19500\viewh11520\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 About & requirements
+\f1\b0 \
+\
+This package installs the Free Pascal Compiler 3.2.0rc1 for running on Intel to compile PowerPC 32 bit and 64 bit programs. It requires the regular Free Pascal Compiler 3.2.0rc1 for Intel package to be already installed.\
+\
+This package can be used to compile for\
+\pard\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\pardirnatural\partightenfactor0
+\ls1\ilvl0\cf0 {\listtext	\uc0\u8226 	}PowerPC 32 bit (targeting Mac OS X 10.3 - 10.6)\
+{\listtext	\uc0\u8226 	}PowerPC 64 bit (targeting Mac OS X 10.4 - 10.5)\
+\pard\tx560\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b \cf0 Mac OS X 10.7+ compatibility
+\f1\b0 \
+\
+Apple no longer supports compiling for PowerPC on Mac OS X 10.7 (Lion) and later, nor does it support Xcode 3.x on these OS versions (which contains the PowerPC SDKs). Some people have reported success by simply copying over an existing Xcode 3.x install onto newer system. In that case, you will have to tell the compiler where it can find the PowerPC assembler, linker and SDK.\
+\
+\pard\tx560\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 Assuming Xcode 3.x is installed in the folder /Applications/Xcode3, this can be achieved by passing the following command line parameters to FPC:\
+\pard\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\pardirnatural\partightenfactor0
+\ls2\ilvl0\cf0 {\listtext	\uc0\u8226 	}
+\f2\i\b 10.4:
+\f1\i0\b0  -WM10.4 -XR"/Applications/Xcode3/SDKs/MacOSX10.4u.sdk" -FD"/Applications/Xcode3/usr/bin"\
+{\listtext	\uc0\u8226 	}
+\f2\i\b 10.5:
+\f1\i0\b0  -WM10.5 -XR"/Applications/Xcode3/SDKs/MacOSX10.5.sdk" -FD"/Applications/Xcode3/usr/bin"\
+\pard\tx560\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b \cf0 Mac OS X 10.6+ compatibility
+\f1\b0 \
+\pard\tx560\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+PowerPC 64 bit support was removed from Mac OS X 10.6. Follow the instructions in the Mac OS X 10.7+ section above to target PowerPC64 under Mac OS X 10.6.\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b \cf0 Mac OS X 10.6 compatibility
+\f1\b0 \
+\
+There is a 
+\f0\b bug in the Xcode 3.2.x linker
+\f1\b0  (the default version shipped with Mac OS X 10.6) that results in errors when compiling dynamic libraries with FPC. You can work around it by specifying the 
+\f3\i -k-no_order_inits
+\f1\i0  parameter when compiling a dynamic library (it's only required while compiling the library itself, not while compiling units it uses).\
+\
+This bug has been 
+\f0\b fixed in Xcode 4 and later
+\f1\b0 , so no special parameters are required anymore when using newer versions.\
+\
+
+\f0\b Usage
+\f1\b0 \
+\
+\'95 If you come from Delphi, you may want to check out Lazarus instead for a more familiar environment: {\field{\*\fldinst{HYPERLINK "http://www.lazarus.freepascal.org"}}{\fldrslt http://www.lazarus.freepascal.org/}}. Note that it cannot be used to compile PowerPC 64 bit GUI programs for Mac OS X (64 bit Intel works fine).\
+\
+\'95 Xcode 4 templates, mainly geared at developing using the Objective-Pascal dialect, can be found at {\field{\*\fldinst{HYPERLINK "http://web.me.com/macpgmr/ObjP/Xcode4/"}}{\fldrslt https://macpgmr.github.io/}}.\
+\
+\'95 You may also want to check out the Light Weight Pascal IDE, available at {\field{\*\fldinst{HYPERLINK "http://www.ragnemalm.se/lightweight/"}}{\fldrslt http://www.ragnemalm.se/lightweight/}}. It is much easier to use than Xcode and recommended if you do not need all the features offered by Xcode.\
+\
+\'95 The compiler can also be used from the command line, in which case you use Terminal to compile programs. For editing source files, you can use your favorite editor. After installation, the compiler -called "fpc"- will be located in the directory /usr/local/bin. You may have to add this directory to your PATH before you can use the compiler from the command line. To target PowerPC 32 resp. 64 bit, use "fpc -Ppowerpc" resp. "fpc -Ppowerpc64".\
+\
+\'95 The documentation is installed in {\field{\*\fldinst{HYPERLINK "file:///Developer/Documentation/Free%20Pascal%20Compiler"}}{\fldrslt file:///Developer/Documentation/Free Pascal Compiler}}.\
+\
+\
+For more information, see the ReadMe.txt file or visit {\field{\*\fldinst{HYPERLINK "http://www.freepascal.org"}}{\fldrslt http://www.freepascal.org}}}

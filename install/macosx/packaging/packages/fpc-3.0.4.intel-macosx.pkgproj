@@ -5,6 +5,10 @@
 	<key>PACKAGES</key>
 	<array>
 		<dict>
+			<key>MUST-CLOSE-APPLICATION-ITEMS</key>
+			<array/>
+			<key>MUST-CLOSE-APPLICATIONS</key>
+			<false/>
 			<key>PACKAGE_FILES</key>
 			<dict>
 				<key>DEFAULT_INSTALL_LOCATION</key>
@@ -267,7 +271,7 @@
 									<key>PATH_TYPE</key>
 									<integer>0</integer>
 									<key>PERMISSIONS</key>
-									<integer>493</integer>
+									<integer>1005</integer>
 									<key>TYPE</key>
 									<integer>1</integer>
 									<key>UID</key>
@@ -360,6 +364,22 @@
 									<integer>0</integer>
 									<key>PATH</key>
 									<string>Widgets</string>
+									<key>PATH_TYPE</key>
+									<integer>0</integer>
+									<key>PERMISSIONS</key>
+									<integer>493</integer>
+									<key>TYPE</key>
+									<integer>1</integer>
+									<key>UID</key>
+									<integer>0</integer>
+								</dict>
+								<dict>
+									<key>CHILDREN</key>
+									<array/>
+									<key>GID</key>
+									<integer>0</integer>
+									<key>PATH</key>
+									<string>Extensions</string>
 									<key>PATH_TYPE</key>
 									<integer>0</integer>
 									<key>PERMISSIONS</key>
@@ -498,8 +518,14 @@
 				</dict>
 				<key>PAYLOAD_TYPE</key>
 				<integer>0</integer>
+				<key>SHOW_INVISIBLE</key>
+				<false/>
+				<key>SPLIT_FORKS</key>
+				<true/>
+				<key>TREAT_MISSING_FILES_AS_WARNING</key>
+				<false/>
 				<key>VERSION</key>
-				<integer>3</integer>
+				<integer>5</integer>
 			</dict>
 			<key>PACKAGE_SCRIPTS</key>
 			<dict>
@@ -526,12 +552,22 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>fpc-3.0.4.intel-macosx</string>
+				<string>fpc-3.0.4a.intel-macosx</string>
 				<key>OVERWRITE_PERMISSIONS</key>
+				<false/>
+				<key>PAYLOAD_SIZE</key>
+				<integer>-1</integer>
+				<key>REFERENCE_PATH</key>
+				<string></string>
+				<key>RELOCATABLE</key>
+				<false/>
+				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
 				<string>1.0</string>
 			</dict>
+			<key>TYPE</key>
+			<integer>0</integer>
 			<key>UUID</key>
 			<string>C1F89A5D-D993-4DAB-9520-C6AECC09EB09</string>
 		</dict>
@@ -557,6 +593,18 @@
 		</dict>
 		<key>PROJECT_PRESENTATION</key>
 		<dict>
+			<key>BACKGROUND</key>
+			<dict>
+				<key>APPAREANCES</key>
+				<dict>
+					<key>DARK_AQUA</key>
+					<dict/>
+					<key>LIGHT_AQUA</key>
+					<dict/>
+				</dict>
+				<key>SHARED_SETTINGS_FOR_ALL_APPAREANCES</key>
+				<true/>
+			</dict>
 			<key>INSTALLATION TYPE</key>
 			<dict>
 				<key>HIERARCHIES</key>
@@ -591,8 +639,6 @@
 						<dict/>
 					</dict>
 				</dict>
-				<key>INSTALLATION TYPE</key>
-				<integer>0</integer>
 				<key>MODE</key>
 				<integer>1</integer>
 			</dict>
@@ -674,8 +720,6 @@
 			</dict>
 			<key>LICENSE</key>
 			<dict>
-				<key>KEYWORDS</key>
-				<dict/>
 				<key>LOCALIZATIONS</key>
 				<array>
 					<dict>
@@ -779,6 +823,7 @@
 						<integer>0</integer>
 						<key>IC_REQUIREMENT_FILES_LIST</key>
 						<array>
+							<string>/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/crt1.o</string>
 							<string>/usr/lib/crt1.o</string>
 						</array>
 						<key>IC_REQUIREMENT_FILES_SELECTOR</key>
@@ -803,10 +848,6 @@
 					<true/>
 				</dict>
 			</array>
-			<key>POSTINSTALL_PATH</key>
-			<dict/>
-			<key>PREINSTALL_PATH</key>
-			<dict/>
 			<key>RESOURCES</key>
 			<array/>
 			<key>ROOT_VOLUME_ONLY</key>
@@ -814,8 +855,6 @@
 		</dict>
 		<key>PROJECT_SETTINGS</key>
 		<dict>
-			<key>ADVANCED_OPTIONS</key>
-			<dict/>
 			<key>BUILD_FORMAT</key>
 			<integer>0</integer>
 			<key>BUILD_PATH</key>
@@ -994,7 +1033,11 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>fpc-3.0.4.intel-macosx</string>
+			<string>fpc-3.0.4a.intel-macosx</string>
+			<key>PAYLOAD_ONLY</key>
+			<false/>
+			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>TYPE</key>
