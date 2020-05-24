@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# based on https://github.com/Homebrew/install/blob/master/install.sh
+
+major_minor() {
+  echo "${1%%.*}.$(x="${1#*.}"; echo "${x%%.*}")"
+}
+
+if [[ -z "${HOMEBREW_ON_LINUX-}" ]]; then
+  macos_version="$(major_minor "$(/usr/bin/sw_vers -productVersion)")"
+fi
+
+version_gt() {
+  [[ "${1%.*}" -gt "${2%.*}" ]] || [[ "${1%.*}" -eq "${2%.*}" && "${1#*.}" -gt "${2#*.}" ]]
+}
+
+should_install_command_line_tools() {
+  if version_gt "$macos_version" "10.13"; then
+    ! [[ -e "/Library/Developer/CommandLineTools/usr/bin/git" ]]
+  else
+    ! [[ -e "/usr/lib/crt1.o" ]]
+  fi
+}
+
+if should_install_command_line_tools; then
+  exit 1
+else
+  exit 0
+fi
