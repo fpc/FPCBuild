@@ -73,7 +73,9 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
      3. Dynamic libraries
      4. Profiling
      5. Using DOS generated applications under OS/2
-     6. INSTALL.EXE complains about a missing TZ variable under OS/2
+     6. INSTALL.EXE of version 1.0.6 or below returns an unknown error (-1) under OS/2
+          or
+        INSTALL.EXE of version 1.0.6 or above complains about missing TZ variable under OS/2
      7. OS/2 compiler not working after upgrading to 1.9.6 or newer
      8. Compilation under OS/2 fails with error "Can't call the assembler"
  7. DOS-related information
@@ -1046,7 +1048,9 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
         You should use native OS/2 applications under OS/2 (including the
         native OS/2 compiler) or try installing a new OS/2 fixpack to see if it
         solves the problem.
-     6. INSTALL.EXE complains about a missing TZ variable under OS/2
+     6. INSTALL.EXE of version 1.0.6 or below fails with an unknown error (-1) under OS/2
+            or
+        INSTALL.EXE of version 1.0.6 or above complains about missing TZ variable under OS/2
 
         You are most probably using an older version of OS/2 (like OS/2 Warp
         3.0) and do not have TZ variable in your environment. The easiest
