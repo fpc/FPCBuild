@@ -493,7 +493,7 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>fpc-3.2.0rc1-intel-macosx</string>
+				<string>fpc-3.2.0-intel-macosx</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -697,7 +697,7 @@
 						<key>LANGUAGE</key>
 						<string>English</string>
 						<key>VALUE</key>
-						<string>Free Pascal Compiler Intel 3.2.0rc1</string>
+						<string>Free Pascal Compiler Intel 3.2.0</string>
 					</dict>
 				</array>
 			</dict>
@@ -969,7 +969,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>fpc-3.2.0rc1-intel-macosx</string>
+			<string>fpc-3.2.0-intel-macosx</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>
