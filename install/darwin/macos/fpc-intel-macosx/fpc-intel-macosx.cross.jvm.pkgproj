@@ -558,7 +558,7 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>fpc-3.2.0rc1.intel-macosx.cross.jvm</string>
+				<string>fpc-3.2.0.intel-macosx.cross.jvm</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -570,7 +570,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.0</string>
+				<string>2.0</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -773,7 +773,7 @@
 						<key>LANGUAGE</key>
 						<string>English</string>
 						<key>VALUE</key>
-						<string>Free Pascal Compiler for Intel 3.2.0rc1 - JVM cross-compilers</string>
+						<string>Free Pascal Compiler for Intel 3.2.0 - JVM cross-compilers</string>
 					</dict>
 				</array>
 			</dict>
@@ -844,11 +844,11 @@
 							<key>LANGUAGE</key>
 							<string>English</string>
 							<key>VALUE</key>
-							<string>Please install FPC 3.2.0rc1 for Intel before installing these cross-compilers.</string>
+							<string>Please install FPC 3.2.0 for Intel before installing these cross-compilers.</string>
 						</dict>
 					</array>
 					<key>NAME</key>
-					<string>FPC 3.2.0rc1 for Intel not yet installed</string>
+					<string>FPC 3.2.0 for Intel not yet installed</string>
 					<key>STATE</key>
 					<true/>
 				</dict>
@@ -1038,7 +1038,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>fpc-3.2.0rc1.intel-macosx.cross.jvm</string>
+			<string>fpc-3.2.0.intel-macosx.cross.jvm</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>
