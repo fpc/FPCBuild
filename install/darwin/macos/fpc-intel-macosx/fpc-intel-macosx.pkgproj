@@ -677,7 +677,7 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>../../../doc/readme.txt</string>
+							<string>ReadMe.txt</string>
 							<key>PATH_TYPE</key>
 							<integer>1</integer>
 						</dict>
@@ -796,7 +796,7 @@
 			<key>BUILD_PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>x86</string>
+				<string>build/fpc-3.2.0.intel-macosx</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
