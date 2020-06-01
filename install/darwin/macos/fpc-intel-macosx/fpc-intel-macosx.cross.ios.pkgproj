@@ -757,7 +757,7 @@
 							<key>PATH</key>
 							<string>/Volumes/Data/dev/fpcbuild/install/darwin/macos/fpc-intel-macosx/ReadMe.txt</string>
 							<key>PATH_TYPE</key>
-							<integer>0</integer>
+							<integer>1</integer>
 						</dict>
 					</dict>
 				</array>
