@@ -753,7 +753,7 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>/Volumes/Data/dev/fpcbuild/install/doc/readme.txt</string>
+							<string>/Volumes/Data/dev/fpcbuild/install/darwin/macos/fpc-intel-macosx/ReadMe.txt</string>
 							<key>PATH_TYPE</key>
 							<integer>0</integer>
 						</dict>
@@ -865,7 +865,7 @@
 			<key>BUILD_PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>build/fpc-3.2.0rc1.intel-macosx.cross.jvm</string>
+				<string>build/fpc-3.2.0.intel-macosx.cross.jvm</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
