@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # enable to debug when things go wrong, run script as $0 para1 para2 >tt.log 2>tt2.log
-set -vx
+#set -vx
 
 # This scripts builds i386/x86-64 "fat" binaries of i386/x86-64 compilers, and also of ppc/ppc64 and
 # jvm cross-compilers

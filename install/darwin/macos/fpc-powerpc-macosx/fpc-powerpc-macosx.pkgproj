@@ -559,7 +559,7 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>fpc-3.2.0rc1.powerpc-macosx</string>
+				<string>fpc-3.2.0.powerpc-macosx</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -571,7 +571,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.0</string>
+				<string>2.0</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -754,9 +754,9 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>/Volumes/Data/dev/fpcbuild/install/doc/readme.txt</string>
+							<string>../fpc-intel-macosx/ReadMe.txt</string>
 							<key>PATH_TYPE</key>
-							<integer>0</integer>
+							<integer>1</integer>
 						</dict>
 					</dict>
 				</array>
@@ -774,7 +774,7 @@
 						<key>LANGUAGE</key>
 						<string>English</string>
 						<key>VALUE</key>
-						<string>Free Pascal Compiler PowerPC 3.2.0rc1</string>
+						<string>Free Pascal Compiler PowerPC 3.2.0</string>
 					</dict>
 				</array>
 			</dict>
@@ -866,7 +866,7 @@
 			<key>BUILD_PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>build</string>
+				<string>build/fpc-3.2.0.powerpc-macosx</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
@@ -1039,7 +1039,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>fpc-3.2.0rc1.powerpc-macosx</string>
+			<string>fpc-3.2.0.powerpc-macosx</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>

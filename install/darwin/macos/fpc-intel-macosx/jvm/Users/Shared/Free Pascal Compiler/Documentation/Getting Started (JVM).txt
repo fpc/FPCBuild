@@ -1,6 +1,6 @@
 About & requirements
 
-This package installs the Free Pascal Compiler 3.2.0rc1 for JVM. It requires the JDK 1.5 or later to be installed and the "java" executable to be in the PATH.
+This package installs the Free Pascal Compiler 3.2.0 for JVM. It requires the JDK 1.5 or later to be installed and the "java" executable to be in the PATH.
 
 This package can be used to compile for
   • Java JVM 1.5 or later

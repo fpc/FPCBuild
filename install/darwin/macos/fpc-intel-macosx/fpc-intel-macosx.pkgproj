@@ -475,7 +475,7 @@
 				<key>PREINSTALL_PATH</key>
 				<dict>
 					<key>PATH_TYPE</key>
-					<integer>0</integer>
+					<integer>1</integer>
 				</dict>
 				<key>RESOURCES</key>
 				<array/>
@@ -493,7 +493,7 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>fpc-3.2.0rc1-intel-macosx</string>
+				<string>fpc-3.2.0-intel-macosx</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -505,7 +505,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.0</string>
+				<string>2.0</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -677,7 +677,7 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>../../../doc/readme.txt</string>
+							<string>ReadMe.txt</string>
 							<key>PATH_TYPE</key>
 							<integer>1</integer>
 						</dict>
@@ -697,7 +697,7 @@
 						<key>LANGUAGE</key>
 						<string>English</string>
 						<key>VALUE</key>
-						<string>Free Pascal Compiler Intel 3.2.0rc1</string>
+						<string>Free Pascal Compiler Intel 3.2.0</string>
 					</dict>
 				</array>
 			</dict>
@@ -742,6 +742,47 @@
 					<key>STATE</key>
 					<true/>
 				</dict>
+				<dict>
+					<key>BEHAVIOR</key>
+					<integer>2</integer>
+					<key>DICTIONARY</key>
+					<dict>
+						<key>IC_REQUIREMENT_SCRIPT_ARGUMENTS</key>
+						<array/>
+						<key>IC_REQUIREMENT_SCRIPT_COMPARATOR</key>
+						<integer>0</integer>
+						<key>IC_REQUIREMENT_SCRIPT_EMBED</key>
+						<true/>
+						<key>IC_REQUIREMENT_SCRIPT_PATH</key>
+						<dict>
+							<key>PATH</key>
+							<string>../CommandLineToolsCheck</string>
+							<key>PATH_TYPE</key>
+							<integer>1</integer>
+						</dict>
+						<key>IC_REQUIREMENT_SCRIPT_VALUE</key>
+						<integer>0</integer>
+					</dict>
+					<key>IC_REQUIREMENT_CHECK_TYPE</key>
+					<integer>0</integer>
+					<key>IDENTIFIER</key>
+					<string>fr.whitebox.Packages.requirement.scripts</string>
+					<key>MESSAGE</key>
+					<array>
+						<dict>
+							<key>LANGUAGE</key>
+							<string>English</string>
+							<key>SECONDARY_VALUE</key>
+							<string>You must install the Xcode command line tools BEFORE installing FPC, otherwise the generated FPC configuration file will be incomplete. For more information, see the pages linked from https://www.freepascal.org/down/i386/macosx.html</string>
+							<key>VALUE</key>
+							<string>Install Xcode Command Line Tools</string>
+						</dict>
+					</array>
+					<key>NAME</key>
+					<string>Result of External Script</string>
+					<key>STATE</key>
+					<true/>
+				</dict>
 			</array>
 			<key>RESOURCES</key>
 			<array/>
@@ -755,7 +796,7 @@
 			<key>BUILD_PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>x86</string>
+				<string>build/fpc-3.2.0.intel-macosx</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
@@ -928,12 +969,17 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>fpc-3.2.0rc1-intel-macosx</string>
+			<string>fpc-3.2.0-intel-macosx</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>
 			<false/>
 		</dict>
+	</dict>
+	<key>SHARED_GLOBAL_DATA</key>
+	<dict>
+		<key>IC_REQUIREMENT_JAVASCRIPT_SHARED_SOURCE_CODE</key>
+		<string></string>
 	</dict>
 	<key>TYPE</key>
 	<integer>0</integer>
