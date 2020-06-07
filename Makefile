@@ -3262,6 +3262,7 @@ innomsdosbuild: innocheck
 	$(MAKE) buildmsdos_subarch SUBARCH=8086 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR)
 	$(MAKE) buildmsdos_subarch SUBARCH=80186 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR)
 	$(MAKE) buildmsdos_subarch SUBARCH=80286 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR)
+	$(MAKE) buildmsdos_subarch SUBARCH=80386 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR)
 	$(MOVE) $(INNODIR)/units/msdos_ $(INNODIR)/units/msdos
 	$(COPY) install/crossbinmsdos/nasm.exe $(INNODIR)/bin/i386-win32
 	rmcvsdir$(EXEEXT) $(INNODIR)
