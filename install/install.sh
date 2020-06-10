@@ -38,12 +38,39 @@ yesno ()
 #
 #
 #
+CMDGREP="grep"
+CMDGGREP="`which ggrep 2> /dev/null`"
+if [ -f "$CMDGGREP" ] ; then
+  CMDGREP="$CMDGGREP"
+  echo "Using GREP binary=$CMDGREP"
+fi
+grep_version=`$CMDGREP --version 2> /dev/null `
+grep_version_res=$?
+if [ $grep_version_res -ne 0 ] ; then
+  echo "Installed grep command $CMDGREP does not support --version"
+  grep_version=""
+fi
+
+if [ "${grep_version//GNU/}" != "${grep_version}" ] ; then
+  is_gnu_grep=1
+  grep_silent_opt="-q"
+else
+  is_gnu_grep=0
+  grep_silent_opt=""
+fi
+
 CMDTAR="tar"
+# Use GNU tar if present
+CMDGTAR="`which gtar 2> /dev/null`"
+if [ -f "$CMDGTAR" ]; then
+  CMDTAR="$CMDGTAR"
+  echo "Using TAR binary=$CMDTAR"
+fi
 
 tar_version=`$CMDTAR --version 2> /dev/null `
 tar_version_res=$?
 if [ $tar_version_res -ne 0 ] ; then
-  echo "Installed tar command does not support --version"
+  echo "Installed tar command $CMDTAR does not support --version"
   tar_version=""
 fi
 
@@ -51,23 +78,54 @@ if [ "${tar_version//GNU/}" != "${tar_version}" ] ; then
   is_gnu_tar=1
   no_same_owner_tar_opt=--no-same-owner
   strip_tar_opt="--strip 1"
+  use_gunzip=0
 else
   is_gnu_tar=0
   no_same_owner_tar_opt=
   strip_tar_opt=
+  use_gunzip=1
 fi
 
 TAR="$CMDTAR $no_same_owner_tar_opt"
 # Untar files ($3,optional) from  file ($1) to the given directory ($2)
 unztar ()
 {
- $TAR -xzf "$HERE/$1" -C "$2" $3
+ if [ $use_gunzip -eq 0 ] ; then
+   $TAR -xzf "$HERE/$1" -C "$2" $3
+ else
+   startdir="`pwd`" 
+   targzfile="$HERE/$1"
+   tarfile="${targzfile/tar.gz/tar}"
+   if [ ! -f "$tarfile" ] ; then
+     gunzip "$targzfile"
+   fi
+   cd "$2"
+   $TAR -xf "$tarfile" $3
+   cd "$startdir"
+ fi
 }
 
 # Untar tar.gz file ($2) from file ($1) and untar result to the given directory ($3)
 unztarfromtar ()
 {
- $CMDTAR -xOf "$HERE/$1" "$2" | $TAR -C "$3" -xzf -
+ if [ $use_gunzip -eq 0 ] ; then
+   $CMDTAR -xOf "$HERE/$1" "$2" | $TAR -C "$3" -xzf -
+ else
+   startdir="`pwd`"
+   $CMDTAR -xf "$HERE/$1" "$2"
+   targzfile="$startdir/$2"
+   tarfile="${targzfile/tar.gz/tar}"
+   if [ ! -f "$tarfile" ] ; then
+     gunzip "$targzfile"
+   fi
+   cd "$3"
+   $TAR -xf "$tarfile"
+   res=$?
+   if [ $res -eq 0 ] ; then
+     rm -f "$2"
+   fi
+   cd "$startdir"
+ fi
 }
 
 # Get file list from tar archive ($1) in variable ($2)
@@ -182,8 +240,8 @@ installbinary ()
   listtarfiles "$BINARYTAR" packages units
   for f in $packages
   do
-    if ! echo "$f" | grep -q fcl > /dev/null ; then
-      if ! echo "$f" | grep -q rtl > /dev/null ; then
+    if ! echo "$f" | $CMDGREP $grep_silent_opt fcl > /dev/null ; then
+      if ! echo "$f" | $CMDGREP $grep_silent_opt rtl > /dev/null ; then
         p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
 	echo "Installing $p"
         unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
@@ -261,20 +319,8 @@ case "$OSNAME" in
        echo "upgrading binutils package to at least version 2.21"
      fi
      PREFIX=/usr/local
-     # Use GNU tar if present
-     if [ "`which gtar`" != "" ]; then
-       CMDTAR=`which gtar`
-       TAR="$CMDTAR --no-same-owner"
-     fi
-     echo "Using TAR binary=$CMDTAR"
   ;;
   aix)
-     # Use GNU tar if present
-     if [ "`which gtar`" != "" ]; then
-       CMDTAR=`which gtar`
-       TAR="$CMDTAR --no-same-owner"
-     fi
-     echo "Using TAR binary=$CMDTAR"
      # Install in /usr/local or /usr ?
      if checkpath /usr/local/bin; then
          PREFIX=/usr/local
