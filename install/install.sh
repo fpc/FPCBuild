@@ -169,41 +169,38 @@ installbinary ()
   if [ "$2" = "" ]; then
     FPCTARGET="$1"
     CROSSPREFIX=
+    PPCPREFIX=ppc
   else
     FPCTARGET=`echo $2 | sed 's/-$//'`
     CROSSPREFIX="$2"
+    PPCPREFIX=ppcross
   fi
 
   BINARYTAR="${CROSSPREFIX}binary.$1.tar"
 
-  # conversion from long to short archname for ppc<x>
   PPCSUFFIX=$FPCTARGET
-  # Only list shortened suffixes
+  # conversion from long to short archname for ppc<x>
   case $FPCTARGET in
+    aarch64)
+      PPCSUFFIX=a64;;
+    alpha)
+      PPCSUFFIX=axp;;
     m68k)
       PPCSUFFIX=68k;;
     i386)
       PPCSUFFIX=386;;
-    powerpc64)
-      PPCSUFFIX=ppc64;;
-    powerpc)
-      PPCSUFFIX=ppc;;
-    arm*)
-      PPCSUFFIX=arm;;
-    x86_64)
-      PPCSUFFIX=x64;;
-    ia64)
-      PPCSUFFIX=ia64;;
-    alpha)
-      PPCSUFFIX=axp;;
-    aarch64)
-      PPCSUFFIX=a64;;
     i8086)
       PPCSUFFIX=8086;;
+    powerpc)
+      PPCSUFFIX=ppc;;
+    powerpc64)
+      PPCSUFFIX=ppc64;;
     riscv32)
-      PPCSUFFIX=rv32;
+      PPCSUFFIX=rv32;;
     riscv64)
-      PPCSUFFIX=rv64;
+      PPCSUFFIX=rv64;;
+    x86_64)
+      PPCSUFFIX=x64;;
   esac
 
   # Install compiler/RTL. Mandatory.
@@ -217,13 +214,14 @@ installbinary ()
   fi
 
   # Install symlink
-  if [ -f "$LIBDIR/ppc${PPCSUFFIX}" ] ; then
-    echo "Installing symbolic link to  $LIBDIR/ppc${PPCSUFFIX} in $EXECDIR"
+  if [ -f "$LIBDIR/${PPCPREFIX}${PPCSUFFIX}" ] ; then
+    rm -f "$EXECDIR/${PPCPREFIX}${PPCSUFFIX}"
+    ln -sf "$LIBDIR/${PPCPREFIX}${PPCSUFFIX}" "$EXECDIR/${PPCPREFIX}${PPCSUFFIX}"
+  elif [ -f "$LIBDIR/ppc${PPCSUFFIX}" ] ; then
     rm -f "$EXECDIR/ppc${PPCSUFFIX}"
     ln -sf "$LIBDIR/ppc${PPCSUFFIX}" "$EXECDIR/ppc${PPCSUFFIX}"
-    res=$?
   else
-    echo "Warning: $LIBDIR/ppc${PPCSUFFIX} not found"
+    echo "Warning: Compiler for $FPCTARGET not found"
   fi
 
   echo "Installing rtl packages..."
