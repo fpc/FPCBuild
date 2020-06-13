@@ -206,7 +206,13 @@ installbinary ()
 
   # Install compiler/RTL. Mandatory.
   echo "Installing compiler and RTL for $FPCTARGET..."
-  unztarfromtar "$BINARYTAR" "${CROSSPREFIX}base.$1.tar.gz" "$PREFIX"
+  # Full install builds cross generated on x86_64-linux have a different name for base tar.gz file
+  basetargz=`$CMDTAR -tf "$BINARYTAR" | sed -n -e "/^base.*tar\.gz/p" -e "/^$FPCTARGET-base.*tar\.gz/p" | head -1 `
+  if [ -n "$basetargz" ] ; then
+    unztarfromtar "$BINARYTAR" "$basetargz" "$PREFIX"
+  else
+    unztarfromtar "$BINARYTAR" "${CROSSPREFIX}base.$1.tar.gz" "$PREFIX"
+  fi
 
   if [ -f "binutils-${CROSSPREFIX}$1.tar.gz" ]; then
     if yesno "Install Cross binutils"; then
