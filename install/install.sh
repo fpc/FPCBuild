@@ -178,7 +178,8 @@ installbinary ()
 
   BINARYTAR="${CROSSPREFIX}binary.$1.tar"
 
-  PPCSUFFIX=$FPCTARGET
+  # Select CPU part of FPCTARGET
+  PPCSUFFIX=${FPCTARGET/-*/}
   # conversion from long to short archname for ppc<x>
   case $FPCTARGET in
     aarch64)
