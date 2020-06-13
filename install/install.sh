@@ -181,7 +181,7 @@ installbinary ()
   # Select CPU part of FPCTARGET
   PPCSUFFIX=${FPCTARGET/-*/}
   # conversion from long to short archname for ppc<x>
-  case $FPCTARGET in
+  case $PPCSUFFIX in
     aarch64)
       PPCSUFFIX=a64;;
     alpha)
