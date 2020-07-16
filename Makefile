@@ -330,7 +330,7 @@ FPCFPMAKE=$(FPC)
 endif
 endif
 override PACKAGE_NAME=fpc
-override PACKAGE_VERSION=3.2.0-beta
+override PACKAGE_VERSION=3.2.1
 BS_FPC_VERSION:=$(FPC_VERSION)
 FPC_VERSION:=$(firstword $(subst -, ,$(PACKAGE_VERSION)))
 ifneq ($(wildcard install),)
