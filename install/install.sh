@@ -38,12 +38,39 @@ yesno ()
 #
 #
 #
+CMDGREP="grep"
+CMDGGREP="`which ggrep 2> /dev/null`"
+if [ -f "$CMDGGREP" ] ; then
+  CMDGREP="$CMDGGREP"
+  echo "Using GREP binary=$CMDGREP"
+fi
+grep_version=`$CMDGREP --version 2> /dev/null `
+grep_version_res=$?
+if [ $grep_version_res -ne 0 ] ; then
+  echo "Installed grep command $CMDGREP does not support --version"
+  grep_version=""
+fi
+
+if [ "${grep_version//GNU/}" != "${grep_version}" ] ; then
+  is_gnu_grep=1
+  grep_silent_opt="-q"
+else
+  is_gnu_grep=0
+  grep_silent_opt=""
+fi
+
 CMDTAR="tar"
+# Use GNU tar if present
+CMDGTAR="`which gtar 2> /dev/null`"
+if [ -f "$CMDGTAR" ]; then
+  CMDTAR="$CMDGTAR"
+  echo "Using TAR binary=$CMDTAR"
+fi
 
 tar_version=`$CMDTAR --version 2> /dev/null `
 tar_version_res=$?
 if [ $tar_version_res -ne 0 ] ; then
-  echo "Installed tar command does not support --version"
+  echo "Installed tar command $CMDTAR does not support --version"
   tar_version=""
 fi
 
@@ -51,23 +78,54 @@ if [ "${tar_version//GNU/}" != "${tar_version}" ] ; then
   is_gnu_tar=1
   no_same_owner_tar_opt=--no-same-owner
   strip_tar_opt="--strip 1"
+  use_gunzip=0
 else
   is_gnu_tar=0
   no_same_owner_tar_opt=
   strip_tar_opt=
+  use_gunzip=1
 fi
 
 TAR="$CMDTAR $no_same_owner_tar_opt"
 # Untar files ($3,optional) from  file ($1) to the given directory ($2)
 unztar ()
 {
- $TAR -xzf "$HERE/$1" -C "$2" $3
+ if [ $use_gunzip -eq 0 ] ; then
+   $TAR -xzf "$HERE/$1" -C "$2" $3
+ else
+   startdir="`pwd`" 
+   targzfile="$HERE/$1"
+   tarfile="${targzfile/tar.gz/tar}"
+   if [ ! -f "$tarfile" ] ; then
+     gunzip "$targzfile"
+   fi
+   cd "$2"
+   $TAR -xf "$tarfile" $3
+   cd "$startdir"
+ fi
 }
 
 # Untar tar.gz file ($2) from file ($1) and untar result to the given directory ($3)
 unztarfromtar ()
 {
- $CMDTAR -xOf "$HERE/$1" "$2" | $TAR -C "$3" -xzf -
+ if [ $use_gunzip -eq 0 ] ; then
+   $CMDTAR -xOf "$HERE/$1" "$2" | $TAR -C "$3" -xzf -
+ else
+   startdir="`pwd`"
+   $CMDTAR -xf "$HERE/$1" "$2"
+   targzfile="$startdir/$2"
+   tarfile="${targzfile/tar.gz/tar}"
+   if [ ! -f "$tarfile" ] ; then
+     gunzip "$targzfile"
+   fi
+   cd "$3"
+   $TAR -xf "$tarfile"
+   res=$?
+   if [ $res -eq 0 ] ; then
+     rm -f "$2"
+   fi
+   cd "$startdir"
+ fi
 }
 
 # Get file list from tar archive ($1) in variable ($2)
@@ -111,44 +169,50 @@ installbinary ()
   if [ "$2" = "" ]; then
     FPCTARGET="$1"
     CROSSPREFIX=
+    PPCPREFIX=ppc
   else
     FPCTARGET=`echo $2 | sed 's/-$//'`
     CROSSPREFIX="$2"
+    PPCPREFIX=ppcross
   fi
 
   BINARYTAR="${CROSSPREFIX}binary.$1.tar"
 
+  # Select CPU part of FPCTARGET
+  PPCSUFFIX=${FPCTARGET/-*/}
   # conversion from long to short archname for ppc<x>
-  case $FPCTARGET in
-    m68k*)
-      PPCSUFFIX=68k;;
-    sparc*)
-      PPCSUFFIX=sparc;;
-    i386*)
-      PPCSUFFIX=386;;
-    powerpc64*)
-      PPCSUFFIX=ppc64;;
-    powerpc*)
-      PPCSUFFIX=ppc;;
-    arm*)
-      PPCSUFFIX=arm;;
-    x86_64*)
-      PPCSUFFIX=x64;;
-    mips*)
-      PPCSUFFIX=mips;;
-    ia64*)
-      PPCSUFFIX=ia64;;
-    alpha*)
-      PPCSUFFIX=axp;;
-    aarch64*)
+  case $PPCSUFFIX in
+    aarch64)
       PPCSUFFIX=a64;;
-    i8086*)
+    alpha)
+      PPCSUFFIX=axp;;
+    m68k)
+      PPCSUFFIX=68k;;
+    i386)
+      PPCSUFFIX=386;;
+    i8086)
       PPCSUFFIX=8086;;
+    powerpc)
+      PPCSUFFIX=ppc;;
+    powerpc64)
+      PPCSUFFIX=ppc64;;
+    riscv32)
+      PPCSUFFIX=rv32;;
+    riscv64)
+      PPCSUFFIX=rv64;;
+    x86_64)
+      PPCSUFFIX=x64;;
   esac
 
   # Install compiler/RTL. Mandatory.
   echo "Installing compiler and RTL for $FPCTARGET..."
-  unztarfromtar "$BINARYTAR" "${CROSSPREFIX}base.$1.tar.gz" "$PREFIX"
+  # Full install builds cross generated on x86_64-linux have a different name for base tar.gz file
+  basetargz=`$CMDTAR -tf "$BINARYTAR" | sed -n -e "/^base.*tar\.gz/p" -e "/^$FPCTARGET-base.*tar\.gz/p" | head -1 `
+  if [ -n "$basetargz" ] ; then
+    unztarfromtar "$BINARYTAR" "$basetargz" "$PREFIX"
+  else
+    unztarfromtar "$BINARYTAR" "${CROSSPREFIX}base.$1.tar.gz" "$PREFIX"
+  fi
 
   if [ -f "binutils-${CROSSPREFIX}$1.tar.gz" ]; then
     if yesno "Install Cross binutils"; then
@@ -157,8 +221,15 @@ installbinary ()
   fi
 
   # Install symlink
-  rm -f "$EXECDIR/ppc${PPCSUFFIX}"
-  ln -sf "$LIBDIR/ppc${PPCSUFFIX}" "$EXECDIR/ppc${PPCSUFFIX}"
+  if [ -f "$LIBDIR/${PPCPREFIX}${PPCSUFFIX}" ] ; then
+    rm -f "$EXECDIR/${PPCPREFIX}${PPCSUFFIX}"
+    ln -sf "$LIBDIR/${PPCPREFIX}${PPCSUFFIX}" "$EXECDIR/${PPCPREFIX}${PPCSUFFIX}"
+  elif [ -f "$LIBDIR/ppc${PPCSUFFIX}" ] ; then
+    rm -f "$EXECDIR/ppc${PPCSUFFIX}"
+    ln -sf "$LIBDIR/ppc${PPCSUFFIX}" "$EXECDIR/ppc${PPCSUFFIX}"
+  else
+    echo "Warning: Compiler for $FPCTARGET not found"
+  fi
 
   echo "Installing rtl packages..."
   listtarfiles "$BINARYTAR" packages units-rtl
@@ -182,8 +253,8 @@ installbinary ()
   listtarfiles "$BINARYTAR" packages units
   for f in $packages
   do
-    if ! echo "$f" | grep -q fcl > /dev/null ; then
-      if ! echo "$f" | grep -q rtl > /dev/null ; then
+    if ! echo "$f" | $CMDGREP $grep_silent_opt fcl > /dev/null ; then
+      if ! echo "$f" | $CMDGREP $grep_silent_opt rtl > /dev/null ; then
         p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
 	echo "Installing $p"
         unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
@@ -261,20 +332,8 @@ case "$OSNAME" in
        echo "upgrading binutils package to at least version 2.21"
      fi
      PREFIX=/usr/local
-     # Use GNU tar if present
-     if [ "`which gtar`" != "" ]; then
-       CMDTAR=`which gtar`
-       TAR="$CMDTAR --no-same-owner"
-     fi
-     echo "Using TAR binary=$CMDTAR"
   ;;
   aix)
-     # Use GNU tar if present
-     if [ "`which gtar`" != "" ]; then
-       CMDTAR=`which gtar`
-       TAR="$CMDTAR --no-same-owner"
-     fi
-     echo "Using TAR binary=$CMDTAR"
      # Install in /usr/local or /usr ?
      if checkpath /usr/local/bin; then
          PREFIX=/usr/local
