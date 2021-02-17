@@ -1,3 +1,9 @@
+fpc (3.2.2rc1) unstable; urgency=medium
+
+   * New minor release
+
+ -- Marco van de Voort <marco@freepascal.org>  Tue, 17 Feb 2020 16:06:05 +0100
+
 fpc (3.2.0) unstable; urgency=medium
 
    * New major release
