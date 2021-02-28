@@ -2815,6 +2815,7 @@ renametoshort:
 	-mv $(PKGPRE)$(PKGUNITSPRE)syslog$(ZIPSUFFIX).zip usysl$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)tcl$(ZIPSUFFIX).zip utcl$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)tosunits$(ZIPSUFFIX).zip utos$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)tplylib$(ZIPSUFFIX).zip utpll$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)univint$(ZIPSUFFIX).zip uuniv$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)unixutil$(ZIPSUFFIX).zip uunix$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)unzip$(ZIPSUFFIX).zip uzip$(ZIPSUFFIXSHORT).zip
