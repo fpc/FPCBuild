@@ -1,0 +1,91 @@
+This is the EMX OS/2 port of GNU make. It was initially done by 
+Kent Williams <williams@herky.cs.uiowa.edu>. It has later been taken
+over by Kai Uwe Rommel <rommel@ars.de>. It can be used with EMX
+for OS/2 and Win32 (RSX). 
+
+The Win32 flavor of this EMX port does not rely on the native Win32
+patches that were integrated by Cygnus. They do also support a Win32
+version, but that port seems to be very incomplete, according to their
+own docs.
+
+This version of GNU make supports embedded REXX commands under OS/2.
+Similar like Unix users can embed shell commands into command lists of
+rules, OS/2 users can use REXX for this purpose. The major difference
+is that the Unix version executes an external shell with the shell
+commands passed as arguments while the OS/2 version executes REXX
+commands internally, by passing them directly to the resident OS/2
+REXX interpreter, without need for subprocesses. This should thus be
+faster.
+
+Compared to REXX commands written as external .CMD procedures, the
+following restrictions apply, however:
+
+- any REXX command in a rule's command list must be prefixed by the
+  keyword "rexx"
+- all REXX commands can be only one line long, similarly to the
+  restrictions for shell commands in Makefiles under Unix, but:
+- similar like the Unix implementation does with embedded shell
+  commands, GNU make allows you to let a REXX command (script) span
+  multiple lines if you use the backslash as "continuation" character
+  at the end of each line and also use the semicolon to end each REXX
+  command line, since they will be concatenated into one single line
+- GNU make uses quoting characters (\, " and ') internally, so if you
+  need to use them in REXX commands, you have to quote them properly,
+  just like you have to if you embed shell commands in Unix Makefiles
+- a REXX command script may end with a "return" or "exit" statement
+  with a numeric parameter which is interpreted by make like the exit
+  code of an external command, if no such statement is used, the exit
+  code is assumed to be zero (i.e. no error)
+- this is a quick hack and may have bugs, let me know if you find any
+
+Example:
+
+test:
+        rexx do i=1 to 10; say i; end; return 0
+
+which could also be written as
+
+test:
+        rexx \
+	  do i=1 to 10; \
+	    say i; \
+	  end; \
+	  return 0
+
+If a REXX script parses "source", then the third parameter will
+contain the word "MAKE" instead of the .CMD file's pathname that
+external REXX procedures get in this place.
+
+History:
+93/08/08: update to 3.68, fixed handling of " and ' quotes.
+93/11/23: preliminary update to 3.69, none of the pending fixes done yet.
+94/02/18: cleanup of quoting and shell problems, update to version 3.70
+94/03/14: fixes for still outstanding and newly introduced bugs
+94/04/24: fix for drive letters in targets and backslashes in command
+          lines, should run under DOS too now
+94/06/07: update to 3.71, fix for bug with trailing backslashes
+94/08/03: fixes for /c and for drive letters
+94/12/13: update for 3.72
+95/04/20: update for 3.73, needed major changes in job.c
+95/04/24: fix for ` characters in command lines
+95/06/12: update for 3.74
+96/05/19: fixes for crashes, case insensitivity, tab/spaces, added REXX support
+96/06/16: fixes for quoting bug and rexx incompatibility with other shells,
+          removed tab/spaces fix because it causes other problems
+96/09/15: update for 3.75
+96/09/21: fixed VPATH handling (for \ instead of /)
+96/10/20: added fix or hanging on Ctrl-C, by Eberhard Mattes
+96/12/28: fixed endless recursion for some kinds of quoting,
+          added Win32 support
+97/04/01: fixed VPATH separator bug
+98/04/20: update for 3.76.1 (with help from Sharon Dagan, <sdagan@ibm.net>)
+98/04/24: fixed various bugs (perhaps)
+          added PATH_SEPARATOR_CHAR environment variable for VPATH override
+
+--
+/* Kai Uwe Rommel                   ARS Computer & Consulting GmbH *
+ * rommel@ars.de (http://www.ars.de)             Muenchen, Germany *
+ * rommel@leo.org (http://www.leo.org/pub/comp/os/os2 maintenance) */
+
+DOS ... is still a real mode only non-reentrant interrupt
+handler, and always will be.                -Russell Williams
