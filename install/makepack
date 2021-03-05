@@ -4,7 +4,22 @@
 # Copyright 1996-2004 Michael Van Canneyt and Peter Vreman
 #
 
-set -e
+# set -e
+
+
+# Parse all args with XX=VALUE
+check_next_arg=1
+
+while [ $check_next_arg -eq 1 ] ; do
+  check_next_arg=0
+  arg="$1"
+  if [ "${arg/=/_}" != "${arg}" ] ; then
+    echo "Adding MAKEPACK_${arg} variable"
+    eval export "\"MAKEPACK_${arg}\""
+    shift
+    check_next_arg=1
+  fi
+done
 
 # Set this to "yes" if you want to force making the documentation.
 # if it is not equal to yes, the documentation is assumed present in a file doc-pdf.tar.gz
@@ -48,25 +63,47 @@ MAKE=make
 TAR=tar
 
 case "$HOSTOS" in
- *freebsd*) MAKE=gmake
-	EXTRAOPT+=" -Fl/usr/local/lib -Fl/usr/X11R6/lib  -dFREEBSD5"
+  *freebsd*) MAKE=gmake
+    if [ -d /usr/local/lib ] ; then
+      EXTRAOPT+=" -Fl/usr/local/lib"
+    fi
+    if [ -d /usr/X11R6/lib ] ; then
+      EXTRAOPT+=" -Fl/usr/X11R6/lib"
+    fi
+    EXTRAOPT+=" -dFREEBSD5"
   ;;
- *netbsd*) MAKE=gmake
-	EXTRAOPT+=" -Fl/usr/pkg/lib"
+  *netbsd*) MAKE=gmake
+    if [ -d /usr/pkg/lib ] ; then
+      EXTRAOPT+=" -Fl/usr/pkg/lib"
+    fi
   ;;
 
- *sunos*) MAKE=gmake
-     # Use system linker if on solaris machine
-     if [ "$SOURCEOS" == "solaris" ]; then
-       EXTRAOPT+=" -Xn"
-     fi
-     # Use GNU tar if present
-     if [ "`which gtar`" != "" ]; then
-       TAR=`which gtar`
-     fi
- ;;
- *openbsd*) MAKE=gmake
-	EXTRAOPT+=" -Fl/usr/local/lib"
+  *linux*) 
+    if [ "$SOURCECPU" = "i386" ] ; then
+      if [ -d /lib32 ] ; then
+        EXTRAOPT+=" -Fl/lib32"
+      fi
+      if [ -d /usr/lib32 ] ; then
+        EXTRAOPT+=" -Fl/usr/lib32"
+      fi
+    fi 
+  ;;
+  *sunos*)
+    MAKE=gmake
+    # Use system linker if on solaris machine
+    if [ "$SOURCEOS" == "solaris" ]; then
+      EXTRAOPT+=" -Xn"
+    fi
+    # Use GNU tar if present
+    if [ "`which gtar`" != "" ]; then
+      TAR=`which gtar`
+    fi
+  ;;
+  *openbsd*)
+    MAKE=gmake
+    if [ -d /usr/local/lib ] ; then
+      EXTRAOPT+=" -Fl/usr/local/lib"
+    fi
   ;;
 esac
 
@@ -86,63 +123,64 @@ fi
 # Retrieve GDBMI_DEFAULT_OS_LIST from Makefile.fpc
 GDBMI_DEFAULT_OS_LIST=`grep '^GDBMI_DEFAULT_OS_LIST *=' Makefile.fpc | sed 's+[^=]*= *\(.*\)+\1+'`
 
-# Use of GDBMI for text mode IDE, starting with version 3.1.1
-if  [ "X${VERSION#3.0.}" == "X${VERSION}" ] ; then
-  if  [ "X${NOGDB}" == "X" ] ; then
-#  Determine if we should use GDBMI for Text Mode IDE compilation
-    if [ "X${NOGDBMI}" == "X" ]; then
-      if [ "X${GDBMI_DEFAULT_OS_LIST/%{TARGETOS}}" != "X${GDBMI_DEFAULT_LIST}" ] ; then
-        echo "Use GDBMI"
-        export GDBMI=1
-      fi
+# Use of GDBMI for text mode IDE, if in GDBMI_DEFAULT_OS_LIST
+if  [ "X${NOGDB}" == "X" ] ; then
+  #  Determine if we should use GDBMI for Text Mode IDE compilation
+  if [ "X${NOGDBMI}" == "X" ]; then
+    if [ "X${GDBMI_DEFAULT_OS_LIST/%{TARGETOS}}" != "X${GDBMI_DEFAULT_LIST}" ] ; then
+      echo "Building text mode IDE using GDBMI"
+      export GDBMI=1
     fi
-  fi #NOGDB
-fi #Not 3.0.X version
+  fi
+fi #NOGDB
 
 if [ "X${GDBMI}" != "X" ] ; then
-if [ "X${GDBMI}" == "X0" ] ; then
-if [ "$CHECKLIBGDB" = "" ]; then
-  CHECKLIBGDB=yes
-fi
+  if [ "X${GDBMI}" == "X0" ] ; then
+    if [ "$CHECKLIBGDB" = "" ]; then
+      CHECKLIBGDB=yes
+    fi
+  else
+    CHECKLIBGDB=no
+  fi
 else
-CHECKLIBGDB=no
-fi
-else
-if [ "$CHECKLIBGDB" = "" ]; then
-  CHECKLIBGDB=yes
-fi
+  if [ "$CHECKLIBGDB" = "" ]; then
+    CHECKLIBGDB=yes
+  fi
 fi
 
 FULLTARGET=$TARGETCPU-$TARGETOS
 FULLSOURCE=$SOURCECPU-$SOURCEOS
+
+# Set this variable to 1 if BUILDFULLNATIVE is passed
+FULLNATIVE_CROSS=0
 
 echo "FPC Source: $FULLSOURCE"
 echo "FPC Target: $FULLTARGET"
 
 # Cross building
 #  - add prefix
-#  - no IDE
-if [ "$FULLTARGET" != "$FULLSOURCE" ]; then
-   CROSS="cross"
-   CROSSPREFIX=$FULLTARGET-
-   IDE=
+if [ "X$MAKEPACK_BUILDFULLNATIVE" == "X1" ] ; then
+  CROSS=
+  CROSSPREFIX=
+  FULLSUFFIX=$FULLTARGET
+  if [ "$FULLTARGET" != "$FULLSOURCE" ]; then
+    FULLNATIVE_CROSS=1
+  fi
+elif [ "$FULLTARGET" != "$FULLSOURCE" ]; then
+  CROSS="cross"
+  CROSSPREFIX=$FULLTARGET-
+  FULLSUFFIX=$FULLSOURCE
 else
-   CROSS=
-   CROSSPREFIX=
-   # Starting with version 3.1.1, the IDE is not a separate part anymore, but part of utils
-   if [ "X${VERSION#3.0.}" != "X${VERSION}" ] ; then
-     # Version 3.0.x, add the IDE as separate part
-     export IDE=ide
-   else
-     export IDE=
-   fi
+  CROSS=
+  CROSSPREFIX=
+  FULLSUFFIX=$FULLTARGET
 fi
 
 
 # Check for libgdb.a
-if [ "$CROSS" = "" ]; then
-  if [ "$CHECKLIBGDB" = "yes" ]; then
-    if [ "$GDBLIBDIR" = "" ]; then
+if [ "$XCROSS" == "X" ]; then
+  if [ "X$CHECKLIBGDB" == "Xyes" ]; then
+    if [ "X$GDBLIBDIR" == "X" ]; then
       GDBLIBDIR=fpcsrc/libgdb/$TARGETOS/$TARGETCPU
     fi
     if [ ! -e "$GDBLIBDIR/libgdb.a" ]; then
@@ -157,7 +195,7 @@ if [ "$CROSS" = "" ]; then
 fi
 
 # First check for doc-pdf.tar.gz before building anything
-if [ "$CROSS" = "" ]; then
+if [ "X$CROSS" == "X" ]; then
   if [ ! -f doc-pdf.tar.gz ]; then
     if [ "$MAKEDOCS" != "yes" ]; then
       echo "No documentation available. Please copy the file doc-pdf.tar.gz to this directory."
@@ -188,21 +226,29 @@ if [[ ( "$FULLSOURCE" == "powerpc-linux" ) && ( -z "$CROSS" ) ]]; then
   export FPMAKE_SKIP_CONFIG="-n -XPpowerpc-linux-"
 fi
 
-if [ -z "$GCC" ] ; then
-  GCC=`which gcc`
+if [[ ( "$FULLSOURCE" == "x86_64-linux" ) && ( "$FULLTARGET" == "i386-linux" ) ]]; then
+  export TEST_BINUTILSPREFIX=i386-linux-
+  export BINUTILSPREFIX=i386-linux-
+  GCC_EXTRA_OPTS="$GCC_EXTRA_OPTS -m32"
+  export EXTRAOPT="${EXTRAOPT} -Xd -Fl/usr/lib32 -Fl/lib32 -Fd"
 fi
 
-if [ -n "$GCC" ] ; then
-  LIBGCC_FILENAME=`gcc -print-libgcc-file-name $GCC_EXTRA_OPTS`
-  LIBGCC_DIR=`dirname $LIBGCC_FILENAME`
-  if [ -d "$LIBGCC_DIR" ] ; then
-    echo "Adding $LIBGCC_DIR directory to library directory list"
-    export EXTRAOPT="${EXTRAOPT} -Fl$LIBGCC_DIR"
+if [[ ( "$FULLSOURCE" == "$FULLTARGET" ) || ( -n "$GCC_EXTRA_OPTS" ) ]] ; then
+  if [ -z "$GCC" ] ; then
+    GCC=`which gcc`
+  fi
+  if [ -n "$GCC" ] ; then
+    LIBGCC_FILENAME=`gcc -print-libgcc-file-name $GCC_EXTRA_OPTS`
+    LIBGCC_DIR=`dirname $LIBGCC_FILENAME`
+    if [ -d "$LIBGCC_DIR" ] ; then
+      echo "Adding libgcc LIBGCC_DIR directory to library directory list"
+      export EXTRAOPT="${EXTRAOPT} -Fl$LIBGCC_DIR"
+    fi
   fi
 fi
 
 # check existence of binutils if cross packing
-if [ ! "$CROSS" = "" ]; then
+if [ "X$CROSS" != "X" ]; then
   if [ ! -f binutils-${CROSSPREFIX}$FULLSOURCE.tar.gz ]; then
     echo "No cross binutils available: binutils-${CROSSPREFIX}$FULLSOURCE.tar.gz missing."
     exit 1
@@ -218,8 +264,8 @@ fi
 # Build everything using the makefiles
 echo "Starting ${MAKE} distclean CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS FPC=$FPC"
 ${MAKE} distclean CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS FPC=$FPC
-echo "Starting ${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" FPC_VERSION=$VERSION FPC=$FPC $MAKE_EXTRA"
-${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPT="${EXTRAOPT}" FPC_VERSION=$VERSION FPC=$FPC $MAKE_EXTRA
+echo "Starting ${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPTNEW=\"${EXTRAOPT}\" CROSSOPT=\"$CROSSOPT $EXTRAOPT\" FPC_VERSION=$VERSION FPC=$FPC $MAKE_EXTRA"
+${MAKE} ${CROSS}zipinstall CPU_TARGET=$TARGETCPU OS_TARGET=$TARGETOS OPTNEW="${EXTRAOPT}" CROSSOPT="$CROSSOPT $EXTRAOPT" FPC_VERSION=$VERSION FPC=$FPC $MAKE_EXTRA
 if [ $? != 0 ]; then
   echo "Failed to make distribution archive."
   exit 1
@@ -229,7 +275,7 @@ fi
 RELFILES="install.sh"
 
 # install.sh
-echo "Copying install.sh"
+echo "Copying install.sh, substituting version strings"
 sed -e s+%version%+$VERSION+ -e s+%fullversion%+$FULLVERSION+ install/install.sh > install.sh
 chmod 755 install.sh
 
@@ -238,17 +284,38 @@ cp install/doc/readme.txt .
 chmod 644 readme.txt
 
 # binary.*.tar
-BINARYTAR=${CROSSPREFIX}binary.$FULLSOURCE.tar
+BINARYTAR=${CROSSPREFIX}binary.$FULLSUFFIX.tar
 echo "Creating $BINARYTAR"
-BINPACKAGES="base $IDE units utils"
+BINPACKAGES="base units utils"
 BINFILES=
 for p in $BINPACKAGES; do
-  BINFILES="$BINFILES ${CROSSPREFIX}$p*.$FULLSOURCE.tar.gz"
+  PATTERN="${CROSSPREFIX}$p*$FULLSUFFIX.tar.gz"
+  p_files=`ls -1  $PATTERN 2> /dev/null`
+  if [ -z "$p_files" ] ; then
+    PATTERN=$p*$FULLTARGET.tar.gz
+    p_files=`ls -1  $PATTERN 2> /dev/null`
+  fi
+  if [ ! -z "$p_files" ] ; then
+    BINFILES+=" $PATTERN"
+  else
+    if [ "$p" = "base" ] ; then
+      if [ -f "${FULLTARGET}-base.$FULLSOURCE.tar.gz" ] ;then
+        BINFILES+=" ${FULLTARGET}-base.$FULLSOURCE.tar.gz"
+      fi
+    fi
+  fi
 done
+
+echo "${TAR} cf $BINARYTAR $BINFILES"
 ${TAR} cf $BINARYTAR $BINFILES
-if [ $? != 0 ]; then
-  echo "Failed to create $BINARYTAR"
-  exit 1
+tarres=$?
+if [ $tarres != 0 ]; then
+  if [ ! -f "$BINARYTAR" ] ; then
+    echo "Failed to create $BINARYTAR"
+    exit 1
+  else
+    echo "$TAR returned error=$tarres"
+  fi
 fi
 RELFILES="$RELFILES $BINARYTAR"
 
@@ -263,7 +330,7 @@ else
 fi
 
 # Files to be added to the .tar
-DIRNAME=${CROSSPREFIX}fpc-$FULLVERSION.$FULLSOURCE
+DIRNAME=${CROSSPREFIX}fpc-$FULLVERSION.$FULLSUFFIX
 TARNAME=${DIRNAME}.tar
 echo "Creating $TARNAME"
 # Erase directory if it exists
@@ -278,9 +345,14 @@ fi
 mkdir $DIRNAME
 mv $RELFILES $DIRNAME
 ${TAR} cf $TARNAME $DIRNAME
-if [ $? != 0 ]; then
-  echo "Failed to create $TARNAME"
-  exit 1
+tarres=$?
+if [ $tarres != 0 ]; then
+  if [! -f "$TARNAME" ] ; then
+    echo "Failed to create $TARNAME"
+    exit 1
+  else
+    echo "$TAR returned error=$tarres"
+  fi
 else
   echo "Successfully created `pwd`/$TARNAME"
 fi
