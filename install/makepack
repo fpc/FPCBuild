@@ -56,8 +56,20 @@ fi
 SOURCECPU=`$FPC -iSP | head -n1`
 SOURCEOS=`$FPC -iSO | head -n1`
 
+TR=`which gtr 2> /dev/null`
+
+if [ -f "$TR" ] ; then
+  check_gnu_tr=`$TR --help | grep -i "GNU.*coreutil" 2> /dev/null`
+  if [ -z "$check_gnu_tr" ] ; then
+    TR=""
+  fi
+fi
+if [ -z "$TR" ] ; then
+  TR=tr
+fi
+
 # retrieve real OS.
-HOSTOS=`uname -s | tr "[:upper:]" "[:lower:]"`
+HOSTOS=`uname -s | $TR "[:upper:]" "[:lower:]"`
 
 MAKE=make
 TAR=tar
