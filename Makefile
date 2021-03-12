@@ -932,7 +932,15 @@ else
 ifneq ($(findstring $(FPCFPMAKE_CPU_OPT),mips mipsel),)
 FPCMAKE_CROSSGCCOPT=-mabi=32
 else
+ifneq ($(findstring $(FPCFPMAKE_CPU_OPT),riscv64),)
+FPCMAKE_CROSSGCCOPT=-mabi=lp64
+else
+ifneq ($(findstring $(FPCFPMAKE_CPU_OPT),riscv32),)
+FPCMAKE_CROSSGCCOPT=-mabi=ilp32
+else
 FPCMAKE_CROSSGCCOPT=-m32
+endif
+endif
 endif
 endif
 endif
@@ -2846,7 +2854,7 @@ renametoshort:
 	-mv $(PKGPRE)utils-importtl$(ZIPSUFFIX).zip uimpt$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)utils-instantfpc$(ZIPSUFFIX).zip uifpc$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)utils-javaapp$(ZIPSUFFIX).zip ujvp$(ZIPSUFFIXSHORT).zip
-	-mv $(PKGPRE)utils-json2pas$(ZIPSUFFIX).zip ujs2p$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-json2pas$(ZIPSUFFIX).zip jsnp$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)utils-lexyacc$(ZIPSUFFIX).zip ulexy$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)utils-mksymbian$(ZIPSUFFIX).zip umksb$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)utils-pas2fpm$(ZIPSUFFIX).zip up2fp$(ZIPSUFFIXSHORT).zip
