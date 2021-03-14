@@ -1082,7 +1082,7 @@ innox64build: innocheck buildx64
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	fpcmkcfg -t install/fpcx64.ist -o $(INNODIR)/fpcx64.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcx64.iss
-	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
+	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
 		
 innojvmbuild: innocheck buildjvm
 	rmcvsdir$(EXEEXT) $(INNODIR)
