@@ -932,15 +932,7 @@ else
 ifneq ($(findstring $(FPCFPMAKE_CPU_OPT),mips mipsel),)
 FPCMAKE_CROSSGCCOPT=-mabi=32
 else
-ifneq ($(findstring $(FPCFPMAKE_CPU_OPT),riscv64),)
-FPCMAKE_CROSSGCCOPT=-mabi=lp64
-else
-ifneq ($(findstring $(FPCFPMAKE_CPU_OPT),riscv32),)
-FPCMAKE_CROSSGCCOPT=-mabi=ilp32
-else
 FPCMAKE_CROSSGCCOPT=-m32
-endif
-endif
 endif
 endif
 endif
@@ -3271,7 +3263,7 @@ endif
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	fpcmkcfg -t install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	$(INNOCMD_ISCC)
-	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
+	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
 innocebuild: innocheck buildce
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
@@ -3281,7 +3273,7 @@ innocebuild: innocheck buildce
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	fpcmkcfg -t install/fpcce.ist -o $(INNODIR)/fpcce.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcce.iss
-	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
+	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
 innox64build: innocheck buildx64
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
@@ -3316,7 +3308,7 @@ innojvmbuild: innocheck buildjvm
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	fpcmkcfg -t install/fpcjvm.ist -o $(INNODIR)/fpcjvm.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcjvm.iss
-	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(CPU_TARGET).exe
+	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(CPU_TARGET).exe
 buildmsdos_subarch_mm: fpcsrc/build-stamp.cross-msdos
 	$(MAKE) -C fpcsrc/rtl clean FPC=$(realpath ./fpcsrc/compiler/ppcross8086.exe) OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
 	$(MAKE) -C fpcsrc/rtl install FPC=$(realpath ./fpcsrc/compiler/ppcross8086.exe) OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
@@ -3350,7 +3342,7 @@ innomsdosbuild: innocheck
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	fpcsubst -i install/fpcmsdos.ist -o $(INNODIR)/fpcmsdos.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcmsdos.iss
-	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
+	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
 innoandroidbuild:
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
@@ -3378,7 +3370,7 @@ innoandroidbuild:
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	fpcmkcfg -t install/fpcandroid.ist -o $(INNODIR)/fpcandroid.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcandroid.iss
-	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.android.exe
+	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.android.exe
 innoclean:
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
