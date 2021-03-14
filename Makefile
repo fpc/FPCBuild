@@ -3298,7 +3298,7 @@ innox64build: innocheck buildx64
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	fpcmkcfg -t install/fpcx64.ist -o $(INNODIR)/fpcx64.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcx64.iss
-	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
+	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
 innox86x64build: innocheck
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
@@ -3313,7 +3313,7 @@ endif
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	fpcmkcfg -t install/fpcx86x64.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	$(INNOCMD_ISCC)
-	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).win32.and.win64.exe
+	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).win32.and.win64.exe
 innojvmbuild: innocheck buildjvm
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)

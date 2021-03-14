@@ -12,6 +12,7 @@
 ;
 [Setup]
 AppName=Free Pascal (x86 & x64)
+OutputBaseFilename=fpc-setup
 AppID=FreePascal
 AppVerName=Free Pascal %FPCVERSION%
 AppPublisher=Free Pascal Team
