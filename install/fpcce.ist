@@ -12,6 +12,7 @@
 ;
 [Setup]
 AppName=Free Pascal CE
+OutputBaseFilename=fpc-setup
 ; this must match with the main installer
 AppID=FreePascal
 AppVerName=Free Pascal CE %FPCVERSION%
