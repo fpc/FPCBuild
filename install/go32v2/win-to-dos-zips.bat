@@ -9,10 +9,10 @@ rem that needs to be updated on a future release
 set BATCH_RELEASE_VERSION=3.3.1
 set BATCH_OS_TARGET=go32v2
 set NAT_OS_TARGET=win32
-rem To avoid problems, it seems better to keep thios directory
-rem name within the 8.3 constraints
+rem To avoid problems, it seems better to keep this directory name
+rem within the 8.3 constraints
 set BATCH_FPCBUILD_DRIVE=c:
-set BATCH_BUILD_NAME=trunk
+set BATCH_BUILD_NAME=pure-trunk
 set BATCH_FPCBUILD_DIR=%BATCH_FPCBUILD_DRIVE%\pas\%BATCH_BUILD_NAME%
 rem Same with forward slashes
 set GNU_FPCBUILD_DIR=%BATCH_FPCBUILD_DRIVE%/pas/%BATCH_BUILD_NAME%
@@ -26,10 +26,11 @@ rem set LIMIT83fs="go32v2 win32"
 set LOCAL_LIMIT83fs="go32v2 emx watcom msdos"
 rem Start of Batch comands
 %BATCH_FPCBUILD_DRIVE%
-cd %BATCH_FPCBUILD_DIR%
-
-rem  Accept a label fro partial runs
+rem  Accept a label for partial runs
 if not "%1" == "" goto %1
+
+if exist %BATCH_FPCBUILD_DIR%-export goto dir_ok
+cd %BATCH_FPCBUILD_DIR%
 
 if not exist .svn goto dir_ok
 cd ..
@@ -39,10 +40,13 @@ rmdir /S /Q  %BATCH_BUILD_NAME%-export
 :no_dir
 echo Exporting %BATCH_BUILD_NAME% to %BATCH_BUILD_NAME%-export
 svn export --force %BATCH_BUILD_NAME% %BATCH_BUILD_NAME%-export
-set BATCH_BUILD_NAME=%BATCH_BUILD_NAME%-export
-cd %BATCH_BUILD_NAME%
 set SKIP_DISTCLEAN=1
 :dir_ok
+set BATCH_BUILD_NAME=%BATCH_BUILD_NAME%-export
+set BATCH_FPCBUILD_DIR=%BATCH_FPCBUILD_DRIVE%\pas\%BATCH_BUILD_NAME%
+rem Same with forward slashes
+set GNU_FPCBUILD_DIR=%BATCH_FPCBUILD_DRIVE%/pas/%BATCH_BUILD_NAME%
+cd %BATCH_FPCBUILD_DIR%
 rem Stage 0: Clean everything
 :stage0
 rem Test pass to check if NOGDB is needed
@@ -75,6 +79,12 @@ echo make native rtl
 rem all options removed OS_TARGET=%NAT_OS_TARGET% LIMIT83fs=%LOCAL_LIMIT83fs%
 make -C fpcsrc/rtl all  > rtl_all.log
 if errorlevel 1 goto got_make_error
+make -C fpcsrc/compiler cycle  > cycle.log
+if errorlevel 1 goto got_make_error
+cd fpcsrc\compiler
+copy /y ppc386.exe ppc386-start.exe
+set FPC=%GNU_FPCBUILD_DIR%/fpcsrc/compiler/ppc386-start.exe
+cd ..\..
 echo make and fpmake in packages
 make -C fpcsrc/packages fpmake.exe  > packages_fpmake.log
 if errorlevel 1 goto got_make_error
