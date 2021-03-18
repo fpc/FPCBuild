@@ -524,6 +524,7 @@ renametoshort:
 	-mv $(PKGPRE)utils-fppkg$(ZIPSUFFIX).zip ufpkg$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)utils-fprcp$(ZIPSUFFIX).zip ufprc$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)utils-h2pas$(ZIPSUFFIX).zip uh2pa$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-ihxutil$(ZIPSUFFIX).zip uihxu$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)utils-importtl$(ZIPSUFFIX).zip uimpt$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)utils-instantfpc$(ZIPSUFFIX).zip uifpc$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)utils-javaapp$(ZIPSUFFIX).zip ujvp$(ZIPSUFFIXSHORT).zip
