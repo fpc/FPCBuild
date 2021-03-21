@@ -2814,6 +2814,7 @@ renametoshort:
 	-mv $(PKGPRE)$(PKGUNITSPRE)ptc$(ZIPSUFFIX).zip uptc$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)pthreads$(ZIPSUFFIX).zip upthr$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)pxlib$(ZIPSUFFIX).zip upxl$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)$(PKGUNITSPRE)qlunits$(ZIPSUFFIX).zip uqlun$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)regexpr$(ZIPSUFFIX).zip ureg$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)rexx$(ZIPSUFFIX).zip urexx$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)$(PKGUNITSPRE)rsvg$(ZIPSUFFIX).zip ursvg$(ZIPSUFFIXSHORT).zip
@@ -2873,6 +2874,7 @@ renametoshort:
 	-mv $(PKGPRE)utils-sim_pasc$(ZIPSUFFIX).zip usmp$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)utils-svn2cvs$(ZIPSUFFIX).zip us2c$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)utils-unicode$(ZIPSUFFIX).zip uucd$(ZIPSUFFIXSHORT).zip
+	-mv $(PKGPRE)utils-wasbin$(ZIPSUFFIX).zip uwsbn$(ZIPSUFFIXSHORT).zip
 	-mv $(PKGPRE)rtl$(ZIPSUFFIX).zip rtl$(ZIPSUFFIXSHORT).zip
 shortsrc:
 	$(MAKE) renametoshort ZIPSUFFIX=$(ZIPSOURCESUFFIX) ZIPSUFFIXSHORT=src
