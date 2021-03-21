@@ -1,5 +1,5 @@
 Name: fpc-i8086-msdos
-Version: 3.2.0
+Version: 3.2.2
 Release: 0.rc1
 
 # Because this rpm is used on different systems, with different names
@@ -11,12 +11,11 @@ License: GPL and modified LGPL
 Group: Development/Languages
 Source0: fpcbuild-%{version}rc1.tar.gz
 Source1: make-i8086-msdos-unixpackage-%{version}rc1.sh
-Patch0: fpcbuild-3.2.0rc1-nowatcom.diff
 Summary: Free Pascal Compiler for i8086-msdos
 Packager: Nikolay Nikolov (nickysn@users.sourceforge.net)
 URL: http://www.freepascal.org/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires: fpc
+BuildRequires: fpc nasm glibc-devel
 Requires: fpc
 
 %define fpcbuildsubdir fpcbuild-%{version}rc1
@@ -45,7 +44,6 @@ utils. Provided units are the runtime library (RTL), free component library
 
 %prep
 %setup -c
-%patch0 -p0
 cp -p %SOURCE1 %{fpcbuildsubdir}
 
 %build
