@@ -514,34 +514,34 @@ renametoshort:
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)zorba$(ZIPSUFFIX).zip uzorb$(ZIPSUFFIXSHORT).zip
 # Utils packages in alphabetical order
 	-$(MOVE) $(PKGPRE)utils$(ZIPSUFFIX).zip utils$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-debugsrv$(ZIPSUFFIX).zip udbgs$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-dxegen$(ZIPSUFFIX).zip udxeg$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-fpcm$(ZIPSUFFIX).zip ufpcm$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-fpcmkcfg$(ZIPSUFFIX).zip ufpck$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-fpcres$(ZIPSUFFIX).zip ufprs$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-fpcreslipo$(ZIPSUFFIX).zip ufprl$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-fpdoc$(ZIPSUFFIX).zip ufpdc$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-fpmc$(ZIPSUFFIX).zip ufpmc$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-fppkg$(ZIPSUFFIX).zip ufpkg$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-fprcp$(ZIPSUFFIX).zip ufprc$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-h2pas$(ZIPSUFFIX).zip uh2pa$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-ihxutil$(ZIPSUFFIX).zip uihxu$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-importtl$(ZIPSUFFIX).zip uimpt$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-instantfpc$(ZIPSUFFIX).zip uifpc$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-javaapp$(ZIPSUFFIX).zip ujvp$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-debugsrv$(ZIPSUFFIX).zip dbgs$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-dxegen$(ZIPSUFFIX).zip dxeg$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-fpcm$(ZIPSUFFIX).zip fpcm$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-fpcmkcfg$(ZIPSUFFIX).zip fpck$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-fpcres$(ZIPSUFFIX).zip fprs$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-fpcreslipo$(ZIPSUFFIX).zip fprl$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-fpdoc$(ZIPSUFFIX).zip fpdc$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-fpmc$(ZIPSUFFIX).zip fpmc$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-fppkg$(ZIPSUFFIX).zip fpkg$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-fprcp$(ZIPSUFFIX).zip fprc$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-h2pas$(ZIPSUFFIX).zip h2pa$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-ihxutil$(ZIPSUFFIX).zip ihxu$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-importtl$(ZIPSUFFIX).zip impt$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-instantfpc$(ZIPSUFFIX).zip ifpc$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-javaapp$(ZIPSUFFIX).zip jvp$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-json2pas$(ZIPSUFFIX).zip jsnp$(ZIPSUFFIXSHORT).zip
 # This package resides in fpcsrc/utils/tply directory
-	-$(MOVE) $(PKGPRE)utils-lexyacc$(ZIPSUFFIX).zip ulexy$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-mksymbian$(ZIPSUFFIX).zip umksb$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-pas2fpm$(ZIPSUFFIX).zip up2fp$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-pas2jni$(ZIPSUFFIX).zip up2jn$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-pas2js$(ZIPSUFFIX).zip uupjs$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-pas2ut$(ZIPSUFFIX).zip up2ut$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-rmwait$(ZIPSUFFIX).zip urmw$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-sim_pasc$(ZIPSUFFIX).zip usmp$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-svn2cvs$(ZIPSUFFIX).zip us2c$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-unicode$(ZIPSUFFIX).zip uucd$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-wasbin$(ZIPSUFFIX).zip uwsbn$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-lexyacc$(ZIPSUFFIX).zip lexy$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-mksymbian$(ZIPSUFFIX).zip mksb$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-pas2fpm$(ZIPSUFFIX).zip p2fp$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-pas2jni$(ZIPSUFFIX).zip p2jn$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-pas2js$(ZIPSUFFIX).zip pjs$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-pas2ut$(ZIPSUFFIX).zip p2ut$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-rmwait$(ZIPSUFFIX).zip rmw$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-sim_pasc$(ZIPSUFFIX).zip smp$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-svn2cvs$(ZIPSUFFIX).zip s2c$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-unicode$(ZIPSUFFIX).zip ucd$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-wasmbin$(ZIPSUFFIX).zip wsbn$(ZIPSUFFIXSHORT).zip
 
 # Sources only
 	-$(MOVE) $(PKGPRE)rtl$(ZIPSUFFIX).zip rtl$(ZIPSUFFIXSHORT).zip
