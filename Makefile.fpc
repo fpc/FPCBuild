@@ -1097,8 +1097,10 @@ innojvmbuild: innocheck buildjvm
 	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(CPU_TARGET).exe
 
 buildmsdos_subarch_mm: fpcsrc/build-stamp.cross-msdos
-	$(MAKE) -C fpcsrc/rtl clean install OS_TARGET=msdos FPC=ppc8086 CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
-	$(MAKE) -C fpcsrc/packages clean install OS_TARGET=msdos FPC=ppc8086 CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)" FPCFPMAKE=$(BASEDIR)/fpcsrc/compiler/ppc
+	$(MAKE) -C fpcsrc/rtl clean FPC=$(realpath ./fpcsrc/compiler/ppcross8086.exe) OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+	$(MAKE) -C fpcsrc/rtl install FPC=$(realpath ./fpcsrc/compiler/ppcross8086.exe) OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
+	$(MAKE) -C fpcsrc/packages clean FPC=$(realpath ./fpcsrc/compiler/ppcross8086.exe) OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)" FPCFPMAKE=$(BASEDIR)/fpcsrc/compiler/ppc
+	$(MAKE) -C fpcsrc/packages install FPC=$(realpath ./fpcsrc/compiler/ppcross8086.exe) OS_TARGET=msdos CPU_TARGET=i8086 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)" FPCFPMAKE=$(BASEDIR)/fpcsrc/compiler/ppc
 	$(MOVE) $(INSTALL_BASEDIR)/units/msdos $(INSTALL_BASEDIR)/units/msdos_/$(SUBARCH)-$(MEMORY_MODEL)
 
 buildmsdos_subarch:
@@ -1107,53 +1109,25 @@ buildmsdos_subarch:
 	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=medium
 	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=compact
 	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=large
-ifeq ($(findstring 3.0.,$(FPC_VERSION)),)
 	$(MAKE) buildmsdos_subarch_mm MEMORY_MODEL=huge
-endif
-
-build_msdos:
-	$(DELTREE) $(INSTALL_BASEDIR)/units/msdos_
-	$(MKDIR) $(INSTALL_BASEDIR)/units/msdos_
-	$(MAKE) buildmsdos_subarch SUBARCH=8086
-	$(MAKE) buildmsdos_subarch SUBARCH=80186
-	$(MAKE) buildmsdos_subarch SUBARCH=80286
-	$(MAKE) buildmsdos_subarch SUBARCH=80386
-	$(MOVE) $(INSTALL_BASEDIR)/units/msdos_ $(INSTALL_BASEDIR)/units/msdos
-
-buildmsdos_rtl_subarch_mm:
-	$(MAKE) -C fpcsrc/rtl/msdos info clean all FPC=ppc8086 CPU_TARGET=i8086 OS_TARGET=msdos OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
-	$(MAKE) -C fpcsrc/rtl/msdos install FPC=ppc8086 CPU_TARGET=i8086 OS_TARGET=msdos CROSSINSTALL=1 OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs -Wm$(MEMORY_MODEL) -Cp$(SUBARCH)"
-	$(MOVE) $(INSTALL_BASEDIR)/units/msdos $(INSTALL_BASEDIR)/units/msdos_/$(SUBARCH)-$(MEMORY_MODEL)
-
-buildmsdos_rtl_subarch:
-	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=tiny CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
-	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=small CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
-	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=medium CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
-	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=compact CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
-	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=large CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
-ifeq ($(findstring 3.0.,$(FPC_VERSION)),)
-	$(MAKE) buildmsdos_rtl_subarch_mm MEMORY_MODEL=huge CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
-endif
-
-buildmsdos_rtl: fpcsrc/build-stamp.cross-msdos
-	$(DELTREE) $(INSTALL_BASEDIR)/units/msdos_
-	$(MKDIR) $(INSTALL_BASEDIR)/units/msdos_
-	$(MAKE) buildmsdos_rtl_subarch SUBARCH=8086 CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
-	$(MAKE) buildmsdos_rtl_subarch SUBARCH=80186 CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
-	$(MAKE) buildmsdos_rtl_subarch SUBARCH=80286 CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
-	$(MAKE) buildmsdos_rtl_subarch SUBARCH=80386 CPU_TARGET=i8086 OS_TARGET=msdos FPC=ppc8086
-	$(MOVE) $(INSTALL_BASEDIR)/units/msdos_ $(INSTALL_BASEDIR)/units/msdos
 
 innomsdosbuild: innocheck
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
 	$(MKDIR) $(INNODIR)
 	$(COPYTREE) demo $(INNODIR)
+	$(MKDIR) $(INNODIR)/doc
+	$(MKDIR) $(INNODIR)/doc/fpc
+	$(COPY) -R install/doc/* $(INNODIR)/doc/fpc
 	$(MKDIR) $(INNODIR)/units/msdos_
+	$(MAKE) -C fpcsrc/ compiler_cycle RELEASE=1 OS_SOURCE=win32 CPU_SOURCE=i386 CPU_TARGET=i8086 OS_TARGET=msdos OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs"
+	$(MAKE) -C fpcsrc/ compiler_install RELEASE=1 OS_SOURCE=win32 CPU_SOURCE=i386 CPU_TARGET=i8086 OS_TARGET=msdos OPT="-CX -XXs" BINUTILSPREFIX= CROSSOPT="$(OPT) -CX -XXs" INSTALL_PREFIX=$(INNODIR)
 	$(MAKE) buildmsdos_subarch SUBARCH=8086 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR)
 	$(MAKE) buildmsdos_subarch SUBARCH=80186 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR)
 	$(MAKE) buildmsdos_subarch SUBARCH=80286 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR)
+	$(MAKE) buildmsdos_subarch SUBARCH=80386 OS_SOURCE=win32 CPU_SOURCE=i386 INSTALL_PREFIX=$(INNODIR)
 	$(MOVE) $(INNODIR)/units/msdos_ $(INNODIR)/units/msdos
+	$(COPY) install/crossbinmsdos/nasm.exe $(INNODIR)/bin/i386-win32
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	fpcsubst -i install/fpcmsdos.ist -o $(INNODIR)/fpcmsdos.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcmsdos.iss
