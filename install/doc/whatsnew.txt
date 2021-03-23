@@ -15,6 +15,7 @@ The main highlights of this version:
 
 Platforms:
   * New platform: aarch64-darwin
+  * A new 32/64-bit combined installer for Windows.
 
 Utilities:
   * fpcres provides support for compiling resources from *.rc files
