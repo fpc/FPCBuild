@@ -86,6 +86,7 @@ help:
 	@$(ECHO)    deb         Build linux .deb packages
 	@$(ECHO)    inno        "Build Windows (Innosetup) based installer"
 	@$(ECHO)    innox64     "Build Win32-Win64 cross compiler installer"
+	@$(ECHO)    innox86x64  "Build Windows (Innosetup) combined installer for Win32 and Win64"
 	@$(ECHO)    innoce      "Build Win32-Wince cross compiler installer"
 	@$(ECHO)    innomsdos   "Build Win32-MsDos cross compiler installer"
 	@$(ECHO)    innoandroid "Build Win32-Android cross compiler installer"
@@ -1083,7 +1084,23 @@ innox64build: innocheck buildx64
 	fpcmkcfg -t install/fpcx64.ist -o $(INNODIR)/fpcx64.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcx64.iss
 	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
-		
+
+innox86x64build: innocheck
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	$(DELTREE) $(INNODIR)
+	$(MKDIR) $(INNODIR)
+	$(COPYTREE) demo $(INNODIR)
+	$(COPYTREE) install/unicode $(INNODIR)
+ifndef NODOCS
+	unzip -d $(INNODIR) doc-pdf.zip
+endif
+	$(MAKE) install INSTALL_PREFIX=$(INNODIR)
+	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=win64 CPU_TARGET=x86_64
+	rmcvsdir$(EXEEXT) $(INNODIR)
+	fpcmkcfg -t install/fpcx86x64.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
+	$(INNOCMD_ISCC)
+	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).win32.and.win64.exe
+
 innojvmbuild: innocheck buildjvm
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
@@ -1179,6 +1196,10 @@ innoce : checkfpcdir
 innox64 : checkfpcdir
 	$(MAKE) OS_TARGET=win64 CPU_TARGET=x86_64 innox64build NOGDB=1
 	$(MAKE) innoclean	
+
+innox86x64 : checkfpcdir
+	$(MAKE) innox86x64build
+	$(MAKE) innoclean
 
 innojvm : checkfpcdir
 	$(MAKE) OS_TARGET=java CPU_TARGET=jvm innojvmbuild NOGDB=1

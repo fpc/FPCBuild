@@ -1,0 +1,419 @@
+;**********************************************************************
+; We don't use the INNO Setup preprocessor. It is unfortunately quite buggy.
+; So, this script must be preprocessed by our own tools.
+; The preprocessor will replace anything enclosed in percent characters
+; by the value specified in it's config file. Standard there are only
+; the following things;
+; FPCVERSION   Version of FPC.
+; BUILDDIR     Build directory.
+;**********************************************************************
+;
+; ISS Build script generated on %BUILDDATE% - %BUILDTIME%
+;
+[Setup]
+AppName=Free Pascal (x86 & x64)
+AppID=FreePascal
+AppVerName=Free Pascal %FPCVERSION%
+AppPublisher=Free Pascal Team
+AppPublisherURL=http://www.freepascal.org/
+AppSupportURL=http://www.freepascal.org/
+AppUpdatesURL=http://www.freepascal.org/
+DefaultDirName={sd}\FPC\%FPCVERSION%
+DefaultGroupName=Free Pascal
+AllowNoIcons=yes
+InfoAfterFile=doc\fpc\whatsnew.txt
+Compression=lzma/max
+SolidCompression=true
+SourceDir=%BUILDDIR%
+InternalCompressLevel=max
+AppCopyright=GPL
+AppendDefaultDirName=false
+AlwaysShowComponentsList=false
+ShowLanguageDialog=yes
+; we put version numbers in the appdir, so never use old dirname
+UsePreviousAppDir=no
+; we update the PATH variable, so set ChangesEnvironment
+ChangesEnvironment=yes
+
+[Tasks]
+Name: associatepp; Description: "Associate .pp files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: x86\ide
+Name: associateinc; Description: "Associate .inc files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: x86\ide
+Name: associatepas; Description: "Associate .pas files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: x86\ide; Flags: unchecked
+Name: associatedpr; Description: "Associate .dpr files with Free Pascal IDE"; GroupDescription: "File associations:"; Components: x86\ide; Flags: unchecked
+Name: createdesktopicon; Description: "Create a desktop icon for the Free Pascal IDE"; Components: x86\ide
+Name: createidecfg; Description: "Create a default configuration for the Free Pascal IDE"; Components: x86\ide
+Name: createcfg; Description: "Create a standard configuration file for the compiler"
+Name: createfppkgcfg; Description: "Create a standard configuration file for the package manager (fppkg)"
+
+[Files]
+; Base package
+Source: bin\i386-win32\ppc386.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\ppudump.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\ppufiles.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\ppumove.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\fp32.ico; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\fpc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\instantfpc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\fpcmkcfg.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\fppkg.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\rmcvsdir.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: bin\i386-win32\fpcsubst.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: base
+Source: doc\fpc\COPYING; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\copying.dj; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\copying.emx; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\copying.fpc; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\copying.rsx; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\COPYING.v2; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\COPYING.v3; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\faq.txt; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\faq.htm; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\licensez.ip; DestDir: {app}\doc\fpc; Components: base
+Source: doc\fpc\readme.txt; DestDir: {app}\doc\fpc; Components: base; Flags: isreadme
+Source: doc\fpc\whatsnew.txt; DestDir: {app}\doc\fpc; Components: base
+Source: msg\*.*; DestDir: {app}\msg; Components: base
+Source: units\i386-win32\rtl\*.*; DestDir: {app}\units\i386-win32\rtl; Components: x86\base
+Source: unicode\*.*; DestDir: {app}\unicode; Flags: recursesubdirs; Components: base
+; Binutils (asld)
+Source: bin\i386-win32\ar.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\binutils
+Source: bin\i386-win32\as.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\binutils
+Source: bin\i386-win32\cpp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\binutils
+Source: bin\i386-win32\dlltool.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\binutils
+Source: bin\i386-win32\gcc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\binutils
+Source: bin\i386-win32\ld.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\binutils
+Source: bin\i386-win32\nm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\binutils
+Source: bin\i386-win32\objdump.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\binutils
+Source: bin\i386-win32\objcopy.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\binutils
+Source: bin\i386-win32\windres.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\binutils
+Source: bin\i386-win32\windres.h; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\binutils
+Source: bin\i386-win32\strip.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\binutils
+Source: bin\i386-win32\gdb.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: gdb
+Source: bin\i386-win32\libexpat-1.dll; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: gdb
+; IDE files
+Source: bin\i386-win32\fp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\ide
+Source: bin\i386-win32\fp32.ico; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\ide
+Source: bin\i386-win32\fp.ans; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\ide
+Source: bin\i386-win32\cvsco.tdf; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\ide
+Source: bin\i386-win32\cvsdiff.tdf; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\ide
+Source: bin\i386-win32\cvsup.tdf; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\ide
+Source: bin\i386-win32\gplprog.pt; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\ide
+Source: bin\i386-win32\gplunit.pt; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\ide
+Source: bin\i386-win32\unit.pt; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\ide
+Source: bin\i386-win32\program.pt; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\ide
+Source: bin\i386-win32\tpgrep.tdf; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\ide
+Source: bin\i386-win32\grep.tdf; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x86\ide
+Source: doc\ide\readme.ide; DestDir: {app}\doc\ide; Flags: ignoreversion; Components: x86\ide
+; Make tools
+Source: bin\i386-win32\gdate.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\gecho.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\ginstall.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\ginstall.exe.manifest; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\gmkdir.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\grep.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\make.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\mv.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\patch.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\patch.exe.manifest; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\pwd.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\rm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\unzip.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\zip.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\cmp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\cp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+Source: bin\i386-win32\diff.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: make
+; FPC Utilities
+Source: bin\i386-win32\bin2obj.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\data2inc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\delp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\fpcmake.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\fpdoc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\fpmc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+
+; makes no sense since we don't deliever the gtk dlls
+; Source: bin\i386-win32\fpmcgtk.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\fprcp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\h2pas.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\h2paspp.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\makeskel.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\pas2jni.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\plex.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\postw32.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\ppdep.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\ptop.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\pyacc.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\rstconv.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\unitdiff.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\chmls.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\chmcmd.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\fpcres.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\yylex.cod; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: bin\i386-win32\yyparse.cod; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: utils
+Source: units\i386-win32\utils-lexyacc\*.*; DestDir: {app}\units\i386-win32\utils-lexyacc; Flags: ignoreversion; Components: utils
+; Demos
+Source: demo\*.*; DestDir: {app}\demo; Flags: ignoreversion recursesubdirs ; Components: demo
+; Documentation
+%DisableDocs%Source: doc\*.pdf; DestDir: {app}\doc; Flags: ignoreversion; Components: docs
+
+; Units
+Source: units\i386-win32\*.*; DestDir: {app}\units\i386-win32; Flags: ignoreversion recursesubdirs; Components: x86\units
+Source: fpmkinst\i386-win32\*.*; DestDir: {app}\fpmkinst\i386-win32; Flags: ignoreversion recursesubdirs; Components: x86\units
+; Examples
+Source: examples\*.*; DestDir: {app}\examples; Flags: ignoreversion recursesubdirs; Components: examples
+
+; x64
+; Base package
+Source: bin\i386-win32\ppcrossx64.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x64\base
+Source: bin\i386-win32\x86_64-win64-ar.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x64\binutils
+Source: bin\i386-win32\x86_64-win64-as.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x64\binutils
+Source: bin\i386-win32\x86_64-win64-ld.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x64\binutils
+Source: bin\i386-win32\x86_64-win64-strip.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x64\binutils
+Source: bin\i386-win32\x86_64-win64-nm.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x64\binutils
+Source: bin\i386-win32\x86_64-win64-objdump.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x64\binutils
+Source: bin\i386-win32\x86_64-win64-objcopy.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x64\binutils
+Source: bin\i386-win32\x86_64-win64-windres.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x64\binutils
+Source: units\x86_64-win64\rtl\*.*; DestDir: {app}\units\x86_64-win64\rtl; Components: x64\base
+; Include license and readme files, so they are available even if somebody installs this package alone though
+; it will not result in a working fpc installation
+Source: doc\fpc\libffi.txt; DestDir: {app}\doc\fpc; Flags: onlyifdoesntexist; Components: x64\base
+
+; Units
+Source: units\x86_64-win64\*.*; DestDir: {app}\units\x86_64-win64; Flags: ignoreversion recursesubdirs; Components: x64\units
+Source: fpmkinst\x86_64-win64\*.*; DestDir: {app}\fpmkinst\x86_64-win64; Flags: ignoreversion recursesubdirs; Components: x64\units
+
+
+[INI]
+Filename: {app}\Free Pascal.url; Section: InternetShortcut; Key: URL; String: http://www.freepascal.org/
+
+[Icons]
+Name: {userdesktop}\Free Pascal IDE; Filename: {app}\bin\i386-win32\fp.exe; components: x86\ide; IconFileName: {app}\bin\i386-win32\fp32.ico; WorkingDir: {app}\bin\i386-win32; Tasks: createdesktopicon
+Name: {group}\Free Pascal; Filename: {app}\bin\i386-win32\fp.exe; components: x86\ide; IconFileName: {app}\bin\i386-win32\fp32.ico; WorkingDir: {app}\bin\i386-win32
+Name: {group}\{cm:ProgramOnTheWeb,Free Pascal}; Filename: {app}\Free Pascal.url; IconFileName: {app}\bin\i386-win32\fp32.ico;
+Name: {group}\{cm:UninstallProgram,Free Pascal}; Filename: {uninstallexe}
+%DisableDocs%Name: {group}\Documentation\User's manual; Filename: {app}\doc\user.pdf; Components: docs
+%DisableDocs%Name: {group}\Documentation\Programmer's manual; Filename: {app}\doc\prog.pdf; Components: docs
+%DisableDocs%Name: {group}\Documentation\Reference manual; Filename: {app}\doc\ref.pdf; Components: docs
+%DisableDocs%Name: {group}\Documentation\Run-Time Library Reference guide; Filename: {app}\doc\rtl.pdf; Components: docs
+%DisableDocs%Name: {group}\Documentation\Free Component Library Reference guide; Filename: {app}\doc\fcl.pdf; Components: docs
+%DisableDocs%Name: {group}\Documentation\Free Pascal code documenter Reference manual; Filename: {app}\doc\fpdoc.pdf; Components: docs
+
+[UninstallDelete]
+Type: files; Name: {app}\Free Pascal.url
+Type: files; Name: {app}\bin\i386-win32\fpc.cfg; Tasks: createcfg;
+Type: files; Name: {app}\bin\i386-Win32\fp.cfg; Tasks: createidecfg;
+Type: files; Name: {app}\bin\i386-Win32\fp.ini; Tasks: createidecfg;
+Type: files; Name: {localappdata}\FreePascal\fppkg\config\default; Tasks: createfppkgcfg;
+Type: files; Name: {localappdata}\FreePascal\fppkg\fppkg.cfg; Tasks: createfppkgcfg;
+
+[Components]
+Name: base; Description: Basic system for Windows (x86/x64); Flags: fixed; Types: Custom Minimum Full
+Name: x86; Description: Free Pascal for Win32 (x86); Types: Custom Minimum Full
+Name: x86\base; Description: Basic system for Win32 (x86); Types: Custom Minimum Full
+Name: x86\binutils; Description: GNU linker and assembler (x86); Types: Custom Minimum Full
+Name: x86\ide; Description: Integrated Development Environment (x86); Types: Custom Full
+Name: x86\units; Description: Units (x86); Types: Full Minimum Custom
+Name: x64; Description: Free Pascal for Win64 (x64);Types: Custom Minimum Full
+Name: x64\base; Description: Basic system for Win64 (x64); Types: Custom Minimum Full
+Name: x64\binutils; Description: GNU linker and assembler (x64); Types: Custom Minimum Full
+Name: x64\units; Description: Units (x64); Types: Full Minimum Custom
+%DisableDocs%Name: docs; Description: Documentation in PDF; Types: Custom Full
+Name: utils; Description: Free Pascal Utilities; Types: Custom Full
+Name: make; Description: GNU make; Types: Custom Full
+Name: demo; Description: Demos; Types: Custom Full
+Name: gdb; Description: GNU debugger; Types: Full Custom
+Name: examples; Description: Examples; Types: Full Custom
+
+
+[Types]
+Name: Full; Description: Full installation
+Name: Minimum; Description: Minimum installation
+Name: Custom; Description: Custom installation; Flags: iscustom
+
+[Code]
+function IsHKLMWriteable(): boolean;
+begin
+  Result := IsAdminLoggedOn or IsPowerUserLoggedOn;
+end;
+
+function IsHKLMNotWriteable: boolean;
+begin
+  Result := not IsHKLMWriteable();
+end;
+
+[Registry]
+; Associate .pp with FP IDE (admin mode)
+Root: HKLM; Subkey: "SOFTWARE\Classes\.pp"; ValueType: string; ValueName: ""; ValueData: "FPCPPFile"; Flags: uninsdeletevalue; Tasks: associatepp; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPCPPFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepp; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPCPPFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepp;Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPCPPFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepp; Check: IsHKLMWriteable
+; Associate .pp with FP IDE (restricted user)
+Root: HKCU; Subkey: "SOFTWARE\Classes\.pp"; ValueType: string; ValueName: ""; ValueData: "FPCPPFile"; Flags: uninsdeletevalue; Tasks: associatepp; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPCPPFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepp; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPCPPFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepp; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPCPPFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepp; Check: IsHKLMNotWriteable
+
+; Associate .inc with FP IDE (admin mode)
+Root: HKLM; Subkey: "SOFTWARE\Classes\.inc"; ValueType: string; ValueName: ""; ValueData: "FPCINCFile"; Flags: uninsdeletevalue; Tasks: associateinc; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPCINCFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal include File"; Flags: uninsdeletekey; Tasks: associateinc; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPCINCFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associateinc; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPCINCFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associateinc; Check: IsHKLMWriteable
+; Associate .inc with FP IDE (restricted user)
+Root: HKCU; Subkey: "SOFTWARE\Classes\.inc"; ValueType: string; ValueName: ""; ValueData: "FPCINCFile"; Flags: uninsdeletevalue; Tasks: associateinc;  Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPCINCFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal include File"; Flags: uninsdeletekey; Tasks: associateinc; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPCINCFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associateinc; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPCINCFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associateinc; Check: IsHKLMNotWriteable
+
+; Associate .pas with FP IDE (admin mode)
+Root: HKLM; Subkey: "SOFTWARE\Classes\.pas"; ValueType: string; ValueName: ""; ValueData: "FPCPASFile"; Flags: uninsdeletevalue; Tasks: associatepas; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPPASFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepas; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPPASFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepas; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\Classes\FPPASFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepas; Check: IsHKLMWriteable
+; Associate .pas with FP IDE (restricted user)
+Root: HKCU; Subkey: "SOFTWARE\Classes\.pas"; ValueType: string; ValueName: ""; ValueData: "FPCPASFile"; Flags: uninsdeletevalue; Tasks: associatepas; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPPASFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal File"; Flags: uninsdeletekey; Tasks: associatepas; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPPASFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatepas; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\Classes\FPPASFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatepas; Check: IsHKLMNotWriteable
+
+; Associate .dpr with FP IDE (admin mode)
+Root: HKLM; Subkey: "SOFTWARE\.dpr"; ValueType: string; ValueName: ""; ValueData: "FPCDPRFile"; Flags: uninsdeletevalue; Tasks: associatedpr; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\FPDPRFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal Project File"; Flags: uninsdeletekey; Tasks: associatedpr; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\FPDPRFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatedpr; Check: IsHKLMWriteable
+Root: HKLM; Subkey: "SOFTWARE\FPDPRFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatedpr; Check: IsHKLMWriteable
+; Associate .dpr with FP IDE (restricted user)
+Root: HKCU; Subkey: "SOFTWARE\.dpr"; ValueType: string; ValueName: ""; ValueData: "FPCDPRFile"; Flags: uninsdeletevalue; Tasks: associatedpr; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\FPDPRFile"; ValueType: string; ValueName: ""; ValueData: "Free Pascal Project File"; Flags: uninsdeletekey; Tasks: associatedpr; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\FPDPRFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\i386-Win32\fpc32.ico"; Tasks: associatedpr; Check: IsHKLMNotWriteable
+Root: HKCU; Subkey: "SOFTWARE\FPDPRFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\i386-win32\fp.exe"" ""%1""";Tasks: associatedpr; Check: IsHKLMNotWriteable
+
+; Extend path in NT,2000 or XP. Does not work in 95/98/Me
+; System-wide
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "PATH"; ValueData: "{reg:HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment,PATH|};{app}\bin\i386-Win32";MinVersion: 5.0,4.0; Check: IsHKLMWriteable
+; Current user only
+Root: HKCU; Subkey: "Environment"; ValueType: String; ValueName: "PATH"; ValueData: "{reg:HKCU\environment,PATH|};{app}\bin\i386-Win32";MinVersion: 5.0,4.0; Check: IsHKLMNotWriteable
+
+
+[Run]
+FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for Free Pascal compiler"; Parameters: "-d ""basepath={app}"" -d ""sharepath={app}"" -o ""{app}\bin\i386-Win32\fpc.cfg"""; Tasks: createcfg
+FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for the Free Pascal IDE"; Parameters: "-1 -d ""basepath={app}"" -d ""sharepath={app}"" -o ""{app}\bin\i386-Win32\fp.cfg"""; Tasks: createidecfg
+FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file for the Free Pascal IDE"; Parameters: "-2 -d ""basepath={app}"" -d ""sharepath={app}"" -o ""{app}\bin\i386-Win32\fp.ini"""; Tasks: createidecfg
+FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default configuration file the Free Pascal Packager (fppkg)"; Parameters: "-3 -p -d ""globalpath={app}"" -d ""globalprefix={app}"" -o ""{localappdata}\FreePascal\fppkg\fppkg.cfg"""; Tasks: createfppkgcfg
+FileName: {app}\bin\i386-win32\fpcmkcfg.exe; Description: "Creating default compiler configuration file for Free Pascal Packager (fppkg)"; Parameters: "-4 -p -d ""fpcbin={app}\bin\i386-Win32\fpc.exe"" -o ""{localappdata}\FreePascal\fppkg\config\default"""; Tasks: createfppkgcfg
+
+[Code]
+
+const
+  regUninstall = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\FreePascal_is1';
+
+var
+  OldInstDir: string;
+
+function RegReadString(RootKey: Integer; const SubKeyName, ValueName, DefValue: String): String;
+begin
+  if not RegQueryStringValue(RootKey, SubKeyName, ValueName, Result) then
+    Result:=DefValue;
+end;
+
+procedure CleanupPath(const Dir: string);
+var
+  p, s, path, newpath, oldpath, regpath: string;
+  i, regroot: integer;
+begin
+  if Dir = '' then
+    exit;
+  if IsHKLMWriteable then begin
+    regroot:=HKEY_LOCAL_MACHINE;
+    regpath:='SYSTEM\CurrentControlSet\Control\Session Manager\Environment';
+  end
+  else begin
+    regroot:=HKEY_CURRENT_USER;
+    regpath:='Environment';
+  end;
+
+  path:=RegReadString(regroot, regpath, 'PATH', '')
+  if path = '' then
+    exit;
+
+  newpath:='';
+  oldpath:=path;
+  p:=AddBackslash(Dir) + 'bin\i386-win32';
+  while path <> '' do begin
+    i:=Pos(';', path);
+    if i = 0 then
+      i:=Length(path) + 1;
+    s:=Copy(path, 1, i - 1);
+    Delete(path, 1, i);
+    if CompareText(RemoveBackslash(s), p) <> 0 then begin
+      if newpath <> '' then
+        newpath:=newpath + ';';
+      newpath:=newpath + s;
+    end;
+  end;
+
+  if newpath <> oldpath then
+    RegWriteStringValue(regroot, regpath, 'PATH', newpath);
+end;
+
+function InitializeSetup(): Boolean;
+var
+  UninstallApp, OldName, CurName, CurVer, s: string;
+  i: integer;
+begin
+  Result:=False;
+  CurVer:='%FPCVERSION%';
+  CurName:='Free Pascal ' + CurVer;
+  OldName:=RegReadString(HKEY_LOCAL_MACHINE, regUninstall, 'DisplayName', '');
+  OldInstDir:=RegReadString(HKEY_LOCAL_MACHINE, regUninstall, 'InstallLocation', '');
+  UninstallApp:=RemoveQuotes(RegReadString(HKEY_LOCAL_MACHINE, regUninstall, 'UninstallString', ''));
+  if (OldInstDir <> '') and (OldName <> CurName) and FileExists(UninstallApp) then begin
+    i:=MsgBox('Other version of Free Pascal is already installed on this computer:'#13#10#13#10+
+              OldName + ' (' + RemoveBackslash(OldInstDir) + ')'#13#10#13#10+
+              'Uninstall the existing version of Free Pascal?',
+              mbConfirmation, MB_YESNOCANCEL or MB_DEFBUTTON2);
+
+    case i of
+      IDCANCEL:
+        // Cancel installation
+        exit;
+
+      IDYES:
+        begin
+          // Uninstall existing version
+          i:=0;
+          s:='';
+          if not Exec(UninstallApp, '/SILENT', OldInstDir, SW_SHOW, ewWaitUntilTerminated, i) then
+            s:='Unable to execute the uninstaller.'#13#10 + SysErrorMessage(i)
+          else
+            if i <> 0 then
+              s:=Format('The uninstaller returned an error code: %d', [i]);
+
+          if s <> '' then begin
+            i:=MsgBox(s + #13#10#13#10'Continue installation?', mbError, MB_YESNO);
+            if i <> IDYES then
+              exit;
+          end;
+
+          // Remove path of the uninstalled FPC from the PATH environment variable
+          CleanupPath(OldInstDir);
+          OldInstDir:='';
+        end;
+    end;
+  end;
+
+  Result:=True;
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if CurStep = ssInstall then begin
+    // Remove existing FPC path from the PATH environment variable
+    CleanupPath(OldInstDir);
+    CleanupPath(ExpandConstant('{app}'));
+  end;
+end;
+
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+begin
+  if CurUninstallStep = usUninstall then begin
+    // Remove FPC path from the PATH environment variable
+    OldInstDir:=RegReadString(HKEY_LOCAL_MACHINE, regUninstall, 'InstallLocation', '');
+    CleanupPath(OldInstDir);
+  end;
+end;
