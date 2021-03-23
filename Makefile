@@ -2370,7 +2370,8 @@ endif
 install: $(BUILDSTAMP)
 	$(MAKE) installbase
 	$(MAKE) -C fpcsrc installother
-crossinstall: $(BUILDSTAMP)
+crossinstall: 
+	$(MAKE) $(BUILDSTAMP) CROSSINSTALL=1
 	$(MAKE) installbase CROSSINSTALL=1
 	$(MAKE) -C fpcsrc installother CROSSINSTALL=1
 zipinstall: $(BUILDSTAMP)
@@ -2382,10 +2383,12 @@ ifeq ($(FULL_SOURCE),$(FULL_TARGET))
 else
 	$(MAKE) fpc_zipinstall ZIPTARGET=install FULLZIPNAME=fpc-$(PACKAGE_VERSION).$(TARGETSUFFIX).built.on.$(SOURCESUFFIX)
 endif
-crosszipinstall: $(BUILDSTAMP)
+crosszipinstall:
+	$(MAKE) $(BUILDSTAMP) CROSSINSTALL=1
 	$(MAKE) fpc_zipinstall CROSSINSTALL=1 ZIPTARGET=installbase ZIPNAME=base
 	$(MAKE) -C fpcsrc zipinstallother CROSSINSTALL=1
-crosssinglezipinstall: $(BUILDSTAMP)
+crosssinglezipinstall:
+	$(MAKE) $(BUILDSTAMP) CROSSINSTALL=1
 	$(MAKE) fpc_zipinstall ZIPTARGET=install FULLZIPNAME=fpc-$(PACKAGE_VERSION).$(SOURCESUFFIX).cross.$(TARGETSUFFIX) CROSSINSTALL=1
 .PHONY: docspdf makepackdocs docsrcinstall docsrc
 DOCSOURCEDIR=$(INSTALL_SOURCEDIR)/../docs
