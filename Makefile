@@ -2864,7 +2864,7 @@ renametoshort:
 	-$(MOVE) $(PKGPRE)utils-instantfpc$(ZIPSUFFIX).zip ifpc$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-javaapp$(ZIPSUFFIX).zip jvp$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-json2pas$(ZIPSUFFIX).zip jsnp$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-lexyacc$(ZIPSUFFIX).zip lexy$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-lexyacc$(ZIPSUFFIX).zip tply$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-mksymbian$(ZIPSUFFIX).zip mksb$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-pas2fpm$(ZIPSUFFIX).zip p2fp$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-pas2jni$(ZIPSUFFIX).zip p2jn$(ZIPSUFFIXSHORT).zip
