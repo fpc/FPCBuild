@@ -4,9 +4,10 @@
 
 ******************************************************************************
 
-Free Pascal 3.2.2 is a minor release in the FPC. As such, it contains mostly
-fixes of bugs discovered in the previous version, plus some updates
-for included packages.
+Free Pascal 3.2.2 is a minor release of the 3.2.x fixes branch. As such, it
+contains mostly fixes of bugs discovered in the previous version, plus some
+updates for included packages. In this case a new target was also backported
+from trunk.
 
 There are currently no known changes which might result in incompatibility to
 the previous version 3.2.0.
