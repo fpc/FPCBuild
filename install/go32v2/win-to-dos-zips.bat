@@ -7,6 +7,7 @@ rem Variables used below, this should be the only part
 rem that needs to be updated on a future release
 
 set BATCH_RELEASE_VERSION=3.3.1
+set DOS_ZIP_VERSION=331
 set BATCH_OS_TARGET=go32v2
 set NAT_OS_TARGET=win32
 rem To avoid problems, it seems better to keep this directory name
@@ -121,6 +122,8 @@ if errorlevel 1 goto got_make_error
 mkdir %GO32ZIPDIR%
 cp fpcsrc/installer/install.exe %GO32ZIPDIR%
 cp fpcsrc/installer/install.dat %GO32ZIPDIR%
+cp install/bingo32/cwsdpmi.exe %GO32ZIPDIR%
+cp install/bingo32/wmemu387.dxe %GO32ZIPDIR%
 rem No used for installer
 rem make -C fpcsrc installer_zipinstall OS_TARGET=%BATCH_OS_TARGET%
 if errorlevel 1 goto got_make_error
@@ -133,12 +136,12 @@ for %%f in (*.zip) do echo %%f >> long-zip-listing.txt
 rem  now we have long file names packages
 :stageshort
 echo make shortnames OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LOCAL_LIMIT83fs%
-make shortnames OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LOCAL_LIMIT83fs% > shortnames.log
+make shortnames OS_TARGET=%BATCH_OS_TARGET% LIMIT83fs=%LOCAL_LIMIT83fs% > shortnames.log 2> shortnames.err
 if errorlevel 1 goto got_make_error
 rem This fails for fcl packages, because those have a long i386-go32v2 prefix
 rem Set CROSSINSTALL to 1 to force that prefix in shortnames rule
 echo make shortnames OS_TARGET=%BATCH_OS_TARGET% CROSSINSTALL=1 LIMIT83fs=%LOCAL_LIMIT83fs%
-make shortnames OS_TARGET=%BATCH_OS_TARGET% CROSSINSTALL=1 LIMIT83fs=%LOCAL_LIMIT83fs% > shortnames2.log
+make shortnames OS_TARGET=%BATCH_OS_TARGET% CROSSINSTALL=1 LIMIT83fs=%LOCAL_LIMIT83fs% > shortnames2.log 2> shortnames2.err
 if errorlevel 1 goto got_make_error
 
 :stage_allzips
@@ -146,10 +149,12 @@ mkdir %GO32ZIPDIR%
 cp *.zip %GO32ZIPDIR%
 
 :test_zips
-rm chk-inst.lst
+if exist chk-inst.lst del chk-inst.lst
+if exist short-zip-listing.txt del short-zip-listing.txt
 cd %GO32ZIPDIR%
+echo "Listing count of occurences of zip files  in install.dat to ..\chk-inst.lst"
 for %%f in (*.zip) do grep -c %%f install.dat >> ..\chk-inst.lst
-echo "short zip listing" > ..\short-zip-listing.txt
+echo "Generating short zip listing in ..\short-zip-listing.txt"
 for %%f in (*.zip) do echo %%f >> ..\short-zip-listing.txt
 cd ..
 
@@ -157,7 +162,21 @@ rem Check if any of the zips is not listed in install.dat
 grep -c 0 chk-inst.lst
 if errorlevel 1 goto zip_check_ok
 echo "At least one generated zip file is not listed in install.dat"
+grep -n 0 chk-inst.lst > zero-lines.lst
+sed -n "s,^\([0-9]*\):0,NR == \1,p" zero-lines.lst > gawk.lst
+gawk -f gawk.lst short-zip-listing.txt > not-found.lst
+type not-found.lst
 :zip_check_ok
+
+cd %GO32ZIPDIR%
+zip ..\dos%DOS_ZIP_VERSION%.zip install.exe install.dat cwsdpmi.exe wmemu387.dxe *dos.zip
+if errorlevel 1 goto got_zip_error
+copy /y ..\dos%DOS_ZIP_VERSION%.zip ..\dos%DOS_ZIP_VERSION%full.zip
+zip ..\dos%DOS_ZIP_VERSION%full.zip *src.zip 
+if errorlevel 1 goto got_zip_error
+goto end_ok
+:got_zip_error
+echo "Error while running zip"
 goto end_ok
 :got_make_error
 echo "Error while running make"
