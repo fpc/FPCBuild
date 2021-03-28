@@ -2724,7 +2724,7 @@ renametoshort:
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-pdf$(ZIPSUFFIX).zip ufcpd$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-process$(ZIPSUFFIX).zip ufclp$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-registry$(ZIPSUFFIX).zip ufclr$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-report$(ZIPSUFFIX).zip ufcre$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-report$(ZIPSUFFIX).zip ufpre$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-res$(ZIPSUFFIX).zip ufcle$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-sdo$(ZIPSUFFIX).zip ufcsd$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-sound$(ZIPSUFFIX).zip ufsnd$(ZIPSUFFIXSHORT).zip
