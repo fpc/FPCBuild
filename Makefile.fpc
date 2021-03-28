@@ -517,7 +517,7 @@ renametoshort:
 	-$(MOVE) $(PKGPRE)utils-debugsrv$(ZIPSUFFIX).zip dbgs$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-dxegen$(ZIPSUFFIX).zip dxeg$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-fpcm$(ZIPSUFFIX).zip fpcm$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-fpcmkcfg$(ZIPSUFFIX).zip fpck$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-fpcmkcfg$(ZIPSUFFIX).zip fcmk$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-fpcres$(ZIPSUFFIX).zip fprs$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-fpcreslipo$(ZIPSUFFIX).zip fprl$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-fpdoc$(ZIPSUFFIX).zip fpdc$(ZIPSUFFIXSHORT).zip
@@ -535,7 +535,7 @@ renametoshort:
 	-$(MOVE) $(PKGPRE)utils-mksymbian$(ZIPSUFFIX).zip mksb$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-pas2fpm$(ZIPSUFFIX).zip p2fm$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-pas2jni$(ZIPSUFFIX).zip p2jn$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-pas2js$(ZIPSUFFIX).zip pjs$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-pas2js$(ZIPSUFFIX).zip p2js$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-pas2ut$(ZIPSUFFIX).zip p2ut$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-rmwait$(ZIPSUFFIX).zip rmw$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-sim_pasc$(ZIPSUFFIX).zip smp$(ZIPSUFFIXSHORT).zip
