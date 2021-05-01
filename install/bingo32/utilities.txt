@@ -7,7 +7,7 @@ directory current/v2gnu.
 zip.exe comes from Info-ZIP's Zip (http://www.info-zip.org).
 
 aslddos:
-Files from GNU binutils 2.17 (djgpp 2.03). Original file: bnu217b.zip
+Files from GNU binutils 2.31.1 (djgpp 2.05). Original file: bnu2311b.zip
  * ar.exe
  * as.exe
  * ld.exe
@@ -16,29 +16,29 @@ Files from GNU binutils 2.17 (djgpp 2.03). Original file: bnu217b.zip
  * strip.exe
 
 makedos:
-Files from GNU diffutils 2.8.7 (djgpp 2.03). Original file: dif287b.zip
+Files from GNU diffutils 3.7 (djgpp 2.05). Original file: dif37b.zip
  * diff.exe
  * cmp.exe
-Files from GNU sh-utils 2.0.11 (djgpp 2.03). Original file: shl2011b.zip
+Files from GNU sh-utils 2.0.11 (djgpp 2.05). Original file: shl2011br2.zip
  * gdate.exe   (renamed from date.exe)
  * gecho.exe   (renamed from echo.exe)
  * pwd.exe
-Files from GNU fileutils 4.1 (djgpp 2.03). Original file: fil41b.zip
+Files from GNU fileutils 4.1 (djgpp 2.05). Original file: fil41br2.zip
  * cp.exe
  * mv.exe
  * ginstall.exe
  * rm.exe
  * gmkdir.exe  (renamed from mkdir.exe)
-Files from GNU grep 2.5.3 (djgpp 2.03). Original file: grep253b.zip
+Files from GNU grep 2.28 (djgpp 2.05). Original file: grep228b.zip
  * grep.exe
-Files from GNU patch 2.5.9 (djgpp 2.03). Original file: pat259b.zip
+Files from GNU patch 2.7.5 (djgpp 2.05). Original file: pat275br2.zip
  * patch.exe
-Files from GNU make 3.79.1 (djgpp 2.03). Original file: mak3791b.zip
+Files from GNU make 4.2.1 (djgpp 2.05). Original file: mak421b.zip
  * make.exe
 Files from Info-ZIP's Zip 2.32. Original file: zip232x.zip
  * zip.exe
 
 gdbdos:
-Files from GNU gdb 6.1.1 (djgpp 2.03). Original file: gdb611b.zip
+Files from GNU gdb 8.0.1 (djgpp 2.05). Original file: gdb801b.zip
  * gdb.exe
 
