@@ -1106,7 +1106,7 @@ endif
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	fpcmkcfg -t install/fpcx86x64.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	$(INNOCMD_ISCC)
-	$(MOVE) $(INNODIR)/Output/setup.exe fpc-$(PACKAGE_VERSION).win32.and.win64.exe
+	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).win32.and.win64.exe
 
 innojvmbuild: innocheck buildjvm
 	rmcvsdir$(EXEEXT) $(INNODIR)
