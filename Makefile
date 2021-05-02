@@ -2613,6 +2613,7 @@ ifeq ($(OS_TARGET),win32)
 endif
 ifeq ($(OS_TARGET),win64)
 	-$(COPY) $(addprefix $(CVSINSTALL)/binw64/,*.ico *.exe *.dll *.h *.manifest) $(INSTALL_BINDIR)
+	-$(COPY) $(CVSINSTALL)/binw32/gcc.exe $(INSTALL_BINDIR)/x86_64-win64-gcc.exe
 endif
 endif
 ifeq ($(OS_TARGET),os2)
