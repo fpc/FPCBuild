@@ -2592,6 +2592,7 @@ ifeq ($(OS_TARGET),wince)
 endif
 ifeq ($(OS_TARGET),win64)
 	$(COPY) $(addprefix $(CVSINSTALL)/crossbinw64/, *.exe) $(INSTALL_BINDIR)
+	-$(COPY) $(CVSINSTALL)/binw32/gcc.exe $(INSTALL_BINDIR)/x86_64-win64-gcc.exe	
 endif
 ifeq ($(OS_TARGET),msdos)
 	$(COPY) $(addprefix $(CVSINSTALL)/crossbinmsdos/, *.exe) $(INSTALL_BINDIR)
