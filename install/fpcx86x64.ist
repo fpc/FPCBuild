@@ -170,6 +170,7 @@ Source: bin\i386-win32\x86_64-win64-nm.exe; DestDir: {app}\bin\i386-win32; Flags
 Source: bin\i386-win32\x86_64-win64-objdump.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x64\binutils
 Source: bin\i386-win32\x86_64-win64-objcopy.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x64\binutils
 Source: bin\i386-win32\x86_64-win64-windres.exe; DestDir: {app}\bin\i386-win32; Flags: ignoreversion; Components: x64\binutils
+Source: bin\i386-win32\gcc.exe; DestDir: {app}\bin\i386-win32; DestName: "x86_64-win64-gcc.exe"; Flags: ignoreversion; Components: x64\binutils
 Source: units\x86_64-win64\rtl\*.*; DestDir: {app}\units\x86_64-win64\rtl; Components: x64\base
 ; Include license and readme files, so they are available even if somebody installs this package alone though
 ; it will not result in a working fpc installation
