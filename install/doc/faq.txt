@@ -135,11 +135,12 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
           ☆ 02/2017: 3.0.2 released 
           ☆ 11/2017: 3.0.4 released
           ☆ 04/2020: 3.2.0 released
+          ☆ 05/2021: 3.2.2 released
      2. Which versions exist, and which one should I use?
 
-        The latest official version is 3.2.0, the first release in the 3.2.x
-        series. New development is performed in the 3.3.x series, which will
-        eventually be released as 3.4.0 or 4.0.0, depending on milestones
+        The latest official version is 3.2.2, the first minor update in the
+        3.2.x series. New development is performed in the 3.3.x series, which
+        will eventually be released as 3.4.0 or 4.0.0, depending on milestones
         achieved.
 
         Historic versions
@@ -202,7 +203,7 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
             on as many platforms as possible. GNU Pascal tries to implement a
             portable pascal compiler based on POSIX.
         Version:
-            Currently, Free Pascal is at version 3.2.0 (April 2020). GNU
+            Currently, Free Pascal is at version 3.2.2 (May 2021). GNU
             Pascal is stopped version 2.1 (from 2002, which can be built with
             several different GCC's as backend; their Mac OS X version is an
             exception though, as it follows the GCC version number).
@@ -212,8 +213,8 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
             to the last version a few times a year, and there are regular
             snapshot for OS X and Windows, made by users.
         Operating systems:
-            Free Pascal runs on a large number of platforms, inlcuding DOS (16/
-            32-bit), Win32 (no UNIX porting layer needed), Linux, FreeBSD,
+            Free Pascal runs on a large number of platforms, including DOS (16/
+            32-bit), Win32/Win64 (no UNIX porting layer needed), Linux, FreeBSD,
             NetBSD, OS/2, BeOS, Mac OS X, on the following architectures: x86
             (32 and 64 bit), SPARC, PowerPC (32 and 64 bit), ARM, Java Virtual
             Machine (under development), and MIPS (under development). GNU
