@@ -94,14 +94,14 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
 
      1. What is Free Pascal (FPC)?
 
-        Originally named FPK-Pascal, the Free Pascal compiler is a 16,32 and 64
+        Originally named FPK-Pascal, the Free Pascal compiler is a 16, 32 and 64
         bit Turbo Pascal and Delphi compatible Pascal compiler for Linux,
         Windows, OS/2, FreeBSD, Mac OS X, DOS and several other platforms (the
         number of supported targets grows all the time, although not all of
         them are on the same level as the main ones).
 
         The Free Pascal compiler is available for several architectures: x86
-        (16,32 and 64 bit), ARM, PowerPC (32 and 64 bit), SPARC (v8, v9), Java
+        (16, 32 and 64 bit), ARM, PowerPC (32 and 64 bit), SPARC (v8, v9), Java
         Virtual Machine (under development) and MIPS (little and big endian,
         under development). An older version (the 1.0 series) and current
         development versions also supported m68k.
@@ -556,8 +556,8 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
             as this is the limit of some processors. Use const or var
             parameters where appropriate.
           ☆ CPU16,CPU32 or CPU64 is defined indicating whether the target is a
-            16,32-bit or 64-bit cpu. This can help with incorporating 16,32-bit
-            and 64-bit specific code.
+            16-bit, 32-bit or 64-bit cpu. This can help with incorporating
+            16-bit, 32-bit and 64-bit specific code.
           ☆ Use the ptruint type when declaring an ordinal that will store a
             pointer, since pointers can be either 32-bit or 64-bit depending on
             the processor and operating system. For 16-bit it is memory model
