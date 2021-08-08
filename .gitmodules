@@ -4,3 +4,4 @@
 [submodule "fpcdocs"]
 	path = fpcdocs
 	url = https://gitlab.com/freepascal.org/fpc/documentation.git
+	branch = main
