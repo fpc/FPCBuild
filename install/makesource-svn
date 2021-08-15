@@ -23,7 +23,9 @@ rm -rf buildsrc
 
 mkdir buildsrc
 cd buildsrc
-svn co http://svn.freepascal.org/svn/fpc/$SVNPATH fpc
+
+SVN_REPO=https://github.com/fpc/FPCSource.git
+svn co $SVN_REPO/$SVNPATH fpc
 
 find -name .svn -type d | xargs tar -cvzf $OUTPUTDIR/SVNfiles-$VERSION.tar.gz 
 
