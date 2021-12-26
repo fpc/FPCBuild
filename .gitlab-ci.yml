@@ -1,0 +1,29 @@
+# This .gitlab.ci.yml is based on:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
+# the FPC specific parts are partly from:
+# https://gitlab.com/alb42/testconversion2/-/blob/main/.gitlab-ci.yml
+
+image: registry.gitlab.com/freepascal.org/fpc/source/debian-buster-x86_64
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+  - build-and-deploy
+ 
+build-job:
+  stage: build-and-deploy
+  artifacts:
+        name: "$CI_BUILD"
+        paths:
+            - fpc-*.tar
+        when: always
+        expire_in: 14 days
+  script:
+    - make -j 4 all OS_TARGET=linux CPU_TARGET=x86_64 FPMAKEOPT="-T 4" 
+    - cd fpcdocs
+    - make pdftar > docs.log
+    - tail docs.log
+    - cd ..
+    - cp fpcdocs/doc-pdf.tar.gz .
+    - install/makepack
