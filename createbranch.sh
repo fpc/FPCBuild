@@ -1,58 +1,57 @@
 #!/bin/sh
+set -e
 
-# Default read-only HTTP URL used for externals
-SVNHTTPURL=https://svn.freepascal.org/svn
-
-if [ $# -lt 1 ]; then
-  echo "Usage: $0 <branch/tag name>"
+if [ $# -lt 2 ]; then
+  echo "Usage: $0 <branch/tag> <name>"
   echo
-  echo "Example: $0 branches/fixes_2_1"
-  echo "         $0 tags/release_2_0_4"
+  echo "Example: $0 branch fixes_2_1"
+  echo "         $0 tag release_2_0_4"
   echo
   exit 1
 fi
-NEWSVNTAG=$1
 
-# For testing output the svn commands
-if [ ."$2" = ."test" ]; then
-  SVN="echo svn"
+# For testing output the git commands
+if [ ."$3" = ."test" ]; then
+  GIT="echo git"
 else
-  SVN=svn
+  GIT=git
 fi
 
-# Decode SVN URL from current fpcbuild URL
-FPCBUILDURL=`svn info . | grep URL | grep fpcbuild`
+# Decode git remote from current fpcbuild remote
+FPCBUILDURL=`git remote get-url origin | grep fpc/build.git`
 if [ $? -ne 0 ]; then
-  echo "This is not an fpcbuild checkout"
+   echo "This is not an fpcbuild checkout"
 fi
-SVNURL=`echo $FPCBUILDURL | sed -e 's+URL: ++' -e 's+/fpcbuild/.*$++'`
-OLDSVNTAG=`echo $FPCBUILDURL | sed -e 's+URL:.*fpcbuild/++'`
-COMMITMSG="Creating branch $NEWSVNTAG"
 
-echo "SVN URL: $SVNURL"
-echo "Old SVN (branch) dir: $OLDSVNTAG"
-echo "New SVN (branch) dir: $NEWSVNTAG"
+echo Using remote url $FPCBUILDURL
 
-$SVN copy $SVNURL/fpc/$OLDSVNTAG $SVNURL/fpc/$NEWSVNTAG -m "$COMMITMSG"
-$SVN copy $SVNURL/fpcbuild/$OLDSVNTAG $SVNURL/fpcbuild/$NEWSVNTAG -m "$COMMITMSG"
+echo Updating everything
+$GIT submodule update --init --recursive
+$GIT pull --recurse-submodule
+$GIT submodule update --init --recursive
 
-# Generate svn:externals property
-cat << EXTERNALEOF > external.lst
-../../../fpc/$NEWSVNTAG fpcsrc
-../../../fpcdocs/trunk fpcdocs
-EXTERNALEOF
-echo
-echo "External list:"
-echo "===="
-cat external.lst
-echo "===="
-echo
-
-# Setting properties on a remote URL is not supported.
-# To workaround we need to do a (non-recursive) checkout of the
-# just created fpcbuild branch
-$SVN co -N $SVNURL/fpcbuild/$NEWSVNTAG branchtmp
-$SVN ps -F external.lst svn:externals branchtmp
-
-# Commit and cleanup
-$SVN ci branchtmp -m "$COMMITMSG" && rm -rf branchtmp && rm -f external.lst
+if [ ."$1" = ."tag" ]; then
+  echo Tagging $2
+  $GIT tag -a $2 -m "  Tagging $2"
+  $GIT submodule foreach git tag -a $2 -m "  Tagging $2"
+  echo Pushing still disabled, check the script $0 for #!!!
+  #!!! $GIT submodule foreach git push origin $2
+  #!!! $GIT push origin $2
+else
+  if [ ."$1" = ."branch" ]; then
+    $GIT checkout -b $2
+    cd fpcsrc
+    $GIT checkout -b $2
+    cd ../fpcdocs
+    $GIT checkout main
+    $GIT pull
+    cd ..
+    $GIT commit -a -m "Creating branch $2"
+    echo Pushing still disabled, check the script $0 for #!!!
+    #!!! $GIT submodule foreach git push origin $2 
+    #!!! $GIT push origin $2
+  else
+    echo Unknown operation $1
+    exit 1
+  fi 
+fi
