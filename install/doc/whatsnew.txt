@@ -1,5 +1,30 @@
                             Free Pascal Compiler
 
+                                Version 3.2.4
+
+******************************************************************************
+
+Free Pascal 3.2.4 is a minor release of the 3.2.x fixes branch. As such, it
+contains mostly fixes of bugs discovered in the previous version, plus some
+updates for included packages.
+
+There are currently no known changes which might result in incompatibility to
+the previous version 3.2.2.
+
+!!!! fcl-db, see mailing list!
+
+The main highlights of this version:
+
+Platforms:
+megaAVR 0 and tinyAVR 0/1
+
+Utilities:
+
+Packages:
+
+******************************************************************************
+                            Free Pascal Compiler
+
                                 Version 3.2.2
 
 ******************************************************************************
@@ -137,11 +162,11 @@ Some highlights are:
 
 Rtl:
   * TRect, TPoint and similar types are now type compatible between
-    Types and Windows unit, and are now advanced records. 
+    Types and Windows unit, and are now advanced records.
 
 Packages:
   * googleapi and fcl-pdf packages.
-  * fcl-db and web packages synchronized 
+  * fcl-db and web packages synchronized
   * unicode tables updated.
 
 See http://bugs.freepascal.org/changelog_page.php for the list of reported
@@ -324,7 +349,7 @@ Packages:
   * Many improvements to the database units (fcl-db)
   * Objective-Pascal interfaces to Foundation, AppKit, CoreData and WebCore
   * OpenGL headers updated to OpenGL 4.0
-  
+
 Details about these new features can be found at
 http://wiki.freepascal.org/FPC_New_Features_2.6.0
 
@@ -346,10 +371,10 @@ Some highlights are:
 
 Packages:
   * Many improvements to the XML units
-  * Many improvements to the database units. 
+  * Many improvements to the database units.
         * Specially sqlite got quite some fixes.
-  * Many improvements to the chm units. 
-        * Including a commandline CHM compiler 
+  * Many improvements to the chm units.
+        * Including a commandline CHM compiler
   * Many improvements to fppkg and fpmake for another round of testing.
 
 Platforms:
@@ -426,7 +451,7 @@ Compiler:
   * Fixes to the interface delegation (implements) support
   * Improved cpu register allocation
   * Improved ARM/EABI support
-  
+
 RTL:
   * Linearly scaling multi-threaded memory manager
   * Support for (advisory) file locking on Unix-based platforms
@@ -451,7 +476,7 @@ bugs which have been fixed in this release.
                               What's New in 2.2.4
 ******************************************************************************
 
-Free Pascal 2.2.4 contains many bug fixes and some new features. The 
+Free Pascal 2.2.4 contains many bug fixes and some new features. The
 main purpose of this release is to fix problems reported with FPC 2.2.2.
 
 Please also see http://wiki.freepascal.org/User_Changes_2.2.4 for a list
@@ -481,7 +506,7 @@ bugs which have been fixed in this release.
                               What's New in 2.2.2
 ******************************************************************************
 
-Free Pascal 2.2.2 contains many bug fixes and some new features. The 
+Free Pascal 2.2.2 contains many bug fixes and some new features. The
 main purpose of this release is to fix problems reported with FPC 2.2.0,
 and to remove all potentially tainted code from our source code base.
 
