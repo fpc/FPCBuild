@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 3.2.2
+                               Version 3.2.4
 
 ****************************************************************************
 * Introduction
@@ -16,12 +16,13 @@ also partial support for the Macintosh pascal dialect.
 
 News and changes related to this release are described in whatsnew.txt.
 
-Free Pascal 3.2.2 is currently available for the following platforms:
+Free Pascal 3.2.4 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-powerpc
 - Linux-sparc
 - Linux-ARM
+- Linux-Aarch64
 - Win32-i386 (2000/XP, WinNT or later)
 - Win64-x86_64 (XP or later)
 - Wince-ARM (cross compiled from win32-i386)
@@ -72,12 +73,17 @@ e-mail addresses are listed below.
   - variant support
   - inlining
 - code optimizer:
-  - peephole optimizer (80x86 only)
+  - peephole optimizer
   - jump optimizer
-  - loading of variables into registers
-  - assembler level dataflow analyzer (80x86 only)
+  - register variables
   - stack frame eliminations
   - sophisticated register allocator
+  - common subexpression elimination
+  - constant folding
+  - constant propagation
+  - loop unrolling
+  - data structure recording 
+  - fast math
 - integrated BASM (built-in assembler) parser
   - supports ATT syntax used by GNU C
   - supports Intel syntax used by Turbo Pascal (x86-only)
@@ -107,12 +113,12 @@ e-mail addresses are listed below.
 ****************************************************************************
 
 Processor:
-  i386, x86_64, PowerPC, ARM, MIPS, i8086, Motorola 68k, Sparc or JVM 
-  runtime
+  i386, x86_64, PowerPC, PowerPC64, ARM, MIPS, i8086, Motorola 68k, 
+  Aarch64 aka ARM64, AVR, Sparc or JVM runtime
 Win32:
  - MS Windows NT/2000/XP or later (Win95, 98 and ME are not supported
    in FPC officially any longer).
- - 16 MB RAM
+ - 128 MB RAM
 OS/2:
  - OS/2 Warp v3.0 with one of late fixpaks - FP 35 should be fine,
    OS/2 Warp v4.0 with FP 5 and above, WSeB, MCP or any eComStation version
@@ -135,7 +141,7 @@ Mac OS X:
 * Quick start - Win32
 ****************************************************************************
 
-Download the distribution package (fpc-3.2.2.i386-win32.exe) and run it
+Download the distribution package (fpc-3.2.4.i386-win32.exe) and run it
 - it is a self-extracting installer, so just follow the instructions
 to install it. The installer should set the PATH environment variable as
 appropriate.
@@ -150,7 +156,7 @@ and type on the command line:
 * Quick start - DOS
 ****************************************************************************
 
-Download distribution archive (dos322.zip for GO32v2) and unzip it into
+Download distribution archive (dos324.zip for GO32v2) and unzip it into
 a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -173,7 +179,7 @@ and type
 * Quick start - OS/2 / eComStation / ArcaOS
 ****************************************************************************
 
-Download distribution archive (os2322full.zip or os2322.zip for OS/2,
+Download distribution archive (os2324full.zip or os2324.zip for OS/2,
 eComStation or ArcaOS) and unzip it into a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
@@ -198,7 +204,7 @@ and type
 * Quick start - Linux/FreeBSD
 ****************************************************************************
 
-Download fpc-3.2.2.<cpu>-<os>.tar and untar into a temporary directory.
+Download fpc-3.2.4.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
