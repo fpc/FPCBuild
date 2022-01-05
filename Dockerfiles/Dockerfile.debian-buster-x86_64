@@ -1,0 +1,7 @@
+# Dockerfile used by the FPC CI on gitlab for x86_64-linux
+FROM debian:stable
+
+RUN apt-get update && apt-get --yes dist-upgrade && apt-get install --yes build-essential texlive texlive-latex-extra wget &&\
+   wget https://sourceforge.net/projects/lazarus/files/Lazarus%20Linux%20amd64%20DEB/Lazarus%202.2RC1/fpc-laz_3.2.2-210709_amd64.deb/download -O /tmp/fpc.deb
+   dpkg -i /tmp/fpc.deb &&\
+   rm /tmp/fpc.deb && apt-get clean
