@@ -131,8 +131,6 @@ Files:
  demo/graph/mandel.pp
  demo/graph/samegame.pp
  demo/lister/flist.pas
- demo/lister/flist.pas
- demo/lister/lister.pas
  demo/lister/lister.pas
  demo/modex/voxel.pp
  demo/morphos/ahitest.pas
@@ -152,7 +150,6 @@ Files:
  demo/text/lines.pp
  demo/text/magic.pp
  demo/text/qsort.pp
- demo/unix/cgibmp.pp
  demo/unix/cgibmp.pp
  demo/wince/testemu/w32rapi.pp
  demo/wince/testemu/wcetemu.pp
