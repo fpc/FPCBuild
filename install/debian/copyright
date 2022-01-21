@@ -161,7 +161,6 @@ Files:
  fpcdocs/htmwrite8859.pp
  fpcdocs/makehtm.pp
  fpcsrc/compiler/aarch64/cpuinfo.pas
- fpcsrc/compiler/alpha/cpuinfo.pas
  fpcsrc/compiler/arm/cpuinfo.pas
  fpcsrc/compiler/avr/cpuinfo.pas
  fpcsrc/compiler/ccharset.pas
@@ -190,69 +189,68 @@ Files:
  fpcsrc/compiler/utils/mkx86reg.pp
  fpcsrc/compiler/utils/msg2inc.pp
  fpcsrc/compiler/utils/msgdif.pp
- fpcsrc/compiler/vis/cpuinfo.pas
- fpcsrc/ide/fp.pas
- fpcsrc/ide/fpcalc.pas
- fpcsrc/ide/fpcatch.pas
- fpcsrc/ide/fpcodcmp.pas
- fpcsrc/ide/fpcodtmp.pas
- fpcsrc/ide/fpcompil.pas
- fpcsrc/ide/fpconst.pas
- fpcsrc/ide/fpdebug.pas
- fpcsrc/ide/fpdesk.pas
- fpcsrc/ide/fpdpansi.pas
- fpcsrc/ide/fpevalw.pas
- fpcsrc/ide/fphelp.pas
- fpcsrc/ide/fpide.pas
- fpcsrc/ide/fpini.pas
- fpcsrc/ide/fpintf.pas
- fpcsrc/ide/fpkeys.pas
- fpcsrc/ide/fpmansi.inc
- fpcsrc/ide/fpmcomp.inc
- fpcsrc/ide/fpmdebug.inc
- fpcsrc/ide/fpmedit.inc
- fpcsrc/ide/fpmfile.inc
- fpcsrc/ide/fpmhelp.inc
- fpcsrc/ide/fpmingw.pas
- fpcsrc/ide/fpmopts.inc
- fpcsrc/ide/fpmrun.inc
- fpcsrc/ide/fpmsrch.inc
- fpcsrc/ide/fpmtools.inc
- fpcsrc/ide/fpmwnd.inc
- fpcsrc/ide/fpredir.pas
- fpcsrc/ide/fpregs.pas
- fpcsrc/ide/fpswitch.pas
- fpcsrc/ide/fpsymbol.pas
- fpcsrc/ide/fptemplt.pas
- fpcsrc/ide/fptools.pas
- fpcsrc/ide/fpusrscr.pas
- fpcsrc/ide/fputils.pas
- fpcsrc/ide/fpvars.pas
- fpcsrc/ide/fpviews.pas
- fpcsrc/ide/gplprog.pt
- fpcsrc/ide/gplunit.pt
- fpcsrc/ide/wansi.pas
- fpcsrc/ide/wcedit.pas
- fpcsrc/ide/wchmhwrap.pas
- fpcsrc/ide/wconsole.pas
- fpcsrc/ide/weditor.pas
- fpcsrc/ide/whelp.pas
- fpcsrc/ide/whlpview.pas
- fpcsrc/ide/whtml.pas
- fpcsrc/ide/whtmlhlp.pas
- fpcsrc/ide/whtmlscn.pas
- fpcsrc/ide/winclip.pas
- fpcsrc/ide/windebug.pas
- fpcsrc/ide/wini.pas
- fpcsrc/ide/wnghelp.pas
- fpcsrc/ide/woahelp.pas
- fpcsrc/ide/wos2help.pas
- fpcsrc/ide/wresourc.pas
- fpcsrc/ide/wtphwrit.pas
- fpcsrc/ide/wutils.pas
- fpcsrc/ide/wviews.pas
- fpcsrc/ide/wvphelp.pas
- fpcsrc/ide/wwinhelp.pas
+ fpcsrc/package/ide/fp.pas
+ fpcsrc/package/ide/fpcalc.pas
+ fpcsrc/package/ide/fpcatch.pas
+ fpcsrc/package/ide/fpcodcmp.pas
+ fpcsrc/package/ide/fpcodtmp.pas
+ fpcsrc/package/ide/fpcompil.pas
+ fpcsrc/package/ide/fpconst.pas
+ fpcsrc/package/ide/fpdebug.pas
+ fpcsrc/package/ide/fpdesk.pas
+ fpcsrc/package/ide/fpdpansi.pas
+ fpcsrc/package/ide/fpevalw.pas
+ fpcsrc/package/ide/fphelp.pas
+ fpcsrc/package/ide/fpide.pas
+ fpcsrc/package/ide/fpini.pas
+ fpcsrc/package/ide/fpintf.pas
+ fpcsrc/package/ide/fpkeys.pas
+ fpcsrc/package/ide/fpmansi.inc
+ fpcsrc/package/ide/fpmcomp.inc
+ fpcsrc/package/ide/fpmdebug.inc
+ fpcsrc/package/ide/fpmedit.inc
+ fpcsrc/package/ide/fpmfile.inc
+ fpcsrc/package/ide/fpmhelp.inc
+ fpcsrc/package/ide/fpmingw.pas
+ fpcsrc/package/ide/fpmopts.inc
+ fpcsrc/package/ide/fpmrun.inc
+ fpcsrc/package/ide/fpmsrch.inc
+ fpcsrc/package/ide/fpmtools.inc
+ fpcsrc/package/ide/fpmwnd.inc
+ fpcsrc/package/ide/fpredir.pas
+ fpcsrc/package/ide/fpregs.pas
+ fpcsrc/package/ide/fpswitch.pas
+ fpcsrc/package/ide/fpsymbol.pas
+ fpcsrc/package/ide/fptemplt.pas
+ fpcsrc/package/ide/fptools.pas
+ fpcsrc/package/ide/fpusrscr.pas
+ fpcsrc/package/ide/fputils.pas
+ fpcsrc/package/ide/fpvars.pas
+ fpcsrc/package/ide/fpviews.pas
+ fpcsrc/package/ide/gplprog.pt
+ fpcsrc/package/ide/gplunit.pt
+ fpcsrc/package/ide/wansi.pas
+ fpcsrc/package/ide/wcedit.pas
+ fpcsrc/package/ide/wchmhwrap.pas
+ fpcsrc/package/ide/wconsole.pas
+ fpcsrc/package/ide/weditor.pas
+ fpcsrc/package/ide/whelp.pas
+ fpcsrc/package/ide/whlpview.pas
+ fpcsrc/package/ide/whtml.pas
+ fpcsrc/package/ide/whtmlhlp.pas
+ fpcsrc/package/ide/whtmlscn.pas
+ fpcsrc/package/ide/winclip.pas
+ fpcsrc/package/ide/windebug.pas
+ fpcsrc/package/ide/wini.pas
+ fpcsrc/package/ide/wnghelp.pas
+ fpcsrc/package/ide/woahelp.pas
+ fpcsrc/package/ide/wos2help.pas
+ fpcsrc/package/ide/wresourc.pas
+ fpcsrc/package/ide/wtphwrit.pas
+ fpcsrc/package/ide/wutils.pas
+ fpcsrc/package/ide/wviews.pas
+ fpcsrc/package/ide/wvphelp.pas
+ fpcsrc/package/ide/wwinhelp.pas
  fpcsrc/installer/install.pas
  fpcsrc/installer/insthelp.pas
  fpcsrc/installer/scroll.pas
