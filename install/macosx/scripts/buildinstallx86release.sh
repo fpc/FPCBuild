@@ -15,11 +15,15 @@
 
 # defaults for (old) SDK locations
 SDKi386=${SDKi386-/Volumes/Data/dev/osxsdk/MacOSX10.4u.sdk}
-SDKx64=${SDKx64-/Volumes/Data/dev/osxsdk/MacOSX10.5.sdk}
+SDKx64=${SDKx64-/Volumes/Data/dev/osxsdk/MacOSX10.6.sdk}
 SDKppc=${SDKppc-$SDKi386}
 SDKppc64=${SDKppc64-$SDKppc}
-BINUTILSDIR=${BINUTILSIDR-/Volumes/Data/dev/osxsdk/Xcode502toolchain/usr/bin}
+SDKaarch64=${SDKaarch64-$HOME/bigsursdk}
+# BINUTILSDIR=${BINUTILSDIR-/Volumes/Data/dev/osxsdk/Xcode502toolchain/usr/bin}
+BINUTILSDIR=${BINUTILSDIR-/usr/bin}
+BINUTILSDIRi386=${BINUTILSDIRi386-/Volumes/Data/dev/osxsdk/Xcode502toolchain/usr/bin}
 BINUTILSDIRppc=${BINUTILSDIRppc-/Volumes/Data/dev/osxsdk/oldcctools/usr/bin}
+BINUTILSDIRaarch64=${BINUTILSDIRaarch64-$HOME/bigsurbin}
 if [ x${NCPU} = x ]; then
   NCPU=`sysctl -n machdep.cpu.core_count`
 fi
@@ -45,10 +49,13 @@ BASEDIR=`dir_resolve "$BASEDIR"`
 source "$BASEDIR"/helpers.sh
 
 InstallDirX86="${InstallBaseDir}/x86/usr/local"
+rm -rf "$InstallDirX86"
 mkdir -p "$InstallDirX86"
 InstallDirPPC="${InstallBaseDir}/ppc/usr/local"
+rm -rf "$InstallDirPPC"
 mkdir -p "$InstallDirPPC"
 InstallDirJVM="${InstallBaseDir}/jvm/usr/local"
+rm -rf "$InstallDirJVM"
 mkdir -p "$InstallDirJVM"
 
 ######################################################
@@ -63,15 +70,15 @@ BASEOPT="-ap -FD${BINUTILSDIR}"
 # build the native x86-64 binaries and units
 cd "$FPCBUILD"/fpcsrc
 make FPC="$1/ppcx64" OPT="$BASEOPT" distclean -j $NCPU
-make FPC="$1/ppcx64" OPT="$BASEOPT -WM10.5 -XR${SDKx64}" CPU_SOURCE=x86_64 all -j $NCPU FPMAKEOPT="-T $NCPU --target=x86_64-darwin"
-make FPC=`pwd`/compiler/ppcx64 OPT="$BASEOPT -WM10.5 -XR${SDKx64}" INSTALL_PREFIX="$InstallDirX86" install
+make FPC="$1/ppcx64" OPT="$BASEOPT -WM10.6 -XR${SDKx64}" CPU_SOURCE=x86_64 all -j $NCPU FPMAKEOPT="-T $NCPU --target=x86_64-darwin"
+make FPC=`pwd`/compiler/ppcx64 OPT="$BASEOPT -WM10.6 -XR${SDKx64}" INSTALL_PREFIX="$InstallDirX86" install
 VERSION=`./compiler/ppcx64 -iV`
 InstalledCompilerDir="$InstallDirX86"/lib/fpc/$VERSION
 
 # Build x86-64 -> i386 cross-compiler
 cd "$FPCBUILD"/fpcsrc
-make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.5 -XR${SDKx64}" CROSSOPT="-WM10.4 -XR${SDKi386}" CPU_TARGET=i386 -j $NCPU FPMAKEOPT="-T $NCPU" all
-make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.5 -XR${SDKx64}" CROSSOPT="-WM10.4 -XR${SDKi386}" CPU_TARGET=i386 INSTALL_PREFIX="$InstallDirX86" CROSSINSTALL=1 install
+make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.6 -XR${SDKx64}" CROSSOPT="-WM10.4 -XR${SDKi386}" CPU_TARGET=i386 -j $NCPU FPMAKEOPT="-T $NCPU" all
+make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.6 -XR${SDKx64}" CROSSOPT="-WM10.4 -XR${SDKi386}" CPU_TARGET=i386 INSTALL_PREFIX="$InstallDirX86" CROSSINSTALL=1 install
 cd "$InstallDirX86"/bin
 mv ../lib/fpc/$VERSION/ppcross386 ../lib/fpc/$VERSION/ppc386
 
@@ -79,13 +86,13 @@ mv ../lib/fpc/$VERSION/ppcross386 ../lib/fpc/$VERSION/ppc386
 TMPINSTALLDIR=`mktemp -d -t fpcinst.XXXXXXX`
 cd "$FPCBUILD"/fpcsrc
 make FPC="$InstalledCompilerDir/ppc386" OPT="$BASEOPT" distclean -j $NCPU OVERRIDEVERSIONCHECK=1
-make FPC="$InstalledCompilerDir/ppc386" OPT="$BASEOPT -WM10.4 -XR${SDKi386}" CPU_SOURCE=i386 -j $NCPU FPMAKEOPT="-T $NCPU --target=i386-darwin" OVERRIDEVERSIONCHECK=1 all
-make FPC=`pwd`/compiler/ppc386 OPT="$BASEOPT -WM10.4 -XR${SDKi386}" CPU_SOURCE=i386 INSTALL_PREFIX="$TMPINSTALLDIR" install
+make FPC="$InstalledCompilerDir/ppc386" OPT="$BASEOPT -WM10.4 -FD${BINUTILSDIRi386} -XR${SDKi386}" CPU_SOURCE=i386 -j $NCPU FPMAKEOPT="-T $NCPU --target=i386-darwin" OVERRIDEVERSIONCHECK=1 all
+make FPC=`pwd`/compiler/ppc386 OPT="$BASEOPT -WM10.4 -FD${BINUTILSDIRi386} -XR${SDKi386}" CPU_SOURCE=i386 INSTALL_PREFIX="$TMPINSTALLDIR" install
 
 # Build i386 -> x86-64 cross-compiler
 cd "$FPCBUILD"/fpcsrc
-make FPC="$InstalledCompilerDir/ppc386" OPT="$BASEOPT -WM10.4 -XR${SDKi386}" CROSSOPT="-WM10.5 -XR${SDKx64}" CPU_SOURCE=i386 CPU_TARGET=x86_64 -j $NCPU FPMAKEOPT="-T $CNPU --target=x86_64-darwin" all
-make FPC="$InstalledCompilerDir/ppc386" OPT="$BASEOPT -WM10.4 -XR${SDKi386}" CROSSOPT="-WM10.5 -XR${SDKx64}" CPU_SOURCE=i386 CPU_TARGET=x86_64 INSTALL_PREFIX="$TMPINSTALLDIR" CROSSINSTALL=1 install
+make FPC="$InstalledCompilerDir/ppc386" OPT="$BASEOPT -WM10.4 -FD${BINUTILSDIRi386} -XR${SDKi386}" CROSSOPT="-WM10.6 -FD${BINUTILSDIR} -XR${SDKx64}" CPU_SOURCE=i386 CPU_TARGET=x86_64 -j $NCPU FPMAKEOPT="-T $CNPU --target=x86_64-darwin" all
+make FPC="$InstalledCompilerDir/ppc386" OPT="$BASEOPT -WM10.4 -FD${BINUTILSDIRi386} -XR${SDKi386}" CROSSOPT="-WM10.6 -FD${BINUTILSDIR} -XR${SDKx64}" CPU_SOURCE=i386 CPU_TARGET=x86_64 INSTALL_PREFIX="$TMPINSTALLDIR" CROSSINSTALL=1 install
 mv "$TMPINSTALLDIR"/lib/fpc/$VERSION/ppcrossx64 "$TMPINSTALLDIR"/lib/fpc/$VERSION/ppcx64
 
 # Create fat/universal binaries
@@ -141,15 +148,15 @@ BASECROSSOPT="-ap -FD${BINUTILSDIRppc}"
 # x64 -> ppc
 cd "$FPCBUILD"/fpcsrc
 make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT" distclean -j $NCPU OVERRIDEVERSIONCHECK=1
-make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.5 -XR${SDKx64}" CROSSOPT="$BASECROSSOPT -WM10.4 -XR${SDKppc}" CPU_TARGET=powerpc -j $NCPU FPMAKEOPT="-T $NCPU" all
-make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.5 -XR${SDKx64}" CROSSOPT="$BASECROSSOPT -WM10.4 -XR${SDKppc}" CPU_TARGET=powerpc INSTALL_PREFIX="$InstallDirPPC" CROSSINSTALL=1 install
+make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.6 -XR${SDKx64}" CROSSOPT="$BASECROSSOPT -WM10.4 -XR${SDKppc}" CPU_TARGET=powerpc -j $NCPU FPMAKEOPT="-T $NCPU" all
+make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.6 -XR${SDKx64}" CROSSOPT="$BASECROSSOPT -WM10.4 -XR${SDKppc}" CPU_TARGET=powerpc INSTALL_PREFIX="$InstallDirPPC" CROSSINSTALL=1 install
 cd "$InstallDirPPC"/lib/fpc/$VERSION
 mv ppcrossppc ppcppc
 
 # x64 -> ppc64
 cd "$FPCBUILD"/fpcsrc
-make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.5 -XR${SDKx64}" CROSSOPT="$BASECROSSOPT -WM10.4 -XR${SDKppc64}" CPU_TARGET=powerpc64 -j $NCPU FPMAKEOPT="-T $NCPU" all
-make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.5 -XR${SDKx64}" CROSSOPT="$BASECROSSOPT -WM10.4 -XR${SDKppc64}" CPU_TARGET=powerpc64 INSTALL_PREFIX="$InstallDirPPC" CROSSINSTALL=1 install
+make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.6 -XR${SDKx64}" CROSSOPT="$BASECROSSOPT -WM10.4 -XR${SDKppc64}" CPU_TARGET=powerpc64 -j $NCPU FPMAKEOPT="-T $NCPU" all
+make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.6 -XR${SDKx64}" CROSSOPT="$BASECROSSOPT -WM10.4 -XR${SDKppc64}" CPU_TARGET=powerpc64 INSTALL_PREFIX="$InstallDirPPC" CROSSINSTALL=1 install
 cd "$InstallDirPPC"/lib/fpc/$VERSION
 mv ppcrossppc64 ppcppc64
 
@@ -158,7 +165,7 @@ mv ppcrossppc64 ppcppc64
 cd "$FPCBUILD"/fpcsrc
 make FPC="$InstalledCompilerDir"/ppc386 OPT="$BASEOPT" distclean -j $NCPU OVERRIDEVERSIONCHECK=1
 cd compiler
-make FPC="$InstalledCompilerDir/ppc386" OPT="$BASEOPT -WM10.4 -XR${SDKi386}" CPU_SOURCE=i386 -j $NCPU FPMAKEOPT="-T $CNPU --target=powerpc-darwin" cycle ppuclean powerpc powerpc64
+make FPC="$InstalledCompilerDir/ppc386" OPT="$BASEOPT -WM10.4  -FD${BINUTILSDIRi386} -XR${SDKi386}" CPU_SOURCE=i386 -j $NCPU FPMAKEOPT="-T $CNPU --target=powerpc-darwin" cycle ppuclean powerpc powerpc64
 
 makefatbinary ppcppc "$InstallDirPPC"/lib/fpc/$VERSION/ppcppc
 makefatbinary ppcppc64 "$InstallDirPPC"/lib/fpc/$VERSION/ppcppc64
@@ -169,6 +176,25 @@ ln -sf ../lib/fpc/$VERSION/ppcppc
 ln -sf ../lib/fpc/$VERSION/ppcppc64
 strip ../lib/fpc/$VERSION/ppcppc
 strip ../lib/fpc/$VERSION/ppcppc64
+
+########################################################
+# Build aarch64
+########################################################
+
+BASECROSSOPT="-ap -FD${BINUTILSDIRaarch64}"
+
+
+# x64 -> aarc64
+cd "$FPCBUILD"/fpcsrc
+make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT" distclean -j $NCPU OVERRIDEVERSIONCHECK=1
+make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.14 -XR${SDKx64}" CROSSOPT="$BASECROSSOPT -WM11.0 -XR${SDKaarch64}" CPU_TARGET=aarch64 -j $NCPU FPMAKEOPT="-T $NCPU" all
+make FPC="$InstalledCompilerDir"/ppcx64 OPT="$BASEOPT -WM10.14 -XR${SDKx64}" CROSSOPT="$BASECROSSOPT -WM11.0 -XR${SDKaarch64}" CPU_TARGET=aarch64 INSTALL_PREFIX="$InstallDirX86" CROSSINSTALL=1 install
+cd "$InstallDirX86"/lib/fpc/$VERSION
+mv ppcrossa64 ppca64
+
+# create compiler binary symbolic links
+cd "$InstallDirX86"/bin
+ln -sf ../lib/fpc/$VERSION/ppca64
 
 ##########################
 # Build jvm cross-compiler
@@ -204,14 +230,14 @@ make FPC="$InstalledCompilerDir"/ppcx64 OPT="-ap" CROSSOPT="$BASECROSSOPT" CPU_T
 cd "$FPCBUILD"/fpcsrc
 make FPC="$InstalledCompilerDir"/ppcx64 OPT="-ap" distclean -j $NCPU OVERRIDEVERSIONCHECK=1
 cd compiler
-make FPC="$InstalledCompilerDir/ppcx64" OPT="$BASEOPT -WM10.5 -XR${SDKx64}" -j $NCPU FPMAKEOPT="-T $CNPU" cycle ppuclean jvm
+make FPC="$InstalledCompilerDir/ppcx64" OPT="$BASEOPT -WM10.6 -XR${SDKx64}" -j $NCPU FPMAKEOPT="-T $CNPU" cycle ppuclean jvm
 mv ppcjvm "$InstallDirJVM"/lib/fpc/$VERSION/
 
 # build i386->jvm cross-compiler
 cd "$FPCBUILD"/fpcsrc
 make FPC="$InstalledCompilerDir"/ppc386 OPT="$BASEOPT" distclean -j $NCPU OVERRIDEVERSIONCHECK=1
 cd compiler
-make FPC="$InstalledCompilerDir/ppc386" OPT="$BASEOPT -WM10.4 -XR${SDKi386}" CPU_SOURCE=i386 -j $NCPU FPMAKEOPT="-T $CNPU" cycle ppuclean jvm
+make FPC="$InstalledCompilerDir/ppc386" OPT="$BASEOPT -WM10.4 -FD${BINUTILSDIRi386} -XR${SDKi386}" CPU_SOURCE=i386 -j $NCPU FPMAKEOPT="-T $CNPU" cycle ppuclean jvm
 
 makefatbinary ppcjvm "$InstallDirJVM"/lib/fpc/$VERSION/ppcjvm
 cd "$InstallDirJVM"/bin
