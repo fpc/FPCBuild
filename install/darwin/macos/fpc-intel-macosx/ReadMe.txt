@@ -1,7 +1,7 @@
 
                             Free Pascal Compiler
 
-                               Version 3.2.0
+                               Version 3.2.2
 
 ****************************************************************************
 * Introduction
@@ -13,7 +13,7 @@ This package contains an advanced freeware 32-bit/64-bit/16-bit pascal compiler 
 
 News and changes related to this release are described in whatsnew.txt.
 
-Free Pascal 3.2.0 is currently available for the following platforms:
+Free Pascal 3.2.2 is currently available for the following platforms:
 - Linux-i386
 - Linux-x86_64 (amd64)
 - Linux-powerpc
@@ -26,6 +26,7 @@ Free Pascal 3.2.0 is currently available for the following platforms:
 - FreeBSD-x86_64
 - Mac OS X/Darwin for PowerPC (32 and 64 bit)
 - Mac OS X/Darwin for Intel (32 and 64 bit)
+- Mac OS X/Darwin for AArch64/ARM64
 - iOS (ARM and AArch64/ARM64) and iPhoneSimulator (32 and 64 bit)
 - OS/2-i386 (OS/2 Warp v3.0, 4.0, WarpServer for e-Business and eComStation)
 - Haiku-i386
@@ -117,7 +118,7 @@ Mac OS X:
 * Quick start - Win32
 ****************************************************************************
 
-Download the distribution package (fpc-3.2.0.i386-win32.exe) and run it - it is a self-extracting installer, so just follow the instructions to install it. The installer should set the PATH environment variable as appropriate.
+Download the distribution package (fpc-3.2.2.i386-win32.exe) and run it - it is a self-extracting installer, so just follow the instructions to install it. The installer should set the PATH environment variable as appropriate.
 
 To test the compiler, change to the demo\texts directory of the FPC tree and type on the command line:
         fpc hello
@@ -128,7 +129,7 @@ To test the compiler, change to the demo\texts directory of the FPC tree and typ
 * Quick start - DOS
 ****************************************************************************
 
-Download distribution archive (dos320.zip for GO32v2) and unzip it into a temporary directory.
+Download distribution archive (dos322.zip for GO32v2) and unzip it into a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
 
@@ -143,7 +144,7 @@ To test the compiler, change to the demo\texts directory of the FPC tree and typ
 * Quick start - OS/2 / eComStation / ArcaOS
 ****************************************************************************
 
-Download distribution archive (os2320full.zip or os2320.zip for OS/2, eComStation or ArcaOS) and unzip it into a temporary directory.
+Download distribution archive (os2322full.zip or os2322.zip for OS/2, eComStation or ArcaOS) and unzip it into a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
 
@@ -158,7 +159,7 @@ To test the compiler, change to the demo\texts directory of the FPC tree and typ
 * Quick start - Linux/FreeBSD
 ****************************************************************************
 
-Download fpc-3.2.0.<cpu>-<os>.tar and untar into a temporary directory.
+Download fpc-3.2.2.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
@@ -219,7 +220,7 @@ Additional information about mailing lists, news, future plans etc. can be found
 
 SNAPSHOTS & SOURCES
 -------------------
-One of the features of FPC is the snapshots. These are made daily or weekly from the developers' latest versions of the source. Snapshots are available for GO32v2, Win32, OS/2 and Linux versions. The latest snapshots are in: ftp://ftp.freepascal.org/fpc/snapshot/ in appropriately named .zip/tar files.
+One of the features of FPC is the snapshots. These are made daily or weekly from the developers' latest versions of the source. Snapshots are available for GO32v2, Win32 and Linux versions. The latest snapshots are in: ftp://ftp.freepascal.org/fpc/snapshot/ in appropriately named .zip/tar files.
 
 You will also normally find in the snapshot archive file a readme, with a note about the latest included changes. It is quite common, though it doesn't always happen, that when a bug is reported it is fixed and a fixed version can be obtained the NEXT day in the appropriate snapshot.... yes really!
 

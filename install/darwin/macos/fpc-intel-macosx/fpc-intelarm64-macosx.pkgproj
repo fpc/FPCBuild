@@ -489,11 +489,11 @@
 				<key>FOLLOW_SYMBOLIC_LINKS</key>
 				<false/>
 				<key>IDENTIFIER</key>
-				<string>org.freepascal.freePascalCompiler320.fpcinst386</string>
+				<string>org.freepascal.freePascalCompiler322.fpcinstintelarm64</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>fpc-3.2.0-intel-macosx</string>
+				<string>fpc-3.2.2-intelarm64-macosx</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -641,7 +641,7 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>x86/Users/Shared/Free Pascal Compiler/Documentation/Getting Started (Intel).rtf</string>
+							<string>x86/Users/Shared/Free Pascal Compiler/Documentation/Getting Started (Intel and ARM64).rtf</string>
 							<key>PATH_TYPE</key>
 							<integer>1</integer>
 						</dict>
@@ -697,7 +697,7 @@
 						<key>LANGUAGE</key>
 						<string>English</string>
 						<key>VALUE</key>
-						<string>Free Pascal Compiler Intel 3.2.0</string>
+						<string>Free Pascal Compiler Intel and ARM64 3.2.2</string>
 					</dict>
 				</array>
 			</dict>
@@ -706,42 +706,6 @@
 		<dict>
 			<key>LIST</key>
 			<array>
-				<dict>
-					<key>BEHAVIOR</key>
-					<integer>3</integer>
-					<key>DICTIONARY</key>
-					<dict>
-						<key>IC_REQUIREMENT_CPU_ARCHITECTURE_FAMILY</key>
-						<integer>2</integer>
-						<key>IC_REQUIREMENT_CPU_INTEL_ARCHITECTURE_TYPE</key>
-						<integer>0</integer>
-						<key>IC_REQUIREMENT_CPU_MINIMUM_CPU_CORES_COUNT</key>
-						<integer>1</integer>
-						<key>IC_REQUIREMENT_CPU_MINIMUM_FREQUENCY</key>
-						<integer>866666</integer>
-						<key>IC_REQUIREMENT_CPU_POWERPC_ARCHITECTURE_TYPE</key>
-						<integer>0</integer>
-					</dict>
-					<key>IC_REQUIREMENT_CHECK_TYPE</key>
-					<integer>0</integer>
-					<key>IDENTIFIER</key>
-					<string>fr.whitebox.Packages.requirement.cpu</string>
-					<key>MESSAGE</key>
-					<array>
-						<dict>
-							<key>LANGUAGE</key>
-							<string>English</string>
-							<key>SECONDARY_VALUE</key>
-							<string>This package contains only Intel binaries, which cannot be used on a PowerPC-based Macintosh. Install the PowerPC version of FPC instead.</string>
-							<key>VALUE</key>
-							<string></string>
-						</dict>
-					</array>
-					<key>NAME</key>
-					<string>Processor</string>
-					<key>STATE</key>
-					<true/>
-				</dict>
 				<dict>
 					<key>BEHAVIOR</key>
 					<integer>2</integer>
@@ -792,11 +756,11 @@
 		<key>PROJECT_SETTINGS</key>
 		<dict>
 			<key>BUILD_FORMAT</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>BUILD_PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>build/fpc-3.2.0.intel-macosx</string>
+				<string>build/fpc-3.2.2.intelarm64-macosx</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
@@ -969,7 +933,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>fpc-3.2.0-intel-macosx</string>
+			<string>fpc-3.2.2-intelarm64-macosx</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>

@@ -1,6 +1,6 @@
 About & requirements
 
-This package installs the Free Pascal Compiler 3.2.0 for JVM. It requires the JDK 1.5 or later to be installed and the "java" executable to be in the PATH.
+This package installs the Free Pascal Compiler 3.2.2 for JVM. It requires the JDK 1.5 or later to be installed and the "java" executable to be in the PATH.
 
 This package can be used to compile for
   • Java JVM 1.5 or later
@@ -16,7 +16,7 @@ You can find an overview of the supported language and RTL features at http://wi
 Instead of the standard FPC RTL and packages, you can make use of the standard JDK (1.5)/Android DK (r14) classes via resp. the jdk15 and androidr14 units.
 
 To run applications, you have to add the FPC RTL units to the java classpath. You can do so with the -cp command line parameter, e.g.
-  java -cp /usr/local/lib/fpc/3.2.0/units/jvm-java/rtl:. Program
+  java -cp /usr/local/lib/fpc/3.2.2/units/jvm-java/rtl:. Program
 
 Note the ":." at the end, because you have to add the current directory explicitly to the classpath if you specify it explicitly.
 
