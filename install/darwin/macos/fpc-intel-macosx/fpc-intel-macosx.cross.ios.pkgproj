@@ -554,11 +554,11 @@
 				<key>FOLLOW_SYMBOLIC_LINKS</key>
 				<false/>
 				<key>IDENTIFIER</key>
-				<string>org.freepascal.freePascalCompiler320.fpcinstx86-ios</string>
+				<string>org.freepascal.freePascalCompiler322.fpcinstx86-ios</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>fpc-3.2.0.intel-macosx.cross.ios</string>
+				<string>fpc-3.2.2.intel-macosx.cross.ios</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -775,7 +775,7 @@
 						<key>LANGUAGE</key>
 						<string>English</string>
 						<key>VALUE</key>
-						<string>Free Pascal Compiler for Intel 3.2.0 - iOS cross-compilers</string>
+						<string>Free Pascal Compiler for Intel 3.2.2 - iOS cross-compilers</string>
 					</dict>
 				</array>
 			</dict>
@@ -831,7 +831,7 @@
 						<integer>0</integer>
 						<key>IC_REQUIREMENT_FILES_LIST</key>
 						<array>
-							<string>/usr/local/lib/fpc/3.2.0/ppcx64</string>
+							<string>/usr/local/lib/fpc/3.2.2/ppcx64</string>
 						</array>
 						<key>IC_REQUIREMENT_FILES_SELECTOR</key>
 						<integer>0</integer>
@@ -846,11 +846,11 @@
 							<key>LANGUAGE</key>
 							<string>English</string>
 							<key>VALUE</key>
-							<string>Please install FPC 3.2.0 for Intel before installing these cross-compilers.</string>
+							<string>Please install FPC 3.2.2 for Intel before installing these cross-compilers.</string>
 						</dict>
 					</array>
 					<key>NAME</key>
-					<string>FPC 3.2.0 for Intel not yet installed</string>
+					<string>FPC 3.2.2 for Intel not yet installed</string>
 					<key>STATE</key>
 					<true/>
 				</dict>
@@ -867,7 +867,7 @@
 			<key>BUILD_PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>build/fpc-3.2.0.intel-macosx.cross.ios</string>
+				<string>build/fpc-3.2.2.intel-macosx.cross.ios</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
@@ -1040,7 +1040,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>fpc-3.2.0.intel-macosx.cross.ios</string>
+			<string>fpc-3.2.2.intel-macosx.cross.ios</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>
