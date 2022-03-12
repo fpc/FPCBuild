@@ -1041,9 +1041,9 @@ endif
 
 innocheck:
 ifndef NODOCS
-# Check for doc-pdf.zip
-ifeq ($(wildcard doc-pdf.zip),)
-	@$(ECHO) "No documentation available. Please copy the file doc-pdf.zip to this directory."
+# Check for doc-chm.zip
+ifeq ($(wildcard doc-chm.zip),)
+	@$(ECHO) "No documentation available. Please copy the file doc-chm.zip to this directory."
 	@exit 1
 endif
 endif
@@ -1064,7 +1064,7 @@ innobuild: innocheck build
 	$(COPYTREE) demo $(INNODIR)
 	$(COPYTREE) install/unicode $(INNODIR)
 ifndef NODOCS
-	unzip -d $(INNODIR) doc-pdf.zip
+	unzip -d $(INNODIR) doc-chm.zip
 endif
 	$(MAKE) install INSTALL_PREFIX=$(INNODIR)
 	rmcvsdir$(EXEEXT) $(INNODIR)
@@ -1101,7 +1101,7 @@ innox86x64build: innocheck
 	$(COPYTREE) demo $(INNODIR)
 	$(COPYTREE) install/unicode $(INNODIR)
 ifndef NODOCS
-	unzip -d $(INNODIR) doc-pdf.zip
+	unzip -d $(INNODIR) doc-chm.zip
 endif
 	$(MAKE) install INSTALL_PREFIX=$(INNODIR)
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=win64 CPU_TARGET=x86_64
