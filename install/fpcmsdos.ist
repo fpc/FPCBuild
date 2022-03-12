@@ -82,7 +82,7 @@ Source: fpmkinst\msdos\*.*; DestDir: {app}\fpmkinst\msdos; Flags: ignoreversion 
 [Components]
 Name: base; Description: Basic system for win32 to i8086-msdos crosscompiler; Flags: fixed; Types: Custom Minimum Full
 Name: binutils; Description: NASM assembler; Flags: fixed; Types: Custom Minimum Full
-%DisableDocs%Name: docs; Description: Documentation in PDF; Types: Custom Full
+%DisableDocs%Name: docs; Description: Documentation/help (CHM); Types: Custom Full
 ; Name: ide; Description: Integrated Development Environment; Types: Custom Full
 ; Name: utils; Description: Free Pascal Utilities; Types: Custom Full
 ; Name: make; Description: GNU make; Types: Custom Full

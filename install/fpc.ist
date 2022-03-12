@@ -151,7 +151,7 @@ Source: bin\i386-win32\yyparse.cod; DestDir: {app}\bin\i386-win32; Flags: ignore
 ; Demos
 Source: demo\*.*; DestDir: {app}\demo; Flags: ignoreversion recursesubdirs ; Components: demo
 ; Documentation
-%DisableDocs%Source: doc\*.pdf; DestDir: {app}\doc; Flags: ignoreversion; Components: docs
+%DisableDocs%Source: help\*.chm; DestDir: {app}\help; Flags: ignoreversion; Components: docs
 
 ; Units
 Source: units\i386-win32\*.*; DestDir: {app}\units\i386-win32; Flags: ignoreversion recursesubdirs; Components: units
@@ -168,12 +168,12 @@ Name: {userdesktop}\Free Pascal IDE; Filename: {app}\bin\i386-win32\fp.exe; comp
 Name: {group}\Free Pascal; Filename: {app}\bin\i386-win32\fp.exe; components: ide; IconFileName: {app}\bin\i386-win32\fp32.ico; WorkingDir: {app}\bin\i386-win32
 Name: {group}\{cm:ProgramOnTheWeb,Free Pascal}; Filename: {app}\Free Pascal.url; IconFileName: {app}\bin\i386-win32\fp32.ico;
 Name: {group}\{cm:UninstallProgram,Free Pascal}; Filename: {uninstallexe}
-%DisableDocs%Name: {group}\Documentation\User's manual; Filename: {app}\doc\user.pdf; Components: docs
-%DisableDocs%Name: {group}\Documentation\Programmer's manual; Filename: {app}\doc\prog.pdf; Components: docs
-%DisableDocs%Name: {group}\Documentation\Reference manual; Filename: {app}\doc\ref.pdf; Components: docs
-%DisableDocs%Name: {group}\Documentation\Run-Time Library Reference guide; Filename: {app}\doc\rtl.pdf; Components: docs
-%DisableDocs%Name: {group}\Documentation\Free Component Library Reference guide; Filename: {app}\doc\fcl.pdf; Components: docs
-%DisableDocs%Name: {group}\Documentation\Free Pascal code documenter Reference manual; Filename: {app}\doc\fpdoc.pdf; Components: docs
+%DisableDocs%Name: {group}\Documentation\User's manual; Filename: {app}\help\user.chm; Components: docs
+%DisableDocs%Name: {group}\Documentation\Programmer's manual; Filename: {app}\help\prog.chm; Components: docs
+%DisableDocs%Name: {group}\Documentation\Reference manual; Filename: {app}\help\ref.chm; Components: docs
+%DisableDocs%Name: {group}\Documentation\Run-Time Library Reference guide; Filename: {app}\help\rtl.chm; Components: docs
+%DisableDocs%Name: {group}\Documentation\Free Component Library Reference guide; Filename: {app}\help\fcl.chm; Components: docs
+%DisableDocs%Name: {group}\Documentation\Free Pascal code documenter Reference manual; Filename: {app}\help\fpdoc.chm; Components: docs
 
 [UninstallDelete]
 Type: files; Name: {app}\Free Pascal.url
@@ -186,7 +186,7 @@ Type: files; Name: {localappdata}\FreePascal\fppkg\fppkg.cfg; Tasks: createfppkg
 [Components]
 Name: base; Description: Basic system for  win32; Flags: fixed; Types: Custom Minimum Full
 Name: binutils; Description: GNU linker and assembler; Flags: fixed; Types: Custom Minimum Full
-%DisableDocs%Name: docs; Description: Documentation in PDF; Types: Custom Full
+%DisableDocs%Name: docs; Description: Documentation/help (CHM); Types: Custom Full
 Name: ide; Description: Integrated Development Environment; Types: Custom Full
 Name: utils; Description: Free Pascal Utilities; Types: Custom Full
 Name: make; Description: GNU make; Types: Custom Full
