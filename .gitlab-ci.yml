@@ -24,8 +24,7 @@ build-job:
   script:
     - make -j 4 all OS_TARGET=linux CPU_TARGET=x86_64 FPMAKEOPT="-T 4" 
     - cd fpcdocs
-    - make pdfdist > docs.log
-    - tail docs.log
+    - make pdfdist > docs.log ; tail docs.log
     - cd ..
     - cp fpcdocs/doc-pdf.tar.gz .
     - install/makepack
