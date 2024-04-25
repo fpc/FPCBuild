@@ -156,10 +156,24 @@ and type on the command line:
 * Quick start - DOS
 ****************************************************************************
 
-Download distribution archive (dos324.zip for GO32v2) and unzip it into
-a temporary directory.
+Download distribution archive for GO32v2 (either the basic dos324.zip, or
+dos324full.zip containing also the sources) and unzip it into a temporary
+directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
+
+Note that some files and directories have names longer than 8.3 limit
+existing with the traditional / legacy FAT16 format without the VFAT
+extensions. In this context, it's worth mentioning that you should prefer to
+use LFN-enabled environment whenever possible. However, FPC may be used (not
+built from its own sources!!!) even in environments not providing support
+for long file names (LFN). If you are in such a situation, you should be
+aware that files containing longer file names are not selected in the
+installer by default if LFN support is not detected. Among others, this
+includes the basic package containing the compiler and RTL - you should make
+sure to select at least this package, but preferably also some other like
+package rtl-console, which contains legacy TP/BP compatibility unit Crt,
+among others.
 
 Don't forget to set PATH as mentioned by the install program. If running
 under plain DOS, this can be done by opening file named AUTOEXEC.BAT located
@@ -179,10 +193,20 @@ and type
 * Quick start - OS/2 / eComStation / ArcaOS
 ****************************************************************************
 
-Download distribution archive (os2324full.zip or os2324.zip for OS/2,
-eComStation or ArcaOS) and unzip it into a temporary directory.
+Download distribution archive for OS/2, eComStation or ArcaOS (either
+os2324full.zip containing also the source files, or the basic os2324.zip)
+and unzip it into a temporary directory.
 
 Start the install program INSTALL.EXE and follow the instructions.
+
+Note that some files and directories have names longer than 8.3 limit
+existing with the traditional / legacy FAT16 format. Obviously, OS/2
+provides full support for longer file names with OS/2 applications when used
+on more efficient filesystems like JFS or HPFS, or even with FAT32. However,
+OS/2 still provides the possibility to use the legacy FAT16 as well. We do
+not recommend installing FPC to partitions formatted as FAT16, but it is
+possible, albeit with certain limitations (among others, FPC itself may not
+be built from its own sources in such case).
 
 Don't forget to set PATH and LIBPATH as mentioned by the install program.
 This can be done by opening file named CONFIG.SYS located in the root
@@ -255,10 +279,14 @@ ftp://ftp.freepascal.org/fpc/dist/docs-pdf/, other formats are available
 for download in the directory of the respective distributed release.
 
 NB that there is at present no FPC specific documentation for the platform
-specific API (like Win32 system functions, etc.). There is a note in the ftp
-/doc explaining where MS help file documenting Win32 API can be obtained,
-other platforms (especially Unix-based ones) often come with this
-documentation included in system installation.
+specific API (like Win32 system functions, etc.). There is a link to
+documentation of Win32/Win64 API provided by MS on page "More information"
+available on the FPC web site (see below), other platforms (especially
+Unix-based ones) often come with this documentation included in system
+installation.
+
+The page "More information" contains also references to other 3rd party
+resources, including general Pascal tutorials, etc.
 
 
 ****************************************************************************
@@ -268,7 +296,7 @@ documentation included in system installation.
 Suggestions, Help ...
 ---------------------
 e-mail: fpc-devel@lists.freepascal.org (bugs, developer related questions)
-e-mail: fpc-pascal@lists.freepascal.org (general pascal related questions)
+e-mail: fpc-pascal@lists.freepascal.org (general Pascal related questions)
 
 Both these adresses are for mailing lists. If you're not subscribed,
 be sure to mention this fact when sending questions to these lists,
@@ -318,6 +346,7 @@ you'll need at least 32 MB of physical memory (64 MB is better), at least
 a 200 MHz processor and at least 100 MB of free disk space. You'll also
 need some knowledge of makefiles & programming... it is not difficult but
 it isn't easy either!
+
 
 REPORTING BUGS
 ----------------
@@ -377,6 +406,12 @@ downloaded from http://clio.rice.edu/cwsdpmi/.
 
 The DOS version (go32v2) contains some binaries of DJGPP. You can obtain
 the full DJGPP package at: http://www.delorie.com/djgpp/
+
+Similarly, the OS/2 version contains some binaries coming from the EMX
+port of GNU C/C++ and binutils, plus a later port of GNU 'as' performed
+outside of the FPC project. Both the EMX package and GCC binutils ports are
+available e.g. on http://web.archive.org/web/20240422064030/hobbes.nmsu.edu
+including their sources (under /pub/os2/dev/tools/toolkits/).
 
 NOTE: OS/2 version of the installer uses the library UNZIP32.DLL from
       Info-ZIP. Info-ZIP's software (Zip, UnZip and related utilities)
