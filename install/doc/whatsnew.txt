@@ -11,16 +11,24 @@ updates for included packages.
 There are currently no known changes which might result in incompatibility to
 the previous version 3.2.2.
 
-!!!! fcl-db, see mailing list!
-
 The main highlights of this version:
+  * large number of issue and bug fixes
+  * FPC development switched to git, all tools adapted accordingly
+  * fixes to avoid year 2038 problem
+  * updated translations of compiler messages
 
 Platforms:
-megaAVR 0 and tinyAVR 0/1
+  * Support for new AVR targets: megaAVR 0 and tinyAVR 0/1
+  * FreeBSD 12 support
+  * Darwin: made -gl working
 
 Utilities:
+  * FPDoc: markdown support
 
 Packages:
+  * fcl-image improved, e.g. resolution support and orientation flag support
+  * fcl-base: thread pool support
+  * fcl-pdf: pdf reader
 
 ******************************************************************************
                             Free Pascal Compiler
