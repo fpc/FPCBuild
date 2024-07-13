@@ -8,7 +8,7 @@ Free Pascal 3.2.4 is a minor release of the 3.2.x fixes branch. As such, it
 contains mostly fixes of bugs discovered in the previous version, plus some
 updates for included packages.
 
-There are currently no known changes which might result in incompatibility to
+There are currently no known changes which might result in incompatibility with
 the previous version 3.2.2.
 
 The main highlights of this version:
@@ -16,6 +16,7 @@ The main highlights of this version:
   * FPC development switched to git, all tools adapted accordingly
   * fixes to avoid year 2038 problem
   * updated translations of compiler messages
+  * Issues with newer glibc fixed
 
 Platforms:
   * Support for new AVR targets: megaAVR 0 and tinyAVR 0/1
@@ -24,11 +25,13 @@ Platforms:
 
 Utilities:
   * FPDoc: markdown support
+  * fpcres: several improvements
 
 Packages:
   * fcl-image improved, e.g. resolution support and orientation flag support
   * fcl-base: thread pool support
   * fcl-pdf: pdf reader
+  * vcl-compat significantly improved
 
 ******************************************************************************
                             Free Pascal Compiler
