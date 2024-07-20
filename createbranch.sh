@@ -18,9 +18,10 @@ else
 fi
 
 # Decode git remote from current fpcbuild remote
-FPCBUILDURL=`git remote get-url origin | grep fpc/build.git`
-if [ $? -ne 0 ]; then
+FPCBUILDURL=`git remote get-url origin | grep fpc/build.git || true`
+if [ -z "$FPCBUILDURL" ]; then
    echo "This is not an fpcbuild checkout"
+   exit 1
 fi
 
 echo Using remote url $FPCBUILDURL
@@ -34,7 +35,7 @@ if [ ."$1" = ."tag" ]; then
   echo Tagging $2
   $GIT tag -a $2 -m "  Tagging $2"
   $GIT submodule foreach git tag -a $2 -m "  Tagging $2"
-  echo Pushing still disabled, check the script $0 for #!!!
+  echo Pushing still disabled, check the script $0 for \#!!!
   #!!! $GIT submodule foreach git push origin $2
   #!!! $GIT push origin $2
 else
@@ -43,15 +44,12 @@ else
     cd fpcsrc
     $GIT checkout -b $2
     cd ../fpcdocs
-    $GIT checkout main
-    $GIT pull
+    $GIT checkout -b $2
     cd ..
-    $GIT commit -a -m "Creating branch $2"
-    echo Pushing still disabled, check the script $0 for #!!!
-    #!!! $GIT submodule foreach git push origin $2 
-    #!!! $GIT push origin $2
+    $GIT submodule foreach git push origin $2
+    $GIT push origin $2
   else
     echo Unknown operation $1
     exit 1
-  fi 
+  fi
 fi
