@@ -10,6 +10,6 @@ fi
 
 NEWVER="$1"
 
-find -name fpmake.pp\
+find . -name fpmake.pp\
 	-exec sed -i -e "s/Version:=.*/Version:='${NEWVER}';/" '{}' ';'
 
