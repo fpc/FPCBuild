@@ -1,21 +1,19 @@
 #!/bin/sh
-
 set -e
 
 if [ $# -eq 1 ]; then
   VERSION=$1
-  SVNTAGVER=`echo $VERSION | tr '.' '_'`
-  SVNPATH="tags/release_$SVNTAGVER"
-elif [ $# -eq 3 ] && [ $1 = "-svnpath" ]; then
-  SVNPATH=$2
+  GITTAGVER=`echo $VERSION | tr '.' '_'`
+  GITTAG="release_$GITTAGVER"
+elif [ $# -eq 3 ] && [ $1 = "-gittag" ]; then
+  GITTAG=$2
   VERSION=$3
 else
-  echo "Usage: makefpcbuild [-svnpath <svnpath>] <release>"
-  echo "Examples: makefpcbuild -svnpath branches/fixes_2_2 2.2.3"
-  echo "          makefpcbuild 2.2.4"
+  echo "Usage: $0 [-gittag <tag>] <release>"
+  echo "Examples: $0 -gittag release_3_2_4-branch 3.2.4-rc1"
+  echo "          $0 2.2.4"
   exit 1
 fi
-
 
 PACKNAME=fpcbuild-$VERSION
 OUTPUTDIR=..
@@ -27,19 +25,32 @@ cd buildsrc
 
 rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
 
-svn co http://svn.freepascal.org/svn/fpcbuild/$SVNPATH fpcbuild
+GITREPO=https://gitlab.com/freepascal.org/fpc/build.git
 
-#find -name .svn -type d | xargs tar --remove-files -cvzf $OUTPUTDIR/SVNfiles-$VERSION.tar.gz 
+git clone --depth 1 --recurse-submodules --branch $GITTAG $GITREPO fpcbuild-$VERSION
+for repos in fpcbuild-$VERSION fpcbuild-$VERSION/fpcsrc fpcbuild-$VERSION/fpcdocs; do
+  CURPATH=`pwd`
+  cd $repos
+  git config core.eol crlf
+  cd $CURPATH
+done
 
-svn export fpcbuild fpcbuild-$VERSION --native-eol CRLF
-# Do not add the logs to the source-package
-rm -rf fpcbuild-$VERSION/logs
+cd fpcbuild-$VERSION 
+git ls-files -z --recurse-submodules | xargs -0 rm
+git checkout . --recurse-submodules
+cd ..
+
+for repos in fpcbuild-$VERSION fpcbuild-$VERSION/fpcsrc fpcbuild-$VERSION/fpcdocs; do
+  rm -rf $repos/.git
+done 
 zip -D9r $OUTPUTDIR/$PACKNAME.zip fpcbuild-$VERSION
-
 rm -rf fpcbuild-$VERSION
 
-svn export fpcbuild fpcbuild-$VERSION
-rm -rf fpcbuild-$VERSION/logs
+git clone --depth 1 --recurse-submodules --branch $GITTAG $GITREPO fpcbuild-$VERSION
+for repos in fpcbuild-$VERSION fpcbuild-$VERSION/fpcsrc fpcbuild-$VERSION/fpcdocs; do
+  rm -rf $repos/.git
+done
 tar cfv - fpcbuild-$VERSION/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
+
 cd ..
 rm -rf buildsrc

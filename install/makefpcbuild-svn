@@ -1,0 +1,45 @@
+#!/bin/sh
+
+set -e
+
+if [ $# -eq 1 ]; then
+  VERSION=$1
+  SVNTAGVER=`echo $VERSION | tr '.' '_'`
+  SVNPATH="tags/release_$SVNTAGVER"
+elif [ $# -eq 3 ] && [ $1 = "-svnpath" ]; then
+  SVNPATH=$2
+  VERSION=$3
+else
+  echo "Usage: makefpcbuild [-svnpath <svnpath>] <release>"
+  echo "Examples: makefpcbuild -svnpath branches/fixes_2_2 2.2.3"
+  echo "          makefpcbuild 2.2.4"
+  exit 1
+fi
+
+
+PACKNAME=fpcbuild-$VERSION
+OUTPUTDIR=..
+
+rm -rf buildsrc
+
+mkdir buildsrc
+cd buildsrc
+
+rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
+
+svn co http://svn.freepascal.org/svn/fpcbuild/$SVNPATH fpcbuild
+
+#find -name .svn -type d | xargs tar --remove-files -cvzf $OUTPUTDIR/SVNfiles-$VERSION.tar.gz 
+
+svn export fpcbuild fpcbuild-$VERSION --native-eol CRLF
+# Do not add the logs to the source-package
+rm -rf fpcbuild-$VERSION/logs
+zip -D9r $OUTPUTDIR/$PACKNAME.zip fpcbuild-$VERSION
+
+rm -rf fpcbuild-$VERSION
+
+svn export fpcbuild fpcbuild-$VERSION
+rm -rf fpcbuild-$VERSION/logs
+tar cfv - fpcbuild-$VERSION/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
+cd ..
+rm -rf buildsrc
