@@ -1,0 +1,44 @@
+#!/bin/sh
+
+set -e
+
+if [ $# -eq 1 ]; then
+  VERSION=$1
+  GITTAGVER=`echo $VERSION | tr '.' '_'`
+  GITTAG="release_$GITTAGVER"
+elif [ $# -eq 3 ] && [ $1 = "-gittag" ]; then
+  GITTAG=$2
+  VERSION=$3
+else
+  echo "Usage: makesource [-gittag <tag>] <release>"
+  echo "Examples: makesource -gittag release_3_2_4-branch 3.2.4-rc1"
+  echo "          makesource 2.2.4"
+  exit 1
+fi
+
+PACKNAME=fpc-$VERSION.source
+OUTPUTDIR=..
+
+rm -rf buildsrc
+
+mkdir buildsrc
+cd buildsrc
+
+GITREPO=https://gitlab.com/freepascal.org/fpc/source.git
+git clone --depth 1 --branch $GITTAG $GITREPO fpc-$VERSION
+
+rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
+cd fpc-$VERSION
+git config core.eol crlf
+git ls-files -z | xargs -0 rm
+git checkout .
+rm -rf .git
+cd ..
+zip -D9r $OUTPUTDIR/$PACKNAME.zip fpc-$VERSION
+
+rm -rf fpc-$VERSION
+git clone --depth 1 --branch $GITTAG $GITREPO fpc-$VERSION
+rm -rf fpc-$VERSION/.git
+tar cfv - fpc-$VERSION/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
+cd ..
+rm -rf buildsrc
