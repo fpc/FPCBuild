@@ -1,6 +1,9 @@
 #! /usr/bin/dh-exec
-usr/lib/fpc/*/*/*/rtl
-usr/lib/fpc/*/*/*/rtl-console*
-usr/lib/fpc/*/*/*/rtl-extra*
-usr/lib/fpc/*/*/*/rtl-objpas*
-usr/lib/fpc/*/*/*/rtl-unicode*
+usr/bin/${DEB_HOST_MULTIARCH}-fpcmkcfg-${VERSION}
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/rtl
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/rtl-console*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/rtl-extra*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/rtl-generics*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/rtl-objpas*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/rtl-unicode*
+usr/share/doc/fp-units-rtl     [!freebsd-any]

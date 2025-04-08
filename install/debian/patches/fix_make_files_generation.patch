@@ -1,0 +1,96 @@
+From: Abou Al Montacir <abou.almontacir@sfr.fr>
+Date: Sun, 04 Dec 2017 23:55:22 +0100
+Description: Fix sub directories in Makefile.fpc to allor recursive generation.
+
+Index: fpc/fpcsrc/Makefile.fpc
+===================================================================
+--- fpc.orig/fpcsrc/Makefile.fpc
++++ fpc/fpcsrc/Makefile.fpc
+@@ -7,7 +7,7 @@ name=fpc
+ version=3.2.4-rc1
+ 
+ [target]
+-dirs=compiler rtl utils packages installer
++dirs=compiler rtl utils packages installer tests
+ 
+ [require]
+ nortl=y
+Index: fpc/fpcsrc/packages/ide/Makefile.fpc
+===================================================================
+--- fpc.orig/fpcsrc/packages/ide/Makefile.fpc
++++ fpc/fpcsrc/packages/ide/Makefile.fpc
+@@ -5,6 +5,9 @@
+ name=ide
+ version=3.2.4-rc1
+ 
++[target]
++dirs=fakegdb compiler
++
+ [require]
+ packages=rtl fpmkunit rtl-extra fv chm regexpr
+ packages_go32v2=graph
+Index: fpc/fpcsrc/packages/Makefile.fpc
+===================================================================
+--- fpc.orig/fpcsrc/packages/Makefile.fpc
++++ fpc/fpcsrc/packages/Makefile.fpc
+@@ -2,6 +2,9 @@
+ #
+ #   Makefile.fpc for Free Pascal Packages
+ #
++[target]
++dirs= paszlib fcl-process hash libtar fpmkunit
++
+ [require]
+ packages=rtl
+ 
+Index: fpc/fpcsrc/utils/Makefile.fpc
+===================================================================
+--- fpc.orig/fpcsrc/utils/Makefile.fpc
++++ fpc/fpcsrc/utils/Makefile.fpc
+@@ -1,6 +1,9 @@
+ #
+ #   Makefile.fpc for running fpmake
+ #
++[target]
++dirs=fpcm debugsvr dxegen fpcmkcfg fpcreslipo fpcres fpdoc fppkg fprcp h2pas importtl instantfpc mksymbian pas2fpm pas2jni pas2js pas2ut rmwait tply unicode json2pas
++
+ [require]
+ packages=rtl fpmkunit fcl-json
+ 
+Index: fpc/fpcsrc/utils/fpcm/fpmake.pp
+===================================================================
+--- fpc.orig/fpcsrc/utils/fpcm/fpmake.pp
++++ fpc/fpcsrc/utils/fpcm/fpmake.pp
+@@ -215,7 +215,7 @@ begin
+ {$endif ALLPACKAGES}
+     P.Version:='3.2.4-rc1';
+ 
+-    P.Dependencies.Add('fcl-base');
++    //P.Dependencies.Add('fcl-base');
+ 
+     T:=P.Targets.AddProgram('fpcmake.pp');
+ 
+Index: fpc/fpcsrc/tests/Makefile.fpc
+===================================================================
+--- fpc.orig/fpcsrc/tests/Makefile.fpc
++++ fpc/fpcsrc/tests/Makefile.fpc
+@@ -10,6 +10,7 @@ fpcdir=..
+ rule=allexectests
+ 
+ [target]
++dirs=tstunits utils
+ programs=gparmake createlst
+ 
+ [rules]
+Index: fpc/fpcsrc/tests/utils/Makefile.fpc
+===================================================================
+--- fpc.orig/fpcsrc/tests/utils/Makefile.fpc
++++ fpc/fpcsrc/tests/utils/Makefile.fpc
+@@ -13,6 +13,7 @@ fpcdir=../..
+ nortl=y
+ 
+ [target]
++dirs=testsuite
+ programs=dotest fptime fail testfail digest concat $(DBDIGEST) $(MSDOSPROG)
+ programs_win32=prepup
+ programs_win64=prepup

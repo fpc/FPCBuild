@@ -1,0 +1,58 @@
+From: Abou Al Montacir <abou.almontacir@sfr.fr>
+Date: Wed, 30 Dec 2020 22:21:46 +0100
+Description: Fix samplecfg tool to be compatible with multiarch compiler paths.
+ (Closes: Bug#975351)
+
+Index: fpc/fpcsrc/compiler/utils/samplecfg
+===================================================================
+--- fpc.orig/fpcsrc/compiler/utils/samplecfg
++++ fpc/fpcsrc/compiler/utils/samplecfg
+@@ -15,7 +15,7 @@ if [ $# = 0 ]; then
+   echo 'confdir = Path to /etc'
+   echo 'Example :'
+   echo 'samplecfg /usr/local/lib/fpc/3.0.2'
+-  exit 1
++  fpcdir=${1:-`dirname $0`}
+ fi
+ if [ "$2" ]; then
+   sysdir="$2"
+@@ -23,17 +23,19 @@ if [ "$2" ]; then
+ else
+   sysdir=/etc
+ fi
+-FPCBIN=`dirname "$1"`/../../bin/fpc
+-FPBIN=`dirname "$1"`/../../bin/fp
+-FPPKGBIN=`dirname "$1"`/../../bin/fppkg
+-FPCMKCFGBIN=`dirname "$1"`/../../bin/fpcmkcfg
+-SHAREPATH=`dirname "$1"`/../../share/fpc/\$fpcversion
++fpcdir=`realpath -s "${fpcdir}"`
++echo 'Running with fpcdir="'${fpcdir}'"'
++FPCBIN=/usr/bin/fpc
++FPBIN=/usr/bin/fp
++FPPKGBIN=/usr/bin/fppkg
++FPCMKCFGBIN=/usr/bin/fpcmkcfg
++SHAREPATH=/usr/share/fpc/\$fpcversion
+ # Look for one in the PATH, if no new one was installed.
+ if [ ! -f $FPCMKCFGBIN ]; then
+   FPCMKCFGBIN=fpcmkcfg
+ fi
+ 
+-sysfpdirbase=`dirname "$1"`/`"$FPCBIN" -iV`
++sysfpdirbase=`dirname "${fpcdir}"`/`"$FPCBIN" -iV`
+ sysfpdirbase2=$sysfpdirbase/ide
+ sysfpdir=$sysfpdirbase2/text
+ 
+@@ -72,10 +74,10 @@ if [ -f "$FPBIN" ] ; then
+ fi
+ 
+ # set right path to FPC with $fpcversion
+-FPCPATH=`dirname "$1"`/\$fpcversion
++FPCPATH=`dirname "${fpcdir}"`
+ # set right prefix to FPC
+-FPCGLOBALPATH=`dirname "$1"`
+-FPCGLOBALPREFIX="$FPCGLOBALPATH"/../../
++FPCGLOBALPATH=`dirname "${FPCPATH}"`
++FPCGLOBALPREFIX=/usr
+ 
+ # Write (.)fpc.cfg
+ echo Writing sample configuration file to $fpccfgfile

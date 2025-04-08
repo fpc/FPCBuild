@@ -1,10 +1,13 @@
 #! /usr/bin/dh-exec
-usr/lib/fpc/*/*/*/fpmkunit*
-usr/lib/fpc/*/*/*/hash*
-usr/lib/fpc/*/*/*/ncurses*
-usr/lib/fpc/*/*/*/pasjpeg*
-usr/lib/fpc/*/*/*/paszlib*
-usr/lib/fpc/*/*/*/regexpr*
-usr/lib/fpc/*/*/*/uuid*         [!freebsd-any]
-usr/lib/fpc/*/*/*/x11*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fpmkunit*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/hash*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/libtar*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/ncurses*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/pasjpeg*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/paszlib*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/regexpr*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/tplylib*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/libusb*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/uuid*         [!freebsd-any]
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/x11*
 usr/share/doc/fp-units-base     [!freebsd-any]

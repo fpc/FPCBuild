@@ -5,7 +5,7 @@ Only PDF docs are built as shipped. You may want to make the HTML files with
 tex4ht by yourself and eventually adapt the doc-base file.
 
 To create a new config file for fpc (/etc/fpc.cfg) use the command:
- /usr/lib/fpc/%{fpcversion}/samplecfg /usr/lib/fpc/%{fpcversion}
+ /usr/lib/${DEB_HOST_MULTIARCH}/fpc/%{fpcversion}/samplecfg /usr/lib/fpc/%{fpcversion}
 However, you should be aware that said file (/etc/fpc.cfg) is
 declared as a conffile since version 1.0.2.
 

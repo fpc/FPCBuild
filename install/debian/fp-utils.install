@@ -1,0 +1,3 @@
+#! /usr/bin/dh-exec
+debian/fp-fix-timestamps usr/bin/
+etc/fpc-*.cfg.d [any]

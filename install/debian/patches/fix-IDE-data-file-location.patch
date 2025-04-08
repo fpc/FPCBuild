@@ -1,69 +1,97 @@
 Description: Align fp IDE template file paths with Debian standards
   The fp IDE looks for template files in /usr/bin where itself is installed.
-  However this is not conform with Debian stadard for file locations.
+  However this is not conform with Debian standard for file locations.
   This patch fixes this by making the IDE looking for templates in the base
   installation directory.
+  Location of IDE template files in Debian distribution is:
+  /usr/lib/$(DEB_TARGET_MULTIARCH)/fpc/3.2.2/ide/
+  as for examples:
+  /usr/lib/x86_64-linux-gnu/fpc/3.2.2/ide
+  /usr/lib/arm-linux-gnueabihf/fpc/3.2.2/ide
 Author: Abou Al Montacir <abou.almontacir@sfr.fr>
-Index: fpc/fpcsrc/ide/fpmake.pp
-===================================================================
---- fpc.orig/fpcsrc/ide/fpmake.pp
-+++ fpc/fpcsrc/ide/fpmake.pp
-@@ -204,16 +204,16 @@ begin
-     T.Directory:='compiler';
-     T.Install:=false;
+index 54d0ffd1..39ae6079 100644
+--- a/fpcsrc/packages/ide/fpcompil.pas
++++ b/fpcsrc/packages/ide/fpcompil.pas
+@@ -911,6 +911,8 @@ begin
  
--    P.InstallFiles.Add('fp.ans','$(bininstalldir)');
--    P.InstallFiles.Add('gplprog.pt','$(bininstalldir)');
--    P.InstallFiles.Add('gplunit.pt','$(bininstalldir)');
--    P.InstallFiles.Add('program.pt','$(bininstalldir)');
--    P.InstallFiles.Add('unit.pt','$(bininstalldir)');
--    P.InstallFiles.Add('cvsco.tdf','$(bininstalldir)');
--    P.InstallFiles.Add('cvsdiff.tdf','$(bininstalldir)');
--    P.InstallFiles.Add('cvsup.tdf','$(bininstalldir)');
--    P.InstallFiles.Add('grep.tdf','$(bininstalldir)');
--    P.InstallFiles.Add('tpgrep.tdf','$(bininstalldir)');
-+    P.InstallFiles.Add('fp.ans','$(baseinstalldir)/ide');
-+    P.InstallFiles.Add('gplprog.pt','$(baseinstalldir)/ide');
-+    P.InstallFiles.Add('gplunit.pt','$(baseinstalldir)/ide');
-+    P.InstallFiles.Add('program.pt','$(baseinstalldir)/ide');
-+    P.InstallFiles.Add('unit.pt','$(baseinstalldir)/ide');
-+    P.InstallFiles.Add('cvsco.tdf','$(baseinstalldir)/ide');
-+    P.InstallFiles.Add('cvsdiff.tdf','$(baseinstalldir)/ide');
-+    P.InstallFiles.Add('cvsup.tdf','$(baseinstalldir)/ide');
-+    P.InstallFiles.Add('grep.tdf','$(baseinstalldir)/ide');
-+    P.InstallFiles.Add('tpgrep.tdf','$(baseinstalldir)/ide');
-     P.InstallFiles.Add('fp32.ico', [win32, win64], '$(bininstalldir)');
- 
-     with P.Sources do
-Index: fpc/fpcsrc/ide/fpini.pas
+   MainFile:=FileName;
+   SetStatus('Writing switches to file...');
++  if SwitchesPath = '/etc/'+SwitchesName then
++       SwitchesPath := SwitchesName;
+   WriteSwitches(SwitchesPath);
+   { leaving open browsers leads to crashes !! (PM) }
+   SetStatus('Preparing symbol info...');
+Index: fpc/fpcsrc/packages/ide/fpmake.pp
 ===================================================================
---- fpc.orig/fpcsrc/ide/fpini.pas
-+++ fpc/fpcsrc/ide/fpini.pas
-@@ -178,12 +178,12 @@ begin
-    end;
- {$endif WINDOWS}
- {$else}
--  SystemIDEDir:=FExpand(DirOf(system.paramstr(0))+'../lib/fpc/'+version_string+'/ide/text');
-+  SystemIDEDir:=FExpand(DirOf(system.paramstr(0))+'../lib/fpc/'+version_string+'/ide');
+--- fpc.orig/fpcsrc/packages/ide/fpmake.pp
++++ fpc/fpcsrc/packages/ide/fpmake.pp
+@@ -282,16 +282,16 @@ begin
+         T.Directory:='compiler';
+         T.Install:=false;
+ 
+-        P.InstallFiles.Add('fp.ans','$(bininstalldir)');
+-        P.InstallFiles.Add('gplprog.pt','$(bininstalldir)');
+-        P.InstallFiles.Add('gplunit.pt','$(bininstalldir)');
+-        P.InstallFiles.Add('program.pt','$(bininstalldir)');
+-        P.InstallFiles.Add('unit.pt','$(bininstalldir)');
+-        P.InstallFiles.Add('cvsco.tdf','$(bininstalldir)');
+-        P.InstallFiles.Add('cvsdiff.tdf','$(bininstalldir)');
+-        P.InstallFiles.Add('cvsup.tdf','$(bininstalldir)');
+-        P.InstallFiles.Add('grep.tdf','$(bininstalldir)');
+-        P.InstallFiles.Add('tpgrep.tdf','$(bininstalldir)');
++        P.InstallFiles.Add('fp.ans','$(baseinstalldir)/ide');
++        P.InstallFiles.Add('gplprog.pt','$(baseinstalldir)/ide');
++        P.InstallFiles.Add('gplunit.pt','$(baseinstalldir)/ide');
++        P.InstallFiles.Add('program.pt','$(baseinstalldir)/ide');
++        P.InstallFiles.Add('unit.pt','$(baseinstalldir)/ide');
++        P.InstallFiles.Add('cvsco.tdf','$(baseinstalldir)/ide');
++        P.InstallFiles.Add('cvsdiff.tdf','$(baseinstalldir)/ide');
++        P.InstallFiles.Add('cvsup.tdf','$(baseinstalldir)/ide');
++        P.InstallFiles.Add('grep.tdf','$(baseinstalldir)/ide');
++        P.InstallFiles.Add('tpgrep.tdf','$(baseinstalldir)/ide');
+         P.InstallFiles.Add('fp32.ico', [win32, win64], '$(bininstalldir)');
+ 
+         with P.Sources do
+index b493cafd..15806a7a 100644
+--- a/fpcsrc/packages/ide/fpini.pas
++++ b/fpcsrc/packages/ide/fpini.pas
+@@ -154,6 +154,17 @@ const
+   ieShowReadme       = 'ShowReadme';
+   ieEditKeys         = 'EditKeys';
+ 
++const
++{$ifdef CPUARMHF}
++  gnu = 'gnueabihf';
++{$endif CPUARMHF}
++{$ifdef CPUARMEL}
++  gnu = 'gnueabi';
++{$endif CPUARMEL}
++{$ifndef CPUARM}
++  gnu = 'gnu';
++{$endif CPUARM}
++  FullTarget = {$I %FPCTARGETCPU%} + '-' + {$I %FPCTARGETOS%} + '-' + gnu;
+ 
+ Procedure InitDirs;
+ begin
+@@ -182,7 +193,7 @@ begin
+   SystemIDEDir:=FExpand(DirOf(system.paramstr(0))+'../lib/fpc/'+version_string+'/ide/text');
    If Not ExistsDir(SystemIDEdir) Then
      begin
 -    SystemIDEDir:=FExpand(DirOf(system.paramstr(0))+'../lib64/fpc/'+version_string+'/ide/text');
-+    SystemIDEDir:=FExpand(DirOf(system.paramstr(0))+'../lib64/fpc/'+version_string+'/ide');
++    SystemIDEDir:=FExpand(DirOf(system.paramstr(0))+'../lib/'+LowerCase(FullTarget)+'/fpc/'+version_string+'/ide');
      If Not ExistsDir(SystemIDEdir) Then
--      SystemIDEDir:='/usr/lib/fpc/'+version_string+'/ide/text';
-+      SystemIDEDir:='/usr/lib/fpc/'+version_string+'/ide';
+       SystemIDEDir:='/usr/lib/fpc/'+version_string+'/ide/text';
      end;
-   IDEdir:=CompleteDir(FExpand('~/.fp'));
-   If Not ExistsDir(IDEdir) Then
-Index: fpc/fpcsrc/ide/fptemplt.pas
-===================================================================
---- fpc.orig/fpcsrc/ide/fptemplt.pas
-+++ fpc/fpcsrc/ide/fptemplt.pas
-@@ -280,6 +280,7 @@ begin
-   New(Templates, Init(10,10));
-   ScanDir('.');
-   ScanDir(IDEDir);
-+  ScanDir(SystemIDEDir);
- end;
- 
- 
+diff --git a/fpcsrc/packages/ide/fpswitch.pas b/fpcsrc/packages/ide/fpswitch.pas
+index e46266f0..196f2151 100644
+--- a/fpcsrc/packages/ide/fpswitch.pas
++++ b/fpcsrc/packages/ide/fpswitch.pas
+@@ -1392,6 +1392,8 @@ begin
+      AddLongIntItem('Local ~h~eap size','h');
+    end;}
+   SwitchesPath:=LocateFile(SwitchesName);
++  if ExistsFile('/etc/'+SwitchesName) then
++    SwitchesPath:='/etc/'+SwitchesName;
+   if SwitchesPath='' then
+     SwitchesPath:=SwitchesName;
+   SwitchesPath:=FExpand(SwitchesPath);

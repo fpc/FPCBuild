@@ -1,0 +1,24 @@
+Description: Disable FPU inlining on m68k
+ There is a bug in the FPU code on m68k which causes the
+ bootstrap to fail (upstream bug #37250). Until the bug
+ has been fixed, disable FPU inlining to work around the
+ issue and fix the bootstrap on m68k.
+ .
+Author: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Forwarded: https://bugs.freepascal.org/view.php?id=37250
+Last-Update: 2021-01-22
+
+--- fpc-3.2.0+dfsg.orig/fpcsrc/compiler/m68k/n68kadd.pas
++++ fpc-3.2.0+dfsg/fpcsrc/compiler/m68k/n68kadd.pas
+@@ -148,10 +148,7 @@ implementation
+ 
+     function t68kaddnode.inlineable_realconstnode(const n: tnode): boolean;
+       begin
+-        result:=(n.nodetype = realconstn) and
+-            not ((trealconstnode(n).value_real=MathInf.Value) or
+-                 (trealconstnode(n).value_real=MathNegInf.Value) or
+-                 (trealconstnode(n).value_real=MathQNaN.value));
++        result:=false;
+       end;
+ 
+ 

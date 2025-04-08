@@ -12,7 +12,7 @@ Index: fpc/fpcsrc/compiler/systems/t_linux.pas
 ===================================================================
 --- fpc.orig/fpcsrc/compiler/systems/t_linux.pas
 +++ fpc/fpcsrc/compiler/systems/t_linux.pas
-@@ -1095,7 +1095,7 @@ begin
+@@ -1408,7 +1408,7 @@ begin
    if HasExports then
      cmdstr:=cmdstr+' -E';
  
@@ -21,10 +21,10 @@ Index: fpc/fpcsrc/compiler/systems/t_linux.pas
  
    { Create external .dbg file with debuginfo }
    if success and (cs_link_separate_dbg_file in current_settings.globalswitches) then
-@@ -1150,7 +1150,7 @@ begin
-   Replace(cmdstr,'$INIT',InitStr);
-   Replace(cmdstr,'$FINI',FiniStr);
+@@ -1476,7 +1476,7 @@ begin
    Replace(cmdstr,'$SONAME',SoNameStr);
+   Replace(cmdstr,'$MAP',mapstr);
+   Replace(cmdstr,'$GCSECTIONS',GCSectionsStr);
 -  success:=DoExec(FindUtil(utilsprefix+binstr),cmdstr,true,false);
 +  success:=DoExec(FindUtil(utilsprefix+binstr)+'.bfd',cmdstr,true,false);
  

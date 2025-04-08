@@ -1,0 +1,25 @@
+Description: fix version lists in utests.pp
+ utests.pp has three version lists, the first defining an enumerated type
+ and then the second two defining textual versions and svn branches
+ for each enumeration entry.
+
+ Unfortunately the first list was not consistent with each other resulting
+ in a compile error. This patch expands the first list to match the
+ others.
+Author: Peter Michael Green <plugwash@debian.org>
+
+--- fpc-3.2.0+dfsg.orig/fpcsrc/tests/utils/testsuite/utests.pp
++++ fpc-3.2.0+dfsg/fpcsrc/tests/utils/testsuite/utests.pp
+@@ -211,7 +211,11 @@ type
+     ver_3_0_3,
+     ver_3_0_4,
+     ver_3_0_5,
+-    ver_3_1_1);
++    ver_3_1_1,
++    ver_3_2_0,
++    ver_3_2_1,
++    ver_3_3_1
++);
+ 
+ const
+   ver_trunk = high (known_versions);

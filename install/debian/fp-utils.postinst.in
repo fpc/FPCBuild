@@ -2,7 +2,7 @@
 
 set -e
 
-FPCDIR=/usr/lib/fpc
+FPCDIR=/usr/lib/${DEB_HOST_MULTIARCH}/fpc
 
 # add alternatives
 update-alternatives \
@@ -12,6 +12,7 @@ update-alternatives \
 	--slave /usr/bin/chmls chmls /usr/bin/chmls-${VERSION} \
 	--slave /usr/bin/ifpc ifpc /usr/bin/ifpc-${VERSION} \
 	--slave /usr/bin/fppkg fppkg /usr/bin/fppkg-${VERSION} \
+	--slave /usr/bin/grab_vcsa grab_vcsa /usr/bin/grab_vcsa-${VERSION} \
 	--slave /usr/bin/instantfpc instantfpc /usr/bin/ifpc-${VERSION} \
 	--slave /usr/bin/ppufiles ppufiles /usr/bin/ppufiles-${VERSION} \
 	--slave /usr/bin/ppudump ppudump /usr/bin/ppudump-${VERSION} \

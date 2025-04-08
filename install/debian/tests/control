@@ -5,7 +5,8 @@ Restrictions: rw-build-tree, allow-stderr
 # if this warrants a:
 # Restrictions: breaks-testbed
 #
+# binutils is the only relevant difference that I could find between
+#  autopkgtest.u.c and ci.d.n (maybe needed for webtbs/tw0876)
+# build-essential is needed to build some c/c++ objects used for testing
 # zlib1g-dev is needed for at least test/packages/zlib/tzlib1.pp
-# libgcc seems to be needed for test/packages/webtbs/tw14265.pp
-#   although installing libgcc-5-dev doesn't seem to help
-Depends: @, zlib1g-dev
+Depends: @, binutils, build-essential, zlib1g-dev

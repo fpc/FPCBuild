@@ -2,7 +2,7 @@
 
 set -e
 
-FPCDIR=/usr/lib/fpc
+FPCDIR=/usr/lib/${DEB_HOST_MULTIARCH}/fpc
 
 # remove alternatives
 update-alternatives \

@@ -1,0 +1,105 @@
+From: Abou Al Montacir <abou.almontacir@sfr.fr>
+Description: Change path of unit files to make it support MA co-installation.
+ (Closes: Bug#73368)
+ This patch was modified to fix default value of FPCDIR on ppc64el causing test
+ suite of Castle Game Engine to break on that target.
+Bug-Debian: http://bugs.debian.org/73368
+Last-Update: Wed, 15 Jan 2025 00:05:11 +0100
+
+Index: fpc/fpcsrc/utils/fpcm/fpcmake.ini
+===================================================================
+--- fpc.orig/fpcsrc/utils/fpcm/fpcmake.ini
++++ fpc/fpcsrc/utils/fpcm/fpcmake.ini
+@@ -338,6 +338,11 @@ endif
+ 
+ export OS_TARGET OS_SOURCE ARCH CPU_TARGET CPU_SOURCE FULL_TARGET FULL_SOURCE TARGETSUFFIX SOURCESUFFIX CROSSCOMPILE
+ 
++ifndef DEB_HOST_MULTIARCH
++DEB_HOST_MULTIARCH=$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
++endif
++export DEB_HOST_MULTIARCH
++
+ [fpmakefpcdetect]
+ #####################################################################
+ # FPC Binary and Version Detection
+@@ -415,7 +420,7 @@ ifeq ($(FPCDIR),wrong)
+ ifdef inUnix
+ override FPCDIR=/usr/local/lib/fpc/$(FPC_VERSION)
+ ifeq ($(wildcard $(FPCDIR)/units),)
+-override FPCDIR=/usr/lib/fpc/$(FPC_VERSION)
++override FPCDIR=/usr/lib/${DEB_HOST_MULTIARCH}/fpc/$(FPC_VERSION)
+ endif
+ else
+ override FPCDIR:=$(subst /$(FPC),,$(firstword $(strip $(wildcard $(addsuffix /$(FPC),$(SEARCHPATH))))))
+@@ -641,7 +646,7 @@ endif
+ ifndef INSTALL_BASEDIR
+ ifdef UNIXHier
+ ifdef INSTALL_FPCPACKAGE
+-INSTALL_BASEDIR:=$(INSTALL_PREFIX)/lib/fpc/$(FPC_VERSION)
++INSTALL_BASEDIR:=$(INSTALL_PREFIX)/lib/${DEB_HOST_MULTIARCH}/fpc/$(FPC_VERSION)
+ else
+ INSTALL_BASEDIR:=$(INSTALL_PREFIX)/lib/$(PACKAGE_NAME)
+ endif
+@@ -684,7 +689,7 @@ endif
+ # Where to install shared libraries
+ ifndef INSTALL_LIBDIR
+ ifdef UNIXHier
+-INSTALL_LIBDIR:=$(INSTALL_PREFIX)/lib
++INSTALL_LIBDIR:=$(INSTALL_PREFIX)/lib/${DEB_HOST_MULTIARCH}
+ else
+ INSTALL_LIBDIR:=$(INSTALL_UNITDIR)
+ endif
+@@ -794,7 +799,7 @@ INSTALL_DATADIR=$(INSTALL_BASEDIR)
+ endif
+ 
+ ifndef INSTALL_SHAREDDIR
+-INSTALL_SHAREDDIR=$(INSTALL_PREFIX)/lib
++INSTALL_SHAREDDIR=$(INSTALL_PREFIX)/lib/${DEB_HOST_MULTIARCH}
+ endif
+ 
+ #####################################################################
+Index: fpc/fpcsrc/packages/fpmkunit/src/fpmkunit.pp
+===================================================================
+--- fpc.orig/fpcsrc/packages/fpmkunit/src/fpmkunit.pp
++++ fpc/fpcsrc/packages/fpmkunit/src/fpmkunit.pp
+@@ -4538,6 +4538,9 @@ begin
+   BinInstallDir:='';
+   LibInstallDir:='';
+   ExamplesInstallDir:='';
++  if GlobalUnitDir = '' then begin
++    GlobalUnitDir := FBaseInstallDir;
++  end;
+ end;
+ 
+ 
+@@ -4884,6 +4887,21 @@ end;
+ ****************************************************************************}
+ 
+ procedure TFPCDefaults.CompilerDefaults;
++const
++{$ifdef CPUARMHF}
++  gnu = 'gnueabihf';
++{$endif CPUARMHF}
++{$ifdef CPUARMEL}
++  gnu = 'gnueabi';
++{$endif CPUARMEL}
++{$ifndef CPUARM}
++  gnu = 'gnu';
++{$endif CPUARM}
++{$if defined(CPUPOWERPC) and defined(ENDIAN_LITTLE)}
++  FullTarget = {$I %FPCTARGETCPU%} + 'le-' + {$I %FPCTARGETOS%} + '-' + gnu;
++{$ELSE}
++  FullTarget = {$I %FPCTARGETCPU%} + '-' + {$I %FPCTARGETOS%} + '-' + gnu;
++{$endif defined(CPUPOWERPC) and defined(ENDIAN_LITTLE)}
+ var
+   BD : String;
+ begin
+@@ -4894,7 +4908,7 @@ begin
+   BD:=FixPath(GetEnvironmentVariable('FPCDIR'), False);
+   if BD='' then
+     begin
+-      BD:='/usr/local/lib/fpc/'+FCompilerVersion;
++      BD:='/usr/lib/' + LowerCase(FullTarget) + '/fpc/'+FCompilerVersion;
+       if not DirectoryExists(BD) and
+          DirectoryExists('/usr/lib/fpc/'+FCompilerVersion) then
+         BD:='/usr/lib/fpc/'+FCompilerVersion;

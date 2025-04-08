@@ -2,6 +2,8 @@
 usr/bin/bin2obj-*
 usr/bin/chmcmd-*
 usr/bin/chmls-*
+usr/bin/cldrparser-*
+usr/bin/compileserver-*
 usr/bin/data2inc-*
 usr/bin/delp-*
 usr/bin/fd2pascal-*
@@ -12,12 +14,16 @@ usr/bin/fpcsubst-*
 usr/bin/fpdoc-*
 usr/bin/fppkg-*
 usr/bin/fprcp-*
+usr/bin/grab_vcsa-*                 [!freebsd-any]
 usr/bin/h2pas-*
 usr/bin/h2paspp-*
 usr/bin/ifpc-*
+usr/bin/json2pas-*
 usr/bin/makeskel-*                  [!freebsd-any]
+usr/bin/mkinsadd-*
 usr/bin/pas2fpm-*
 usr/bin/pas2jni-*
+usr/bin/pas2js-*
 usr/bin/pas2ut-*
 usr/bin/plex-*
 usr/bin/postw32-*
@@ -30,8 +36,10 @@ usr/bin/pyacc-*
 usr/bin/relpath-*
 usr/bin/rmcvsdir-*
 usr/bin/rstconv-*
+usr/bin/unihelper-*
 usr/bin/unitdiff-*                  [!freebsd-any]
-usr/lib/fpc/*/lexyacc/*.cod
-usr/lib/fpc/*/*/*/utils-lexyacc*
+usr/bin/webidl2pas-*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/lexyacc/*.cod
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/utils-lexyacc*
 usr/share/locale
 usr/share/texmf/tex/latex/fpc-*

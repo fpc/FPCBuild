@@ -1,14 +1,15 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: lazarus
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Free Pascal Compiler
 Source:
- http://freepascal.org/
+ https://freepascal.org/
  .
- The upstream source has been repacked to remove a non-distributable file:
- fpcsrc/rtl/netwlibc/pre/libcpre.gcc.o . Because repacking needed to be done
- anyways, also other precompiled files and generated Makefiles were removed,
- in order to save considerable amounts of disk space. The Makefiles can be
- recreated by running the make-files target in debian/rules, i.e.:
- $ debian/rules make-files
+ The upstream source has been repacked to remove non-distributable files:
+ fpcsrc/rtl/netwlibc/pre/libcpre.gcc.o and
+ fpcsrc/packages/fcl-js/src/jsminifier.pp. Because repacking needed to be done
+ anyways, also other precompiled files and generated Makefiles were removed, in
+ order to save considerable amounts of disk space. The Makefiles can be
+ recreated by running the make-files target in debian/rules, i.e.: $
+ debian/rules make-files
 Comment:
  The original description of upstream's view on the licenses can be found in
  install/doc/readme.txt in the section called license. The text from there is
@@ -61,7 +62,6 @@ Copyright:
  1990-2000 Albert Graef <ag@muwiinfa.geschichte.uni-mainz.de>
  1993-1998 Stefan Zeiger
  1996 Berend de Boer <berend@pobox.com>
- 1996 Mark Wooding
  1996 Simon Tatham
  1998-2002 Berczi Gabor
  1998-2002 Daniel Mantione
@@ -74,7 +74,7 @@ Copyright:
  1998-2012 David Zhang
  1998-2012 Peter Vreman
  1998-2012 the Free Pascal team
- 1998-2014 Florian Klaempfl
+ 1998-2017 Florian Klaempfl
  1998-2014 Jonas Maebe
  1998-2014 the Free Pascal development team
  1999-2000 Aaron Holtzman <aholtzma@ess.engr.uvic.ca>
@@ -115,10 +115,10 @@ Copyright:
  2001-2007 Carlos Laviola <claviola@debian.org>
  2003 Amaya Rodrigo Sastre <amaya@debian.org>
  2003-2004 Roland Stigge <stigge@antcom.de>
- 2006-2014 Abou Al Montacir <abou.almonacir@sfr.rf>
+ 2006-2022 Abou Al Montacir <abou.almonacir@sfr.fr>
  2007 Varun Hiremath <varunhiremath@gmail.com>
  2007-2008 Torsten Werner <twerner@debian.org>
- 2009-2015 Paul Gevers <elbrus@debian.org>
+ 2009-2017 Paul Gevers <elbrus@debian.org>
  2012-2013 Peter Michael Green <plugwash@debian.org>
 License: GPL-2+
 
@@ -161,7 +161,7 @@ Files:
  fpcsrc/compiler/arm/cpuinfo.pas
  fpcsrc/compiler/avr/cpuinfo.pas
  fpcsrc/compiler/ccharset.pas
- fpcsrc/compiler/compinnr.inc
+ fpcsrc/compiler/compinnr.pas
  fpcsrc/compiler/generic/cpuinfo.pas
  fpcsrc/compiler/jvm/cpuinfo.pas
  fpcsrc/compiler/m68k/cpuinfo.pas
@@ -186,68 +186,6 @@ Files:
  fpcsrc/compiler/utils/mkx86reg.pp
  fpcsrc/compiler/utils/msg2inc.pp
  fpcsrc/compiler/utils/msgdif.pp
- fpcsrc/package/ide/fp.pas
- fpcsrc/package/ide/fpcalc.pas
- fpcsrc/package/ide/fpcatch.pas
- fpcsrc/package/ide/fpcodcmp.pas
- fpcsrc/package/ide/fpcodtmp.pas
- fpcsrc/package/ide/fpcompil.pas
- fpcsrc/package/ide/fpconst.pas
- fpcsrc/package/ide/fpdebug.pas
- fpcsrc/package/ide/fpdesk.pas
- fpcsrc/package/ide/fpdpansi.pas
- fpcsrc/package/ide/fpevalw.pas
- fpcsrc/package/ide/fphelp.pas
- fpcsrc/package/ide/fpide.pas
- fpcsrc/package/ide/fpini.pas
- fpcsrc/package/ide/fpintf.pas
- fpcsrc/package/ide/fpkeys.pas
- fpcsrc/package/ide/fpmansi.inc
- fpcsrc/package/ide/fpmcomp.inc
- fpcsrc/package/ide/fpmdebug.inc
- fpcsrc/package/ide/fpmedit.inc
- fpcsrc/package/ide/fpmfile.inc
- fpcsrc/package/ide/fpmhelp.inc
- fpcsrc/package/ide/fpmingw.pas
- fpcsrc/package/ide/fpmopts.inc
- fpcsrc/package/ide/fpmrun.inc
- fpcsrc/package/ide/fpmsrch.inc
- fpcsrc/package/ide/fpmtools.inc
- fpcsrc/package/ide/fpmwnd.inc
- fpcsrc/package/ide/fpredir.pas
- fpcsrc/package/ide/fpregs.pas
- fpcsrc/package/ide/fpswitch.pas
- fpcsrc/package/ide/fpsymbol.pas
- fpcsrc/package/ide/fptemplt.pas
- fpcsrc/package/ide/fptools.pas
- fpcsrc/package/ide/fpusrscr.pas
- fpcsrc/package/ide/fputils.pas
- fpcsrc/package/ide/fpvars.pas
- fpcsrc/package/ide/fpviews.pas
- fpcsrc/package/ide/gplprog.pt
- fpcsrc/package/ide/gplunit.pt
- fpcsrc/package/ide/wansi.pas
- fpcsrc/package/ide/wcedit.pas
- fpcsrc/package/ide/wchmhwrap.pas
- fpcsrc/package/ide/wconsole.pas
- fpcsrc/package/ide/weditor.pas
- fpcsrc/package/ide/whelp.pas
- fpcsrc/package/ide/whlpview.pas
- fpcsrc/package/ide/whtml.pas
- fpcsrc/package/ide/whtmlhlp.pas
- fpcsrc/package/ide/whtmlscn.pas
- fpcsrc/package/ide/winclip.pas
- fpcsrc/package/ide/windebug.pas
- fpcsrc/package/ide/wini.pas
- fpcsrc/package/ide/wnghelp.pas
- fpcsrc/package/ide/woahelp.pas
- fpcsrc/package/ide/wos2help.pas
- fpcsrc/package/ide/wresourc.pas
- fpcsrc/package/ide/wtphwrit.pas
- fpcsrc/package/ide/wutils.pas
- fpcsrc/package/ide/wviews.pas
- fpcsrc/package/ide/wvphelp.pas
- fpcsrc/package/ide/wwinhelp.pas
  fpcsrc/installer/install.pas
  fpcsrc/installer/insthelp.pas
  fpcsrc/installer/scroll.pas
@@ -302,6 +240,7 @@ Files:
  fpcsrc/utils/fppkg/examples/testrep.pp
  fpcsrc/utils/grab_vcsa.pp
  fpcsrc/utils/mkinsadd.pp
+ fpcsrc/utils/pas2js/dist/rtl.js
  fpcsrc/utils/pas2js/pas2js.pp
  fpcsrc/utils/pas2ut/pas2ut.pp
  fpcsrc/utils/ppdep.pp
@@ -327,7 +266,7 @@ Copyright:
  1992 T.Schmid
  1992-1993 NeXT Computer, Inc
  1993-1997 Stefan Stuntz
- 1993-2007 Free Pascal team
+ 1993-2017 Free Pascal team
  1993-2014 Florian Klaempfl
  1994 BetaSoft
  1994-1997 Martin Blom
@@ -347,7 +286,7 @@ Copyright:
  1996-2000 Richard Koerber
  1996-2005 Peter Vreman
  1996-2009 Marco van de Voort <marco@freepascal.org>
- 1996-2014 Michael Van Canneyt
+ 1996-2017 Michael Van Canneyt
  1997 Balazs Scheidler
  1997-1998 Gertjan Schouten
  1997-2000 Daniel Mantione
@@ -355,6 +294,7 @@ Copyright:
  1997-2000 University of Cambridge
  1997-2008 the Daniel Mantione
  1997-2014 the Free Pascal development team
+ 1998 Christian Nentwich <c.nentwich@cs.ucl.ac.uk>
  1998 Gilles Vollant <info@winimage.com>
  1998 Jacques Nomssi Nzali
  1998-2002 Dirk Stöcker
@@ -364,7 +304,7 @@ Copyright:
  1999 Sebastian Guenther <sguenther@gmx.de>
  1999-2000 Daniel Mantione
  1999-2000 Eberhard Mattes
- 1999-2000 Karoly Balogh (aka Charlie/INQ)
+ 1999-2004 Karoly Balogh (aka Charlie/INQ)
  1999-2000 Pavel Ozerski
  1999-2000 Ramon Bosque
  1999-2000 Thomas Schatzl
@@ -389,6 +329,7 @@ Copyright:
  2001 Tramontana Co
  2001-2006 Stefan Heymann
  2001-2011 Armin Diehl
+ 2001-2017 Nikolay Nikolov (nickysn@users.sourceforge.net)
  2002 Daniel Mantione
  2002 Grzegorz Kraszewski
  2002 Hewlett Packard, Inc
@@ -415,13 +356,25 @@ Copyright:
  2009-2010 Dmitry Boyarintsev
  2009-2012 Paul Ishenin
  2009-2012 Sven Barth
- 2010 Graeme Geldenhuys <graemeg@gmail.com>
+ 2010-2016 Graeme Geldenhuys <graemeg@gmail.com>
  2010 Jasper Lievisse Adriaanse <jasper@openbsd.org>
  2010 Olivier Coursière
  2011 Marcus Sackrow
  2012 Reinier Olislagers
- 2012-2013 Inoussa OUEDRAOGO
+ 2012-2015 Inoussa OUEDRAOGO
+ 2013 Denis Volodarsky
+ 2015 Gilson Nunes
+ 2015 Joao Morais
+ 2015 Silvio Clecio
+ 2015 Ondrej Pokorny
+ 2015 Yury Sidorov
+ 2017 Mattias Gaertner
 License: LGPL-2.1+ with staticLink exception
+
+Files: fpcsrc/packages/libmicrohttpd/examples*
+Copyright:
+ 2007-2015 Christian Grothoff
+License: LGPL-2.1+
 
 Files:
  fpcsrc/packages/httpd13/src/*
@@ -458,6 +411,11 @@ Files:
  fpcsrc/packages/libndsfpc/src/dswifi/inc/sys/socket.inc
  fpcsrc/packages/ncurses/src/eti.inc
  fpcsrc/packages/proj4/src/proj.pas
+ fpcsrc/packages/x11/src/xfixes.pp
+ fpcsrc/packages/x11/src/xfixeswire.inc
+ fpcsrc/packages/x11/src/xge.pp
+ fpcsrc/packages/x11/src/xi2.pp
+ fpcsrc/packages/x11/src/xinput2.pp
  fpcsrc/packages/xforms/src/cursorfont.inc
 Copyright:
  1987 X Consortium
@@ -465,8 +423,34 @@ Copyright:
  2001-2008 Frank Warmerdam <warmerdam@pobox.com>
  2005-2006 Stephen Stair <sgstair@akkit.org>
  2006 Francesco Lombardi
+ 2006 Oracle and/or its affiliates
+ 2007-2008 Peter Hutterer
  2009 Ivo Steinmann
+ 2009-2011 Red Hat, Inc.
 License: expat
+
+Files: fpcsrc/packages/x11/src/xinput.pp
+Copyright:
+ 1989 Hewlett-Packard Company, Palo Alto, California.
+ 1989-1998 The Open Group
+License: expat and mit-HP
+
+License: mit-HP
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose and without fee is hereby granted,
+ provided that the above copyright notice appear in all copies and that
+ both that copyright notice and this permission notice appear in
+ supporting documentation, and that the name of Hewlett-Packard not be
+ used in advertising or publicity pertaining to distribution of the
+ software without specific, written prior permission.
+ .
+ HEWLETT-PACKARD DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+ HEWLETT-PACKARD BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+ ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+ WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+ SOFTWARE.
 
 Files:
  fpcsrc/packages/opengles/src/gles20.pas
@@ -696,13 +680,9 @@ Copyright:
  2006 Ivo Steinmann
 License: LGPL-2.1+
 
-Files:
- fpcsrc/packages/hermes/src/*
- fpcsrc/packages/ptc/src/*
-Copyright:
- 1998 Christian Nentwich (c.nentwich@cs.ucl.ac.uk)
- 2001-2013 Nikolay Nikolov (nickysn@users.sourceforge.net)
-License: LGPL-2.1+ with staticLink exception
+Files: fpcsrc/packages/hash/src/md5.pp
+Copyright: 1991-1992 RSA Data Security, Inc.
+License: RSA
 
 Files:
  fpcsrc/packages/sdl/src/jedi-sdl.inc
@@ -770,6 +750,19 @@ Copyright:
 License: Zlib
 
 Files:
+ fpcsrc/packages/x11/src/deckeysym.pp
+ fpcsrc/packages/x11/src/hpkeysym.pp
+Copyright: 1988-1991 by Digital Equipment Corporation, Maynard, Massachusetts
+ 1988-1998 The Open Group
+License: DEC and Open
+
+Files:
+ fpcsrc/packages/x11/src/sunkeysym.pp
+Copyright: 1991 Oracle and/or its affiliates
+ 1991-1998 The Open Group
+License: Expat and Open
+
+Files:
  fpcsrc/rtl/i386/math.inc
  fpcsrc/rtl/x86_64/math.inc
 Copyright:
@@ -791,6 +784,7 @@ Files:
  fpcsrc/compiler/macho.pas
  fpcsrc/packages/httpd20/src/apriconv/apr_iconv.inc
  fpcsrc/packages/httpd22/src/apriconv/apr_iconv.inc
+ fpcsrc/packages/ptc/src/win32/directx/p_dinput.pp
  fpcsrc/packages/pthreads/src/pthrhaiku.inc
  fpcsrc/packages/pthreads/src/pthrbsd.inc
  fpcsrc/packages/pthreads/src/pthrbeos.inc
@@ -1195,6 +1189,23 @@ License: CDDL-1
  Contributors to distribute such responsibility on an equitable basis. Nothing
  herein is intended or shall be deemed to constitute any admission of liability.
  
+License: DEC
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose and without fee is hereby granted,
+ provided that the above copyright notice appear in all copies and that
+ both that copyright notice and this permission notice appear in
+ supporting documentation, and that the name of Digital not be
+ used in advertising or publicity pertaining to distribution of the
+ software without specific, written prior permission.
+ .
+ DIGITAL DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+ DIGITAL BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+ ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+ WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+ SOFTWARE.
+
 License: expat
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -1361,7 +1372,7 @@ License: LGPL-2.1
  .
  You should have received a copy of the GNU Lesser General Public License
  along with this program; if not, write to the Free Software
- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  .
  On Debian systems, the complete text of version 2.1 of the GNU Lesser
  General Public License can be found in '/usr/share/common-licenses/LGPL-2.1'.
@@ -1409,7 +1420,7 @@ License: LGPL-2.1+ with staticLink exception
  .
  You should have received a copy of the GNU Lesser General Public
  License along with this library; if not, write to the Free Software
- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  .
  On Debian systems, the complete text of version 2.1 of the GNU Lesser
  General Public License can be found in '/usr/share/common-licenses/LGPL-2.1'.
@@ -1756,7 +1767,7 @@ License: MPL-1.1
      shall survive.
  .
      8.2.  If You initiate litigation by asserting a patent infringement
-     claim (excluding declatory judgment actions) against Initial Developer
+     claim (excluding declaratory judgment actions) against Initial Developer
      or a Contributor (the Initial Developer or Contributor against whom
      You file such action is referred to as "Participant")  alleging that:
  .
@@ -1897,6 +1908,46 @@ License: MPL-1.1
      use the text of this Exhibit A rather than the text found in the
      Original Code Source Code for Your Modifications.]
 
+License: Open
+ Permission to use, copy, modify, distribute, and sell this software and its
+ documentation for any purpose is hereby granted without fee, provided that
+ the above copyright notice appear in all copies and that both that
+ copyright notice and this permission notice appear in supporting
+ documentation.
+ .
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+ OPEN GROUP BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ .
+ Except as contained in this notice, the name of The Open Group shall not be
+ used in advertising or otherwise to promote the sale, use or other dealings
+ in this Software without prior written authorization from The Open Group.
+
+License: RSA
+ License to copy and use this software is granted provided that it
+ is identified as the "RSA Data Security, Inc. MD5 Message-Digest
+ Algorithm" in all material mentioning or referencing this software
+ or this function.
+ .
+ License is also granted to make and use derivative works provided
+ that such works are identified as "derived from the RSA Data
+ Security, Inc. MD5 Message-Digest Algorithm" in all material
+ mentioning or referencing the derived work.
+ .
+ RSA Data Security, Inc. makes no representations concerning either
+ the merchantability of this software or the suitability of this
+ software for any particular purpose. It is provided "as is"
+ without express or implied warranty of any kind.
+ .
+ These notices must be retained in any copies of any part of this
+ documentation and/or software.
+
 License: SC
  Permission to use, copy, modify, and distribute this software and its
  documentation in source and binary forms for any purpose and without
@@ -1943,4 +1994,3 @@ License: Zlib
  .
     3. This notice may not be removed or altered from any source
     distribution.
-

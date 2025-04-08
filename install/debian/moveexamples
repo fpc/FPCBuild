@@ -56,7 +56,7 @@ PACKAGE_LIST='debian/'*'.install.in'
 for PACKAGE_FILE in ${PACKAGE_LIST}
 do
     PACKAGE_NAME=`basename "${PACKAGE_FILE}" '.install.in'`
-    PACKAGE_CONTENT=`grep 'usr/lib/fpc' "${PACKAGE_FILE}" | awk '{print $1}' | sed -e 's@.*/\([^/]\)@\1@' | sed -e 's/\*//'`
+    PACKAGE_CONTENT=`grep 'usr/lib/${DEB_HOST_MULTIARCH}/fpc' "${PACKAGE_FILE}" | awk '{print $1}' | sed -e 's@.*/\([^/]\)@\1@' | sed -e 's/\*//'`
 	echo '    **** PACKAGE_NAME = "'${PACKAGE_NAME}'"'
 	echo '    **** PACKAGE_CONTENT = "'${PACKAGE_CONTENT}'"'
     move_examples "${PACKAGE_NAME}" "${PACKAGE_CONTENT}"
@@ -65,5 +65,7 @@ done
 echo '**** Examples copied ****'
 
 if [ -d $EXAMPLE_TEMP ] ; then
+    echo "Example dir should be empty now or the rmdir command will fail, showing current content follows:"
+    ls -al $EXAMPLE_TEMP
     rmdir $EXAMPLE_TEMP
 fi

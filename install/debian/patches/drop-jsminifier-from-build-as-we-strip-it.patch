@@ -1,0 +1,17 @@
+Description: the jsminifier.pp is not dfsg free. Therefore we strip it during
+ repack but we must prevent during build as well.
+Bug: https://bugs.freepascal.org/view.php?id=32288
+Author: Paul Gevers <elbrus@debian.org>
+Index: fpc/fpcsrc/packages/fcl-js/fpmake.pp
+===================================================================
+--- fpc.orig/fpcsrc/packages/fcl-js/fpmake.pp
++++ fpc/fpcsrc/packages/fcl-js/fpmake.pp
+@@ -43,8 +43,6 @@ begin
+       T.ResourceStrings:=true;
+     T:=P.Targets.AddUnit('jswriter.pp');
+       T.ResourceStrings:=true;
+-    T:=P.Targets.AddUnit('jsminifier.pp');
+-      T.ResourceStrings:=true;
+ {$ifndef ALLPACKAGES}
+     Run;
+     end;

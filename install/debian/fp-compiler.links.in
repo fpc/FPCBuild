@@ -1,1 +1,3 @@
-/usr/lib/fpc/${VERSION}/${PPCBIN} /usr/bin/${PPCBIN}-${VERSION}
+/usr/lib/${DEB_HOST_MULTIARCH}/fpc/${VERSION}/${PPCBIN} /usr/bin/${PPCBIN}-${VERSION}
+/usr/share/man/man1/fpc-${VERSION}.1.gz /usr/share/man/man1/${DEB_HOST_MULTIARCH}-fpc-${VERSION}.1.gz
+/usr/share/man/man1/fpcres-${VERSION}.1.gz /usr/share/man/man1/${DEB_HOST_MULTIARCH}-fpcres-${VERSION}.1.gz

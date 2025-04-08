@@ -1,0 +1,5 @@
+#! /usr/bin/dh-exec
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/pastojs*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/utils-pas2js*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/webidl*
+usr/share/doc/fp-units-wasm

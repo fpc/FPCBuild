@@ -1,0 +1,17 @@
+Description: Clean man pages to be lintian warnings and erros free.
+ Lintian enforces strict policy on man pages. We try here to fix upstream files
+ to ensure a lintian rules compatible files..
+Author: Abou Al Montacir <abou.almontacir@sfr.fr>
+
+diff --git a/install/man/man1/fpcjres.1 b/install/man/man1/fpcjres.1
+index ef033a80..6c48d678 100644
+--- a/install/man/man1/fpcjres.1
++++ b/install/man/man1/fpcjres.1
+@@ -1,6 +1,6 @@
+ .TH fpcjres "1" "September 2015" "fpcjres - resource file converter" "User Commands"
+ .SH NAME
+-fpcjres \- manual page for fpcjres: a resource file converter
++fpcjres \- a resource file converter
+ .SH DESCRIPTION
+ fpcjres 
+ This program is called by the free pascal compiler and is used to 

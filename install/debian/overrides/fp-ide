@@ -1,4 +1,0 @@
-# Free pascal binaries are often statically linked.
-fp-ide binary: statically-linked-binary
-fp-ide: statically-linked-binary
-fp-ide: debian-revision-should-not-be-zero

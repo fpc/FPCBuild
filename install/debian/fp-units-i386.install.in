@@ -1,4 +1,5 @@
 #! /usr/bin/dh-exec
-usr/lib/fpc/*/*/*/libc
-usr/lib/fpc/*/fpmkinst/*/libc.fpm
-usr/lib/fpc/*/*/*/unixutil*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/libc
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/fpmkinst/*/libc.fpm
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/unixutil*
+usr/share/doc/fp-units-i386                                        [linux-i386]

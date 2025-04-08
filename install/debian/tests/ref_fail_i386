@@ -1,0 +1,35 @@
+# This test is a regression after activating dynamic linking
+../packages/rtl-generics/tests/testrunner.rtlgenerics
+# These tests were failing before activating dynamic linking
+test/cg/tm128
+test/opt/tdfa11
+test/opt/tdfa8
+test/packages/webtbs/tw14265
+test/tarray15
+test/timplements4a
+test/timplements4b
+test/tlibrary2
+test/tset6
+test/tunistr7
+test/tweaklib2
+test/twide7
+webtbs/tw0876
+Note: This test needs C libraries
+webtbs/tw12038
+webtbs/tw12704b
+webtbs/tw16949b
+webtbs/tw17904
+webtbs/tw22744
+webtbs/tw22744b
+webtbs/tw24863
+webtbs/tw26481
+webtbs/tw2886
+webtbs/tw37926
+webtbs/tw3930
+webtbs/tw3964b
+webtbs/tw4809
+webtbs/tw8730c
+webtbs/tw9089c
+webtbs/tw9089d
+webtbf/tw18225b
+webtbf/tw3930a

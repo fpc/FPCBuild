@@ -1,0 +1,2 @@
+#! /usr/bin/dh-exec
+/usr/share/fpcsrc/${DEB_UPSTREAM_MAIN_VERSION} /usr/share/fpcsrc/default

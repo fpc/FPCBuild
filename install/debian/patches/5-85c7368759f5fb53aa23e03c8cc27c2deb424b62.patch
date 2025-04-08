@@ -1,0 +1,24 @@
+From 85c7368759f5fb53aa23e03c8cc27c2deb424b62 Mon Sep 17 00:00:00 2001
+From: florian <florian@freepascal.org>
+Date: Wed, 24 Aug 2022 21:15:18 +0200
+Subject: [PATCH]   * handle also simulated flags in
+ tmipselnotnode.second_boolean, resolves #39877
+
+---
+ compiler/mips/ncpumat.pas | 31 ++++++++++++++++---------------
+ tests/webtbs/tw39877.pp   | 15 +++++++++++++++
+ 2 files changed, 31 insertions(+), 15 deletions(-)
+ create mode 100644 tests/webtbs/tw39877.pp
+
+diff --git a/fpcsrc/compiler/mips/ncpumat.pas b/fpcsrc/compiler/mips/ncpumat.pas
+index 9db7c052..5b33a866 100644
+--- a/fpcsrc/compiler/mips/ncpumat.pas
++++ b/fpcsrc/compiler/mips/ncpumat.pas
+@@ -245,6 +245,7 @@ begin
+   begin
+     secondpass(left);
+     case left.location.loc of
++      LOC_FLAGS,
+       LOC_REGISTER, LOC_CREGISTER, LOC_REFERENCE, LOC_CREFERENCE,
+       LOC_SUBSETREG,LOC_CSUBSETREG,LOC_SUBSETREF,LOC_CSUBSETREF:
+       begin

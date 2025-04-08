@@ -1,20 +1,24 @@
 #! /usr/bin/dh-exec
-usr/lib/fpc/*/*/*/fcl-async*
-usr/lib/fpc/*/*/*/fcl-base*
-usr/lib/fpc/*/*/*/fcl-db*
-usr/lib/fpc/*/*/*/fcl-extra*
-usr/lib/fpc/*/*/*/fcl-fpcunit*
-usr/lib/fpc/*/*/*/fcl-image*
-usr/lib/fpc/*/*/*/fcl-js*
-usr/lib/fpc/*/*/*/fcl-json*
-usr/lib/fpc/*/*/*/fcl-net*
-usr/lib/fpc/*/*/*/fcl-passrc*
-usr/lib/fpc/*/*/*/fcl-process*
-usr/lib/fpc/*/*/*/fcl-registry*
-usr/lib/fpc/*/*/*/fcl-res*
-usr/lib/fpc/*/*/*/fcl-sdo*
-usr/lib/fpc/*/*/*/fcl-sound*
-usr/lib/fpc/*/*/*/fcl-stl*
-usr/lib/fpc/*/*/*/fcl-web*          [!freebsd-any]
-usr/lib/fpc/*/*/*/fcl-xml*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-async*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-base*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-db*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-extra*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-fpcunit*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-hash*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-image*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-js*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-json*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-net*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-passrc*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-pdf*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-process*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-registry*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-report*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-res*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-sdo*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-sound*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-stl*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-web*          [!freebsd-any]
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fcl-xml*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/vcl-compat*
 usr/share/doc/fp-units-fcl          [!freebsd-any]

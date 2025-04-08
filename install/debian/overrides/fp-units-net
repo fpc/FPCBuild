@@ -1,3 +1,0 @@
-# The name of the unit is dbus not D-Bus.
-fp-units-net: capitalization-error-in-description dbus D-Bus
-fp-units-net: debian-revision-should-not-be-zero

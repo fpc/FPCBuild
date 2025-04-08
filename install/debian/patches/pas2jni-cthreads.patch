@@ -1,0 +1,22 @@
+Description: Make pas2jni use cthreads on Unices
+ The "pas2jni" util program shipped with FPC uses threads,
+ but is compiled without thread support and fails to
+ actually do anything useful when run.
+Forwarded: https://gitlab.com/freepascal.org/fpc/source/-/merge_requests/185
+Origin: vendor, https://src.fedoraproject.org/rpms/fpc/c/9c5c41eb5df798f8967c0c384a4c28aa52b250a3
+Author: Artur Frenszek-Iwicki <fedora@svgames.pl>
+Last-Update: 2022-03-16
+
+--- a/fpcsrc/utils/pas2jni/pas2jni.pas
++++ b/fpcsrc/utils/pas2jni/pas2jni.pas
+@@ -22,7 +22,9 @@
+ {$mode objfpc}{$H+}
+ program pas2jni;
+ 
+-uses SysUtils, Classes, writer, ppuparser;
++uses
++  {$IFDEF UNIX}cthreads,{$ENDIF}
++  SysUtils, Classes, writer, ppuparser;
+ 
+ var
+   w: TWriter;

@@ -1,25 +1,28 @@
 #! /usr/bin/dh-exec
-usr/lib/fpc/*/*/*/aspell*
-usr/lib/fpc/*/*/*/bfd*
-usr/lib/fpc/*/*/*/bzip2*
-usr/lib/fpc/*/*/*/cdrom*        [!freebsd-any]
-usr/lib/fpc/*/*/*/chm*
-usr/lib/fpc/*/*/*/fftw*
-usr/lib/fpc/*/*/*/fpindexer*
-usr/lib/fpc/*/*/*/fppkg*        [!freebsd-any]
-usr/lib/fpc/*/*/*/gdbint*
-usr/lib/fpc/*/*/*/iconvenc*
-usr/lib/fpc/*/*/*/jni*
-usr/lib/fpc/*/*/*/libsee*       [!freebsd-any]
-usr/lib/fpc/*/*/*/libtar*
-usr/lib/fpc/*/*/*/libxml2*
-usr/lib/fpc/*/*/*/lua*          [!freebsd-any]
-usr/lib/fpc/*/*/*/newt*         [!freebsd-any]
-usr/lib/fpc/*/*/*/pthreads*
-usr/lib/fpc/*/*/*/syslog*
-usr/lib/fpc/*/*/*/tcl*
-usr/lib/fpc/*/*/*/unzip*
-usr/lib/fpc/*/*/*/users*
-usr/lib/fpc/*/*/*/utmp*
-usr/lib/fpc/*/*/*/zlib*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/aspell*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/bfd*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/bzip2*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/cdrom*        [!freebsd-any]
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/chm*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fftw*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fpindexer*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/fppkg*        [!freebsd-any]
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/gdbint*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/iconvenc*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/jni*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/libcups*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/libffi*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/libgc*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/libmagic*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/libsee*       [!freebsd-any]
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/libxml2*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/lua*          [!freebsd-any]
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/newt*         [!freebsd-any]
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/pthreads*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/syslog*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/tcl*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/unzip*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/users*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/utmp*
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/*/*/zlib*
 usr/share/doc/fp-units-misc     [!freebsd-any]

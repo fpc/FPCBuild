@@ -4,7 +4,7 @@ Index: fpc/fpcsrc/utils/fpcm/fpcmmain.pp
 ===================================================================
 --- fpc.orig/fpcsrc/utils/fpcm/fpcmmain.pp
 +++ fpc/fpcsrc/utils/fpcm/fpcmmain.pp
-@@ -315,6 +315,46 @@ implementation
+@@ -313,6 +313,46 @@ implementation
        end;
  
  
@@ -51,7 +51,7 @@ Index: fpc/fpcsrc/utils/fpcm/fpcmmain.pp
      function posidx(const substr,s : string;idx:integer):integer;
        var
          i,j : integer;
-@@ -1215,7 +1255,7 @@ implementation
+@@ -1216,7 +1256,7 @@ implementation
             end;
             if FileExists('/usr/local/bin/ppc' + ppcSuffix[cpu]) then
              begin
@@ -60,12 +60,26 @@ Index: fpc/fpcsrc/utils/fpcm/fpcmmain.pp
                if s<>'' then
                 begin
                   if s[length(s)]='/' then
-@@ -1227,7 +1267,7 @@ implementation
+@@ -1228,7 +1268,21 @@ implementation
              begin
                if FileExists('/usr/bin/ppc' + ppcSuffix[cpu]) then
                 begin
 -                 s:=ExtractFilePath({$ifdef ver1_0}ReadLink{$else}fpReadLink{$endif}('/usr/bin/ppc' + ppcSuffix[cpu]));
 +                 s:=ExtractFilePath(ReadLink('/usr/bin/ppc' + ppcSuffix[cpu], 255));
++                 if s<>'' then
++                  begin
++                    if s[length(s)]='/' then
++                     delete(s,length(s),1);
++                    hs:=SubstVariables('$(wildcard $(addprefix '+s+'/,Makefile.fpc))');
++                  end;
++               end;
++            end;
++           if hs='' then
++            begin
++              s:=ExtractFileName(s);
++              if DirectoryExists('/usr/share/fpcsrc/' + s) then
++               begin
++                 s:=ReadLink('/usr/share/fpcsrc/' + s, 255);
                   if s<>'' then
                    begin
                      if s[length(s)]='/' then

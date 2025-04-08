@@ -1,1 +1,3 @@
-fpc source: debian-revision-should-not-be-zero
+# In 3.0.0+dfsg-5 elbrus added fp-fix-timestamps that expects d/source/timestamps
+# lintian bug: http://bugs.debian.org/825222
+unknown-file-in-debian-source

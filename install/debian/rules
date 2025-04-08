@@ -2,8 +2,12 @@
 # debian/rules for Free Pascal
 
 DEB_PACKAGE_NAME = fpc
+export DEB_BUILD_MAINT_OPTIONS := hardening=+bindnow
 export DH_ALWAYS_EXCLUDE := COPYING:LICENSE
 export LANG:=C
+
+# for Salsa CI
+undefine RELEASE
 
 # Documentation type to use pdf/html
 ifeq (${DEBDOCTYPE},)
@@ -14,20 +18,28 @@ else
 DOCTYPE=${DEBDOCTYPE}
 CONVERTER=${DOCTYPE}
 endif
+# Include standard dpkg-buildpackage variables
+include /usr/share/dpkg/architecture.mk
+include /usr/share/dpkg/pkg-info.mk
 # Undefine FPC if it was set
 unexport FPC
 # Build new compiler name
-CPU_SOURCE=$(shell dpkg-architecture -qDEB_BUILD_ARCH_CPU)
-CPU_TARGET=$(shell dpkg-architecture -qDEB_HOST_ARCH_CPU)
+CPU_SOURCE=${DEB_BUILD_ARCH_CPU}
+CPU_TARGET=${DEB_HOST_ARCH_CPU}
 # Take care that Debian uses amd64 while FPC perfers x86_64 instead
 CPU_SOURCE := $(subst amd64,x86_64,${CPU_SOURCE})
 CPU_TARGET := $(subst amd64,x86_64,${CPU_TARGET})
 # Take care that Debian uses arm64 while FPC perfers aarch64 instead
 CPU_SOURCE := $(subst arm64,aarch64,${CPU_SOURCE})
 CPU_TARGET := $(subst arm64,aarch64,${CPU_TARGET})
-# Take care that debian uses ppc64 while FPC prefers powerpc64 instead
+# Take care that debian uses ppc64/-el while FPC prefers powerpc64 instead
+ifeq ($(DEB_HOST_ARCH_CPU),ppc64el)
+CPU_SOURCE := $(subst ppc64el,powerpc64,${CPU_SOURCE})
+CPU_TARGET := $(subst ppc64el,powerpc64,${CPU_TARGET})
+else
 CPU_SOURCE := $(subst ppc64,powerpc64,${CPU_SOURCE})
 CPU_TARGET := $(subst ppc64,powerpc64,${CPU_TARGET})
+endif
 # Shuld get rid of this one day, as it is done automatically  by FPC make files
 ifeq ($(CPU_TARGET),m68k)
 PPSUF=68k
@@ -56,6 +68,15 @@ endif
 ifeq ($(CPU_TARGET),sparc)
 PPSUF=sparc
 endif
+ifeq ($(CPU_TARGET),sparc64)
+PPSUF=sparc64
+endif
+ifeq ($(CPU_TARGET),mips)
+PPSUF=mips
+endif
+ifeq ($(CPU_TARGET),mipsel)
+PPSUF=mipsel
+endif
 
 ifneq ($(CPU_SOURCE),$(CPU_TARGET))
 PPPRE=ppcross
@@ -64,28 +85,32 @@ PPPRE=ppc
 endif
 
 PPNEW=$(PPPRE)$(PPSUF)
-
-OS_TARGET=$(subst kfreebsd,freebsd,$(shell dpkg-architecture -qDEB_HOST_ARCH_OS))
-
+# Take care that Debian uses kfreebsd while FPC prefers freebsd
+OS_SOURCE=${DEB_BUILD_ARCH_OS}
+OS_TARGET=$(subst kfreebsd,freebsd,${DEB_HOST_ARCH_OS})
+# FPC uses FPCTARGET to identify the target for which the binaries are
+# produced. This is generally a couple of target CPU and target OS names
+# separated by a dash.
 FPCTARGET=$(CPU_TARGET)-$(OS_TARGET)
 # Get version information from changelog file
-DEB_VERSION:=$(shell dpkg-parsechangelog --show-field Version)
-DEB_DATE:=$(shell date --utc --date="`dpkg-parsechangelog --show-field Date`" +%Y/%m/%d)
-DEB_UPSTREAM_VERSION:=$(shell echo $(DEB_VERSION) | cut -f 1 -d -)
-DEB_UPSTREAM_MAIN_VERSION:=$(shell echo ${DEB_UPSTREAM_VERSION} | sed -e 's/^\([0-9\.]*\).*/\1/')
+DEB_DATE:=$(shell date --utc --date="@${SOURCE_DATE_EPOCH}" +%Y/%m/%d)
+export DEB_UPSTREAM_MAIN_VERSION:=$(shell echo ${DEB_VERSION_UPSTREAM} | sed -e 's/^\([0-9\.]*\).*/\1/')
 DEB_BUILD=$(lastword $(subst -, ,${DEB_VERSION}))
 ifndef PACKAGESUFFIX
 export PACKAGESUFFIX=-${DEB_UPSTREAM_MAIN_VERSION}
 endif
 # Get directories
 INSTALL_DIR=${CURDIR}/debian/tmp
+CFG_DIR=${INSTALL_DIR}/etc/fpc-${DEB_UPSTREAM_MAIN_VERSION}.cfg.d
 BIN_DIR=${INSTALL_DIR}/usr/bin
-LIB_DIR=${INSTALL_DIR}/usr/lib/${DEB_PACKAGE_NAME}/${DEB_UPSTREAM_MAIN_VERSION}
+# Debian policy is to install libraries that are multi-arch coinstallable in
+# /usr/lib/${DEB_HOST_MULTIARCH}
+LIB_DIR=${INSTALL_DIR}/usr/lib/${DEB_HOST_MULTIARCH}/${DEB_PACKAGE_NAME}/${DEB_UPSTREAM_MAIN_VERSION}
 DOC_DIR=${INSTALL_DIR}/usr/share/doc
 SRC_DIR=${INSTALL_DIR}/usr/share/fpcsrc/${DEB_UPSTREAM_MAIN_VERSION}
 EXAMPLE_TEMP=${INSTALL_DIR}/usr/share/doc/fpc-${DEB_UPSTREAM_MAIN_VERSION}
 STY_DIR=${INSTALL_DIR}/usr/share/texmf/tex/latex/fpc-${DEB_UPSTREAM_MAIN_VERSION}
-# Get utils
+# Override standard GNUE make variables
 ifndef MKDIR
 MKDIR=mkdir -p
 endif
@@ -96,11 +121,15 @@ ifndef MV
 MV=mv
 endif
 RM:=rm -rf
-# Get fpcmake from path if none is specified.
+# Build fpcmake from sources if none is specified.
 ifndef FPCMAKE
-# In 3.0.0rc1 building the new fpcmake doesn't work outside the full build
-#FPCMAKE=fpcsrc/utils/fpcm/fpcmake
-FPCMAKE=$(shell which fpcmake)
+# Upstream wants that one uses latest FPC make utility to produce make files
+# from FPC make files. This is required because, especially in old days, FPC
+# make utility used to evolve so that old tool versions were not able to
+# process new FPC make files. So it is always safe to start first by building
+# this tool from sources and then use it to build make files to build compiler,
+# RTL and packages.
+FPCMAKE=fpcsrc/utils/fpcm/bin/${CPU_SOURCE}-${OS_SOURCE}/fpcmake
 endif
 # Undefine FPCDIR if it was set
 unexport FPCDIR
@@ -109,7 +138,11 @@ NEWFPDOC=$(CURDIR)/fpcsrc/utils/fpdoc/fpdoc
 # Set default compilation options
 DEB_BUILD_FPC_OPT=debian/deb-build-fpc.cfg
 DEB_HOST_FPC_OPT=debian/deb-host-fpc.cfg
+ifeq ($(DEB_HOST_ARCH_CPU),ppc64el)
+BUILDOPTS=PP=$(NEWPP) OPT='@${CURDIR}/${DEB_HOST_FPC_OPT} -Cb- -Caelfv2'
+else
 BUILDOPTS=PP=$(NEWPP) OPT='@${CURDIR}/${DEB_HOST_FPC_OPT}'
+endif
 ifdef CROSSOPT
 BUILDOPTS+= CROSSOPT=${CROSSOPT}
 endif
@@ -117,29 +150,16 @@ INSTALLOPTS=INSTALL_PREFIX=$(INSTALL_DIR)/usr PP=$(NEWPP)
 
 export GDBLIBDIR=/usr/lib
 
-ifeq ($(CPU_TARGET),arm)
-  DEBIANARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
+ifeq ($(CPU_TARGET),m68k)
   # Disable optimization for the first runs as there may be bugs associated
-  # with that, preventing proper building new versions (cf bug 800811)
-  #
-  # Unsure if the -d option is still needed, this code was originally used to
-  # bootstrap other arm flavors
-  CYCLEOPTS:=OPT='@${CURDIR}/${DEB_HOST_FPC_OPT} -dFPC_$(DEBIANARCH)' OPTLEVEL1=-O-
+  # with that, preventing proper building new versions
+  CYCLEOPTS:=OPT='@${CURDIR}/${DEB_HOST_FPC_OPT}' OPTLEVEL1=-O-
 else
   CYCLEOPTS:=OPT='@${CURDIR}/${DEB_HOST_FPC_OPT}'
 endif
 
 # Set default compilation options
-DEB_HOST_MULTIARCH ?=$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-DEB_BUILD_MULTIARCH ?=$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH)
-
 FPMAKE_BUILDOPTS=FPMAKE_SKIP_CONFIG='-n @${CURDIR}/${DEB_BUILD_FPC_OPT}'
-
-LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS | sed -e 's/-Wl,//g' -e 's/,/ /g')
-
-# Until we switch to shorthand dh, we need to set this ourselves for
-# reproducible builds
-export SOURCE_DATE_EPOCH = $(shell date -d "$$(dpkg-parsechangelog -SDate)" +%s)
 
 #export DH_VERBOSE=1
 
@@ -158,6 +178,8 @@ export SOURCE_DATE_EPOCH = $(shell date -d "$$(dpkg-parsechangelog -SDate)" +%s)
 clean: check-makefiles clean-all-but-makefiles clean-makefiles
 	# Make sure the debconf translations are always up-to-date
 	debconf-updatepo
+	# Make sure the list with timestamps is up-to-date
+	[ ! $$(which fp-fix-timestamps) ] || fp-fix-timestamps update
 	dh_clean
 
 # See comment above clean target. Fool make-file when approriate
@@ -182,11 +204,24 @@ endif
 clean-all-but-makefiles: makefiles
 	dh_testdir
 
+	# Remove the gnome1, gtk1, fpgtk and imlib packages
+	# as they depend on libraries long go removed from Debian.
+	rm -rf fpcsrc/packages/gnome1
+	rm -rf fpcsrc/packages/gtk1
+	rm -rf fpcsrc/packages/imlib
+	rm -rf fpcsrc/packages/fpgtk
+	# The following packages depend on (at least) fpgtk and were
+	# not build in Debian anyways. The makefiles target fails to run
+	# if we remove the above, but not these because fpcmake checks
+	# for all Makefile.fpc files and notices that the dependency is
+	# not fullfilled.
+	rm -rf fpcsrc/utils/fpdoc/fpde
+	rm -rf fpcsrc/utils/fpmc
+
 	# Call upstream clean targets
 	[ ! -s fpcsrc/Makefile ]  || $(MAKE) -C fpcsrc compiler_distclean
 	[ ! -s fpcsrc/Makefile ]  || $(MAKE) -C fpcsrc rtl_distclean
 	[ ! -s fpcsrc/Makefile ]  || $(MAKE) -C fpcsrc packages_distclean
-	[ ! -s fpcsrc/Makefile ]  || $(MAKE) -C fpcsrc ide_distclean
 	[ ! -s fpcsrc/Makefile ]  || $(MAKE) -C fpcsrc utils_distclean
 	[ ! -s fpcdocs/Makefile ] || $(MAKE) -C fpcdocs clean
 	# Just in case they forgot something
@@ -203,31 +238,18 @@ clean-all-but-makefiles: makefiles
 	rm -f $(DEB_BUILD_FPC_OPT)
 	rm -f $(DEB_HOST_FPC_OPT)
 
-	# Remove the gnome1, gtk1, fpgtk and imlib packages
-	# as they depend on libraries long go removed from Debian.
-	rm -rf fpcsrc/packages/gnome1
-	rm -rf fpcsrc/packages/gtk1
-	rm -rf fpcsrc/packages/imlib
-	rm -rf fpcsrc/packages/fpgtk
-	# The following packages depend on (at least) fpgtk and were
-	# not build in Debian anyways. The makefiles target fails to run
-	# if we remove the above, but not these because fpcmake checks
-	# for all Makefile.fpc files and notices that the dependency is
-	# not fullfilled.
-	rm -rf fpcsrc/utils/fpdoc/fpde
-	rm -rf fpcsrc/utils/fpmc
-
 	dh_clean
 
+FPCMAKEFILES=fpcsrc/Makefile.fpc $(shell find demo fpcdocs -name Makefile.fpc)
 
 makefiles: makefiles-stamp
-makefiles-stamp: $(patsubst %.fpc,%,$(shell find demo fpcdocs fpcsrc -name Makefile.fpc))
+makefiles-stamp: $(patsubst %.fpc,%,${FPCMAKEFILES})
 	# Make files are now generated.
 	touch $@
 
 %Makefile:%Makefile.fpc ${FPCMAKE}
 	# Regenerate make files using fpcmake.
-	${FPCMAKE} -Tall -q $<
+	${FPCMAKE} -r -Tall -q $<
 
 clean-makefiles:
 	# Remove auto-generated Makefiles.
@@ -240,15 +262,20 @@ clean-makefiles:
 #
 
 debian-files: debian-files-stamp
-debian-files-stamp:debian/fixdeb debian/*.in
+debian-files-stamp:debian/fixdeb $(wildcard debian/*.in)
+	mv debian/control debian/control.old
 	@echo "--- Creating/fixing *.install files"
 	DEB_SUBST_PACKAGESUFFIX=${PACKAGESUFFIX} \
 	DEB_SUBST_PPCBIN=${PPNEW} \
 	DEB_SUBST_TARGET=${FPCTARGET} \
-	$< debian/*.in
+	DEB_SUBST_DEB_HOST_MULTIARCH=${DEB_HOST_MULTIARCH} \
+	$< --gen-control debian/*.in
 	# Because we use dh-exec to track units that don't need to install
-	# everywhere, we need the <package>.install files to be executable 
+	# everywhere, we need the <package>.install files to be executable
 	chmod a+x debian/*.install
+	# Ensure we fail build if contol file changed so that we update it in VCS
+	diff -u debian/control.old debian/control
+	${RM} debian/control.old
 	touch debian-files-stamp
 
 
@@ -273,8 +300,11 @@ prepare-source-stamp:
 
 	# Now that we are done with all changes to files in the packaging, let's
 	# make sure that all the timestamps are reproducible.
-	find fpcsrc -type f -newermt "@$${SOURCE_DATE_EPOCH}" -print0 | \
-		xargs -0r touch --no-dereference --date="@$${SOURCE_DATE_EPOCH}"
+	echo -n "fpcsrc/compiler/version.inc " >> debian/source/timestamps
+	LC_ALL=C date --utc --iso-8601=minutes --date=${DEB_DATE} >> debian/source/timestamps
+	debian/fp-fix-timestamps touch
+	#Remove last line agains
+	sed --in-place '$$d' debian/source/timestamps
 
 	touch prepare-source-stamp
 
@@ -307,8 +337,10 @@ build-arch-stamp: ${DEB_BUILD_FPC_OPT} ${DEB_HOST_FPC_OPT}
 	$(MAKE) -C fpcsrc rtl_clean rtl_smart $(BUILDOPTS)
 	# Finally build packages and tools using new compiler and new RTL
 	$(MAKE) -C fpcsrc packages_smart ${BUILDOPTS} ${FPMAKE_BUILDOPTS}
-	$(MAKE) -C fpcsrc ide_all $(BUILDOPTS)
 	$(MAKE) -C fpcsrc utils_all ${BUILDOPTS}
+	# *.fpm files contain the build directory, which results in unreproducible
+	# builds. As this is useless anyways, let's canonize the text.
+	find . -name "*.fpm" -exec sed --in-place "s#${CURDIR}/##" {} \;
 	touch build-arch-stamp
 
 install-arch: build-arch install-arch-stamp
@@ -325,7 +357,6 @@ install-arch-stamp:
 	$(MAKE) -C fpcsrc compiler_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc rtl_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc packages_distinstall $(INSTALLOPTS)
-	$(MAKE) -C fpcsrc ide_distinstall $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-ide/${DEB_UPSTREAM_MAIN_VERSION}
 	$(MAKE) -C fpcsrc utils_distinstall $(INSTALLOPTS)
 	$(MAKE) -C fpcsrc/utils/fpdoc/intl install $(INSTALLOPTS)
 	${CP} -t ${LIB_DIR} \
@@ -335,46 +366,69 @@ install-arch-stamp:
 	/bin/bash debian/moveexamples ${EXAMPLE_TEMP} ${DOC_DIR} ${DEB_UPSTREAM_MAIN_VERSION}
 	# Rename executables
 	for f in  ${BIN_DIR}/* ; do ${MV} $$f $${f}-${DEB_UPSTREAM_MAIN_VERSION} ; done
+	# Move fp-compiler executables to /usr/bin/<triplet>
+	for f in fpc fpcmkcfg fpcres ; do \
+		${MV} ${BIN_DIR}/$${f}-${DEB_UPSTREAM_MAIN_VERSION} ${BIN_DIR}/${DEB_HOST_MULTIARCH}-$${f}-${DEB_UPSTREAM_MAIN_VERSION} ; \
+	done
 	# Install RTL demos
 	$(MAKE) -C demo sourceinstall $(INSTALLOPTS) INSTALL_SOURCEDIR=$(DOC_DIR)/fp-compiler/${DEB_UPSTREAM_MAIN_VERSION}
 	# Install whatsnew and readme
 	$(MAKE) -C install/doc installdoc $(INSTALLOPTS) INSTALL_DOCDIR=$(DOC_DIR)/fp-compiler/${DEB_UPSTREAM_MAIN_VERSION}
-	# Install fpdoc latex styles
+	# Install fpdoc latex styles, but only those that are not already in
+	# texlive-latex-recommended
 	${CP} -t ${STY_DIR} \
-		${CURDIR}/fpcdocs/*.sty
+		${CURDIR}/fpcdocs/fakehtml.sty \
+		${CURDIR}/fpcdocs/fpc.sty
 	touch install-arch-stamp
 
 arrange-arch: install-arch arrange-arch-stamp install-man
 arrange-arch-stamp:
 	dh_testdir
 	dh_testroot
-	# Expected here:
-	# usr/lib/fpc/lexyacc/yyparse.cod
-	# usr/lib/fpc/lexyacc/yylex.cod
-	# usr/bin/unihelper-<version>
-	# usr/bin/ptop.rsj-<version>
-	# usr/bin/mkx86ins-<version>
-	# usr/bin/mkinsad-<version>
-	# usr/bin/mkarmins-<version>
-	# usr/bin/mka64ins-<version>
-	# usr/bin/makeskel.rsj-<version>
-	# usr/bin/cldrparser-<version>
-	dh_install -s --sourcedir=debian/tmp --list-missing
+	# These files are already installed in fp-utils:
+	rm debian/tmp/usr/lib/fpc/lexyacc/yylex.cod
+	rm debian/tmp/usr/lib/fpc/lexyacc/yyparse.cod
+	# These are helper programs needed only when compiling the compiler.
+	rm ${BIN_DIR}/mk*ins-\${DEB_UPSTREAM_MAIN_VERSION}
+	# These files are located inthe wrong folder and we are wating for upstream
+	# to tell us where they should be relocated
+	rm debian/tmp/usr/bin/*.rsj-*
+	rm debian/tmp/usr/lib/libpas2jslib.so
+	# Install files and fail if we are missing anyone
+	dh_install -s
+	dh_missing --fail-missing
 	touch arrange-arch-stamp
 
 # This is a policy required target, for our purpose, it needs to trigger
 # debian-files and install-source at least if that didn't happen yet.
 build-indep: debian-files install-source build-doc
-install-indep: install-doc install-man
+install-indep: build-indep install-doc ${CFG_DIR}/hardening
 
 install-man: install-man-stamp
 install-man-stamp:
+	# Generate man pages for newly supported arches
+	cd install/man/man1 ; \
+		for arch in 68k a64 mips mipsel ppc64 sparc64; do \
+			cp -p ppcx64.1 ppc$${arch}.1 ; \
+			sed --in-place s/x64/$${arch}/ ppc$${arch}.1 ; \
+		done
+
 	# Install man pages
 	$(MAKE) -C install/man installman $(INSTALLOPTS)
 	for s in ${INSTALL_DIR}/usr/man/man[1-9] ; do cd $${s} && ( gzip -d *.gz || true ) && for f in *.[1-9] ; do ${MV} $${f} $${f%%.*}-${DEB_UPSTREAM_MAIN_VERSION}."$${f#*.}" ; done ; done || true
+	# Create missing man pages
+	help2man ${INSTALL_DIR}/usr/bin/${DEB_HOST_MULTIARCH}-fpcmkcfg-${DEB_UPSTREAM_MAIN_VERSION} -m 'Free Pascal Compiler' -s 1 --version-string=' ' -n 'Configuration generator for Free Pascal Compiler (FPC)' -o ${INSTALL_DIR}/usr/man/man1/${DEB_HOST_MULTIARCH}-fpcmkcfg-${DEB_UPSTREAM_MAIN_VERSION}.1 --no-discard-stder
+	help2man ${INSTALL_DIR}/usr/bin/cldrparser-${DEB_UPSTREAM_MAIN_VERSION} -m 'Free Pascal Compiler' -s 1 --version-string=' ' -n 'CLDR to pascal translator for Free Pascal Compiler (FPC)' -o ${INSTALL_DIR}/usr/man/man1/cldrparser-${DEB_UPSTREAM_MAIN_VERSION}.1 --no-discard-stderr
+	help2man ${INSTALL_DIR}/usr/bin/compileserver-${DEB_UPSTREAM_MAIN_VERSION} -m 'Free Pascal Compiler' -s 1 --version-string=' ' -n 'Helper tool for Free Pascal Compiler (FPC)' -o ${INSTALL_DIR}/usr/man/man1/compileserver-${DEB_UPSTREAM_MAIN_VERSION}.1 --no-discard-stderr
+	help2man ${INSTALL_DIR}/usr/bin/json2pas-${DEB_UPSTREAM_MAIN_VERSION} -m 'Free Pascal Compiler' -s 1 --version-string=' ' -n 'JSON to Pascal to translator for Free Pascal Compiler (FPC)' -o ${INSTALL_DIR}/usr/man/man1/json2pas-${DEB_UPSTREAM_MAIN_VERSION}.1 --no-discard-stderr
+	help2man ${INSTALL_DIR}/usr/bin/mkinsadd-${DEB_UPSTREAM_MAIN_VERSION} -m 'Free Pascal Compiler' -s 1 --version-string=' ' -n 'Helper tool for Pascal Compiler (FPC)' -o ${INSTALL_DIR}/usr/man/man1/mkinsadd-${DEB_UPSTREAM_MAIN_VERSION}.1 --no-discard-stderr
+	help2man ${INSTALL_DIR}/usr/bin/pas2js-${DEB_UPSTREAM_MAIN_VERSION} -m 'Free Pascal Compiler' -s 1 --version-string=' ' -n 'Pascal to JavaScript translator based on Free Pascal Compiler (FPC)' -o ${INSTALL_DIR}/usr/man/man1/pas2js-${DEB_UPSTREAM_MAIN_VERSION}.1 --no-discard-stderr
+	help2man ${INSTALL_DIR}/usr/bin/unihelper-${DEB_UPSTREAM_MAIN_VERSION} -m 'Free Pascal Compiler' -s 1 --version-string=' ' -n 'Helper tool for Pascal Compiler (FPC)' -o ${INSTALL_DIR}/usr/man/man1/unihelper-${DEB_UPSTREAM_MAIN_VERSION}.1 --no-discard-stderr
+	help2man ${INSTALL_DIR}/usr/bin/webidl2pas-${DEB_UPSTREAM_MAIN_VERSION} -m 'Free Pascal Compiler' -s 1 --version-string=' ' -n 'WEB IDL to Pascal translator for Free Pascal Compiler (FPC)' -o ${INSTALL_DIR}/usr/man/man1/webidl2pas-${DEB_UPSTREAM_MAIN_VERSION}.1 --no-discard-stderr
 	pod2man -c 'Free pascal for Debian GNU/Linux' -d ${DEB_DATE} debian/fpc-depends > \
 		debian/fpc-depends-${DEB_UPSTREAM_MAIN_VERSION}.1
-	dh_installman -s
+	txt2man -s1 debian/fp-fix-timestamps.txt > debian/fp-fix-timestamps.1
+	dh_installman
 	${RM} ${INSTALL_DIR}/usr/man
 	touch install-man-stamp
 
@@ -392,7 +446,7 @@ build-doc-stamp:
 	# locale here to get reproducible builds (because of sorting in index
 	# pages) and to fix some characters in some documentation files that are
 	# non-ascii.
-	LC_ALL=C.UTF-8 $(MAKE) -C fpcdocs $(CONVERTER)
+	LC_ALL=C.UTF-8 $(MAKE) -C fpcdocs $(CONVERTER) UNITDIR_RTL=
 	touch build-doc-stamp
 
 install-doc: build-doc install-doc-stamp
@@ -430,7 +484,9 @@ binary-indep: install-indep
 	dh_testroot
 	dh_installdocs -i -X.in
 	dh_installchangelogs -i
-	dh_install -i --sourcedir=debian/tmp --list-missing
+	# Install files and fail if we are missing anyone
+	dh_install -i
+	dh_missing --fail-missing
 	find debian/fpc-source${PACKAGESUFFIX}/usr/share/fpcsrc/ -type f \
 	  -not -regex '.*\.\(fpc\|inc\|pas\|pp\)' -delete
 	find debian/fpc-source${PACKAGESUFFIX}/usr/share/fpcsrc/ -type d \
@@ -452,44 +508,59 @@ binary-arch: arrange-arch
 	dh_installdocs -a -X.in
 	dh_installchangelogs -a
 	dh_installexamples -a
-	dh_strip -s
+	dh_strip -a
 	dh_lintian -a
 	dh_compress -a
 	dh_fixperms
 	dh_installdebconf -a
 	dh_installdeb -a
-	dh_shlibdeps -s
-	dh_gencontrol -s
-	dh_md5sums -s
-	dh_builddeb -s $(DEB_DH_BUILDDEB_ARGS)
+	dh_shlibdeps -a
+	dh_gencontrol -a
+	dh_md5sums -a
+	dh_builddeb -a $(DEB_DH_BUILDDEB_ARGS)
 
 .PHONY: arrange-arch binary binary-arch binary-indep build build-arch	\
 	build-doc build-indep check-makefiles clean clean-all-but-makefiles	\
-	clean-makefiles debian-files get-orig-source install install-arch	\
+	clean-makefiles debian-files install install-arch	\
 	install-doc install-indep install-man install-source makefiles		\
-	prepare-source
+	prepare-source gen-control run-tests
 
-get-orig-source:
-	-uscan --upstream-version=0 --rename --force-download
+# Generate debian.control file
+gen-control: debian/control
+
+# Run upstream test suite
+run-tests:
+	dpkg-source --before-build ${CURDIR}
+	debian/tests/run-upstream-testsuite
 
 debian/%:debian/fixdeb debian/changelog debian/%.in
 	DEB_SUBST_PACKAGESUFFIX=${PACKAGESUFFIX} \
 	DEB_SUBST_PPCBIN=${PPNEW} \
 	DEB_SUBST_TARGET=${FPCTARGET} \
+	DEB_SUBST_DEB_HOST_MULTIARCH=${DEB_HOST_MULTIARCH} \
 	$< --gen-control $@.in
 
-fpcsrc/utils/fpcm/fpcmake:fpcsrc/utils/fpcm/Makefile ${DEB_BUILD_FPC_OPT}
-	${MAKE} -C ${@D} OPT=@${CURDIR}/${DEB_BUILD_FPC_OPT}
+${FPCMAKE}:fpcsrc/utils/fpcm/Makefile.fpc fpcsrc/Makefile.fpc ${DEB_BUILD_FPC_OPT}
+	fpcmake -r -Tall -q fpcsrc/Makefile.fpc
+	${MAKE} -C fpcsrc/rtl OPT=@${CURDIR}/${DEB_BUILD_FPC_OPT}
+	${MAKE} -C fpcsrc/packages/fpmkunit bootstrap OPT=@${CURDIR}/${DEB_BUILD_FPC_OPT}
+	${MAKE} -C ${<D} OPT=@${CURDIR}/${DEB_BUILD_FPC_OPT}
 
-fpcsrc/utils/fpcm/Makefile:fpcsrc/utils/fpcm/Makefile.fpc
-	fpcmake -Tall -q $<
-
-${DEB_BUILD_FPC_OPT}:
-	echo '# FPC configuration file for build system tools' > $@
-	echo '-k${LDFLAGS}' >> $@
+${DEB_BUILD_FPC_OPT}:debian/hardening.cfg
+	cp $< $@
+	echo -e'\n# Linked libs path for build system tools' >> $@
 	echo '-Fl/usr/lib/${DEB_BUILD_MULTIARCH}' >> $@
 
-${DEB_HOST_FPC_OPT}:
-	echo '# FPC configuration file for host system applications' > $@
-	echo '-k${LDFLAGS}' >> $@
+${DEB_HOST_FPC_OPT}:debian/hardening.cfg
+	cp $< $@
+	echo -e '\n# Linked libs path for host system applications' >> $@
 	echo '-Fl/usr/lib/${DEB_HOST_MULTIARCH}' >> $@
+
+${CFG_DIR}/hardening:debian/hardening.cfg
+	# Install configration file so that we can use build hadened programs using:
+	# fpc @hardening progname
+	${MKDIR} ${@D}
+	cp $< $@
+
+lintian:
+	lintian -I -i ../${DEB_SOURCE}_${DEB_VERSION}_${DEB_HOST_ARCH}.changes

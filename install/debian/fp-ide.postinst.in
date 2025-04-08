@@ -5,12 +5,23 @@ set -e
 # Load debconf
 . /usr/share/debconf/confmodule
 
-LIB_DIR="/usr/lib/fpc"
-MAN_DIR="/usr/share/man/man1"
+CFG_PATH='/etc/fp.cfg'
+PKG_CFG_PATH="/etc/fp-${VERSION}.cfg"
+LIB_DIR="/usr/lib/${DEB_HOST_MULTIARCH}/fpc"
+MKCFG="/usr/bin/${DEB_HOST_MULTIARCH}-fpcmkcfg-${VERSION}"
 
 # Debhelper code
 #DEBHELPER#
 
+if test -e ${CFG_PATH}
+then
+	mv "${CFG_PATH}" "${CFG_PATH}.`date -Is`.bak"
+fi
+
+# Create new IDE configuration file
+${MKCFG} -p -1 -d "basepath=${LIB_DIR}/\$fpcversion" -o "${PKG_CFG_PATH}"
+
 # add alternatives
 update-alternatives \
-    --install /usr/bin/fp fp /usr/bin/fp-${VERSION} ${PRIORITY}
+    --install /usr/bin/fp fp /usr/bin/fp-${VERSION} ${PRIORITY} \
+	--slave "${CFG_PATH}" fp.cfg "${PKG_CFG_PATH}" \

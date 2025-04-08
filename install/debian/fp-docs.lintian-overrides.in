@@ -1,0 +1,4 @@
+# Spelling error in upstream license text
+spelling-error-in-copyright orignal original
+# Many files are in national encoding.
+national-encoding [usr/share/doc/fp-docs/${VERSION}/pics/*.ans]

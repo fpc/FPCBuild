@@ -1,0 +1,25 @@
+Description: Removed declaration of legacy ncursus variables.
+ These variables are now internal and no more exported by new ncursus libraries.
+Author: Abou Al Montacir <abou.almontacir@sfr.fr>
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=789091
+
+diff --git a/fpcsrc/packages/ncurses/src/form.pp b/fpcsrc/packages/ncurses/src/form.pp
+index a930b75a..136a8d2f 100644
+--- a/fpcsrc/packages/ncurses/src/form.pp
++++ b/fpcsrc/packages/ncurses/src/form.pp
+@@ -232,15 +232,6 @@ var
+   TYPE_IPV4 : PFIELDTYPE external libform name 'TYPE_IPV4';
+ {$endif darwin}
+ 
+-(* Default objects  *)
+-{$ifndef darwin}
+-  _nc_Default_Form : PFORM;cvar;external;
+-  _nc_Default_Field : PFIELD;cvar;external;
+-{$else darwin}
+-  _nc_Default_Form : PFORM external libform name '_nc_Default_Form';
+-  _nc_Default_Field : PFIELD external libform name '_nc_Default_Field';
+-{$endif darwin}
+-
+ (* FIELDTYPE routines *)
+ function new_fieldtype(field_check: TFieldCheck; char_check:TCharCheck):PFIELDTYPE; cdecl;external libform;
+ 

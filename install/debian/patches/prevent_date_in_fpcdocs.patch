@@ -6,7 +6,7 @@ Index: fpc/fpcdocs/Makefile.fpc
 ===================================================================
 --- fpc.orig/fpcdocs/Makefile.fpc
 +++ fpc/fpcdocs/Makefile.fpc
-@@ -109,7 +109,7 @@ ifeq ($(HIDEPROTECTED),YES)
+@@ -115,7 +115,7 @@ ifeq ($(HIDEPROTECTED),YES)
  FCLOPTS+= --hide-protected
  endif
  

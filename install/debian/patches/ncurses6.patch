@@ -1,0 +1,26 @@
+Patch to update ncurses.pp for ncurses 6 by Sven Joachim
+Taken from https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=894049#39
+Index: fpc/fpcsrc/packages/ncurses/src/ncurses.pp
+===================================================================
+--- fpc.orig/fpcsrc/packages/ncurses/src/ncurses.pp
++++ fpc/fpcsrc/packages/ncurses/src/ncurses.pp
+@@ -69,6 +69,7 @@ const
+    NCURSES_VERSION_MINOR = 6;
+    NCURSES_VERSION_PATCH = 20061217;
+    NCURSES_VERSION = '5.6';
++   NCURSES_MOUSE_VERSION = 2;
+ 
+ {$MACRO ON}
+ {$IFNDEF NCURSES_MOUSE_VERSION}
+@@ -78,9 +79,9 @@ const
+ 
+ type
+    pchtype = ^chtype;
+-   chtype  = culong;
++   chtype  = cuint;
+    pmmask_t = ^mmask_t;
+-   mmask_t  = culong;
++   mmask_t  = cuint;
+ 
+ { colors  }
+ var

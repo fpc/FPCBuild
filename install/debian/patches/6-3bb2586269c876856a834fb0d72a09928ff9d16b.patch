@@ -1,0 +1,60 @@
+From 3bb2586269c876856a834fb0d72a09928ff9d16b Mon Sep 17 00:00:00 2001
+From: Pierre Muller <pierre@freepascal.org>
+Date: Fri, 26 May 2023 17:09:47 +0200
+Subject: [PATCH] Fix for sparc64 specific code generation bug report #40252
+
+---
+ compiler/sparc64/cpupara.pas |  3 ++-
+ tests/webtbs/tw40252.pp      | 25 +++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
+ create mode 100644 tests/webtbs/tw40252.pp
+
+diff --git a/fpcsrc/compiler/sparc64/cpupara.pas b/fpcsrc/compiler/sparc64/cpupara.pas
+index fb704447278..c6e97430a38 100644
+--- a/fpcsrc/compiler/sparc64/cpupara.pas
++++ b/fpcsrc/compiler/sparc64/cpupara.pas
+@@ -67,8 +67,9 @@ implementation
+                              is_open_array(def) or
+                              is_array_of_const(def) or
+                              is_array_constructor(def);
++	  { Fix codegen problem for empty record by always passing by address a zero-sized record }
+           recorddef:
+-            result:=def.size>recsizelimit;
++            result:=(def.size>recsizelimit) or (def.size=0);
+           variantdef:
+             result:=false;
+           formaldef :
+diff --git a/fpcsrc/tests/webtbs/tw40252.pp b/fpcsrc/tests/webtbs/tw40252.pp
+new file mode 100644
+index 00000000000..aca68f1a176
+--- /dev/null
++++ b/fpcsrc/tests/webtbs/tw40252.pp
+@@ -0,0 +1,25 @@
++
++type
++  TLazLoggerLogEnabled = record end;
++
++procedure Test(Log : TLazLoggerLogEnabled; const s : string);
++begin
++  writeln('Test: ',s);
++end;
++
++procedure Testv(var Log : TLazLoggerLogEnabled; const s : string);
++begin
++  writeln('Testv: ',s);
++end;
++
++procedure DebuglnStack(LogEnabled: TLazLoggerLogEnabled; const s: string);
++begin
++  Test(LogEnabled, s);
++  Testv(LogEnabled, s);
++end;
++
++var
++  LE : TLazLoggerLogEnabled;
++begin
++  DebuglnStack(LE,'Test string');
++end.
+-- 
+GitLab
+

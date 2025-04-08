@@ -1,0 +1,22 @@
+Description: Change fpmake to install missign package examples.
+ Some packages do not install their examples. This patch allows to add code in
+ their fpmake to install their examples.
+ .
+Author: Abou Al Montacir <abou.almontacir@sfr.fr>
+Bug-Debian: https://bugs.debian.org/1016914
+Origin: vendor
+Forwarded: no
+Reviewed-By: None
+Last-Update: 2022-11-19
+
+--- fpc-3.2.2+dfsg.orig/fpcsrc/packages/webidl/fpmake.pp
++++ fpc-3.2.2+dfsg/fpcsrc/packages/webidl/fpmake.pp
+@@ -48,6 +48,8 @@ begin
+       AddUnit('webidlscanner');
+       AddUnit('webidlparser');
+       end;
++    P.ExamplePath.Add('examples');
++    T:=P.Targets.AddExampleProgram('parsewebidl.pas');
+ {$ifndef ALLPACKAGES}
+     Run;
+     end;

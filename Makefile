@@ -3082,7 +3082,7 @@ DEBVERSION=$(firstword $(subst -, ,${DEBPACKAGEVERSION}))
 DEBBUILD=$(lastword $(subst -, ,${DEBPACKAGEVERSION}))
 DEBSRC=${PACKAGE_NAME}-${DEBVERSION}
 DEBSRCDIR=${BUILDDIR}/${DEBSRC}
-DEBSRC_ORIG=${PACKAGE_NAME}_${PACKAGE_VERSION}.orig
+DEBSRC_ORIG=${PACKAGE_NAME}_${DEBVERSION}.orig
 BUILDDATE=$(shell /bin/date --utc +%Y%m%d)
 ifdef MENTORS
 DEB_BUILDPKG_OPT=-sa
@@ -3105,9 +3105,9 @@ ifndef SIGN
 DEB_BUILDPKG_OPT+= -us -uc
 endif
 debcheck:
-ifneq (${DEBVERSION},${PACKAGE_VERSION})
+ifneq (${DEBVERSION},$(subst -,~,${PACKAGE_VERSION}))
 ifneq (${SNAPSHOT},1)
-	! ${ECHO} "Debian version ($(DEBVERSION)) is not correct, expect $(PACKAGE_VERSION)"
+	! ${ECHO} "Debian version ($(DEBVERSION)) is not correct, expect $(subst -,~,$(PACKAGE_VERSION))"
 endif
 endif
 ifeq ($(wildcard ${DEBSRC_ORIG}.tar.gz),)
@@ -3141,9 +3141,9 @@ endif
 debsetup:
 	$(COPYTREE) ${DEBDIR} $(DEBSRCDIR)/debian
 ifeq (${SNAPSHOT},1)
-ifneq (${DEBVERSION},${PACKAGE_VERSION})
+ifneq (${DEBVERSION},$(subst -,~,${PACKAGE_VERSION}))
 	sed -i ${DEBSRCDIR}/debian/changelog \
-	-e "1ifpc (${PACKAGE_VERSION}-0~${BUILDDATE}) unstable; urgency=low" \
+	-e "1ifpc (${DEBVERSION}-0~${BUILDDATE}) unstable; urgency=low" \
 	-e "1i\ " \
 	-e "1i  * Build daily snapshots." \
 	-e "1i\ " \
@@ -3155,6 +3155,7 @@ endif
 endif
 	chmod 755 $(DEBSRCDIR)/debian/rules
 	find $(DEBSRCDIR) -name '.svn' | xargs ${DELTREE}
+	${MAKE} -C $(DEBSRCDIR) -f debian/rules clean-makefiles
 debbuild:
 	cd ${DEBSRCDIR} ; dpkg-buildpackage ${DEB_BUILDPKG_OPT}
 debcheckpolicy:
@@ -3162,14 +3163,13 @@ ifdef LINTIAN
 	cd ${DEBSRCDIR} ; lintian -I -i ../*.changes
 endif
 debclean:
-ifndef DEBUSESVN
 	${DEL} ${BUILDDIR}/${DEBSRC_ORIG}.tar.gz
-endif
 	mv -v -t . \
+	$(DEBSRCDIR)/../*.buildinfo \
 	$(DEBSRCDIR)/../*.changes \
 	$(DEBSRCDIR)/../*.deb \
 	$(DEBSRCDIR)/../*.dsc \
-	$(DEBSRCDIR)/../*.gz
+	${BUILDDIR}/*.xz
 	${DELTREE} $(DEBSRCDIR)
 	rmdir $(BUILDDIR)
 deb: debcheck debcopy deborigtargz debsetup debbuild debcheckpolicy debclean

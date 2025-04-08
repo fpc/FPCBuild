@@ -66,7 +66,7 @@ Index: fpc/fpcsrc/utils/fpmake.pp
 ===================================================================
 --- fpc.orig/fpcsrc/utils/fpmake.pp
 +++ fpc/fpcsrc/utils/fpmake.pp
-@@ -84,6 +84,7 @@ begin
+@@ -89,6 +89,7 @@ begin
      P.Targets.AddProgram('mkinsadd.pp');
      P.Targets.AddProgram('postw32.pp');
      P.Targets.AddProgram('rmcvsdir.pp');

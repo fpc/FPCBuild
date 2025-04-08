@@ -6,7 +6,7 @@ Index: fpc/fpcsrc/packages/fpmake_proc.inc
 ===================================================================
 --- fpc.orig/fpcsrc/packages/fpmake_proc.inc
 +++ fpc/fpcsrc/packages/fpmake_proc.inc
-@@ -194,12 +194,6 @@ begin
+@@ -196,12 +196,6 @@ begin
  {$include fftw/fpmake.pp}
  end;
  
@@ -19,7 +19,7 @@ Index: fpc/fpcsrc/packages/fpmake_proc.inc
  {$include fpindexer/fpmake.pp}
  
  procedure add_fpmkunit(const ADirectory: string);
-@@ -236,24 +230,12 @@ begin
+@@ -238,24 +232,12 @@ begin
  {$include gmp/fpmake.pp}
  end;
  
@@ -44,7 +44,7 @@ Index: fpc/fpcsrc/packages/fpmake_proc.inc
  procedure add_gtk2(const ADirectory: string);
  begin
    with Installer do
-@@ -314,12 +296,6 @@ begin
+@@ -316,12 +298,6 @@ begin
  {$include imagemagick/fpmake.pp}
  end;
  
@@ -61,7 +61,7 @@ Index: fpc/fpcsrc/packages/fpmake_add.inc
 ===================================================================
 --- fpc.orig/fpcsrc/packages/fpmake_add.inc
 +++ fpc/fpcsrc/packages/fpmake_add.inc
-@@ -32,7 +32,6 @@
+@@ -33,7 +33,6 @@
    add_fcl_web(ADirectory+IncludeTrailingPathDelimiter('fcl-web'));
    add_fcl_xml(ADirectory+IncludeTrailingPathDelimiter('fcl-xml'));
    add_fftw(ADirectory+IncludeTrailingPathDelimiter('fftw'));
@@ -69,7 +69,7 @@ Index: fpc/fpcsrc/packages/fpmake_add.inc
    add_fpindexer(ADirectory+IncludeTrailingPathDelimiter('fpindexer'));
    add_fpmkunit(ADirectory+IncludeTrailingPathDelimiter('fpmkunit'));
    add_fppkg(ADirectory+IncludeTrailingPathDelimiter('fppkg'));
-@@ -41,9 +40,7 @@
+@@ -42,9 +41,7 @@
    add_gdbm(ADirectory+IncludeTrailingPathDelimiter('gdbm'));
    add_ggi(ADirectory+IncludeTrailingPathDelimiter('ggi'));
    add_gmp(ADirectory+IncludeTrailingPathDelimiter('gmp'));
@@ -79,7 +79,7 @@ Index: fpc/fpcsrc/packages/fpmake_add.inc
    add_gtk2(ADirectory+IncludeTrailingPathDelimiter('gtk2'));
    add_hash(ADirectory+IncludeTrailingPathDelimiter('hash'));
    add_hermes(ADirectory+IncludeTrailingPathDelimiter('hermes'));
-@@ -54,7 +51,6 @@
+@@ -55,7 +52,6 @@
    add_ibase(ADirectory+IncludeTrailingPathDelimiter('ibase'));
    add_iconvenc(ADirectory+IncludeTrailingPathDelimiter('iconvenc'));
    add_imagemagick(ADirectory+IncludeTrailingPathDelimiter('imagemagick'));

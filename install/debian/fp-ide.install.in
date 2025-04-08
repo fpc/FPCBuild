@@ -1,5 +1,5 @@
 #! /usr/bin/dh-exec
 usr/bin/fp-*
-usr/lib/fpc/*/ide
-usr/lib/fpc/*/fpmkinst/*/ide.fpm
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/ide
+usr/lib/${DEB_HOST_MULTIARCH}/fpc/*/fpmkinst/*/ide.fpm
 usr/share/doc/fp-ide    [!freebsd-any]

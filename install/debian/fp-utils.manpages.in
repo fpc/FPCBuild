@@ -1,6 +1,8 @@
 debian/tmp/usr/man/man1/bin2obj-${VERSION}.1
 debian/tmp/usr/man/man1/chmcmd-${VERSION}.1
 debian/tmp/usr/man/man1/chmls-${VERSION}.1
+debian/tmp/usr/man/man1/cldrparser-${VERSION}.1
+debian/tmp/usr/man/man1/compileserver-${VERSION}.1
 debian/tmp/usr/man/man1/data2inc-${VERSION}.1
 debian/tmp/usr/man/man1/delp-${VERSION}.1
 debian/tmp/usr/man/man1/fd2pascal-${VERSION}.1
@@ -11,12 +13,16 @@ debian/tmp/usr/man/man1/fpcsubst-${VERSION}.1
 debian/tmp/usr/man/man1/fpdoc-${VERSION}.1
 debian/tmp/usr/man/man1/fppkg-${VERSION}.1
 debian/tmp/usr/man/man1/fprcp-${VERSION}.1
+debian/tmp/usr/man/man1/grab_vcsa-${VERSION}.1
 debian/tmp/usr/man/man1/h2pas-${VERSION}.1
 debian/tmp/usr/man/man1/h2paspp-${VERSION}.1
 debian/tmp/usr/man/man1/ifpc-${VERSION}.1
+debian/tmp/usr/man/man1/json2pas-${VERSION}.1
 debian/tmp/usr/man/man1/makeskel-${VERSION}.1
+debian/tmp/usr/man/man1/mkinsadd-${VERSION}.1
 debian/tmp/usr/man/man1/pas2fpm-${VERSION}.1
 debian/tmp/usr/man/man1/pas2jni-${VERSION}.1
+debian/tmp/usr/man/man1/pas2js-${VERSION}.1
 debian/tmp/usr/man/man1/pas2ut-${VERSION}.1
 debian/tmp/usr/man/man1/plex-${VERSION}.1
 debian/tmp/usr/man/man1/postw32-${VERSION}.1
@@ -29,6 +35,8 @@ debian/tmp/usr/man/man1/pyacc-${VERSION}.1
 debian/tmp/usr/man/man1/relpath-${VERSION}.1
 debian/tmp/usr/man/man1/rmcvsdir-${VERSION}.1
 debian/tmp/usr/man/man1/rstconv-${VERSION}.1
+debian/tmp/usr/man/man1/unihelper-${VERSION}.1
 debian/tmp/usr/man/man1/unitdiff-${VERSION}.1
+debian/tmp/usr/man/man1/webidl2pas-${VERSION}.1
 debian/tmp/usr/man/man5/fpcmake-${VERSION}.5
 debian/tmp/usr/man/man5/ptop-${VERSION}.cfg.5
