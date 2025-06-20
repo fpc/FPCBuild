@@ -1,7 +1,7 @@
 [submodule "fpcsrc"]
 	path = fpcsrc
 	url = https://gitlab.com/freepascal.org/fpc/source.git
-	branch = fixes_3_2
+	branch = release_3_2_4-branch
 [submodule "fpcdocs"]
 	path = fpcdocs
 	url = https://gitlab.com/freepascal.org/fpc/documentation.git
