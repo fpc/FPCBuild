@@ -35,9 +35,8 @@ if [ ."$1" = ."tag" ]; then
   echo Tagging $2
   $GIT tag -a $2 -m "  Tagging $2"
   $GIT submodule foreach git tag -a $2 -m "  Tagging $2"
-  echo Pushing still disabled, check the script $0 for \#!!!
-  #!!! $GIT submodule foreach git push origin $2
-  #!!! $GIT push origin $2
+  $GIT submodule foreach git push origin $2 --follow-tags
+  $GIT push origin $2
 else
   if [ ."$1" = ."branch" ]; then
     $GIT checkout -b $2
