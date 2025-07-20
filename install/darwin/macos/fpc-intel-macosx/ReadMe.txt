@@ -120,7 +120,7 @@ Mac OS X:
 
 Download the distribution package (fpc-3.2.2.i386-win32.exe) and run it - it is a self-extracting installer, so just follow the instructions to install it. The installer should set the PATH environment variable as appropriate.
 
-To test the compiler, change to the demo\texts directory of the FPC tree and type on the command line:
+To test the compiler, change to the demo\text directory of the FPC tree and type on the command line:
         fpc hello
         hello
 
@@ -135,7 +135,7 @@ Start the install program INSTALL.EXE and follow the instructions.
 
 Don't forget to set PATH as mentioned by the install program. If running under plain DOS, this can be done by opening file named AUTOEXEC.BAT located in the root directory of your boot drive (usually C:\) with a plain text editor (like EDIT.COM), extending the line starting with "set PATH=" (case insensitive) with path to newly installed binaries (installation root as selected in the installation program appended with "\BIN\GO32v2") and save it.
 
-To test the compiler, change to the demo\texts directory of the FPC tree and type
+To test the compiler, change to the demo\text directory of the FPC tree and type
         fpc hello
         hello
 
@@ -150,7 +150,7 @@ Start the install program INSTALL.EXE and follow the instructions.
 
 Don't forget to set PATH and LIBPATH as mentioned by the install program. This can be done by opening file named CONFIG.SYS located in the root directory of your boot drive (e.g. C:\) with a plain text editor (e.g. E.EXE), extending the lines starting with "set PATH=" and "LIBPATH=" (both are case insensitive) with path to newly installed binaries (installation root as selected in the installation program appended with "\BIN\OS2" for PATH and "\DLL" for LIBPATH) and save it again as a plain text file. Note that changes to LIBPATH require restart of your machine in order to come into effect.
 
-To test the compiler, change to the demo\texts directory of the FPC tree and type
+To test the compiler, change to the demo\text directory of the FPC tree and type
         fpc hello
         hello
 
@@ -163,7 +163,7 @@ Download fpc-3.2.2.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
-To test the compiler, change to the demo/texts directory of the FPC tree and type
+To test the compiler, change to the demo/text directory of the FPC tree and type
         fpc hello
         hello
 
