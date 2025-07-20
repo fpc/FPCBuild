@@ -146,7 +146,7 @@ Download the distribution package (fpc-3.2.4.i386-win32.exe) and run it
 to install it. The installer should set the PATH environment variable as
 appropriate.
 
-To test the compiler, change to the demo\texts directory of the FPC tree
+To test the compiler, change to the demo\text directory of the FPC tree
 and type on the command line:
         fpc hello
         hello
@@ -183,7 +183,7 @@ insensitive) with path to newly installed binaries (installation root as
 selected in the installation program appended with "\BIN\GO32v2") and save
 it.
 
-To test the compiler, change to the demo\texts directory of the FPC tree
+To test the compiler, change to the demo\text directory of the FPC tree
 and type
         fpc hello
         hello
@@ -218,7 +218,7 @@ PATH and "\DLL" for LIBPATH) and save it again as a plain text file.
 Note that changes to LIBPATH require restart of your machine in order to come
 into effect.
 
-To test the compiler, change to the demo\texts directory of the FPC tree
+To test the compiler, change to the demo\text directory of the FPC tree
 and type
         fpc hello
         hello
@@ -232,7 +232,7 @@ Download fpc-3.2.4.<cpu>-<os>.tar and untar into a temporary directory.
 
 Start the install script with ./install.sh and follow the instructions.
 
-To test the compiler, change to the demo/texts directory of the FPC tree
+To test the compiler, change to the demo/text directory of the FPC tree
 and type
         fpc hello
         hello
