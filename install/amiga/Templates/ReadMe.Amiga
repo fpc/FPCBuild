@@ -1,0 +1,78 @@
+Free Pascal Compiler (FPC) for Amiga/AROS m68k
+Version: %VERSION%
+
+License:
+===================================================================
+The Free Pascal compiler, tools, runtime libraries and packages are 
+distributed under the Library GNU General Public License 
+(see the file docs/copying and docs/copying.fpc)
+
+Contents of the drawer "3rdParty" are not part of Free Pascal and
+distributed on their own licenses.
+
+in detail
+
+vasm - distributed with permission by Volker Barthelmann
+       see the file 3rdParty/vasm/LICENSE
+
+vlink - distributed with permission by Frank Wille
+        see the file 3rdParty/vlink/LICENSE
+
+Requirements:
+===================================================================
+- Amiga 68020+
+- Amiga OS 3.0+ or AROS m68k ABIv1
+- 50 - 250 MB HD space (depends on selected packages)
+
+Installation:
+===================================================================
+- Start the Installer: fpc_install
+- Choose the installation method
+- Novice will make a typical Installation to Work:FPC
+- On the other Levels you can choose the target (a new drawer "FPC"
+  will be created there) and packages to install
+- "minimal" will install:
+  - command-line compiler
+  - resource compiler, fpcmake
+  - vlink/vasm
+  - RTL, amiga specific units with examples
+- "typical" will install:
+  - all from "minimal"
+  - FP-IDE (Free Pascal Console IDE)
+  - useful additional units (FCL, regexpr, symbolic, ...)
+  - various translations for Free Pascal
+- "full" will install:
+  - all from "typical"
+  - some seldom used tools (pputools, configmaker)
+  - some seldom needed units
+- with customized you can configure which packages to install
+  by default the setting for typical is shown
+- The installer creates two entries in the file s:user-startup,
+  an assign FPC: to the installation directory,
+  and a path command which adds the compiler binaries' directory to the path.
+- After the Installer finishes, do not forget to restart your computer
+  before using the command-line compiler or the IDE.
+
+How to use:
+===================================================================
+- open a shell type fpc <source file>
+- double click "Free Pascal IDE" to get the IDE
+
+see the file docs/readme.txt for more information
+
+Information about Free Pascal for Amiga:
+https://wiki.freepascal.org/Amiga
+https://wiki.freepascal.org/m68k
+http://fpcamigawiki.alb42.de
+https://blog.alb42.de
+
+Information about Free Pascal in general:
+https://www.freepascal.org
+Documentation RTL/FCL/LCL
+https://www.freepascal.org/docs.var
+
+Information about vasm:
+http://sun.hasenbraten.de/vasm/
+
+Information about vlink:
+http://sun.hasenbraten.de/vlink/

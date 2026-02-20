@@ -1,0 +1,255 @@
+; Free Pascal
+; $VER: Free Pascal Compiler Installer 0.3 (01.07.2018)
+; Installs Free Pascal Compiler to your computer
+
+(complete 0)
+(set @app-name "Free Pascal Compiler")
+(set @default-dest "Work:")
+;
+(welcome "This installer installs Free Pascal Compiler %VERSION% for Amiga")
+
+(complete 5)
+;
+(set #default-dest-installergen-temp
+  (askdir
+    (prompt "Choose Destination\n\nA drawer called \"FPC\" will be created.")
+    (help "Choose Destination for the Free Pascal installation (a drawer will be created)")
+    (default @default-dest)
+  )
+)
+(set @default-dest #default-dest-installergen-temp)
+(set @default-dest-main #default-dest-installergen-temp)
+(set @default-dest (tackon @default-dest "FPC"))
+
+(complete 11)
+;
+(set @type
+  (askchoice
+    (prompt "Choose Installation type\n")
+    (help @askchoice-help)
+    (choices "Minimal" "Typical" "Full" "Customized")
+    (default 1)
+  )
+)
+(if (= @type 0) (set #varmin 1) (set #varmin 0))
+(if (= @type 1) (set #vartyp 1) (set #vartyp 0))
+(if (= @type 2) (set #varfull 1) (set #varfull 0))
+(if (= @type 3) (set #varcustom 1) (set #varcustom 0))
+
+(complete 40)
+; if customized
+(if (= @type 3)
+(
+
+  (complete 21)
+  ;     user set custom options
+  (set @packages
+    (askoptions
+      (prompt "Select packages you want install\n")
+      (help @askoptions-help)
+      (choices "Compiler" "vasm/vlink" "Free Pascal IDE" "common units (rtl, amunits)" "FCL" "useful units (symbolic, regexp, ...)" "seldom needed units (googleapi, odata)" "additional tools" "translations")
+      (default 127)
+    )
+  )
+  (set #optcompiler (BITAND (shiftright @packages 0) 1))
+  (set #optvlink (BITAND (shiftright @packages 1) 1))
+  (set #optfp (BITAND (shiftright @packages 2) 1))
+  (set #optcommon (BITAND (shiftright @packages 3) 1))
+  (set #optfcl (BITAND (shiftright @packages 4) 1))
+  (set #optuseful (BITAND (shiftright @packages 5) 1))
+  (set #optalien (BITAND (shiftright @packages 6) 1))
+  (set #optaddtools (BITAND (shiftright @packages 7) 1))
+  (set #opttrans (BITAND (shiftright @packages 8) 1))
+
+  ; else
+) ; Else
+(
+
+  (set #optcompiler 1)
+  (set #optvlink 1)
+  (set #optcommon 1)
+
+  (set #optfp 0)
+  (set #optfcl 0)
+  (set #optuseful 0)
+  (set #opttrans 0)
+  (set #optalien 0)
+  (set #optaddtools 0)
+
+  ;   if type >= typical
+  (if (>= @type 1)
+  (
+    (set #optfp 1)
+    (set #optfcl 1)
+    (set #optuseful 1)
+    (set #opttrans 1)
+
+    ;     if type = full
+    (if (= @type 2)
+    (
+      ;       optalien = 1
+      (set #optalien 1)
+      (set #optaddtools 1)
+    ))
+  )) ; End If
+))
+
+(complete 50)
+; if optcompiler
+(if (= #optcompiler 1)
+(
+  ;   copy compiler
+  (copyfiles
+    (prompt "copy compiler\n\n")
+    (help @copyfiles-help)
+    (infos)
+    (source "compiler")
+    (dest @default-dest)
+    (choices "bin")
+  )
+  ;   copy compiler
+  (copyfiles
+    (prompt "copy documentation\n\n")
+    (help @copyfiles-help)
+    (infos)
+    (source "")
+    (dest @default-dest)
+    (choices "docs" "docs.info" "ReadMe.Amiga" "ReadMe.Amiga.info")
+  )
+)) ; End If
+
+(complete 60)
+; if optaddtools
+(if (= #optaddtools 1)
+(
+  ;   copy addtools
+  (copyfiles
+    (prompt "copy additional tools\n\n")
+    (help @copyfiles-help)
+    (infos)
+    (source "addtools")
+    (dest @default-dest)
+    (choices "bin")
+  )
+)) ; End If
+
+(complete 65)
+
+; if optvlink
+(if (= #optvlink 1)
+(
+  ;   copy vlink/vasm
+  (copyfiles
+    (prompt "Copy vlink/vasm\n")
+    (help @copyfiles-help)
+    (source "3rdParty")
+    (dest (tackon @default-dest "bin/m68k-amiga"))
+    (choices "vasm/vasmm68k_std" "vlink/vlink")
+  )
+  (copyfiles
+    (prompt "Copy vlink/vasm documentation\n")
+    (help @copyfiles-help)
+    (source "3rdParty")
+    (dest (tackon @default-dest "docs"))
+    (choices "vasm/vasm.pdf" "vlink/vlink.pdf")
+  )
+)) ; End If
+
+(complete 70)
+
+; if optcommon
+(if (= #optcommon 1)
+(
+  ;   copy common units
+  (copyfiles
+    (prompt "Copy common units\n")
+    (help @copyfiles-help)
+    (source "common")
+    (dest @default-dest)
+    (choices "units" "docs")
+  )
+)) ; End If
+
+(complete 75)
+
+; if optuseful
+(if (= #optuseful 1)
+(
+  ;   copy useful units
+  (copyfiles
+    (prompt "Copy useful units\n")
+    (help @copyfiles-help)
+    (source "useful")
+    (dest @default-dest)
+    (choices "units" "docs")
+  )
+)) ; End If
+
+(complete 80)
+
+; if optfcl
+(if (= #optfcl 1)
+(
+  ;   copy fcl units
+  (copyfiles
+    (prompt "Copy FCL units\n")
+    (help @copyfiles-help)
+    (source "fcl")
+    (dest @default-dest)
+    (choices "units" "docs")
+  )
+)) ; End If
+
+(complete 85)
+; if optalien
+(if (= #optalien 1)
+(
+
+  ;   copy alien units
+  (copyfiles
+    (prompt "Copy alien units\n")
+    (help @copyfiles-help)
+    (source "other")
+    (dest @default-dest)
+    (choices "units" "docs")
+  )
+)) ; End If
+
+(complete 90)
+; if optfp
+(if (= #optfp 1)
+(
+  ;   copy alien units
+  (copyfiles
+    (prompt "Copy Free Pascal IDE\n")
+    (help @copyfiles-help)
+    (source "fp")
+    (dest @default-dest)
+    (choices "Free Pascal IDE" "Free Pascal IDE.info" "bin")
+  )
+)) ; End If
+
+(complete 95)
+; if opttrans
+(if (= #opttrans 1)
+(
+  ;   copy translations
+  (copyfiles
+    (prompt "Copy Compiler translations\n")
+    (help @copyfiles-help)
+    (source "")
+    (dest @default-dest)
+    (choices "msg")
+  )
+)) ; End If
+
+
+(complete 100)
+; assign FPC: and Path to user-startup
+(startup "FreePascal"
+  (prompt "Assign FPC: and set Path in s:user-startup\n")
+  (help @startup-help)
+  (command (cat "Assign FPC: " @default-dest))
+  (command (cat "\nPath FPC:bin/m68k-amiga add"))
+)
+
