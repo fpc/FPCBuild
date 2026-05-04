@@ -33,7 +33,16 @@ Packages:
   * fcl-pdf: pdf reader
   * vcl-compat significantly improved
 
+Free Vision:
+  * Small bug fixes
+
+IDE:
+  * Support long (+255 characters) source code lines
+  * On startup return to last directory
+  * Lot of small bug fixes, improved overall stability
+
 ******************************************************************************
+
                             Free Pascal Compiler
 
                                 Version 3.2.2
