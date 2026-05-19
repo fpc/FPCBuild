@@ -32,6 +32,7 @@ Packages:
   * fcl-base: thread pool support
   * fcl-pdf: pdf reader
   * vcl-compat significantly improved
+  * fcl-hash: new package containing hash and cryptography algorithm classes
 
 Free Vision:
   * Small bug fixes
