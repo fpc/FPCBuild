@@ -1,0 +1,117 @@
+This copy of the GNU file utilities for OS/2 has been compiled for OS/2
+using the emx 0.9b development tools. 
+
+An up to date copy should always be available as
+
+  ftp://ftp.leo.org/pub/comp/os/os2/gnu/systools/gnufutil.zip
+
+The programs were tested under OS/2 2.x with a HPFS, they support long
+filenames and extended attibutes (only cp, mv and install need to
+support EA's and thus do it, the other programs don't). The upper/lower
+case conversion in dd works correctly with national language characters.
+8-bit (such as NLS-) characters are displayed directly by ls, only
+nonprintable characters are replaced by ? or \-Sequences as usual.
+Support for \ and / as path separators was added where neccessary, i.e.
+in ls, cp, mv, rm, install, mkdir and rmdir. In dd there is support to
+access logical and physical drives by their drive name.
+
+a) The following programs of the GNU file utilities were ported to OS/2:
+
+chmod           supports DOS & OS/2 archive/hidden/system flags (partial,
+                flags can be changed, but changes are not reported by -v)
+cp              supports EA's
+dd              NLS support for conv=ucase/lcase, direct drive access support
+df              shows type instead of inode information
+du
+install         supports EA's
+ls/dir/vdir     shows DOS & OS/2 archive/hidden/system flags and 8-bit chars
+mkdir
+mv              supports EA's
+rm
+rmdir
+touch
+dircolors
+
+b) programs not ported:
+
+- chown, chgrp, ln, mkfifo and sync make no much sense under OS/2
+- mvdir is not needed, OS/2 has a rename() that can handle directories,
+  so mv already works for this purpose
+
+This version supports internationalization. To use it, set the
+LANGUAGE environment variable (for german messages, set it to "de").
+
+For that to work, you must set the LOCALEDIR environment variable to
+point to the base locale directory (default is /lib/locale). Into this
+directory, you must copy po/de.gmo (german message catalog, for
+example) from the distribution as de/LC_MESSAGES/@@@.mo and so
+on for other languages.
+
+Kai Uwe Rommel
+
+--
+/* Kai Uwe Rommel      ARS Computer & Consulting GmbH, Muenchen, Germany *
+ * rommel@ars.de             CompuServe 100265,2651, Fax +49 89 324 4524 *
+ * rommel@leo.org (ftp://ftp.leo.org/pub/comp/os/os2 maintenance)        */
+
+DOS ... is still a real mode only non-reentrant interrupt
+handler, and always will be.                -Russell Williams
+
+
+Version 2.1
+Thu 01-Aug-1991
+
+Adapted for version 3.1
+Sun 15-Sep-1991
+
+Adapted for version 3.2 (Actually ported over again from plain 
+sources because the old 16-bit port was screwed up too much.)
+now using emx/gcc (32-bit) under OS/2 2.0
+Sun 28-Jun-1992
+
+Bug fixes and enhancements.
+Wed 22-Jul-1992
+
+Adapted for version 3.3
+Wed 29-Jul-1992
+
+Changes for emx 0.8e, DLL version
+Thu 15-Oct-1992
+
+Version 3.4
+Sat 31-Oct-1992
+
+Version 3.6
+Sun 23-May-1993
+
+Bugfixes by Ric Andersson (traps in rm on many files with short names)
+and myself (rm -f warning on nonexisting *.o etc.)
+Sat 21-Aug-1993
+
+Version 3.12
+emx 0.9a
+Fri 16-Dec-1994
+
+Bugfix for direct disk access
+In dd, valid names are now A:, B:, C: ... for logical drives and
+$1:, $2: ... for physical fixed disks (be extremely careful!).
+Thu 16-Mar-1995
+
+Bugfix for "cp foo ." and "mv foo ." problems.
+Thu 30-Mar-1995
+
+Bugfix for "cp foo x:\" and "mv foo x:\" problems
+Sun 09-Apr-1995
+
+Bugfix for "mkdir -p" with path names with drive specification
+emx 0.9b
+Sat 20-Apr-1996
+
+Version 3.13
+Fri 02-Aug-1996
+
+Bugfix for touch and text mode error
+Bugfix for df on >4GB volumes
+Fixed ls mode flags output format
+Tue 31-Mar-1998
+
