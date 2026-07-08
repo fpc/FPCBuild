@@ -1,0 +1,270 @@
+.TH fpsonar 1 "9 July 2026" "Free Pascal" "Object Pascal static analyzer"
+.SH NAME
+fpsonar \- The Free Pascal Object Pascal static analyzer (linter).
+
+.SH SYNOPSIS
+.B fpsonar analyze
+[options] <path...>
+.br
+.B fpsonar baseline
+[options] [\-o file] <path...>
+.br
+.B fpsonar init\-config
+[\-o file]
+
+.SH DESCRIPTION
+.B fpsonar
+is a static analyzer for Object Pascal (Free Pascal / Lazarus), also known as a
+linter. It reads source code
+.I "without compiling or running it"
+and reports issues \- confusing names, risky patterns, structural metrics and
+style that does not match a project's conventions.
+.PP
+Each finding is reported on a single line, giving the file, the line and column,
+a severity, the name of the rule that fired and a short explanation. At the end
+of a run
+.B fpsonar
+prints a one\-line summary of the number of files analyzed and the number of
+issues found.
+.PP
+.B fpsonar
+belongs to the
+.I fcl\-sonar
+package and is built on the
+.I fcl\-passrc
+Pascal parser and resolver. 
+
+.SH COMMANDS
+The first non\-option argument is the command.
+.TP
+.B analyze
+Report issues (the default flow). Combined with
+.B \-\-new\-code
+it reports and gates only issues that are absent from the given baseline;
+combined with
+.B \-\-baseline
+it reports all issues but excludes those already present in the baseline from
+the quality gate.
+.TP
+.B baseline
+Write a snapshot of the current effective issue fingerprints to the file given
+with
+.B \-\-output
+(or standard output). No quality gate is evaluated. The snapshot is later fed
+back with
+.B \-\-new\-code
+or
+.B \-\-baseline .
+.TP
+.B init\-config
+Write a complete JSON configuration listing every rule with its default enabled
+state and severity, and \- for rules that have tunable parameters \- a
+.I params
+block showing each parameter at its built\-in default. The gate policy is
+included as well. The output goes to the file given with
+.B \-\-output
+(or standard output). Edit it to taste and pass it back with
+.B \-\-config .
+
+.SH TARGETS
+A target passed to
+.B analyze
+or
+.B baseline
+may be:
+.TP
+.B a source file
+A
+.IR .pas ", " .pp " or " .lpr
+file.
+.TP
+.B a directory
+Expanded recursively; every
+.IR .pas ", " .pp " and " .lpr
+file below it is analyzed.
+.TP
+.B a project
+A Lazarus
+.I .lpi
+project or
+.I .lpk
+package; its compiler settings are read and its units analyzed.
+.PP
+Several targets may be listed on one command line.
+
+.SH OPTIONS
+.TP
+.BI "\-\-define " D ", \-d" D
+Add a conditional define.
+.TP
+.BI "\-\-mode " M ", \-M" M
+Set the compiler mode (e.g. OBJFPC, DELPHI).
+.TP
+.BI "\-Fu" path
+Add a unit search path.
+.TP
+.BI "\-Fi" path
+Add an include search path.
+.TP
+.BI "\-\-cpu " C
+Set the target CPU (e.g. x86_64).
+.TP
+.BI "\-\-os " O
+Set the target OS (e.g. linux).
+.TP
+.BI "\-\-project " f ", \-p " f
+Load a
+.IR .lpi ", " .lpk " or " fpc.cfg
+project file.
+.TP
+.BI "\-\-format " fmt ", \-f " fmt
+Report format:
+.B text
+(default),
+.B sarif
+or
+.BR sonar\-json .
+.TP
+.BI "\-\-output " f ", \-o " f
+Write the report to a file (default: standard output).
+.TP
+.BI "\-\-config " f ", \-c " f
+Load a JSON configuration (rule set plus quality\-gate thresholds).
+.TP
+.BI "\-\-new\-code " f
+For
+.BR analyze :
+report and gate only issues absent from baseline
+.IR f .
+Mutually exclusive with
+.BR \-\-baseline .
+.TP
+.BI "\-\-baseline " f
+For
+.BR analyze :
+report all issues but mute (exclude from the gate) those already in baseline
+.IR f .
+Muted issues are annotated with their suppression source. Mutually exclusive
+with
+.BR \-\-new\-code .
+.TP
+.B \-\-real\-rtl
+Resolve the RTL chain (System/SysUtils/Classes) against the real FPC source
+first, falling back to synthetic stubs. Honours the
+.BR \-\-cpu / \-\-os / \-Fu / \-Fi
+overrides. The default is synthetic stubs.
+.TP
+.B \-\-synthetic\-only
+Resolve every
+.I uses
+clause against the host\-independent synthetic RTL only. This opts out of the
+default auto\-detection, which generates a faithful interface stub on demand from
+the matching
+.I .ppu
+via
+.BR ppudump (1)
+(cached) and falls back to synthetic. Use for deterministic,
+FPC\-version\-independent runs.
+.TP
+.BI "\-\-ppu\-cache " dir
+Keep the on\-demand
+.BR ppudump (1)
+stubs in
+.I dir
+permanently (default: per\-run temporary files, discarded at exit). Entries are
+keyed by each
+.IR .ppu 's
+size and modification time and refreshed when it changes. No effect under
+.BR \-\-synthetic\-only .
+.TP
+.B "\-\-help, \-h"
+Show a short help text and exit.
+.PP
+The
+.BR \-Fu / \-Fi / \-d / \-M
+flags accept both the glued (\fB\-FuX\fR) and the separated (\fB\-Fu X\fR) forms.
+
+.SH SUPPRESSING FINDINGS
+An individual finding can be silenced by adding a
+.B // NOSONAR
+comment to the offending line. Whole classes of findings can be silenced from
+the configuration file through its
+.I suppressions
+globs, which match on rule id and/or file path.
+
+.SH EXIT STATUS
+.TP
+.B 0
+Success \- the quality gate passed.
+.TP
+.B 1
+The quality gate failed (configured severity or total thresholds exceeded).
+.TP
+.B 2
+A usage error (e.g. an unknown option, a missing value, or an unreadable
+configuration or baseline file).
+.PP
+By default the gate fails only when a
+.B blocker
+or
+.B critical
+issue is present; all other severities are reported but do not fail the gate.
+These limits are adjustable in the configuration file.
+
+.SH CONFIGURATION
+The configuration is a JSON file passed with
+.BR \-\-config .
+It has an optional
+.I rules
+object (per\-rule
+.IR enabled ", " severity " and " params ),
+an optional
+.I gate
+object (\fImaxBlocker\fR, \fImaxCritical\fR, \fImaxMajor\fR, \fImaxMinor\fR,
+\fImaxInfo\fR, \fImaxTotal\fR; \fB\-1\fR means unlimited on that axis), an
+optional
+.I suppressions
+array and an optional
+.I useTier
+object. Unknown keys are ignored for forward compatibility. A ready\-to\-edit
+file containing every rule can be produced with
+.BR "fpsonar init\-config" .
+
+.SH EXAMPLES
+Analyze a single unit:
+.PP
+.RS
+.B fpsonar analyze myunit.pas
+.RE
+.PP
+Analyze a tree, writing a SARIF report:
+.PP
+.RS
+.B fpsonar analyze src/ \-\-format sarif \-o report.sarif
+.RE
+.PP
+Analyze a Lazarus project with extra unit paths and a define:
+.PP
+.RS
+.B fpsonar analyze myproject.lpi \-Mobjfpc \-dDEBUG \-Fu/path/to/units
+.RE
+.PP
+Generate a configuration, edit it, and use it:
+.PP
+.RS
+.B fpsonar init\-config \-o myrules.json
+.br
+.B fpsonar analyze src/ \-\-config myrules.json
+.RE
+
+.SH SEE ALSO
+.BR fpc (1),
+.BR ppudump (1),
+.BR fpdoc (1)
+
+.SH AUTHOR
+fpsonar was written by Michael Van Canneyt.
+.PP
+This manual page is part of the Free Pascal
+.I fcl\-sonar
+package.
