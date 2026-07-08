@@ -185,12 +185,41 @@ The
 flags accept both the glued (\fB\-FuX\fR) and the separated (\fB\-Fu X\fR) forms.
 
 .SH SUPPRESSING FINDINGS
-An individual finding can be silenced by adding a
+A single finding can be silenced by adding a
 .B // NOSONAR
-comment to the offending line. Whole classes of findings can be silenced from
-the configuration file through its
+comment to the offending line.
+.PP
+Findings can also be silenced in bulk from the configuration file through its
 .I suppressions
-globs, which match on rule id and/or file path.
+array. Each entry is an object with an optional
+.I rule
+and an optional
+.I path
+(at least one is required). A finding is suppressed when
+.B both
+patterns match it: its rule id matches
+.I rule
+.B and
+its file name matches
+.IR path .
+An omitted field acts as a
+.B *
+wildcard. The patterns are case\-sensitive globs in which
+.B *
+matches any run of characters (including path separators),
+.B ?
+matches exactly one character, and every other character matches literally.
+.PP
+Suppressing a rule differs from disabling it (\fI"enabled": false\fR in the
+.I rules
+object). A disabled rule never runs, produces no findings anywhere and cannot
+be scoped; a suppressed rule still runs and only the findings matching the
+.IR rule / path
+globs are hidden, so a rule can stay active project\-wide except for the paths
+where it should not apply. Because the rule still runs, suppressed findings are
+not discarded under
+.BR \-\-baseline :
+they are reported and annotated with their suppression source.
 
 .SH EXIT STATUS
 .TP
