@@ -1,0 +1,5 @@
+Free Pascal for i8086 no longer requires an installation of Open Watcom, since FPC now has an internal linker and library manager for i8086-msdos.
+
+Additional information about the i8086 version of Free Pascal is available in the Free Pascal wiki:
+
+http://wiki.freepascal.org/DOS
