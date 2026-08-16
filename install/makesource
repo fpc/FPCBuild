@@ -1,44 +1,144 @@
-#!/bin/sh
-
-set -e
-
-if [ $# -eq 1 ]; then
-  VERSION=$1
-  GITTAGVER=`echo $VERSION | tr '.' '_'`
-  GITTAG="release_$GITTAGVER"
-elif [ $# -eq 3 ] && [ $1 = "-gittag" ]; then
-  GITTAG=$2
-  VERSION=$3
-else
-  echo "Usage: makesource [-gittag <tag>] <release>"
-  echo "Examples: makesource -gittag release_3_2_4-branch 3.2.4-rc1"
-  echo "          makesource 2.2.4"
+#!/bin/bash
+#
+# Usage
+#
+function usage () {
+  echo "Usage: $0 [options] version"
+  echo "where version is the version id and option is one of"
+  echo " -h --help            this help"
+  echo " -b --build FILE      Build source archive base filename"
+  echo " -n --skip-version    Skip version check on fpc dir"
+  echo " -s --src FILE        FPC Source archive base filename"
+  echo " -d --doc FILE        Documentation source archive base filename"
+  echo " -t --tree-ish TREE   tag/branch to use (HEAD by default)"
+}
+#
+# Usage
+#
+while test $# != 0
+do  
+  f=$1
+  case $f in
+  -h|--help) usage
+      exit 0;;
+  -s|--src)
+     shift
+     PACKNAME=$1;;
+  -b|--build)
+     shift
+     BUILDNAME=$1;;
+  -d|--doc)
+     shift
+     DOCNAME=$1;;
+  -t|--tree-ish)
+     shift
+     TREE=$1;;
+  *) VERSION=$1;;
+  esac
+  shift
+done
+#
+# Sanity checks
+#
+if [ ! -d fpcdocs ]; then
+  echo "No fpcdocs found. Execute this in the fpcbuild repo root dir"
   exit 1
 fi
 
-PACKNAME=fpc-$VERSION.source
-OUTPUTDIR=..
+if [ ! -d fpcsrc ]; then
+  echo "No fpcsrc found. Execute this in the fpcbuild repo root dir"
+  exit 1
+fi
 
-rm -rf buildsrc
+if [ -z "$VERSION" ]; then
+  echo "Error: Missing version"
+  usage
+  exit 1
+fi
+#
+# Check source version
+#
+grep "version=$VERSION" fpcsrc/Makefile.fpc >/dev/null  2>&1
+if [ "$?" = "0" ]; then
+  echo "Source version check OK"  
+else  
+  echo "Version $VERSION not detected in fpcsrc/Makefile.fpc."
+  if [ "$SKIPVERSIONCHECK" != 'YES' ]; then
+    echo "Aborting. supply the -n command to skip this check"
+    exit 1
+  else
+    echo "Ignoring wrong source version"  
+  fi     
+fi
+#
+# Check build version
+#
+grep "version=$VERSION" Makefile.fpc >/dev/null  2>&1
+if [ "$?" = "0" ]; then
+  echo "Build repo version check OK"  
+else  
+  echo "Version $VERSION not detected in Makefile.fpc."
+  if [ "$SKIPVERSIONCHECK" != 'YES' ]; then
+    echo "Aborting. supply the -n command to skip this check"
+    exit 1
+  else
+    echo "Ignoring wrong build repo version"  
+  fi     
+fi
+#
+# Check documentation version
+#  
+grep "$VERSION" fpcdocs/fpc.sty >/dev/null  2>&1
+if [ "$?" = "0" ]; then
+  echo "Documentation version check OK"  
+else  
+  echo "Version $VERSION not detected in fpcdocs/fpc.sty. Aborting."
+  if [ "$SKIPVERSIONCHECK" != 'YES' ]; then
+    echo "Aborting. Supply the -n command to skip this check"
+    exit 1
+  else
+    echo "Ignoring wrong documentation version"  
+  fi
+fi
 
-mkdir buildsrc
-cd buildsrc
+#
+# Set some defaults
+#
+if [ -z "$PACKNAME" ]; then
+  PACKNAME=fpc-${VERSION}.source
+fi
 
-GITREPO=https://gitlab.com/freepascal.org/fpc/source.git
-git clone --depth 1 --branch $GITTAG $GITREPO fpc-$VERSION
+if [ -z "$DOCNAME" ]; then
+  DOCNAME=docs-${VERSION}.source
+fi
 
-rm -f $OUTPUTDIR/$PACKNAME.tar.gz $OUTPUTDIR/$PACKNAME.zip
-cd fpc-$VERSION
-git config core.eol crlf
-git ls-files -z | xargs -0 rm
-git checkout .
-rm -rf .git
-cd ..
-zip -D9r $OUTPUTDIR/$PACKNAME.zip fpc-$VERSION
+if [ -z "$BUILDNAME" ]; then
+  BUILDNAME=fpcbuild-${VERSION}.source
+fi
 
-rm -rf fpc-$VERSION
-git clone --depth 1 --branch $GITTAG $GITREPO fpc-$VERSION
-rm -rf fpc-$VERSION/.git
-tar cfv - fpc-$VERSION/ | gzip > $OUTPUTDIR/$PACKNAME.tar.gz
-cd ..
-rm -rf buildsrc
+if [ -z "$TREE" ]; then
+  TREE=HEAD
+fi
+#
+# Start archiving. Note that the archives are fake-root (root/root owner)
+#
+echo "Creating source archive $PACKNAME.tar.gz"
+git -C fpcsrc archive --format=tar.gz -o ../$PACKNAME.tar.gz $TREE
+
+echo "Creating source archive $PACKNAME.zip"
+git -C fpcsrc archive --format=zip -o ../$PACKNAME.zip $TREE
+
+echo "Creating documentation source archive $DOCNAME.tar.gz"
+git -C fpcdocs archive --format=tar.gz -o ../$DOCNAME.tar.gz $TREE
+
+echo "Creating documentation source archive $DOCNAME.zip"
+git -C fpcdocs archive --format=zip -o ../$DOCNAME.zip $TREE
+
+echo "Creating build source archive $BUILDNAME.tar.gz"
+git archive --format=tar.gz -o $BUILDNAME.tar.gz $TREE
+
+echo "Creating build source archive $BUILDNAME.zip"
+git archive --format=zip -o $BUILDNAME.zip $TREE
+#
+# That's all, folks !
+#
