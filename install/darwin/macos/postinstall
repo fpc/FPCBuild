@@ -1,5 +1,12 @@
 #!/bin/sh
 
-export PATH=/usr/local/bin:$PATH
-version=`"$2"usr/local/bin/fpc -iV`
-"$2"usr/local/lib/fpc/"$version"/samplecfg "$2"usr/local/lib/fpc/"$version" "$4"/etc
+# $2 is the install destination and $4 the root of the system. Both are "/" for
+# the boot volume and a volume path without a trailing slash for any other one.
+dest=${2%/}
+root=${4%/}
+
+PATH=$dest/usr/local/bin:$PATH
+export PATH
+
+version=`"$dest"/usr/local/bin/fpc -iV`
+"$dest"/usr/local/lib/fpc/"$version"/samplecfg "$dest"/usr/local/lib/fpc/"$version" "$root"/etc
