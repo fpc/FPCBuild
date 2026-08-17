@@ -4,7 +4,7 @@
 
 [package]
 name=fpc
-version=3.2.4-rc1
+version=3.2.4-rc2
 
 [target]
 dirs=fpcsrc fpcdocs
@@ -69,33 +69,38 @@ FPC_VERSION:=$(BS_FPC_VERSION)
 
 help:
 	@$(ECHO)
-	@$(ECHO) Targets
-	@$(ECHO)    all         Alias for build
-	@$(ECHO)    build       Build a new compiler and all packages
-	@$(ECHO)    install     Install newly build files
-	@$(ECHO)    zipinstall  Create a zip/tar archive for every package
-	@$(ECHO)    singlezipinstall
-	@$(ECHO)                Create a single zip/tar archive
-	@$(ECHO)    crosszipinstall
-	@$(ECHO)                Build a cross compiler and create zip/tar for every package
-	@$(ECHO)    crosssinglezipinstall
-	@$(ECHO)                Build a cross compiler and a create single zip/tar archive
+	@$(ECHO) "Targets"
+	@$(ECHO) "   all         Alias for build"
+	@$(ECHO) "   build       Build a new compiler and all packages"
+	@$(ECHO) "   install     Install newly build files"
+	@$(ECHO) "   zipinstall  Create a zip/tar archive for every package"
+	@$(ECHO) "   singlezipinstall"
+	@$(ECHO) "               Create a single zip/tar archive"
+	@$(ECHO) "   crosszipinstall"
+	@$(ECHO) "               Build a cross compiler and create zip/tar for every package"
+	@$(ECHO) "   crosssinglezipinstall"
+	@$(ECHO) "               Build a cross compiler and a create single zip/tar archive"
+	@$(ECHO) "   updateversion"
+	@$(ECHO) "               Update version numbers (needs PACKAGE_VERSION set)"
+	@$(ECHO) "   sourcezips"
+	@$(ECHO) "               Create source zips/tar.gz"
+
 	@$(ECHO)
-	@$(ECHO) Distribution Targets:
-	@$(ECHO)    rpm         Build linux .rpm packages
-	@$(ECHO)    deb         Build linux .deb packages
-	@$(ECHO)    inno        "Build Windows (Innosetup) based installer"
-	@$(ECHO)    innox64     "Build Win32-Win64 cross compiler installer"
-	@$(ECHO)    innox86x64  "Build Windows (Innosetup) combined installer for Win32 and Win64"
-	@$(ECHO)    innoce      "Build Win32-Wince cross compiler installer"
-	@$(ECHO)    innomsdos   "Build Win32-MsDos cross compiler installer"
-	@$(ECHO)    innoandroid "Build Win32-Android cross compiler installer"
-	@$(ECHO)    tar         Build .tar installer
+	@$(ECHO) "Distribution Targets:"
+	@$(ECHO) "   rpm         Build linux .rpm packages"
+	@$(ECHO) "   deb         Build linux .deb packages"
+	@$(ECHO) "   inno        Build Windows (Innosetup) based installer"
+	@$(ECHO) "   innox64     Build Win32-Win64 cross compiler installer"
+	@$(ECHO) "   innox86x64  Build Windows (Innosetup) combined installer for Win32 and Win64"
+	@$(ECHO) "   innoce      Build Win32-Wince cross compiler installer"
+	@$(ECHO) "   innomsdos   Build Win32-MsDos cross compiler installer"
+	@$(ECHO) "   innoandroid Build Win32-Android cross compilerinstaller"
+	@$(ECHO) "   tar         Build .tar installer"
 	@$(ECHO)
-	@$(ECHO) FV based installer Targets:
-	@$(ECHO)    go32v2zip   Build .zip files for go32v2
-	@$(ECHO)    os2zip      Build .zip files for OS/2
-	@$(ECHO)    sourcezip   Build .zip files for the sources
+	@$(ECHO) "FV based installer Targets:"
+	@$(ECHO) "   go32v2zip   Build .zip files for go32v2"
+	@$(ECHO) "   os2zip      Build .zip files for OS/2"
+	@$(ECHO) "   sourcezip   Build .zip files for the sources"
 	@$(ECHO)
 	@exit
 
@@ -116,7 +121,16 @@ endif
 
 BUILDSTAMP=fpcsrc/build-stamp.$(FULL_TARGET)
 
-.PHONY: all clean distclean build install installbase zipinstall singlezipinstall crosssinglezipinstall
+.PHONY: all clean distclean build install installbase zipinstall singlezipinstall crosssinglezipinstall updateversion sourcezips
+
+updateversion: install/updatever$(EXEEXT)
+	install/updatever$(EXEEXT) $(PACKAGE_VERSION)
+	cd fpcsrc && ../install/updmkver $(PACKAGE_VERSION)
+install/updatever$(EXEEXT): install/updatever.pp
+	fpc $< 
+
+sourcezips: install/makesource
+	install/makesource $(PACKAGE_VERSION)
 
 all: build
 
