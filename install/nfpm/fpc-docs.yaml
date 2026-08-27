@@ -1,0 +1,28 @@
+# nfpm description of the Free Pascal documentation package.
+#
+# Copyright 1996-2026 the Free Pascal development team.
+
+name: fpc-docs
+arch: all
+platform: linux
+version: ${NFPM_VERSION}
+version_schema: semver
+release: ${NFPM_RELEASE}
+
+section: doc
+priority: optional
+
+maintainer: Free Pascal development team <fpc-devel@lists.freepascal.org>
+vendor: Free Pascal
+homepage: https://www.freepascal.org/
+license: GPL-2.0-or-later and modified LGPL-2.0-or-later
+
+description: |
+  Free Pascal Compiler documentation and examples
+  The reference guides, the user manual and the other manuals in PDF form,
+  together with the example programs.
+
+contents:
+  - src: ./stage-docs/usr
+    dst: /usr
+    type: tree
