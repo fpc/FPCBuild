@@ -371,6 +371,32 @@ ls "$WINBIN" | head -20 | while read -r f ; do echo "    $f" ; done
 # the installers
 # ---------------------------------------------------------------------------
 
+# The tree is checked out with unix line endings, a windows checkout has CRLF.
+# Inno Setup packs the text files as they are, so the staging tree is converted
+# before the installer is compiled. A file with a NUL byte and a file that
+# already has a CR are left alone, which covers the .chm files, the units and
+# the executables.
+fixeol ()
+{
+  local dir=$1 n=0 f=
+  [ -d "$dir" ] || die "$dir not found, the staging step did not run"
+  while IFS= read -r -d '' f ; do
+    grep -Iq . "$f" 2> /dev/null || continue
+    if grep -q $'\r' "$f" ; then continue ; fi
+    sed -i 's/$/\r/' "$f"
+    n=$((n+1))
+  done < <(find "$dir" -type f -print0)
+  log "converted $n text files to CRLF in $dir"
+}
+
+# Fill the staging tree, convert the line endings, compile the installer.
+makeinstaller ()
+{
+  wmake "$1stage" "${MAKEARGS[@]}"
+  fixeol "$BASEDIR/build/inno"
+  wmake "$1pack" "${MAKEARGS[@]}"
+}
+
 # The order is fixed and does not follow the order of --installers.
 #
 # Building the win64 cross compiler starts with "rtlclean rtl" for the source
@@ -386,17 +412,17 @@ ls "$WINBIN" | head -20 | while read -r f ; do echo "    $f" ; done
 built=
 case ",$INSTALLERS," in *,win32,*)
   log "=== make inno (win32) ==="
-  wmake inno "${MAKEARGS[@]}"
+  makeinstaller inno
   built="$built inno" ;;
 esac
 case ",$INSTALLERS," in *,combined,*)
   log "=== make innox86x64 (win32 and win64 in one installer) ==="
-  wmake innox86x64 "${MAKEARGS[@]}"
+  makeinstaller innox86x64
   built="$built innox86x64" ;;
 esac
 case ",$INSTALLERS," in *,win64cross,*)
   log "=== make innox64 (win32 hosted cross compiler to win64) ==="
-  wmake innox64 "${MAKEARGS[@]}"
+  makeinstaller innox64
   built="$built innox64" ;;
 esac
 

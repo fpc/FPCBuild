@@ -3534,7 +3534,7 @@ ifeq ($(wildcard fpcsrc/libgdb/win32/i386/libgdb.a),)
 endif
 endif
 endif
-innobuild: innocheck build
+innobuildstage: innocheck build
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
 	$(MKDIR) $(INNODIR)
@@ -3545,9 +3545,11 @@ ifndef NODOCS
 endif
 	$(MAKE) install INSTALL_PREFIX=$(INNODIR)
 	rmcvsdir$(EXEEXT) $(INNODIR)
+innobuildpack:
 	fpcmkcfg -t install/fpc.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	$(INNOCMD_ISCC)
 	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).$(FULL_TARGET).exe
+innobuild: innobuildstage innobuildpack
 innocebuild: innocheck buildce
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
@@ -3558,17 +3560,19 @@ innocebuild: innocheck buildce
 	fpcmkcfg -t install/fpcce.ist -o $(INNODIR)/fpcce.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcce.iss
 	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
-innox64build: innocheck buildx64
+innox64buildstage: innocheck buildx64
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
 	$(MKDIR) $(INNODIR)
 	$(COPYTREE) demo $(INNODIR)
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=win64 CPU_TARGET=x86_64
 	rmcvsdir$(EXEEXT) $(INNODIR)
+innox64buildpack:
 	fpcmkcfg -t install/fpcx64.ist -o $(INNODIR)/fpcx64.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	"$(ISCCPROG)" $(INNODIR)/fpcx64.iss
 	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).$(FULL_SOURCE).cross.$(FULL_TARGET).exe
-innox86x64build: innocheck
+innox64build: innox64buildstage innox64buildpack
+innox86x64buildstage: innocheck
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
 	$(MKDIR) $(INNODIR)
@@ -3580,9 +3584,11 @@ endif
 	$(MAKE) install INSTALL_PREFIX=$(INNODIR)
 	$(MAKE) crossinstall INSTALL_PREFIX=$(INNODIR) OS_TARGET=win64 CPU_TARGET=x86_64
 	rmcvsdir$(EXEEXT) $(INNODIR)
+innox86x64buildpack:
 	fpcmkcfg -t install/fpcx86x64.ist -o $(INNODIR)/fpc.iss $(FPCISSSUBST) -d FPCVERSION=$(PACKAGE_VERSION)
 	$(INNOCMD_ISCC)
 	$(MOVE) $(INNODIR)/Output/fpc-setup.exe fpc-$(PACKAGE_VERSION).win32.and.win64.exe
+innox86x64build: innox86x64buildstage innox86x64buildpack
 innojvmbuild: innocheck buildjvm
 	rmcvsdir$(EXEEXT) $(INNODIR)
 	$(DELTREE) $(INNODIR)
@@ -3677,3 +3683,15 @@ innoandroid : checkfpcdir
 	$(MAKE) innoandroidbuild NOGDB=1
 	$(MAKE) innoclean
 inno: checkfpcdir innobuild innoclean
+innostage : checkfpcdir innobuildstage
+innopack : checkfpcdir innobuildpack innoclean
+innox86x64stage : checkfpcdir
+	$(MAKE) innox86x64buildstage
+innox86x64pack : checkfpcdir
+	$(MAKE) innox86x64buildpack
+	$(MAKE) innoclean
+innox64stage : checkfpcdir
+	$(MAKE) OS_TARGET=win64 CPU_TARGET=x86_64 innox64buildstage NOGDB=1
+innox64pack : checkfpcdir
+	$(MAKE) OS_TARGET=win64 CPU_TARGET=x86_64 innox64buildpack NOGDB=1
+	$(MAKE) innoclean
