@@ -114,6 +114,25 @@ The order in which the installers are built.
     inno and innox86x64 install win32 units, innox64 installs only win64 units,
     so that order keeps every installer self consistent.
 
+The line endings of the installed text files.
+
+    A windows checkout has CRLF line endings, a linux checkout has LF, and Inno
+    Setup packs the files as it finds them. The demo tree, the examples, the
+    files in doc\fpc, the unicode data and the compiler messages would
+    therefore be installed with unix line endings and show up as one long line
+    in notepad.
+
+    Each installer is built in two steps for that reason. The stage half of the
+    make target (innostage, innox86x64stage, innox64stage) fills build/inno,
+    the script then converts the text files there to CRLF, and the pack half
+    (innopack, innox86x64pack, innox64pack) writes the .iss file, runs ISCC and
+    cleans up. The conversion skips a file that has a NUL byte and a file that
+    already has a CR, so the .chm files, the units and the executables are left
+    alone. The checkout itself is never touched: build/inno is a copy.
+
+    A native windows build still uses inno, innox86x64 and innox64, which run
+    both halves in one go and need no conversion.
+
 The build runs without -j: the GNU make 3.82 that ships in install/binw32 has
 no working jobserver on Windows. This is the slowest part of the run.
 
