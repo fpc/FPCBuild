@@ -2689,6 +2689,9 @@ help:
 	@$(ECHO) "Distribution Targets:"
 	@$(ECHO) "   rpm         Build linux .rpm packages"
 	@$(ECHO) "   deb         Build linux .deb packages"
+	@$(ECHO) "   nfpm        Build linux distribution packages with nfpm (.deb, .rpm, ...)"
+	@$(ECHO) "   nfpmsrc     Build the same for the sources"
+	@$(ECHO) "   nfpmdocs    Build the same for the documentation"
 	@$(ECHO) "   inno        Build Windows (Innosetup) based installer"
 	@$(ECHO) "   innox64     Build Win32-Win64 cross compiler installer"
 	@$(ECHO) "   innox86x64  Build Windows (Innosetup) combined installer for Win32 and Win64"
@@ -3319,6 +3322,89 @@ rpm: checkfpcdir rpmcopy rpmbuild rpmclean
 endif   # spec found
 endif   # rpm available
 endif   # inUnix
+ifeq ($(OS_TARGET),linux)
+NFPM:=$(firstword $(strip $(wildcard $(addsuffix /nfpm$(SRCEXEEXT),$(SEARCHPATH)))))
+NFPMFPCVER:=$(firstword $(subst -, ,$(PACKAGE_VERSION)))
+NFPMCONFDIR=$(BASEDIR)/$(CVSINSTALL)/nfpm
+NFPMBUILDDIR=$(BUILDDIR)/nfpm
+NFPMSTAGE=$(NFPMBUILDDIR)/stage
+NFPMSRCSTAGE=$(NFPMBUILDDIR)/stage-src
+NFPMDOCSTAGE=$(NFPMBUILDDIR)/stage-docs
+ifndef NFPMFORMATS
+NFPMFORMATS=deb rpm
+endif
+ifndef NFPMRELEASE
+NFPMRELEASE=1
+endif
+ifndef NFPMOUTDIR
+NFPMOUTDIR=$(BASEDIR)
+endif
+NFPMARCH_i386=386
+NFPMARCH_x86_64=amd64
+NFPMARCH_arm=arm7
+NFPMARCH_aarch64=arm64
+NFPMARCH_powerpc64=ppc64
+NFPMARCH_powerpc64le=ppc64le
+ifeq ($(NFPMARCH_$(CPU_TARGET)),)
+NFPMARCH=$(CPU_TARGET)
+else
+NFPMARCH=$(NFPMARCH_$(CPU_TARGET))
+endif
+export NFPM_ARCH=$(NFPMARCH)
+export NFPM_VERSION=$(PACKAGE_VERSION)
+export NFPM_RELEASE=$(NFPMRELEASE)
+.PHONY: nfpmcheck nfpmscripts nfpmstage nfpm nfpmsrcstage nfpmsrc nfpmdocstage nfpmdocs nfpmclean
+nfpmcheck:
+ifeq ($(NFPM),)
+	@$(ECHO) "nfpm not found in the path. See https://nfpm.goreleaser.com/install/"
+	@exit 1
+endif
+nfpmscripts:
+	$(MKDIRTREE) $(NFPMBUILDDIR)/scripts
+	sed -e 's+@FPCVERSION@+$(NFPMFPCVER)+g' $(NFPMCONFDIR)/postinstall.sh.in > $(NFPMBUILDDIR)/scripts/postinstall.sh
+	sed -e 's+@FPCVERSION@+$(NFPMFPCVER)+g' $(NFPMCONFDIR)/postremove.sh.in > $(NFPMBUILDDIR)/scripts/postremove.sh
+	chmod 755 $(NFPMBUILDDIR)/scripts/postinstall.sh $(NFPMBUILDDIR)/scripts/postremove.sh
+nfpmstage: $(BUILDSTAMP) nfpmscripts
+	$(DELTREE) $(NFPMSTAGE)
+	$(MKDIRTREE) $(NFPMSTAGE)/usr/bin
+	$(MAKE) install INSTALL_PREFIX=$(NFPMSTAGE)/usr INSTALL_MANDIR=$(NFPMSTAGE)/usr/share/man
+	for f in $(NFPMSTAGE)/usr/lib/fpc/$(NFPMFPCVER)/ppc* ; do \
+	  if [ -x "$$f" ] ; then \
+	    ln -sf /usr/lib/fpc/$(NFPMFPCVER)/`basename $$f` $(NFPMSTAGE)/usr/bin/`basename $$f` ; \
+	  fi ; \
+	done
+	chmod -R go-w $(NFPMSTAGE)
+nfpm: nfpmcheck nfpmstage
+	for f in $(NFPMFORMATS) ; do \
+	  cd $(NFPMBUILDDIR) && $(NFPM) pkg -f $(NFPMCONFDIR)/fpc.yaml -p $$f -t $(NFPMOUTDIR) || exit 1 ; \
+	done
+nfpmsrcstage:
+ifndef NFPMSRCCLEAN
+	@$(ECHO) "make sourceinstall runs distclean first and removes everything that was built."
+	@$(ECHO) "Run this in a separate checkout, or pass NFPMSRCCLEAN=1 to confirm."
+	@exit 1
+endif
+	$(DELTREE) $(NFPMSRCSTAGE)
+	$(MKDIRTREE) $(NFPMSRCSTAGE)/usr
+	$(MAKE) -C fpcsrc sourceinstall INSTALL_PREFIX=$(NFPMSRCSTAGE)/usr
+	chmod -R go-w $(NFPMSRCSTAGE)
+nfpmsrc: nfpmcheck nfpmsrcstage
+	for f in $(NFPMFORMATS) ; do \
+	  cd $(NFPMBUILDDIR) && $(NFPM) pkg -f $(NFPMCONFDIR)/fpc-src.yaml -p $$f -t $(NFPMOUTDIR) || exit 1 ; \
+	done
+nfpmdocstage:
+	@[ -f doc-pdf.tar.gz ] || { $(ECHO) "doc-pdf.tar.gz not found, run make -C fpcdocs pdftar first." ; exit 1 ; }
+	$(DELTREE) $(NFPMDOCSTAGE)
+	$(MKDIRTREE) $(NFPMDOCSTAGE)/usr/share/doc/fpc-$(NFPMFPCVER)
+	tar -C $(NFPMDOCSTAGE)/usr/share/doc/fpc-$(NFPMFPCVER) --strip-components=1 -xzf doc-pdf.tar.gz
+	chmod -R go-w $(NFPMDOCSTAGE)
+nfpmdocs: nfpmcheck nfpmdocstage
+	for f in $(NFPMFORMATS) ; do \
+	  cd $(NFPMBUILDDIR) && $(NFPM) pkg -f $(NFPMCONFDIR)/fpc-docs.yaml -p $$f -t $(NFPMOUTDIR) || exit 1 ; \
+	done
+nfpmclean:
+	$(DELTREE) $(NFPMBUILDDIR)
+endif   # linux
 ifeq ($(OS_TARGET),android)
 ifneq ($(CPU_TARGET),jvm)
 ifdef CROSSCOMPILE

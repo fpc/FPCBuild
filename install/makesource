@@ -21,6 +21,8 @@ do
   case $f in
   -h|--help) usage
       exit 0;;
+  -n|--skip-version)
+     SKIPVERSIONCHECK=YES;;
   -s|--src)
      shift
      PACKNAME=$1;;
@@ -119,26 +121,64 @@ fi
 if [ -z "$TREE" ]; then
   TREE=HEAD
 fi
+
+if [ -z "$SRCPREFIX" ]; then
+  SRCPREFIX=fpc-${VERSION}
+fi
+
+if [ -z "$DOCPREFIX" ]; then
+  DOCPREFIX=fpcdocs-${VERSION}
+fi
+
+if [ -z "$BUILDPREFIX" ]; then
+  BUILDPREFIX=fpcbuild-${VERSION}
+fi
 #
-# Start archiving. Note that the archives are fake-root (root/root owner)
+# Start archiving. Note that the archives are fake-root (root/root owner).
+# Every archive unpacks into a single directory. The .zip archives use CRLF
+# line endings for text files, the .tar.gz archives keep LF.
 #
 echo "Creating source archive $PACKNAME.tar.gz"
-git -C fpcsrc archive --format=tar.gz -o ../$PACKNAME.tar.gz $TREE
+git -C fpcsrc archive --format=tar.gz --prefix=$SRCPREFIX/ -o ../$PACKNAME.tar.gz $TREE
 
 echo "Creating source archive $PACKNAME.zip"
-git -C fpcsrc archive --format=zip -o ../$PACKNAME.zip $TREE
+git -C fpcsrc -c core.autocrlf=true archive --format=zip --prefix=$SRCPREFIX/ -o ../$PACKNAME.zip $TREE
 
 echo "Creating documentation source archive $DOCNAME.tar.gz"
-git -C fpcdocs archive --format=tar.gz -o ../$DOCNAME.tar.gz $TREE
+git -C fpcdocs archive --format=tar.gz --prefix=$DOCPREFIX/ -o ../$DOCNAME.tar.gz $TREE
 
 echo "Creating documentation source archive $DOCNAME.zip"
-git -C fpcdocs archive --format=zip -o ../$DOCNAME.zip $TREE
+git -C fpcdocs -c core.autocrlf=true archive --format=zip --prefix=$DOCPREFIX/ -o ../$DOCNAME.zip $TREE
+#
+# The build archive contains the fpcsrc and fpcdocs submodules. git archive
+# does not descend into submodules, so the tree is assembled in a temp dir.
+# Argument 1 is the value for core.autocrlf.
+#
+BASEDIR=`pwd`
+WORKDIR=`mktemp -d`
+trap "rm -rf $WORKDIR" EXIT
+
+function buildtree () {
+  rm -rf $WORKDIR/$BUILDPREFIX
+  mkdir -p $WORKDIR/$BUILDPREFIX
+  git -c core.autocrlf=$1 archive --format=tar $TREE | tar -C $WORKDIR/$BUILDPREFIX -xf -
+  mkdir -p $WORKDIR/$BUILDPREFIX/fpcsrc $WORKDIR/$BUILDPREFIX/fpcdocs
+  git -C fpcsrc -c core.autocrlf=$1 archive --format=tar $TREE | tar -C $WORKDIR/$BUILDPREFIX/fpcsrc -xf -
+  git -C fpcdocs -c core.autocrlf=$1 archive --format=tar $TREE | tar -C $WORKDIR/$BUILDPREFIX/fpcdocs -xf -
+}
 
 echo "Creating build source archive $BUILDNAME.tar.gz"
-git archive --format=tar.gz -o $BUILDNAME.tar.gz $TREE
+buildtree false
+rm -f $BASEDIR/$BUILDNAME.tar.gz
+tar -C $WORKDIR --owner=0 --group=0 -czf $BASEDIR/$BUILDNAME.tar.gz $BUILDPREFIX
 
 echo "Creating build source archive $BUILDNAME.zip"
-git archive --format=zip -o $BUILDNAME.zip $TREE
+buildtree true
+rm -f $BASEDIR/$BUILDNAME.zip
+cd $WORKDIR && zip -qrD9 $BASEDIR/$BUILDNAME.zip $BUILDPREFIX
+cd $BASEDIR
+
+rm -rf $WORKDIR
 #
 # That's all, folks !
 #

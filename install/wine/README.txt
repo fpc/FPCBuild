@@ -121,6 +121,23 @@ The inno rules call rmcvsdir.exe, fpcmkcfg and unzip without a path, so the
 script gathers the freshly built utilities in build/winbin and puts that
 directory on the Windows PATH.
 
-wine prints "Read access denied for device Z:\" once per program start. Z: is
-mapped to the root of the file system and the volume label cannot be read. It
-is harmless.
+The tree gets its own drive letter in the wine prefix.
+
+    wine maps Z: to the root of the file system. The root is a mount point, so
+    wine looks for the label and the serial number of that volume in the block
+    device the root is mounted from, and a normal user may not read that
+    device. Every program that asks for the volume information of a path on Z:
+    then produces
+
+        wine: Read access denied for device L"\??\Z:\", FS volume label and
+        serial are not available.
+
+    make.exe asks at every start, so a build that runs on Z: prints thousands
+    of these lines. A drive that points at a plain directory instead of at a
+    mount point has no device and wine makes up a label and a serial for it.
+    The script therefore links a free drive letter, t: if it is free, to the
+    tree and lets the whole build run on that drive. The message is gone, and
+    the paths in the build log are short.
+
+    The drive list is read when the wine services start, so the script kills a
+    running wineserver after it makes the link.

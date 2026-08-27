@@ -4,3 +4,6 @@
 *.pp diff=pascal
 *.pas diff=pascal
 *.inc diff=pascal
+
+# Generated staging trees, never part of a source archive.
+/build export-ignore
