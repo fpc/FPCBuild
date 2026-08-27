@@ -176,6 +176,55 @@ if [ ! -d "$WINEPREFIX" ] ; then
 fi
 
 # ---------------------------------------------------------------------------
+# the drive letter of the tree
+# ---------------------------------------------------------------------------
+
+# Z: is mapped to the root of the file system, which is a mount point, so wine
+# looks for the label and the serial number of that volume in the block device
+# the root is mounted from. A normal user may not read that device, and wine
+# says so for every program that asks for the volume information of a path on
+# Z:, make.exe among them:
+#
+#     wine: Read access denied for device L"\??\Z:\", FS volume label and
+#     serial are not available.
+#
+# A drive that points at a plain directory instead of at a mount point has no
+# device, and wine makes up a label and a serial for it. Giving the tree its
+# own drive letter therefore keeps the whole build off Z: and the message away.
+TREEDRIVE=
+TREEREAL=$(readlink -f "$WORKBASE")
+for d in "$WINEPREFIX"/dosdevices/[c-y]: ; do
+  [ -L "$d" ] || continue
+  # a drive left behind by an earlier run through a lowercase symlink
+  if [ ! -e "$d" ] ; then
+    case "$(readlink "$d")" in /tmp/fpcwine-tree.*) rm -f "$d" ;; esac
+    continue
+  fi
+  [ "$(readlink -f "$d")" = "$TREEREAL" ] || continue
+  TREEDRIVE=$(basename "$d")
+  break
+done
+if [ -z "$TREEDRIVE" ] ; then
+  for l in t u v w x y e f g h i j k l m n o p q r s ; do
+    # a letter with a device link is a real disk or a cdrom, leave it alone
+    [ ! -e "$WINEPREFIX/dosdevices/$l::" ] && [ ! -L "$WINEPREFIX/dosdevices/$l::" ] || continue
+    [ ! -e "$WINEPREFIX/dosdevices/$l:" ] && [ ! -L "$WINEPREFIX/dosdevices/$l:" ] || continue
+    ln -sfn "$WORKBASE" "$WINEPREFIX/dosdevices/$l:"
+    TREEDRIVE=$l:
+    break
+  done
+fi
+if [ -n "$TREEDRIVE" ] ; then
+  log "the tree is drive $TREEDRIVE in the wine prefix"
+else
+  log "warning: no free drive letter in the prefix, the build runs on Z: and"
+  log "         wine prints a read access denied message for every program"
+fi
+# the drives are read when the wine services start, so a server that is already
+# running does not know the new letter yet
+wineserver -k 2> /dev/null || true
+
+# ---------------------------------------------------------------------------
 # fetching
 # ---------------------------------------------------------------------------
 

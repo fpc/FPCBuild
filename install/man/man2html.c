@@ -13,73 +13,14 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
 #define BUFSIZE 4096
 
-main(argc, argv)
-int argc;
-char *argv[];
-{
-	char buf[BUFSIZE];
-	static int blank = 1, uopt = 0, lineno = 0, bksp = 0;
 
-	/*
-	 * Options.
- 	 */
-	if (argc > 2)
-		usage();
-	if (argc == 2) {
-		if (strcmp(argv[1], "-u") == 0)
-			uopt = 1;
-		else
-			usage();
-	}
-
-	/*
-	 * Enclose in html envelope 
-	 */
-	puts("<BODY><PRE>");
-
-	/*
-	 * Process each line.  Count unresolved backspaces and issue
-	 * a warning message at the end.
-	 */
-	while (fgets(buf, BUFSIZE, stdin)) {
-	
-		lineno++;
-
-		/* 
-		 * if -u specified, compress duplicate blank lines 
-		 */
-		if (uopt) {
-			if (blankline(buf)) {
-				if (blank)
-					continue;
-				else
-					blank = 1;
-			} else
-				blank = 0;
-		}
-
-		bksp += html(buf, lineno);
-	}
-
-	/*
-	 * Close html envelope.
-	 */
-	puts("</PRE></BODY>");
-
-	/*
-	 * Warn about any unresolved backspaces.
-	 */
-	if (bksp > 0)
-		fprintf(stderr, 
-		    "man2html: warning: %d unresolved backspaces\n", bksp);
-
-	exit(0);
-}
-
-usage()
+void usage()
 {
 	fprintf(stderr, "man2html: usage: man2html [-u]\n");
 	exit(1);
@@ -89,8 +30,7 @@ usage()
  * Given a line, print it out as html.
  * Return the number of unprocessed backspaces in this line.
  */
-int
-html(s, lineno)
+int html(s, lineno)
 char *s;
 int lineno;
 {
@@ -268,3 +208,65 @@ char *s;
 }
 
 
+int main(argc, argv)
+int argc;
+char *argv[];
+{
+	char buf[BUFSIZE];
+	static int blank = 1, uopt = 0, lineno = 0, bksp = 0;
+
+	/*
+	 * Options.
+ 	 */
+	if (argc > 2)
+		usage();
+	if (argc == 2) {
+		if (strcmp(argv[1], "-u") == 0)
+			uopt = 1;
+		else
+			usage();
+	}
+
+	/*
+	 * Enclose in html envelope 
+	 */
+	puts("<BODY><PRE>");
+
+	/*
+	 * Process each line.  Count unresolved backspaces and issue
+	 * a warning message at the end.
+	 */
+	while (fgets(buf, BUFSIZE, stdin)) {
+	
+		lineno++;
+
+		/* 
+		 * if -u specified, compress duplicate blank lines 
+		 */
+		if (uopt) {
+			if (blankline(buf)) {
+				if (blank)
+					continue;
+				else
+					blank = 1;
+			} else
+				blank = 0;
+		}
+
+		bksp += html(buf, lineno);
+	}
+
+	/*
+	 * Close html envelope.
+	 */
+	puts("</PRE></BODY>");
+
+	/*
+	 * Warn about any unresolved backspaces.
+	 */
+	if (bksp > 0)
+		fprintf(stderr, 
+		    "man2html: warning: %d unresolved backspaces\n", bksp);
+
+	exit(0);
+}
