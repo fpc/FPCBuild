@@ -273,10 +273,12 @@ options.
 * Documentation
 ****************************************************************************
 
-The documentation is available as HTML pages, PDF, PS, and text although the
-recommended format is pdf. The latest PDF version is available on
-ftp://ftp.freepascal.org/fpc/dist/docs-pdf/, other formats are available
-for download in the directory of the respective distributed release.
+The documentation is available as HTML pages, PDF, CHM, PS, and text.
+The recommended format for viewing or printing is PDF. CHM format is the
+best option for using it in the FPC text mode IDE. The latest PDF version
+is available on https://downloads.freepascal.org/fpc/docs-pdf/, other
+formats are available for download in the directory of the respective
+distributed release.
 
 NB that there is at present no FPC specific documentation for the platform
 specific API (like Win32 system functions, etc.). There is a link to
@@ -302,14 +304,14 @@ Both these adresses are for mailing lists. If you're not subscribed,
 be sure to mention this fact when sending questions to these lists,
 so that people sending answers know about it and send you a copy.
 Information about available lists and subscription can be found
-on http://lists.freepascal.org/mailman/listinfo
+on https://lists.freepascal.org/mailman/listinfo
 
 Combined with Lazarus, an IDE for the Free Pascal Compiler:
-Web forum: http://forum.lazarus.freepascal.org (all questions)
-Wiki: http://wiki.freepascal.org
+Web forum: https://forum.lazarus.freepascal.org (all questions)
+Wiki: https://wiki.freepascal.org
 
-WWW: http://www.freepascal.org
-FTP: ftp://ftp.freepascal.org/fpc
+WWW: https://www.freepascal.org
+Downloads: https://downloads.freepascal.org/fpc/
 (several mirrors exist, see website for links)
 
 Additional information about mailing lists, news, future plans etc.
@@ -355,7 +357,7 @@ If you find a bug in the released version, you may want to try a snapshot
 the fpc-devel mailing list.
 
 If you find a fault or 'feature' in a release, please report it either
-using the bug reporting interface at http://bugs.freepascal.org, or to
+using the bug reporting interface at https://bugs.freepascal.org, or to
 the fpc-devel mailing list. PLEASE ALWAYS INCLUDE A COMPILABLE CODE
 FRAGMENT that can be used to reproduce the problem (or a link to larger
 archive if it cannot be reproduced with small example). Also state the
@@ -388,7 +390,7 @@ Some of the licenses of the third party tools require to make the source
 available. If you cannot find the sources or information where to find
 them for a certain tool under such a license included into the FPC
 distribution, please contact us through the contact details given
-at http://www.freepascal.org/moreinfo.var and we will provide you
+at https://www.freepascal.org/moreinfo.var and we will provide you
 the sources or information where to find them.
 
 The documentation, unless otherwise noted, is distributed as free
@@ -402,18 +404,20 @@ information about the library license is found in COPYING.FPC.
 
 License conditions for DPMI provider for GO32v2 version (CWSDPMI.EXE)
 can be found in cwsdpmi.txt, sources and/or binary updates may be
-downloaded from http://clio.rice.edu/cwsdpmi/.
+downloaded from https://sandmann.dotster.com/cwsdpmi/.
 
 The DOS version (go32v2) contains some binaries of DJGPP. You can obtain
-the full DJGPP package at: http://www.delorie.com/djgpp/
+the full DJGPP package at: https://www.delorie.com/djgpp/
 
 Similarly, the OS/2 version contains some binaries coming from the EMX
 port of GNU C/C++ and binutils, plus a later port of GNU 'as' performed
 outside of the FPC project. Both the EMX package and GCC binutils ports are
-available e.g. on http://web.archive.org/web/20240422064030/hobbes.nmsu.edu
-including their sources (under /pub/os2/dev/tools/toolkits/).
+available e.g. on https://web.archive.org/web/20240422064030/hobbes.nmsu.edu
+including their sources (in particular
+https://web.archive.org/web/20240115233626/https://hobbes.nmsu.edu/?path=%2Fpub%2Fos2%2Fdev%2Ftools%2Ftoolkits)
+or in the same area on https://hobbes.os-2.in/.
 
 NOTE: OS/2 version of the installer uses the library UNZIP32.DLL from
       Info-ZIP. Info-ZIP's software (Zip, UnZip and related utilities)
       is free and can be obtained as source code or executables from
-      Internet/WWW sites, including http://www.info-zip.org.
+      Internet/WWW sites, including https://infozip.sourceforge.net/.
