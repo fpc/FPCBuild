@@ -99,10 +99,10 @@ e-mail addresses are listed below.
 - support for the GNU debugger
 - integrated development environment (disabled by default on Mac OS X)
   - powerful user friendly Wordstar compatible multi file editor
-  - context sensitive help supports help files in HTML, Windows HLP and
-    Borland TPH format.
+  - context sensitive help supports help files in CHM, HTML, Windows HLP,
+    OS/2 INF and Borland TPH format.
   - debugger on most platforms
-- can create binaries running natively under both DOS and OS/2 (EMX version)
+- can create binaries running natively under both DOS and OS/2 (EMX target)
 - no need for Linux distribution specific binaries, programs you write run
   on all distributions
 - high quality documentation
@@ -121,9 +121,9 @@ Win32:
  - 128 MB RAM
 OS/2:
  - OS/2 Warp v3.0 with one of late fixpaks - FP 35 should be fine,
-   OS/2 Warp v4.0 with FP 5 and above, WSeB, MCP or any eComStation version
-   (OS/2 2.0/2.1 currently not supported, not even for compiled programs).
- - ArcaOS should be OK too, but it hasn't been tested.
+   OS/2 Warp v4.0 with FP 5 and above, WSeB, MCP or any eComStation or
+   ArcaOS versions (OS/2 2.0/2.1 currently not supported, not even for
+   compiled programs).
  - Certain features (e.g. Unicode support in the RTL) require proper support
    only available in later OS/2 versions (at least OS/2 Warp 4.0 FP14),
    otherwise the functionality may be limited (but the binaries still work
@@ -208,9 +208,9 @@ not recommend installing FPC to partitions formatted as FAT16, but it is
 possible, albeit with certain limitations (among others, FPC itself may not
 be built from its own sources in such case).
 
-Don't forget to set PATH and LIBPATH as mentioned by the install program.
-This can be done by opening file named CONFIG.SYS located in the root
-directory of your boot drive (e.g. C:\) with a plain text editor (e.g.
+Don't forget to set PATH and LIBPATH as mentioned by the install program (if
+needed). This can be done by opening file named CONFIG.SYS located in the
+root directory of your boot drive (e.g. C:\) with a plain text editor (e.g.
 E.EXE), extending the lines starting with "set PATH=" and "LIBPATH=" (both
 are case insensitive) with path to newly installed binaries (installation
 root as selected in the installation program appended with "\BIN\OS2" for
