@@ -140,7 +140,7 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
           ☆ 05/2021: 3.2.2 released
      2. Which versions exist, and which one should I use?
 
-        The latest official version is 3.2.2, the first minor update in the
+        The latest official version is 3.2.4, the second minor update in the
         3.2.x series. New development is performed in the 3.3.x series, which
         will eventually be released as 3.4.0 or 4.0.0, depending on milestones
         achieved.
