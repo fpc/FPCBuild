@@ -75,7 +75,12 @@ function UpdateVersionLineVersionPas(const Line: string): string;
       Result := '       patch_nr   = ''' + PatchNr + ''';';
     
     if Pos('minorpatch = ', Line) > 0 then
-      Result := '       minorpatch = ''-' + MinorPatch + ''';'
+      begin
+        if MinorPatch<>'' then
+          Result := '       minorpatch = ''-' + MinorPatch + ''';'
+        else
+          Result := '       minorpatch = '''';';
+      end;
   end;
 
 
