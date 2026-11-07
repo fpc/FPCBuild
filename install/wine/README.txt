@@ -74,10 +74,24 @@ curl        for the downloads. Not needed when --inno, --fpc322 and
 doc-chm.zip in the root of the tree, holding help/*.chm. It is required, not
             built, in the same way that makepack requires doc-pdf.tar.gz.
             Use --nodocs to build without it.
+Xvfb        only when the session has no display, see below.
 
 wineserver needs a writable /run/user/<uid>. The script falls back to a
 temporary directory when XDG_RUNTIME_DIR is not usable, which matters inside
 containers.
+
+A display is needed, also for the silent installs.
+
+    Inno Setup builds its wizard windows even with /VERYSILENT, and so does
+    ISCC.exe. Without DISPLAY or WAYLAND_DISPLAY wine cannot create a window
+    and the install ends right away:
+
+        Error reading FPreparingMemo.Lines.Strings: System Error. Code: 1400.
+        Invalid window handle.
+
+    In a session without a display, over ssh or in a container, the script
+    starts Xvfb itself and stops it again when it is done. Install the xvfb
+    package for that, or run the script with a display.
 
 
 Notes
