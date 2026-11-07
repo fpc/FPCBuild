@@ -31,10 +31,11 @@ NODOCS=
 KEEPPREFIX=
 USEPREFIX=
 
-# Inno Setup 6.7.3. The 6.x installers live on github, the 5.x ones on
-# files.jrsoftware.org.
-INNO_URL=https://github.com/jrsoftware/issrc/releases/download/is-6_7_3/innosetup-6.7.3.exe
-INNO_SHA256=9c73c3bae7ed48d44112a0f48e66742c00090bdb5bef71d9d3c056c66e97b732
+# Inno Setup 5.6.1, the last 5.x release. Its installers run on Windows 2000
+# and later, those of 6.x need Vista or later.
+INNO_URL=https://files.jrsoftware.org/is/5/innosetup-5.6.1-unicode.exe
+INNO_SHA256=27d49e9bc769e9d1b214c153011978db90dc01c2acd1ddcd9ed7b3fe3b96b538
+INNO_DIR='C:\innosetup-5.6.1'
 
 # The released windows compiler used as starting compiler.
 FPC322_URL=https://downloads.freepascal.org/fpc/dist/3.2.2/i386-win32/fpc-3.2.2.i386-win32.exe
@@ -307,27 +308,26 @@ innoinstall ()
 ISCCDIR=
 case "$INNO" in
   "")
-    fetch "$INNO_URL" "$INNOCACHE/innosetup.exe" "$INNO_SHA256"
-    innoinstall "$INNOCACHE/innosetup.exe" 'C:\innosetup' "$WINEPREFIX/drive_c/innosetup/ISCC.exe"
-    ISCCDIR='C:\innosetup' ;;
+    fetch "$INNO_URL" "$INNOCACHE/$(basename "$INNO_URL")" "$INNO_SHA256"
+    ISCCDIR=$INNO_DIR
+    innoinstall "$INNOCACHE/$(basename "$INNO_URL")" "$ISCCDIR" "$(winepath -u "$ISCCDIR\\ISCC.exe")" ;;
   http*|ftp*)
-    fetch "$INNO" "$INNOCACHE/innosetup.exe" ""
-    innoinstall "$INNOCACHE/innosetup.exe" 'C:\innosetup' "$WINEPREFIX/drive_c/innosetup/ISCC.exe"
-    ISCCDIR='C:\innosetup' ;;
+    fetch "$INNO" "$INNOCACHE/$(basename "$INNO")" ""
+    ISCCDIR='C:\innosetup'
+    innoinstall "$INNOCACHE/$(basename "$INNO")" "$ISCCDIR" "$(winepath -u "$ISCCDIR\\ISCC.exe")" ;;
   *)
     if [ -d "$INNO" ] && [ -f "$INNO/ISCC.exe" ] ; then
       ISCCDIR=$(winepath -w "$INNO")
     elif [ -f "$INNO" ] ; then
-      innoinstall "$INNO" 'C:\innosetup' "$WINEPREFIX/drive_c/innosetup/ISCC.exe"
       ISCCDIR='C:\innosetup'
+      innoinstall "$INNO" "$ISCCDIR" "$(winepath -u "$ISCCDIR\\ISCC.exe")"
     else
       die "--inno: not a directory with ISCC.exe, not a file, not a url: $INNO"
     fi ;;
 esac
 
 ISCCPROG="$ISCCDIR\\ISCC.exe"
-[ -f "$WINEPREFIX/drive_c/innosetup/ISCC.exe" ] || [ -n "$INNO" ] || \
-  die "inno setup did not install, no ISCC.exe in the prefix"
+[ -f "$(winepath -u "$ISCCPROG")" ] || die "inno setup did not install, no $ISCCPROG in the prefix"
 log "using $ISCCPROG"
 
 # ---------------------------------------------------------------------------

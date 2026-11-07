@@ -39,7 +39,8 @@ Options
                         Default: all three.
   --inno=<what>         Inno Setup: a directory holding ISCC.exe, an installer
                         to run, or a url to download. Default: download
-                        Inno Setup 6.7.3.
+                        Inno Setup 5.6.1, whose installers also run on
+                        Windows 2000 and XP. Those of 6.x need Vista or later.
   --inno-cache=<dir>    where the downloads are kept between runs.
                         Default $XDG_CACHE_HOME/fpc-wine.
   --fpc322=<what>       the starting compiler: a Windows installer or a url.
@@ -57,7 +58,7 @@ Examples:
 
     # only the combined installer, with a local inno setup and compiler
     install/wine/makewininstaller.sh --installers=combined \
-        --inno=$HOME/innosetup-6.7.3.exe \
+        --inno=$HOME/innosetup-5.6.1-unicode.exe \
         --fpc322=$HOME/fpc-3.2.2.i386-win32.exe
 
     # reuse a prepared prefix, for repeated runs or for CI
@@ -118,7 +119,7 @@ The order in which the installers are built.
     whatever order --installers lists them in. Building the win64 cross
     compiler starts with "rtlclean rtl" for the source platform, so it rebuilds
     the win32 rtl and leaves the win32 packages as they were. An installer that
-    picks up win32 units after that point carries an rtl and packages that were
+    picks up win32 units after that point contains an rtl and packages that were
     compiled against different unit checksums, and the first compilation on the
     user's machine fails with
 
