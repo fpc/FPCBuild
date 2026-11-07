@@ -73,6 +73,9 @@ The version is taken from Makefile.fpc as it is, including a suffix such as
 -rc1. The "version_schema: semver" line lets nfpm write it in the way each
 format expects:
 
+    3.2.4       ->  fpc_3.2.4-1_amd64.deb
+                    fpc-3.2.4-1.x86_64.rpm
+
     3.2.4-rc1   ->  fpc_3.2.4~rc1-1_amd64.deb
                     fpc-3.2.4~rc1-1.x86_64.rpm
 
