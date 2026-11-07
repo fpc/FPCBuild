@@ -153,10 +153,13 @@ else
   export WINEPREFIX=$WORKDIR/wine
 fi
 
+XVFBPID=
+
 cleanup ()
 {
   local rc=$?
   wineserver -k 2> /dev/null || true
+  [ -z "$XVFBPID" ] || kill "$XVFBPID" 2> /dev/null || true
   [ -z "$WORKLINK" ] || rm -f "$WORKLINK"
   if [ -z "$KEEPPREFIX" ] && [ -n "$WORKDIR" ] ; then
     rm -rf "$WORKDIR"
@@ -166,6 +169,29 @@ cleanup ()
   exit $rc
 }
 trap cleanup EXIT
+
+# A silent inno setup installer still creates its wizard windows, and so does
+# ISCC.exe. Without a display wine cannot create them and inno setup stops at
+# once with "Invalid window handle" or "Call not implemented", so a virtual X
+# server is started when the session has no display of its own.
+if [ -z "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] ; then
+  command -v Xvfb > /dev/null || die "there is no X display and Xvfb is not installed.
+    Wine needs a display to create windows; inno setup fails without one, also
+    for a silent install. Install Xvfb (package xvfb) or run with a display."
+  for n in 99 98 97 96 95 94 93 92 91 90 ; do
+    [ ! -e "/tmp/.X$n-lock" ] || continue
+    Xvfb ":$n" -screen 0 1024x768x24 > /dev/null 2>&1 &
+    XVFBPID=$!
+    sleep 1
+    if kill -0 "$XVFBPID" 2> /dev/null ; then
+      export DISPLAY=:$n
+      break
+    fi
+    XVFBPID=
+  done
+  [ -n "$XVFBPID" ] || die "could not start Xvfb"
+  log "no display in this session, using the virtual X server on $DISPLAY"
+fi
 
 if [ ! -d "$WINEPREFIX" ] ; then
   log "creating the wine prefix in $WINEPREFIX"
@@ -255,13 +281,23 @@ fetch ()
 # program named in the third argument is already there
 innoinstall ()
 {
-  local installer=$1 dir=$2 check=$3
+  local installer=$1 dir=$2 check=$3 rc=0
+  local setuplog=$WINEPREFIX/drive_c/innoinstall.log
   if [ -n "$check" ] && [ -f "$check" ] ; then
     log "$(basename "$check") is already in the prefix, not installing again"
     return 0
   fi
   log "installing $(basename "$installer") into $dir"
-  wine "$installer" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /DIR="$dir" > /dev/null 2>&1
+  rm -f "$setuplog"
+  wine "$installer" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /DIR="$dir" \
+       /LOG='C:\innoinstall.log' > /dev/null 2>&1 || rc=$?
+  if [ "$rc" != 0 ] ; then
+    if [ -f "$setuplog" ] ; then
+      log "the last lines of the setup log:"
+      sed -e 's/^/    /' "$setuplog" | tail -12
+    fi
+    die "$(basename "$installer") failed under wine with exit code $rc"
+  fi
 }
 
 # ---------------------------------------------------------------------------
