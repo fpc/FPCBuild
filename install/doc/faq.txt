@@ -138,6 +138,7 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
           ☆ 11/2017: 3.0.4 released
           ☆ 06/2020: 3.2.0 released
           ☆ 05/2021: 3.2.2 released
+          ☆ 11/2026: 3.2.4 released
      2. Which versions exist, and which one should I use?
 
         The latest official version is 3.2.4, the second minor update in the
@@ -208,7 +209,7 @@ library calls, consult the Free Pascal manuals. Topics covered in this document
             on as many platforms as possible. GNU Pascal tries to implement a
             portable pascal compiler based on POSIX.
             Version:
-                Currently, Free Pascal is at version 3.2.2 (May 2021). GNU
+                Currently, Free Pascal is at version 3.2.4 (November 2026). GNU
                 Pascal is stopped version 2.1 (from 2002, which can be built
                 with several different GCC's as backend; their Mac OS X version
                 is an exception though, as it follows the GCC version number).
