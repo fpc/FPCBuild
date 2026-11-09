@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 
 # hacky script for building the i8086-msdos release package for the fpc 3.2.x series
 # it is a stopgap solution until we have proper support for multiple subarchs and memory models in the main makefiles
@@ -8,8 +8,8 @@
 
 set -e
 
-FPCVERSION=3.2.2
-FPCRCVERSION=3.2.2
+FPCVERSION=3.3.1
+FPCRCVERSION=3.3.1
 
 PACKAGE_VERSION=$FPCRCVERSION
 
