@@ -59,6 +59,13 @@ else
   grep_silent_opt=""
 fi
 
+CMDSED="sed"
+CMDGSED="`which gsed 2> /dev/null`"
+if [ -f "$CMDGSED" ] ; then
+  CMDSED="$CMDGSED"
+  echo "Using SED binary=$CMDSED"
+fi
+
 CMDTAR="tar"
 # Use GNU tar if present
 CMDGTAR="`which gtar 2> /dev/null`"
@@ -134,7 +141,7 @@ listtarfiles ()
 {
   askvar="$2"
   if [ ! -z "$3" ]; then
-    list=`$CMDTAR tvf "$1" | awk '{ print $(NF) }' | sed -n /"$3"/p`
+    list=`$CMDTAR tvf "$1" | awk '{ print $(NF) }' | $CMDSED -n /"$3"/p`
   else
      list=`$CMDTAR tvf "$1" | awk '{ print $(NF) }'`
   fi
@@ -171,7 +178,7 @@ installbinary ()
     CROSSPREFIX=
     PPCPREFIX=ppc
   else
-    FPCTARGET=`echo $2 | sed 's/-$//'`
+    FPCTARGET=`echo $2 | $CMDSED 's/-$//'`
     CROSSPREFIX="$2"
     PPCPREFIX=ppcross
   fi
@@ -207,7 +214,7 @@ installbinary ()
   # Install compiler/RTL. Mandatory.
   echo "Installing compiler and RTL for $FPCTARGET..."
   # Full install builds cross generated on x86_64-linux have a different name for base tar.gz file
-  basetargz=`$CMDTAR -tf "$BINARYTAR" | sed -n -e "/^base.*tar\.gz/p" -e "/^$FPCTARGET-base.*tar\.gz/p" | head -1 `
+  basetargz=`$CMDTAR -tf "$BINARYTAR" | $CMDSED -n -e "/^base.*tar\.gz/p" -e "/^$FPCTARGET-base.*tar\.gz/p" | head -1 `
   if [ -n "$basetargz" ] ; then
     unztarfromtar "$BINARYTAR" "$basetargz" "$PREFIX"
   else
@@ -235,7 +242,7 @@ installbinary ()
   listtarfiles "$BINARYTAR" packages units-rtl
   for f in $packages
   do
-    p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
+    p=`echo "$f" | $CMDSED -e 's+^.*units-\([^\.]*\)\..*+\1+'`
 	echo "Installing $p"
     unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
   done
@@ -244,7 +251,7 @@ installbinary ()
   listtarfiles "$BINARYTAR" packages units-fcl
   for f in $packages
   do
-    p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
+    p=`echo "$f" | $CMDSED -e 's+^.*units-\([^\.]*\)\..*+\1+'`
 	echo "Installing $p"
     unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
   done
@@ -255,7 +262,7 @@ installbinary ()
   do
     if ! echo "$f" | $CMDGREP $grep_silent_opt fcl > /dev/null ; then
       if ! echo "$f" | $CMDGREP $grep_silent_opt rtl > /dev/null ; then
-        p=`echo "$f" | sed -e 's+^.*units-\([^\.]*\)\..*+\1+'`
+        p=`echo "$f" | $CMDSED -e 's+^.*units-\([^\.]*\)\..*+\1+'`
 	echo "Installing $p"
         unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
       fi
@@ -266,7 +273,7 @@ installbinary ()
   listtarfiles "$BINARYTAR" packages ${CROSSPREFIX}utils
   for f in $packages
   do
-    p=`echo "$f" | sed -e 's+^.*utils-\([^\.]*\)\..*+\1+' -e 's+^.*\(utils\)[^\.]*\..*+\1+'`
+    p=`echo "$f" | $CMDSED -e 's+^.*utils-\([^\.]*\)\..*+\1+' -e 's+^.*\(utils\)[^\.]*\..*+\1+'`
 	echo "Installing $p"
     unztarfromtar "$BINARYTAR" "$f" "$PREFIX"
   done
@@ -276,7 +283,7 @@ installbinary ()
     chmod u=srx,g=rx,o=rx "$PREFIX/bin/grab_vcsa"
   fi
 
-  ide=`$TAR -tf $BINARYTAR | grep "${CROSSPREFIX}ide.$1.tar.gz"`
+  ide=`$TAR -tf $BINARYTAR | $CMDGREP "${CROSSPREFIX}ide.$1.tar.gz"`
   if [ "$ide" = "${CROSSPREFIX}ide.$1.tar.gz" ]; then
     if yesno "Install Textmode IDE"; then
       unztarfromtar "$BINARYTAR" "${CROSSPREFIX}ide.$1.tar.gz" "$PREFIX"
@@ -321,9 +328,9 @@ case "$OSNAME" in
   sunos)
      # Check if GNU llinker is recent enough, version 2.21 is needed at least
      GNU_LD=`which gld`
-     supported_emulations=`"$GNU_LD" --target-help | sed -n "s|^\(elf.*\):|\1|p" `
-     supports_elf_i386_sol2=`echo $supported_emulations | grep -w elf_i386_sol2 `
-     supports_elf_x86_64_sol2=`echo $supported_emulations | grep -w elf_x86_64_sol2 `
+     supported_emulations=`"$GNU_LD" --target-help | $CMDSED -n "s|^\(elf.*\):|\1|p" `
+     supports_elf_i386_sol2=`echo $supported_emulations | $CMDGREP -w elf_i386_sol2 `
+     supports_elf_x86_64_sol2=`echo $supported_emulations | $CMDGREP -w elf_x86_64_sol2 `
      if [ "$supports_elf_i386_sol2" = "" ]; then
        echo -n "GNU linker $GNU_LD does not support elf_i386_sol2 emulation, please consider "
        echo "upgrading binutils package to at least version 2.21"
@@ -398,8 +405,8 @@ esac
 # Install all binary releases
 for f in *binary*.tar
 do
-  target=`echo $f | sed 's+^.*binary\.\(.*\)\.tar$+\1+'`
-  cross=`echo $f | sed 's+binary\..*\.tar$++'`
+  target=`echo $f | $CMDSED 's+^.*binary\.\(.*\)\.tar$+\1+'`
+  cross=`echo $f | $CMDSED 's+binary\..*\.tar$++'`
 
   # cross install?
   if [ "$cross" != "" ]; then
@@ -448,7 +455,7 @@ subst_pattern=ask
 function substitute_version_string ()
 {
   file=$1
-  has_version=`grep $VERSION $file`
+  has_version=`$CMDGREP $VERSION $file`
   if [ ! -z "$has_version" ] ; then
     if [ "$subst_pattern" == "ask" ] ; then
       if yesno "Subtitute $VERSION by \$fpcversion in config files"; then
@@ -458,25 +465,27 @@ function substitute_version_string ()
       fi
     fi
     if [ "$subst_pattern" == "yes" ] ; then
-      has_dollar_fpcversion=`grep '\$fpcversion' $file`
-      has_CompilerVersion=`grep '\{CompilerVersion\}' $file`
+      has_dollar_fpcversion=`$CMDGREP '\$fpcversion' $file`
+      has_CompilerVersion=`$CMDGREP '{CompilerVersion}' $file`
       if [ -n "$has_dollar_fpcversion" ] ; then
         echo "File $file contains string \"$VERSION\", trying to subtitute with \"\$fpcversion\""
-        sed "s:$VERSION:\$fpcversion:g" $file > $file.tmp
+        $CMDSED "s:$VERSION:\$fpcversion:g" $file > $file.tmp
         sed_res=$?
         if [ $sed_res -eq 0 ] ; then
+	  cp $file ${file}.pre
           mv -f $file.tmp $file
         else
-          echo "sed failed, res=$sed_res"
+          echo "$CMDSED failed, res=$sed_res"
         fi
       elif [ -n "$has_CompilerVersion" ] ; then
         echo "File $file contains string \"$VERSION\", trying to subtitute with \"{CompilerVersion}\""
-        sed "s:$VERSION:\{CompilerVersion\}:g" $file > $file.tmp
+        $CMDSED "s:$VERSION:{CompilerVersion}:g" $file > $file.tmp
         sed_res=$?
         if [ $sed_res -eq 0 ] ; then
+	  cp $file ${file}.pre
           mv -f $file.tmp $file
         else
-          echo "sed failed, res=$sed_res"
+          echo "$CMDSED failed, res=$sed_res"
         fi
       fi
     fi
@@ -486,7 +495,7 @@ function substitute_version_string ()
 # Install /etc/fpc.cfg, this is done using the samplecfg script
 if [ "$cross" = "" ]; then
   "$LIBDIR/samplecfg" "$LIBDIR" | tee samplecfg.log
-  file_list=`sed -n 's:.*Writing sample configuration file to ::p' samplecfg.log`
+  file_list=`$CMDSED -n 's:.*Writing sample configuration file to ::p' samplecfg.log`
   if [ ! -z "$file_list" ] ; then
     for file in $file_list ; do
       if [ -w $file ] ; then
