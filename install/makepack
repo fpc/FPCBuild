@@ -32,9 +32,31 @@ unset FPCDIR
 # Goto the toplevel if necessary
 [ -d install ] || cd ..
 
+CMDGREP="grep"
+CMDGGREP="`which ggrep 2> /dev/null`"
+if [ -f "$CMDGGREP" ] ; then
+  CMDGREP="$CMDGGREP"
+  echo "Using GREP binary=$CMDGREP"
+fi
+
+CMDSED="sed"
+CMDGSED="`which gsed 2> /dev/null`"
+if [ -f "$CMDGSED" ] ; then
+  CMDSED="$CMDGSED"
+  echo "Using SED binary=$CMDSED"
+fi
+
+CMDTAR="tar"
+# Use GNU tar if present
+CMDGTAR="`which gtar 2> /dev/null`"
+if [ -f "$CMDGTAR" ]; then
+  CMDTAR="$CMDGTAR"
+  echo "Using TAR binary=$CMDTAR"
+fi
+
 # Retrieve version from fpcsrc/Makefile.fpc
-FULLVERSION=`grep '^version *=' fpcsrc/Makefile.fpc | sed 's+[^=]*= *\(.*\)+\1+'`
-VERSION=`grep '^version *=' fpcsrc/Makefile.fpc | sed 's+[^=]*= *\([0-9\.]*\).*+\1+'`
+FULLVERSION=`$CMDGREP '^version *=' fpcsrc/Makefile.fpc | $CMDSED 's+[^=]*= *\(.*\)+\1+'`
+VERSION=`$CMDGREP '^version *=' fpcsrc/Makefile.fpc | $CMDSED 's+[^=]*= *\([0-9\.]*\).*+\1+'`
 
 
 if [ -z "$FPC" ] ; then
@@ -72,15 +94,29 @@ fi
 HOSTOS=`uname -s | $TR "[:upper:]" "[:lower:]"`
 
 MAKE=make
-TAR=tar
+TAR=$CMDTAR
 
 case "$HOSTOS" in
   *freebsd*) MAKE=gmake
-    if [ -d /usr/local/lib ] ; then
-      EXTRAOPT+=" -Fl/usr/local/lib"
-    fi
-    if [ -d /usr/X11R6/lib ] ; then
-      EXTRAOPT+=" -Fl/usr/X11R6/lib"
+    if [ "$SOURCECPU" = "i386" ] ; then
+      EXTRAOPT+=" -Xd -k-nostdlib"
+      export BINUTILSPREFIX=i386-freebsd-
+      if [ -d /lib32 ] ; then
+        EXTRAOPT+=" -Fl/lib32 -k-L -k/lib32"
+      fi
+      if [ -d /usr/lib32 ] ; then
+        EXTRAOPT+=" -Fl/usr/lib32 -k-L -k/usr/lib32"
+      fi
+      if [ -d /usr/local/lib32 ] ; then
+        EXTRAOPT+=" -Fl/usr/local/lib32 -k-L -k/usr/local/lib32"
+      fi
+    else 
+      if [ -d /usr/local/lib ] ; then
+        EXTRAOPT+=" -Fl/usr/local/lib"
+      fi
+      if [ -d /usr/X11R6/lib ] ; then
+        EXTRAOPT+=" -Fl/usr/X11R6/lib"
+      fi
     fi
     EXTRAOPT+=" -dFREEBSD5"
   ;;
@@ -106,10 +142,6 @@ case "$HOSTOS" in
     if [ "$SOURCEOS" == "solaris" ]; then
       EXTRAOPT+=" -Xn"
     fi
-    # Use GNU tar if present
-    if [ "`which gtar`" != "" ]; then
-      TAR=`which gtar`
-    fi
   ;;
   *openbsd*)
     MAKE=gmake
@@ -124,8 +156,8 @@ if [ $# -ne 0 ]; then
     echo "Usage: makepack [<cpu>-<os>]"
     exit 1
   fi
-  TARGETCPU=`echo $1 | sed 's+\([^-]*\)-.*+\1+'`
-  TARGETOS=`echo $1 | sed 's+[^-]*-\(.*\)+\1+'`
+  TARGETCPU=`echo $1 | $CMDSED 's+\([^-]*\)-.*+\1+'`
+  TARGETOS=`echo $1 | $CMDSED 's+[^-]*-\(.*\)+\1+'`
 else
   TARGETCPU=$SOURCECPU
   TARGETOS=$SOURCEOS
@@ -133,7 +165,7 @@ fi
 
 # Set this to "no" if you want don't want to check for libgdb.a
 # Retrieve GDBMI_DEFAULT_OS_LIST from Makefile.fpc
-GDBMI_DEFAULT_OS_LIST=`grep '^GDBMI_DEFAULT_OS_LIST *=' Makefile.fpc | sed 's+[^=]*= *\(.*\)+\1+'`
+GDBMI_DEFAULT_OS_LIST=`$CMDGREP '^GDBMI_DEFAULT_OS_LIST *=' Makefile.fpc | $CMDSED 's+[^=]*= *\(.*\)+\1+'`
 
 # Use of GDBMI for text mode IDE, if in GDBMI_DEFAULT_OS_LIST
 if  [ "X${NOGDB}" == "X" ] ; then
@@ -288,7 +320,7 @@ RELFILES="install.sh"
 
 # install.sh
 echo "Copying install.sh, substituting version strings"
-sed -e s+%version%+$VERSION+ -e s+%fullversion%+$FULLVERSION+ install/install.sh > install.sh
+$CMDSED -e s+%version%+$VERSION+ -e s+%fullversion%+$FULLVERSION+ install/install.sh > install.sh
 chmod 755 install.sh
 
 # readme.txt
