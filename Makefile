@@ -367,7 +367,7 @@ FPCFPMAKE=$(FPC)
 endif
 endif
 override PACKAGE_NAME=fpc
-override PACKAGE_VERSION=3.2.4-rc2
+override PACKAGE_VERSION=3.2.3
 BS_FPC_VERSION:=$(FPC_VERSION)
 FPC_VERSION:=$(firstword $(subst -, ,$(PACKAGE_VERSION)))
 ifneq ($(wildcard install),)
@@ -2907,7 +2907,7 @@ renametoshort:
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-pdf$(ZIPSUFFIX).zip ufcpd$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-process$(ZIPSUFFIX).zip ufclp$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-registry$(ZIPSUFFIX).zip ufclr$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-report$(ZIPSUFFIX).zip ufcre$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-report$(ZIPSUFFIX).zip ufpre$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-res$(ZIPSUFFIX).zip ufcle$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-sdo$(ZIPSUFFIX).zip ufcsd$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)$(PKGUNITSPRE)fcl-sound$(ZIPSUFFIX).zip ufsnd$(ZIPSUFFIXSHORT).zip
@@ -3034,7 +3034,7 @@ renametoshort:
 	-$(MOVE) $(PKGPRE)utils-debugsrv$(ZIPSUFFIX).zip dbgs$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-dxegen$(ZIPSUFFIX).zip dxeg$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-fpcm$(ZIPSUFFIX).zip fpcm$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-fpcmkcfg$(ZIPSUFFIX).zip fpck$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-fpcmkcfg$(ZIPSUFFIX).zip fcmk$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-fpcres$(ZIPSUFFIX).zip fprs$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-fpcreslipo$(ZIPSUFFIX).zip fprl$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-fpdoc$(ZIPSUFFIX).zip fpdc$(ZIPSUFFIXSHORT).zip
@@ -3047,11 +3047,11 @@ renametoshort:
 	-$(MOVE) $(PKGPRE)utils-instantfpc$(ZIPSUFFIX).zip ifpc$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-javaapp$(ZIPSUFFIX).zip jvp$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-json2pas$(ZIPSUFFIX).zip jsnp$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-lexyacc$(ZIPSUFFIX).zip lexy$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-lexyacc$(ZIPSUFFIX).zip tply$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-mksymbian$(ZIPSUFFIX).zip mksb$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-pas2fpm$(ZIPSUFFIX).zip p2fp$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-pas2jni$(ZIPSUFFIX).zip p2jn$(ZIPSUFFIXSHORT).zip
-	-$(MOVE) $(PKGPRE)utils-pas2js$(ZIPSUFFIX).zip pjs$(ZIPSUFFIXSHORT).zip
+	-$(MOVE) $(PKGPRE)utils-pas2js$(ZIPSUFFIX).zip p2js$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-pas2ut$(ZIPSUFFIX).zip p2ut$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-rmwait$(ZIPSUFFIX).zip rmw$(ZIPSUFFIXSHORT).zip
 	-$(MOVE) $(PKGPRE)utils-sim_pasc$(ZIPSUFFIX).zip smp$(ZIPSUFFIXSHORT).zip
