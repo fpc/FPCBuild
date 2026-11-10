@@ -1,0 +1,61 @@
+# nfpm description of the Free Pascal Compiler distribution package.
+#
+# Used by the nfpm targets in the toplevel Makefile.fpc. The relative paths are
+# resolved against the directory in which nfpm is started, which is the
+# directory that "make nfpmstage" prepared.
+#
+# Copyright 1996-2026 the Free Pascal development team.
+
+name: fpc
+arch: ${NFPM_ARCH}
+platform: linux
+version: ${NFPM_VERSION}
+version_schema: semver
+release: ${NFPM_RELEASE}
+
+section: devel
+priority: optional
+
+maintainer: Free Pascal development team <fpc-devel@lists.freepascal.org>
+vendor: Free Pascal
+homepage: https://www.freepascal.org/
+license: GPL-2.0-or-later and modified LGPL-2.0-or-later
+
+description: |
+  Free Pascal Compiler
+  The Free Pascal Compiler is an Object Pascal compiler, compatible with
+  Turbo Pascal 7.0 and with Delphi. It comes with a run-time library, the
+  Free Component Library, bindings for many C libraries, a text mode IDE
+  and a set of utilities.
+  .
+  This package contains the compiler, the units and the utilities.
+
+contents:
+  - src: ./stage/usr
+    dst: /usr
+    type: tree
+
+scripts:
+  postinstall: ./scripts/postinstall.sh
+  postremove: ./scripts/postremove.sh
+
+# The dependencies are listed by hand: the package names differ per
+# distribution, and automatic detection is not wanted for a compiler that
+# calls the assembler and the linker itself.
+overrides:
+  deb:
+    depends:
+      - binutils
+      - libc6-dev
+  rpm:
+    depends:
+      - binutils
+      - glibc-devel
+  apk:
+    depends:
+      - binutils
+      - musl-dev
+  archlinux:
+    depends:
+      - binutils
+      - glibc

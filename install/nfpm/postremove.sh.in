@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# Free Pascal post-removal script for deb/rpm packages.
+# Copyright 1996-2026 the Free Pascal development team.
+#
+# The version in the path below is filled in by the make nfpmstage target.
+#
+# The first argument is "purge" on a deb that is being purged, and "0" on an
+# rpm that is being removed for the last time. In every other case the package
+# is being upgraded and the configuration must stay.
+
+case "$1" in
+  purge|0)
+    rm -f /etc/fpc.cfg /etc/fppkg.cfg
+    rm -rf /etc/fppkg
+    rm -rf /usr/lib/fpc/@FPCVERSION@/ide/text
+    ;;
+esac
+
+if [ -x /sbin/ldconfig ] ; then
+  /sbin/ldconfig
+elif [ -x /usr/sbin/ldconfig ] ; then
+  /usr/sbin/ldconfig
+fi
+
+exit 0

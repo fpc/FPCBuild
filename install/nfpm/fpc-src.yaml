@@ -1,0 +1,28 @@
+# nfpm description of the Free Pascal source package.
+#
+# Copyright 1996-2026 the Free Pascal development team.
+
+name: fpc-src
+arch: all
+platform: linux
+version: ${NFPM_VERSION}
+version_schema: semver
+release: ${NFPM_RELEASE}
+
+section: devel
+priority: optional
+
+maintainer: Free Pascal development team <fpc-devel@lists.freepascal.org>
+vendor: Free Pascal
+homepage: https://www.freepascal.org/
+license: GPL-2.0-or-later and modified LGPL-2.0-or-later
+
+description: |
+  Free Pascal Compiler sources
+  The sources of the compiler, the run-time library and the packages.
+  The text mode IDE and Lazarus use them to look up declarations.
+
+contents:
+  - src: ./stage-src/usr
+    dst: /usr
+    type: tree
